@@ -108,6 +108,16 @@ Chart.register(...registerables);
               <app-skeleton height="220px" radius="8px" />
             </div>
           } @else {
+            <div class="chart-legend" aria-hidden="true">
+              <span class="legend-item">
+                <span class="legend-dot legend-dot--income"></span>
+                Income
+              </span>
+              <span class="legend-item">
+                <span class="legend-dot legend-dot--expense"></span>
+                Expenses
+              </span>
+            </div>
             <canvas #chartCanvas></canvas>
           }
         </div>
@@ -133,7 +143,7 @@ Chart.register(...registerables);
             }
           } @else if (recentTransactions().length === 0) {
             <div class="empty-tx">
-              <span>🧾</span>
+              <span class="empty-tx-icon">TX</span>
               <p>
                 No transactions yet.
                 <a routerLink="/transactions/new">Add one!</a>
@@ -218,6 +228,19 @@ Chart.register(...registerables);
       }
       .btn-primary:active {
         transform: scale(0.97);
+      }
+      .empty-tx-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        border-radius: 14px;
+        background: rgba(0, 0, 0, 0.05);
+        color: #555;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
       }
 
       /* Cards */
@@ -347,8 +370,38 @@ Chart.register(...registerables);
         border-radius: 14px;
         padding: 24px;
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.07);
+        min-height: 320px;
+      }
+      .chart-legend {
+        display: flex;
+        justify-content: flex-end;
+        gap: 16px;
+        margin-bottom: 12px;
+        flex-wrap: wrap;
+      }
+      .legend-item {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: #666;
+        font-size: 12px;
+        font-weight: 500;
+      }
+      .legend-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 999px;
+        display: inline-block;
+      }
+      .legend-dot--income {
+        background: #10b981;
+      }
+      .legend-dot--expense {
+        background: #ff5c4d;
       }
       .chart-card canvas {
+        width: 100%;
+        height: 260px;
         max-height: 260px;
       }
       .chart-skeleton {
@@ -465,19 +518,19 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   private chart: Chart | null = null;
 
   private CATEGORY_META: Record<string, { icon: string; color: string }> = {
-    Food: { icon: "🍔", color: "rgba(255,92,77,0.15)" },
-    Transport: { icon: "🚌", color: "rgba(77,166,255,0.15)" },
-    Entertainment: { icon: "🎬", color: "rgba(168,85,247,0.15)" },
-    Shopping: { icon: "🛍️", color: "rgba(245,158,11,0.15)" },
-    Health: { icon: "💊", color: "rgba(16,185,129,0.15)" },
-    Rent: { icon: "🏠", color: "rgba(99,102,241,0.15)" },
-    Salary: { icon: "💼", color: "rgba(34,211,238,0.15)" },
-    Freelance: { icon: "💻", color: "rgba(244,114,182,0.15)" },
-    Utilities: { icon: "⚡", color: "rgba(132,204,22,0.15)" },
+    Food: { icon: "FD", color: "rgba(255,92,77,0.15)" },
+    Transport: { icon: "TR", color: "rgba(77,166,255,0.15)" },
+    Entertainment: { icon: "EN", color: "rgba(168,85,247,0.15)" },
+    Shopping: { icon: "SH", color: "rgba(245,158,11,0.15)" },
+    Health: { icon: "HL", color: "rgba(16,185,129,0.15)" },
+    Rent: { icon: "RE", color: "rgba(99,102,241,0.15)" },
+    Salary: { icon: "SA", color: "rgba(34,211,238,0.15)" },
+    Freelance: { icon: "FR", color: "rgba(244,114,182,0.15)" },
+    Utilities: { icon: "UT", color: "rgba(132,204,22,0.15)" },
   };
 
   categoryIcon(cat: string) {
-    return this.CATEGORY_META[cat]?.icon ?? "💰";
+    return this.CATEGORY_META[cat]?.icon ?? "OT";
   }
   categoryColor(cat: string) {
     return this.CATEGORY_META[cat]?.color ?? "rgba(0,0,0,0.07)";
@@ -557,16 +610,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         interaction: { mode: "index", intersect: false },
         plugins: {
           legend: {
-            position: "top",
-            align: "end",
-            labels: {
-              boxWidth: 10,
-              boxHeight: 10,
-              borderRadius: 99,
-              useBorderRadius: true,
-              font: { family: "DM Sans", size: 12 },
-              color: "#666",
-            },
+            display: false,
           },
           tooltip: {
             backgroundColor: "white",

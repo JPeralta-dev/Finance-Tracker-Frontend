@@ -67,7 +67,7 @@ const CATEGORIES = [
                   [class.active-income]="form.get('type')?.value === 'income'"
                   (click)="form.get('type')?.setValue('income')"
                 >
-                  💚 Income
+                  Income
                 </button>
                 <button
                   type="button"
@@ -75,7 +75,7 @@ const CATEGORIES = [
                   [class.active-expense]="form.get('type')?.value === 'expense'"
                   (click)="form.get('type')?.setValue('expense')"
                 >
-                  🔴 Expense
+                  Expense
                 </button>
               </div>
             </div>
@@ -183,11 +183,11 @@ const CATEGORIES = [
 
             @if (successMsg()) {
               <div class="success-banner" @fadeSlideIn>
-                ✅ {{ successMsg() }}
+                {{ successMsg() }}
               </div>
             }
             @if (errorMsg()) {
-              <div class="error-banner" @fadeSlideIn>⚠️ {{ errorMsg() }}</div>
+              <div class="error-banner" @fadeSlideIn>{{ errorMsg() }}</div>
             }
           </form>
         }
@@ -550,7 +550,7 @@ export class TransactionFormComponent implements OnInit {
       next: () => {
         this.submitting.set(false);
         this.successMsg.set(
-          this.isEdit() ? "✅ Transaction updated!" : "✅ Transaction created!",
+          this.isEdit() ? "Transaction updated." : "Transaction created.",
         );
         setTimeout(() => this.router.navigate(["/transactions"]), 900);
       },

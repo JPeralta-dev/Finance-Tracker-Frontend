@@ -42,7 +42,7 @@ import {
           <div class="stat-divider"></div>
           <div class="stat-item">
             <span class="stat-label">Highest spend</span>
-            <span class="stat-value">{{ topCategory()?.name ?? "" }}</span>
+            <span class="stat-value">{{ topCategory().name }}</span>
           </div>
           <div class="stat-divider"></div>
           <div class="stat-item">
@@ -68,7 +68,7 @@ import {
         } @else if (categories().length === 0) {
           <div class="empty-wrap">
             <app-empty-state
-              icon="🏷️"
+              icon="CT"
               title="No categories yet"
               message="Add some transactions to see categories appear here."
               actionLink="/transactions/new"
@@ -79,7 +79,7 @@ import {
           @for (cat of categories(); track cat.id) {
             <div class="cat-card" @cardEntrance [style.--cat-color]="cat.color">
               <div class="cat-icon-wrap" [style.background]="cat.color + '22'">
-                <span class="cat-icon">{{ cat.icon }}</span>
+                <span class="cat-icon">{{ categoryMark(cat.name) }}</span>
               </div>
               <span class="cat-name">{{ cat.name }}</span>
               <span class="cat-total">{{
@@ -298,14 +298,23 @@ import {
   ],
 })
 export class CategoriesComponent implements OnInit {
+  categoryMark(name: string) {
+    return name
+      .split(/[^A-Za-z0-9]+/)
+      .filter(Boolean)
+      .slice(0, 2)
+      .map((part) => part[0]!.toUpperCase())
+      .join("") || "OT";
+  }
+
   private financeService = inject(FinanceService);
 
   categories = signal<Category[]>([]);
   loading = signal(true);
 
-  topCategory = () => {
+  topCategory = (): Category => {
     const sorted = [...this.categories()].sort((a, b) => b.total - a.total);
-    return sorted[0] ?? null;
+    return sorted[0] ?? { id: "", name: "", icon: "", color: "", total: 0 };
   };
 
   totalExpenses = () => this.categories().reduce((sum, c) => sum + c.total, 0);
