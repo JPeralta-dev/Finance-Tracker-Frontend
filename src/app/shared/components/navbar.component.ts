@@ -18,7 +18,7 @@ interface NavItem {
     <nav class="navbar">
       <div class="nav-inner">
         <a routerLink="/" class="brand">
-          <span class="brand-icon">💸</span>
+          <span class="brand-icon">FL</span>
           <span class="brand-name">Flowr</span>
         </a>
 
@@ -56,9 +56,9 @@ interface NavItem {
     }
     <aside class="drawer mobile-only" [@drawerSlide]="drawerOpen() ? 'open' : 'closed'">
       <div class="drawer-header">
-        <span class="brand-icon">💸</span>
+        <span class="brand-icon">FL</span>
         <span class="brand-name">Flowr</span>
-        <button class="close-btn" (click)="closeDrawer()">✕</button>
+        <button class="close-btn" (click)="closeDrawer()">Close</button>
       </div>
       <ul class="drawer-links">
         @for (item of navItems; track item.path) {
@@ -107,7 +107,19 @@ interface NavItem {
       text-decoration: none;
       margin-right: auto;
     }
-    .brand-icon { font-size: 22px; }
+    .brand-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      background: rgba(255, 92, 77, 0.12);
+      color: #ff5c4d;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
     .brand-name {
       font-family: 'Clash Display', sans-serif;
       font-size: 20px;
@@ -136,7 +148,14 @@ interface NavItem {
     }
     .nav-link:hover { background: rgba(0,0,0,0.05); color: #111; }
     .nav-link.active { background: rgba(255, 92, 77, 0.1); color: #FF5C4D; }
-    .nav-icon { font-size: 15px; }
+    .nav-icon {
+      min-width: 22px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: inherit;
+    }
     .btn-new {
       padding: 8px 18px;
       background: #FF5C4D;
@@ -204,10 +223,11 @@ interface NavItem {
       margin-left: auto;
       background: none;
       border: none;
-      font-size: 16px;
+      font-size: 13px;
+      font-weight: 600;
       cursor: pointer;
       color: #888;
-      padding: 4px 8px;
+      padding: 6px 10px;
       border-radius: 6px;
     }
     .drawer-header .close-btn:hover { background: rgba(0,0,0,0.05); }
@@ -219,28 +239,30 @@ interface NavItem {
       flex-direction: column;
       gap: 2px;
     }
-    .drawer-link {
+    .drawer-link,
+    .drawer-new {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       padding: 12px 14px;
       border-radius: 10px;
       text-decoration: none;
-      font-size: 15px;
+      color: #333;
       font-weight: 500;
-      color: #444;
-      transition: all 0.15s ease;
     }
-    .drawer-link:hover { background: rgba(0,0,0,0.05); }
-    .drawer-link.active { background: rgba(255,92,77,0.1); color: #FF5C4D; }
+    .drawer-link.active {
+      background: rgba(255, 92, 77, 0.1);
+      color: #ff5c4d;
+    }
+    .drawer-link:hover,
+    .drawer-new:hover {
+      background: rgba(0,0,0,0.04);
+    }
     .drawer-new {
-      display: block;
       margin-top: 8px;
-      padding: 12px 14px;
       background: #FF5C4D;
       color: white;
-      border-radius: 10px;
-      text-decoration: none;
+      justify-content: center;
       font-weight: 600;
       text-align: center;
     }
@@ -260,9 +282,9 @@ export class NavbarComponent {
   drawerOpen = signal(false);
 
   navItems: NavItem[] = [
-    { path: '/', label: 'Dashboard', icon: '📊' },
-    { path: '/transactions', label: 'Transactions', icon: '💳' },
-    { path: '/categories', label: 'Categories', icon: '🏷️' },
+    { path: '/', label: 'Dashboard', icon: 'DB' },
+    { path: '/transactions', label: 'Transactions', icon: 'TX' },
+    { path: '/categories', label: 'Categories', icon: 'CT' },
   ];
 
   toggleDrawer() {

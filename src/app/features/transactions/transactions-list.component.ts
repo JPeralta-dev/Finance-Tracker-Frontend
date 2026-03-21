@@ -41,20 +41,20 @@ type SortKey = "date" | "amount" | "category";
       <!-- Error banner -->
       @if (loadError()) {
         <div class="error-banner">
-          ⚠️ {{ loadError() }}
+          {{ loadError() }}
           <button class="retry-btn" (click)="loadTransactions()">Retry</button>
         </div>
       }
 
       <!-- Delete success toast -->
       @if (deleteMsg()) {
-        <div class="toast" @fadeSlideIn>🗑️ {{ deleteMsg() }}</div>
+        <div class="toast" @fadeSlideIn>{{ deleteMsg() }}</div>
       }
 
       <!-- Filters -->
       <div class="filters-bar">
         <div class="search-wrap">
-          <span class="search-icon">🔍</span>
+          <span class="search-icon">Search</span>
           <input
             type="text"
             placeholder="Search transactions…"
@@ -104,7 +104,7 @@ type SortKey = "date" | "amount" | "category";
           </div>
         } @else if (paginatedTransactions().length === 0) {
           <app-empty-state
-            icon="🧾"
+            icon="TX"
             title="No transactions found"
             message="Try adjusting your filters or add a new transaction."
             actionLink="/transactions/new"
@@ -163,7 +163,7 @@ type SortKey = "date" | "amount" | "category";
                     [routerLink]="['/transactions', tx.id]"
                     class="action-btn edit"
                     title="Edit"
-                    >✏️</a
+                    >Edit</a
                   >
                   <button
                     class="action-btn delete"
@@ -171,7 +171,7 @@ type SortKey = "date" | "amount" | "category";
                     [disabled]="deletingId() === tx.id"
                     title="Delete"
                   >
-                    {{ deletingId() === tx.id ? "⏳" : "🗑️" }}
+                    {{ deletingId() === tx.id ? "Deleting" : "Delete" }}
                   </button>
                 </div>
               </div>
@@ -629,15 +629,15 @@ export class TransactionsListComponent implements OnInit {
   pageSize = 10;
 
   private CATEGORY_META: Record<string, { icon: string; color: string }> = {
-    Food: { icon: "🍔", color: "rgba(255,92,77,0.15)" },
-    Transport: { icon: "🚌", color: "rgba(77,166,255,0.15)" },
-    Entertainment: { icon: "🎬", color: "rgba(168,85,247,0.15)" },
-    Shopping: { icon: "🛍️", color: "rgba(245,158,11,0.15)" },
-    Health: { icon: "💊", color: "rgba(16,185,129,0.15)" },
-    Rent: { icon: "🏠", color: "rgba(99,102,241,0.15)" },
-    Salary: { icon: "💼", color: "rgba(34,211,238,0.15)" },
-    Freelance: { icon: "💻", color: "rgba(244,114,182,0.15)" },
-    Utilities: { icon: "⚡", color: "rgba(132,204,22,0.15)" },
+    Food: { icon: "FD", color: "rgba(255,92,77,0.15)" },
+    Transport: { icon: "TR", color: "rgba(77,166,255,0.15)" },
+    Entertainment: { icon: "EN", color: "rgba(168,85,247,0.15)" },
+    Shopping: { icon: "SH", color: "rgba(245,158,11,0.15)" },
+    Health: { icon: "HL", color: "rgba(16,185,129,0.15)" },
+    Rent: { icon: "RE", color: "rgba(99,102,241,0.15)" },
+    Salary: { icon: "SA", color: "rgba(34,211,238,0.15)" },
+    Freelance: { icon: "FR", color: "rgba(244,114,182,0.15)" },
+    Utilities: { icon: "UT", color: "rgba(132,204,22,0.15)" },
   };
 
   categories = computed(() =>
@@ -706,7 +706,7 @@ export class TransactionsListComponent implements OnInit {
   }
 
   categoryIcon(cat: string) {
-    return this.CATEGORY_META[cat]?.icon ?? "💰";
+    return this.CATEGORY_META[cat]?.icon ?? "OT";
   }
   categoryColor(cat: string) {
     return this.CATEGORY_META[cat]?.color ?? "rgba(0,0,0,0.07)";

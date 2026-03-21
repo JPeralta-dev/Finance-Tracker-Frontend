@@ -25,7 +25,18 @@ import { RouterLink } from '@angular/router';
       gap: 10px;
     }
     .empty-icon {
-      font-size: 48px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 56px;
+      height: 56px;
+      padding: 0 14px;
+      border-radius: 18px;
+      background: rgba(0, 0, 0, 0.05);
+      color: #555;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
       margin-bottom: 8px;
       animation: float 3s ease-in-out infinite;
     }
@@ -61,7 +72,7 @@ import { RouterLink } from '@angular/router';
   `]
 })
 export class EmptyStateComponent {
-  @Input() icon = '🔍';
+  @Input() icon = 'NA';
   @Input() title = 'Nothing here yet';
   @Input() message = 'No items to display.';
   @Input() actionLink: string | null = null;
