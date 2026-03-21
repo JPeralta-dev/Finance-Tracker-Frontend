@@ -108,6 +108,16 @@ Chart.register(...registerables);
               <app-skeleton height="220px" radius="8px" />
             </div>
           } @else {
+            <div class="chart-legend" aria-hidden="true">
+              <span class="legend-item">
+                <span class="legend-dot legend-dot--income"></span>
+                Income
+              </span>
+              <span class="legend-item">
+                <span class="legend-dot legend-dot--expense"></span>
+                Expenses
+              </span>
+            </div>
             <canvas #chartCanvas></canvas>
           }
         </div>
@@ -360,8 +370,38 @@ Chart.register(...registerables);
         border-radius: 14px;
         padding: 24px;
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.07);
+        min-height: 320px;
+      }
+      .chart-legend {
+        display: flex;
+        justify-content: flex-end;
+        gap: 16px;
+        margin-bottom: 12px;
+        flex-wrap: wrap;
+      }
+      .legend-item {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: #666;
+        font-size: 12px;
+        font-weight: 500;
+      }
+      .legend-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 999px;
+        display: inline-block;
+      }
+      .legend-dot--income {
+        background: #10b981;
+      }
+      .legend-dot--expense {
+        background: #ff5c4d;
       }
       .chart-card canvas {
+        width: 100%;
+        height: 260px;
         max-height: 260px;
       }
       .chart-skeleton {
@@ -570,16 +610,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         interaction: { mode: "index", intersect: false },
         plugins: {
           legend: {
-            position: "top",
-            align: "end",
-            labels: {
-              boxWidth: 10,
-              boxHeight: 10,
-              borderRadius: 99,
-              useBorderRadius: true,
-              font: { family: "DM Sans", size: 12 },
-              color: "#666",
-            },
+            display: false,
           },
           tooltip: {
             backgroundColor: "white",

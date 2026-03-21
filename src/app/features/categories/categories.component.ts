@@ -42,7 +42,7 @@ import {
           <div class="stat-divider"></div>
           <div class="stat-item">
             <span class="stat-label">Highest spend</span>
-            <span class="stat-value">{{ topCategory()?.name ?? "" }}</span>
+            <span class="stat-value">{{ topCategory().name }}</span>
           </div>
           <div class="stat-divider"></div>
           <div class="stat-item">
@@ -312,9 +312,9 @@ export class CategoriesComponent implements OnInit {
   categories = signal<Category[]>([]);
   loading = signal(true);
 
-  topCategory = () => {
+  topCategory = (): Category => {
     const sorted = [...this.categories()].sort((a, b) => b.total - a.total);
-    return sorted[0] ?? null;
+    return sorted[0] ?? { id: "", name: "", icon: "", color: "", total: 0 };
   };
 
   totalExpenses = () => this.categories().reduce((sum, c) => sum + c.total, 0);
