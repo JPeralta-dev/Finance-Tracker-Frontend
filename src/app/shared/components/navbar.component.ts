@@ -1,7 +1,9 @@
-import { Component, signal, HostListener } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Component, signal, HostListener, OnInit, inject } from '@angular/core';
+import { RouterLink, RouterLinkActive, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { finalize } from 'rxjs';
 import { drawerSlide } from '../animations';
+import { AuthService } from '../../core/services/auth.service';
 
 interface NavItem {
   path: string;
@@ -22,24 +24,41 @@ interface NavItem {
           <span class="brand-name">Flowr</span>
         </a>
 
-        <!-- Desktop links -->
-        <ul class="nav-links desktop-only">
-          @for (item of navItems; track item.path) {
-            <li>
-              <a [routerLink]="item.path"
-                 routerLinkActive="active"
-                 [routerLinkActiveOptions]="{ exact: item.path === '/' }"
-                 class="nav-link">
-                <span class="nav-icon">{{ item.icon }}</span>
-                {{ item.label }}
-              </a>
-            </li>
-          }
-        </ul>
+        <!-- Desktop links (only when authenticated) -->
+        @if (isAuthenticated()) {
+          <ul class="nav-links desktop-only">
+            @for (item of navItems; track item.path) {
+              <li>
+                <a [routerLink]="item.path"
+                   routerLinkActive="active"
+                   [routerLinkActiveOptions]="{ exact: item.path === '/dashboard' }"
+                   class="nav-link">
+                  <span class="nav-icon">{{ item.icon }}</span>
+                  {{ item.label }}
+                </a>
+              </li>
+            }
+          </ul>
 
-        <a routerLink="/transactions/new" class="btn-new desktop-only">
-          + New
-        </a>
+          <a routerLink="/transactions/new" class="btn-new desktop-only">
+            + New
+          </a>
+        }
+
+        <!-- Auth section -->
+        <div class="auth-section desktop-only">
+          @if (isAuthenticated()) {
+            <span class="user-email">{{ userEmail() }}</span>
+            <button class="btn-logout" (click)="onLogout()" [disabled]="logoutLoading()">
+              @if (logoutLoading()) {
+                <span class="spinner-sm"></span>
+              }
+              Logout
+            </button>
+          } @else {
+            <a routerLink="/login" class="btn-login">Sign In</a>
+          }
+        </div>
 
         <!-- Mobile hamburger -->
         <button class="hamburger mobile-only" (click)="toggleDrawer()" [attr.aria-label]="'Toggle menu'">
@@ -60,25 +79,49 @@ interface NavItem {
         <span class="brand-name">Flowr</span>
         <button class="close-btn" (click)="closeDrawer()">Close</button>
       </div>
-      <ul class="drawer-links">
-        @for (item of navItems; track item.path) {
+
+      @if (isAuthenticated()) {
+        <div class="drawer-user">
+          <span class="drawer-user-email">{{ userEmail() }}</span>
+        </div>
+        <ul class="drawer-links">
+          @for (item of navItems; track item.path) {
+            <li>
+              <a [routerLink]="item.path"
+                 routerLinkActive="active"
+                 [routerLinkActiveOptions]="{ exact: item.path === '/dashboard' }"
+                 class="drawer-link"
+                 (click)="closeDrawer()">
+                <span class="nav-icon">{{ item.icon }}</span>
+                {{ item.label }}
+              </a>
+            </li>
+          }
           <li>
-            <a [routerLink]="item.path"
-               routerLinkActive="active"
-               [routerLinkActiveOptions]="{ exact: item.path === '/' }"
-               class="drawer-link"
-               (click)="closeDrawer()">
-              <span class="nav-icon">{{ item.icon }}</span>
-              {{ item.label }}
+            <a routerLink="/transactions/new" class="drawer-new" (click)="closeDrawer()">
+              + New Transaction
             </a>
           </li>
-        }
-        <li>
-          <a routerLink="/transactions/new" class="drawer-new" (click)="closeDrawer()">
-            + New Transaction
-          </a>
-        </li>
-      </ul>
+          <li>
+            <button class="drawer-logout" (click)="onLogout()" [disabled]="logoutLoading()">
+              Logout
+            </button>
+          </li>
+        </ul>
+      } @else {
+        <ul class="drawer-links">
+          <li>
+            <a routerLink="/login" class="drawer-link" (click)="closeDrawer()">
+              Sign In
+            </a>
+          </li>
+          <li>
+            <a routerLink="/register" class="drawer-new" (click)="closeDrawer()">
+              Create Account
+            </a>
+          </li>
+        </ul>
+      }
     </aside>
   `,
   styles: [`
@@ -170,6 +213,45 @@ interface NavItem {
     .btn-new:hover { background: #e54535; transform: translateY(-1px); }
     .btn-new:active { transform: scale(0.97); }
 
+    /* Auth section */
+    .auth-section {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .user-email {
+      font-size: 13px;
+      color: #666;
+      max-width: 160px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .btn-logout {
+      padding: 8px 14px;
+      background: transparent;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #555;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-logout:hover { border-color: #999; color: #111; }
+    .btn-logout:disabled { opacity: 0.5; cursor: not-allowed; }
+    .btn-login {
+      padding: 8px 18px;
+      background: #FF5C4D;
+      color: white;
+      border-radius: 9px;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      transition: all 0.15s;
+    }
+    .btn-login:hover { background: #e54535; }
+
     /* Hamburger */
     .hamburger {
       display: flex;
@@ -231,6 +313,14 @@ interface NavItem {
       border-radius: 6px;
     }
     .drawer-header .close-btn:hover { background: rgba(0,0,0,0.05); }
+    .drawer-user {
+      padding: 12px 20px;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+    .drawer-user-email {
+      font-size: 13px;
+      color: #666;
+    }
     .drawer-links {
       list-style: none;
       padding: 12px;
@@ -239,8 +329,7 @@ interface NavItem {
       flex-direction: column;
       gap: 2px;
     }
-    .drawer-link,
-    .drawer-new {
+    .drawer-link {
       display: flex;
       align-items: center;
       gap: 8px;
@@ -254,18 +343,36 @@ interface NavItem {
       background: rgba(255, 92, 77, 0.1);
       color: #ff5c4d;
     }
-    .drawer-link:hover,
-    .drawer-new:hover {
+    .drawer-link:hover {
       background: rgba(0,0,0,0.04);
     }
     .drawer-new {
-      margin-top: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 14px;
+      border-radius: 10px;
+      text-decoration: none;
       background: #FF5C4D;
       color: white;
-      justify-content: center;
       font-weight: 600;
       text-align: center;
     }
+    .drawer-new:hover { background: #e54535; }
+    .drawer-logout {
+      display: block;
+      width: 100%;
+      padding: 12px 14px;
+      border: none;
+      background: transparent;
+      color: #666;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      text-align: left;
+      border-radius: 10px;
+    }
+    .drawer-logout:hover { background: rgba(0,0,0,0.04); }
 
     .desktop-only { display: flex; }
     .mobile-only { display: none; }
@@ -276,16 +383,56 @@ interface NavItem {
       .drawer.mobile-only { display: block !important; }
       .brand { margin-right: 0; }
     }
+
+    .spinner-sm {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border: 2px solid rgba(0,0,0,0.15);
+      border-top-color: #555;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+      margin-right: 6px;
+      vertical-align: middle;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
   `]
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit {
+  private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
+
   drawerOpen = signal(false);
+  isAuthenticated = signal(false);
+  userEmail = signal('');
+  logoutLoading = signal(false);
 
   navItems: NavItem[] = [
-    { path: '/', label: 'Dashboard', icon: 'DB' },
+    { path: '/dashboard', label: 'Dashboard', icon: 'DB' },
     { path: '/transactions', label: 'Transactions', icon: 'TX' },
     { path: '/categories', label: 'Categories', icon: 'CT' },
   ];
+
+  ngOnInit(): void {
+    this.checkAuth();
+  }
+
+  checkAuth(): void {
+    const authenticated = this.authService.isAuthenticated();
+    this.isAuthenticated.set(authenticated);
+
+    if (authenticated) {
+      this.authService.getProfile().subscribe({
+        next: (user) => {
+          this.userEmail.set(user.displayName ?? user.email);
+        },
+        error: () => {
+          // Token might be expired, clear and redirect
+          this.authService.clearTokens();
+        },
+      });
+    }
+  }
 
   toggleDrawer() {
     this.drawerOpen.update(v => !v);
@@ -293,6 +440,26 @@ export class NavbarComponent {
 
   closeDrawer() {
     this.drawerOpen.set(false);
+  }
+
+  onLogout(): void {
+    this.logoutLoading.set(true);
+    this.authService.logout().pipe(
+      finalize(() => {
+        this.logoutLoading.set(false);
+      }),
+    ).subscribe({
+      next: () => {
+        this.isAuthenticated.set(false);
+        this.userEmail.set('');
+        this.router.navigate(['/login']);
+      },
+      error: () => {
+        this.isAuthenticated.set(false);
+        this.userEmail.set('');
+        this.router.navigate(['/login']);
+      },
+    });
   }
 
   @HostListener('document:keydown.escape')
