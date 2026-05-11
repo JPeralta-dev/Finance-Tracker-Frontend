@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://your-api.example.com'
+  apiUrl: 'https://finance-tracker-yx80.onrender.com'
 };
