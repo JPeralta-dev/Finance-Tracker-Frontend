@@ -3,7 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
 import { Observable, tap } from "rxjs";
 
-import { environment } from "../../../enviroments/environment";
+import { environment } from "../../../environments/environment";
 import { AuthResponse, RefreshResponse, User } from "../models/user.model";
 
 const ACCESS_TOKEN_KEY = "accessToken";

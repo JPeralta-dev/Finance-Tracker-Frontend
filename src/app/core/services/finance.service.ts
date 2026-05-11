@@ -2,7 +2,7 @@ import { Injectable, inject } from "@angular/core";
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Observable } from "rxjs";
 
-import { environment } from "../../../enviroments/environment";
+import { environment } from "../../../environments/environment";
 import { Summary } from "../models/summary.model";
 import { Transaction, TransactionFilters } from "../models/transaction.model";
 import { Category } from "../models/category.model";

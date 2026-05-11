@@ -21,8 +21,8 @@ import { AuthService } from "../../core/services/auth.service";
         <p class="auth-subtitle">Start tracking your finances today</p>
 
         <form [formGroup]="form" (ngSubmit)="onSubmit()" class="auth-form">
-          @if (error()) {
-            <div class="error-banner">{{ error() }}</div>
+          @if (error) {
+            <div class="error-banner">{{ error }}</div>
           }
 
           <div class="field">
@@ -67,9 +67,9 @@ import { AuthService } from "../../core/services/auth.service";
           <button
             type="submit"
             class="btn-primary"
-            [disabled]="form.invalid || loading()"
+            [disabled]="form.invalid || loading"
           >
-            @if (loading()) {
+            @if (loading) {
               <span class="spinner"></span> Creating account...
             } @else {
               Create account
