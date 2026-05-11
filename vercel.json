@@ -1,5 +1,4 @@
 {
-  "version": 2,
   "builds": [
     {
       "src": "package.json",
@@ -9,10 +8,10 @@
       }
     }
   ],
-  "routes": [
+  "rewrites": [
     {
-      "src": "/(.*)",
-      "dest": "/index.html"
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
