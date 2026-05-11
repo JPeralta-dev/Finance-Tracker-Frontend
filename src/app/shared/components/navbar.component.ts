@@ -1,7 +1,7 @@
-import { Component, signal, HostListener, OnInit, inject } from '@angular/core';
-import { RouterLink, RouterLinkActive, Router } from '@angular/router';
+import { Component, signal, HostListener, OnInit, inject, OnDestroy } from '@angular/core';
+import { RouterLink, RouterLinkActive, Router, NavigationEnd } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { finalize } from 'rxjs';
+import { finalize, Subscription } from 'rxjs';
 import { drawerSlide } from '../animations';
 import { AuthService } from '../../core/services/auth.service';
 
@@ -398,9 +398,10 @@ interface NavItem {
     @keyframes spin { to { transform: rotate(360deg); } }
   `]
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, OnDestroy {
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
+  private routerSub?: Subscription;
 
   drawerOpen = signal(false);
   isAuthenticated = signal(false);
@@ -415,6 +416,15 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.checkAuth();
+    this.routerSub = this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.checkAuth();
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.routerSub?.unsubscribe();
   }
 
   checkAuth(): void {
