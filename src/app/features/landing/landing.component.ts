@@ -57,7 +57,7 @@ import { RouterLink } from "@angular/router";
             and it's tracked automatically.
           </p>
           <a
-            href="https://t.me/your_finance_bot"
+            href="https://t.me/hormigaTrackerBot"
             target="_blank"
             rel="noopener noreferrer"
             class="btn-telegram"
