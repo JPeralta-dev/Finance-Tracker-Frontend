@@ -1,0 +1,71 @@
+<div class="tx-table">
+  <!-- Filters -->
+  <div class="tx-table__filters">
+    <ft-transaction-filters
+      [activeFilter]="filter()"
+      [activeSort]="sort().field"
+      [activeDirection]="sort().direction"
+      (filterChange)="onFilterChange($event)"
+      (sortChange)="onSortChange($event)"
+      (searchChange)="onSearchChange($event)"
+    />
+  </div>
+
+  <!-- Results count -->
+  @if (!loading() && totalFiltered() > 0) {
+    <div class="tx-table__count">
+      {{ totalFiltered() }} transaction{{ totalFiltered() === 1 ? '' : 's' }}
+    </div>
+  }
+
+  <!-- Loading skeleton -->
+  @if (loading()) {
+    <div class="tx-table__list">
+      @for (i of [1, 2, 3, 4, 5, 6]; track i) {
+        <div class="tx-row tx-row--skeleton">
+          <div class="tx-row__icon tx-row__icon--skeleton"></div>
+          <div class="tx-row__info">
+            <div class="tx-row__desc tx-row__desc--skeleton"></div>
+            <div class="tx-row__meta tx-row__meta--skeleton"></div>
+          </div>
+          <div class="tx-row__amount tx-row__amount--skeleton"></div>
+        </div>
+      }
+    </div>
+  }
+
+  <!-- Empty state -->
+  @if (isEmpty()) {
+    <div class="tx-table__empty">
+      <div class="tx-table__empty-icon">📭</div>
+      <p class="tx-table__empty-title">{{ emptyMessage() }}</p>
+      <p class="tx-table__empty-desc">
+        Start tracking your finances by adding your first transaction.
+      </p>
+      <a href="/transactions/new" class="tx-table__empty-cta">Add transaction</a>
+    </div>
+  }
+
+  <!-- Transaction list -->
+  @if (!loading() && !isEmpty()) {
+    <div class="tx-table__list">
+      @for (item of pagedItems(); track item.id) {
+        <ft-transaction-row
+          [data]="item"
+          [compact]="compact()"
+          (ftClick)="onSelect($event)"
+        />
+      }
+    </div>
+  }
+
+  <!-- Pagination -->
+  @if (!loading() && !isEmpty() && totalFiltered() > pageSize()) {
+    <ft-pagination
+      [total]="totalFiltered()"
+      [pageSize]="pageSize()"
+      [page]="page()"
+      (pageChange)="onPageChange($event)"
+    />
+  }
+</div>

@@ -41,6 +41,12 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   {
+    path: 'transactions-new',
+    loadComponent: () =>
+      import('./features/transactions/pages/transactions.page').then(m => m.TransactionsPage),
+    canActivate: [authGuard],
+  },
+  {
     path: 'transactions/new',
     loadComponent: () =>
       import('./features/transactions/transaction-form.component').then(m => m.TransactionFormComponent),

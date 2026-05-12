@@ -1,0 +1,114 @@
+/* ─── Transaction Table ────────────────────────────────────────────
+   Composed component: filters + list + pagination.
+   Glass container with skeleton and empty states.
+   ─────────────────────────────────────────────────────────────────── */
+
+.tx-table {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  padding: 20px;
+
+  &__filters {
+    margin-bottom: 16px;
+  }
+
+  &__count {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    margin-bottom: 12px;
+    padding: 0 4px;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  &__empty {
+    text-align: center;
+    padding: 40px 16px;
+  }
+
+  &__empty-icon {
+    font-size: 36px;
+    margin-bottom: 12px;
+    opacity: 0.5;
+  }
+
+  &__empty-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin: 0 0 4px;
+  }
+
+  &__empty-desc {
+    font-size: 13px;
+    color: var(--text-tertiary);
+    margin: 0 0 16px;
+  }
+
+  &__empty-cta {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--accent-start);
+    background: rgba(6, 214, 160, 0.1);
+    border: 1px solid rgba(6, 214, 160, 0.2);
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    transition:
+      background var(--duration-fast) var(--ease-out),
+      border-color var(--duration-fast) var(--ease-out);
+
+    &:hover {
+      background: rgba(6, 214, 160, 0.15);
+      border-color: rgba(6, 214, 160, 0.3);
+    }
+  }
+}
+
+/* Skeleton rows */
+.tx-row--skeleton {
+  pointer-events: none;
+
+  .tx-row__icon--skeleton {
+    background: var(--bg-elevated) !important;
+    animation: shimmer 1.5s ease-in-out infinite alternate;
+  }
+
+  .tx-row__desc--skeleton {
+    height: 14px;
+    width: 60%;
+    background: var(--bg-elevated);
+    border-radius: 4px;
+    animation: shimmer 1.5s ease-in-out infinite alternate;
+  }
+
+  .tx-row__meta--skeleton {
+    height: 12px;
+    width: 30%;
+    background: var(--bg-elevated);
+    border-radius: 4px;
+    animation: shimmer 1.5s ease-in-out infinite alternate;
+  }
+
+  .tx-row__amount--skeleton {
+    height: 16px;
+    width: 70px;
+    background: var(--bg-elevated);
+    border-radius: 4px;
+    animation: shimmer 1.5s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes shimmer {
+  from { opacity: 0.3; }
+  to { opacity: 0.6; }
+}

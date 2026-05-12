@@ -1,0 +1,37 @@
+@if (totalPages() > 1) {
+  <nav class="pagination" aria-label="Pagination">
+    <button
+      class="pagination__btn"
+      [class.pagination__btn--disabled]="!hasPrev()"
+      [disabled]="!hasPrev()"
+      (click)="onPrev()"
+      aria-label="Previous page"
+    >
+      ←
+    </button>
+
+    @for (p of visiblePages(); track p) {
+      @if (p === -1) {
+        <span class="pagination__ellipsis">…</span>
+      } @else {
+        <button
+          class="pagination__btn"
+          [class.pagination__btn--active]="p === page()"
+          (click)="onPageChange(p)"
+        >
+          {{ p }}
+        </button>
+      }
+    }
+
+    <button
+      class="pagination__btn"
+      [class.pagination__btn--disabled]="!hasNext()"
+      [disabled]="!hasNext()"
+      (click)="onNext()"
+      aria-label="Next page"
+    >
+      →
+    </button>
+  </nav>
+}

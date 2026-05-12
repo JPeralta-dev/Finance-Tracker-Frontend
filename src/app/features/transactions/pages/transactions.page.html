@@ -1,0 +1,22 @@
+<div class="transactions-page">
+  <!-- Header -->
+  <div class="transactions-page__header">
+    <div>
+      <h1 class="transactions-page__title">Transactions</h1>
+      <p class="transactions-page__subtitle">
+        Manage and track all your financial activity.
+      </p>
+    </div>
+    <a routerLink="/transactions/new" class="transactions-page__cta">
+      + New Transaction
+    </a>
+  </div>
+
+  <!-- Transaction table -->
+  <ft-transaction-table
+    [items]="transactions()"
+    [loading]="loading()"
+    [pageSize]="10"
+    (ftSelect)="onSelect($event)"
+  />
+</div>

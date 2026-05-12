@@ -1,0 +1,38 @@
+<div
+  class="tx-row"
+  [class.tx-row--compact]="compact()"
+  (click)="onClick()"
+  role="button"
+  tabindex="0"
+>
+  <!-- Category icon -->
+  <div
+    class="tx-row__icon"
+    [style.background]="categoryMeta().bg"
+  >
+    {{ categoryMeta().icon }}
+  </div>
+
+  <!-- Info -->
+  <div class="tx-row__info">
+    <span class="tx-row__desc">{{ data().description }}</span>
+    <span class="tx-row__meta">
+      {{ data().category }} · {{ formatDate(data().date) }}
+    </span>
+  </div>
+
+  <!-- Status badge (optional) -->
+  @if (data().status && data().status !== 'completed') {
+    <ft-badge
+      [variant]="data().status === 'pending' ? 'warning' : 'danger'"
+      size="sm"
+    >
+      {{ data().status }}
+    </ft-badge>
+  }
+
+  <!-- Amount -->
+  <span class="tx-row__amount" [class]="amountClass()">
+    {{ amountSign() }}${{ formatAmount(data().amount) }}
+  </span>
+</div>

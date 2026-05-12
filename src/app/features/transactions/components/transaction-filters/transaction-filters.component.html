@@ -1,0 +1,65 @@
+<div class="tx-filters">
+  <!-- Search -->
+  <div class="tx-filters__search">
+    <span class="tx-filters__search-icon">🔍</span>
+    <input
+      type="text"
+      placeholder="Search transactions..."
+      class="tx-filters__input"
+      (input)="onSearch($event)"
+    />
+  </div>
+
+  <!-- Type filter pills -->
+  <div class="tx-filters__pills">
+    <button
+      class="tx-filters__pill"
+      [class.tx-filters__pill--active]="activeFilter() === 'all'"
+      (click)="onFilterChange('all')"
+    >
+      All
+    </button>
+    <button
+      class="tx-filters__pill"
+      [class.tx-filters__pill--active]="activeFilter() === 'income'"
+      (click)="onFilterChange('income')"
+    >
+      Income
+    </button>
+    <button
+      class="tx-filters__pill"
+      [class.tx-filters__pill--active]="activeFilter() === 'expense'"
+      (click)="onFilterChange('expense')"
+    >
+      Expenses
+    </button>
+  </div>
+
+  <!-- Sort buttons -->
+  <div class="tx-filters__sort">
+    <button
+      class="tx-filters__sort-btn"
+      [class.tx-filters__sort-btn--active]="activeSort() === 'date'"
+      (click)="onSortChange('date')"
+    >
+      Date
+      <span class="tx-filters__sort-icon">{{ getSortIcon('date') }}</span>
+    </button>
+    <button
+      class="tx-filters__sort-btn"
+      [class.tx-filters__sort-btn--active]="activeSort() === 'amount'"
+      (click)="onSortChange('amount')"
+    >
+      Amount
+      <span class="tx-filters__sort-icon">{{ getSortIcon('amount') }}</span>
+    </button>
+    <button
+      class="tx-filters__sort-btn"
+      [class.tx-filters__sort-btn--active]="activeSort() === 'category'"
+      (click)="onSortChange('category')"
+    >
+      Category
+      <span class="tx-filters__sort-icon">{{ getSortIcon('category') }}</span>
+    </button>
+  </div>
+</div>
