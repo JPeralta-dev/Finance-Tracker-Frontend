@@ -2,9 +2,9 @@ import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { StatsGridComponent } from '../components/stats-grid/stats-grid.component';
-import { ChartPlaceholderComponent } from '../components/chart-placeholder/chart-placeholder.component';
 import { RecentActivityComponent, ActivityItem } from '../components/recent-activity/recent-activity.component';
 import { StatCardData } from '../components/stat-card/stat-card.types';
+import { AreaChartComponent, AreaDataset } from '../../../shared/charts';
 
 // Demo data — will be replaced by service calls
 const DEMO_STATS: StatCardData[] = [
@@ -22,10 +22,17 @@ const DEMO_ACTIVITY: ActivityItem[] = [
   { id: '5', description: 'Gas station', category: 'Transport', amount: 45.00, type: 'expense', date: '2026-05-06', icon: '⛽' },
 ];
 
+const CHART_LABELS = ['Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr'];
+
+const CHART_DATASETS: AreaDataset[] = [
+  { label: 'Income', data: [3800, 4100, 3900, 4200, 4000, 4200], color: '#06D6A0' },
+  { label: 'Expenses', data: [2600, 2900, 3100, 2800, 3000, 2840], color: '#FF6B6B' },
+];
+
 @Component({
   selector: 'ft-dashboard-page',
   standalone: true,
-  imports: [CommonModule, RouterLink, StatsGridComponent, ChartPlaceholderComponent, RecentActivityComponent],
+  imports: [CommonModule, RouterLink, StatsGridComponent, AreaChartComponent, RecentActivityComponent],
   templateUrl: './dashboard.page.html',
   styleUrl: './dashboard.page.scss',
 })
@@ -33,4 +40,8 @@ export class DashboardPage {
   readonly stats = signal<StatCardData[]>(DEMO_STATS);
   readonly activity = signal<ActivityItem[]>(DEMO_ACTIVITY);
   readonly loading = signal(false);
+
+  // Chart data
+  readonly chartLabels = CHART_LABELS;
+  readonly chartDatasets = CHART_DATASETS;
 }

@@ -1,0 +1,66 @@
+/* ─── Area Chart ───────────────────────────────────────────────────
+   Wrapper for Chart.js area/line chart with glass surface.
+   ─────────────────────────────────────────────────────────────────── */
+
+.chart-container {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  padding: 24px;
+}
+
+.chart-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.chart-title {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.chart-subtitle {
+  font-size: 13px;
+  color: var(--text-tertiary);
+  margin: 4px 0 0;
+}
+
+.chart-area {
+  position: relative;
+  width: 100%;
+
+  canvas {
+    width: 100% !important;
+    height: 100% !important;
+  }
+}
+
+/* Skeleton */
+.chart-skeleton {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  height: 100%;
+  padding: 0 4px;
+
+  &__bar {
+    flex: 1;
+    background: var(--bg-elevated);
+    border-radius: 4px 4px 0 0;
+    animation: shimmer 1.5s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes shimmer {
+  from { opacity: 0.3; }
+  to { opacity: 0.6; }
+}

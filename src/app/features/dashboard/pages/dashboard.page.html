@@ -18,7 +18,13 @@
   <!-- Main content: Chart + Activity -->
   <div class="dashboard-content">
     <div class="dashboard-content__chart">
-      <ft-chart-placeholder [loading]="loading()" />
+      <ft-area-chart
+        [labels]="chartLabels"
+        [datasets]="chartDatasets"
+        title="Monthly Overview"
+        subtitle="Last 6 months"
+        [loading]="loading()"
+      />
     </div>
     <div class="dashboard-content__activity">
       <ft-recent-activity
