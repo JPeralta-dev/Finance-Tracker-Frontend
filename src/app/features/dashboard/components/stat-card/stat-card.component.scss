@@ -1,0 +1,169 @@
+/* ─── Stat Card ────────────────────────────────────────────────────
+   KPI card with glass surface, trend indicator, optional insight.
+   ─────────────────────────────────────────────────────────────────── */
+
+.stat-card {
+  position: relative;
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  overflow: hidden;
+  transition:
+    border-color var(--duration-normal) var(--ease-smooth),
+    box-shadow var(--duration-normal) var(--ease-smooth),
+    transform var(--duration-normal) var(--ease-out);
+
+  /* Top highlight gradient */
+  &__glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(6, 214, 160, 0.3),
+      transparent
+    );
+    opacity: 0.6;
+  }
+
+  &:hover {
+    border-color: var(--glass-border-hover);
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+  }
+
+  &--compact {
+    padding: 16px;
+
+    .stat-card__value {
+      font-size: 22px;
+    }
+  }
+
+  /* ── Header ── */
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: var(--radius-sm);
+    background: rgba(6, 214, 160, 0.1);
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  &__label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    letter-spacing: 0.01em;
+  }
+
+  /* ── Value ── */
+  &__value {
+    font-family: var(--font-body);
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.2;
+  }
+
+  /* ── Footer ── */
+  &__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  &__trend {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: var(--radius-xs);
+
+    &.trend--up {
+      color: var(--success);
+      background: var(--success-bg);
+    }
+
+    &.trend--down {
+      color: var(--danger);
+      background: var(--danger-bg);
+    }
+
+    &.trend--neutral {
+      color: var(--text-tertiary);
+      background: var(--bg-elevated);
+    }
+  }
+
+  &__insight {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: var(--text-tertiary);
+  }
+}
+
+.insight-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent-end);
+  animation: pulse-slow 3s ease-in-out infinite;
+}
+
+/* Skeleton states */
+.stat-card--skeleton {
+  pointer-events: none;
+
+  .stat-card__icon--skeleton {
+    background: var(--bg-elevated);
+    animation: shimmer 1.5s ease-in-out infinite alternate;
+  }
+
+  .stat-card__label--skeleton {
+    height: 13px;
+    width: 80px;
+    background: var(--bg-elevated);
+    border-radius: 4px;
+    animation: shimmer 1.5s ease-in-out infinite alternate;
+  }
+
+  .stat-card__value--skeleton {
+    height: 28px;
+    width: 140px;
+    background: var(--bg-elevated);
+    border-radius: 6px;
+    animation: shimmer 1.5s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes shimmer {
+  from { opacity: 0.3; }
+  to { opacity: 0.6; }
+}

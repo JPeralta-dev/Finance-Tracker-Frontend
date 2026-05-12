@@ -1,0 +1,38 @@
+<div class="stat-card" [class.stat-card--compact]="compact()">
+  <!-- Top highlight -->
+  <div class="stat-card__glow"></div>
+
+  <!-- Header: icon + label -->
+  <div class="stat-card__header">
+    @if (data().icon) {
+      <span class="stat-card__icon">{{ data().icon }}</span>
+    }
+    <span class="stat-card__label">{{ data().label }}</span>
+  </div>
+
+  <!-- Value -->
+  <div class="stat-card__value">
+    {{ formatValue(data().value) }}
+  </div>
+
+  <!-- Footer: trend + optional insight -->
+  @if (data().trend !== undefined || data().insight) {
+    <div class="stat-card__footer">
+      @if (data().trend !== undefined) {
+        <span
+          class="stat-card__trend"
+          [class]="trendDirection() === 'up' ? 'trend--up' : trendDirection() === 'down' ? 'trend--down' : 'trend--neutral'"
+        >
+          @if (trendDirection() === 'up') { ↑ } @else if (trendDirection() === 'down') { ↓ }
+          {{ trendLabel() }}
+        </span>
+      }
+      @if (data().insight) {
+        <span class="stat-card__insight">
+          <span class="insight-dot"></span>
+          {{ data().insight }}
+        </span>
+      }
+    </div>
+  }
+</div>

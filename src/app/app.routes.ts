@@ -29,6 +29,12 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   {
+    path: 'dashboard-new',
+    loadComponent: () =>
+      import('./features/dashboard/pages/dashboard.page').then(m => m.DashboardPage),
+    canActivate: [authGuard],
+  },
+  {
     path: 'transactions',
     loadComponent: () =>
       import('./features/transactions/transactions-list.component').then(m => m.TransactionsListComponent),

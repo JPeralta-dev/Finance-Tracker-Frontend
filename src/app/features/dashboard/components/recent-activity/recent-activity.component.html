@@ -1,0 +1,65 @@
+<div class="recent-activity">
+  <!-- Header -->
+  <div class="recent-activity__header">
+    <div>
+      <h3 class="recent-activity__title">Recent Activity</h3>
+      <p class="recent-activity__subtitle">Your latest transactions</p>
+    </div>
+    <a href="/transactions" class="recent-activity__link">
+      View all →
+    </a>
+  </div>
+
+  <!-- Loading skeleton -->
+  @if (loading()) {
+    <div class="recent-activity__list">
+      @for (i of [1, 2, 3, 4]; track i) {
+        <div class="activity-row activity-row--skeleton">
+          <div class="activity-row__icon activity-row__icon--skeleton"></div>
+          <div class="activity-row__info">
+            <div class="activity-row__desc activity-row__desc--skeleton"></div>
+            <div class="activity-row__meta activity-row__meta--skeleton"></div>
+          </div>
+          <div class="activity-row__amount activity-row__amount--skeleton"></div>
+        </div>
+      }
+    </div>
+  }
+
+  <!-- Empty state -->
+  @if (isEmpty()) {
+    <div class="recent-activity__empty">
+      <div class="empty-icon">📭</div>
+      <p class="empty-title">No transactions yet</p>
+      <p class="empty-desc">
+        Start tracking your finances by adding your first transaction.
+      </p>
+      <a href="/transactions/new" class="empty-cta">Add transaction</a>
+    </div>
+  }
+
+  <!-- Activity list -->
+  @if (!loading() && !isEmpty()) {
+    <div class="recent-activity__list">
+      @for (item of visibleItems(); track item.id) {
+        <div class="activity-row">
+          <div class="activity-row__icon">
+            {{ item.icon ?? '💳' }}
+          </div>
+          <div class="activity-row__info">
+            <span class="activity-row__desc">{{ item.description }}</span>
+            <span class="activity-row__meta">
+              {{ item.category }}
+              @if (item.date) {
+                · {{ item.date | date: 'MMM d' }}
+              }
+            </span>
+          </div>
+          <span class="activity-row__amount" [class]="amountClass(item)">
+            {{ formatAmount(item) }}
+          </span>
+        </div>
+      }
+    </div>
+  }
+</div>

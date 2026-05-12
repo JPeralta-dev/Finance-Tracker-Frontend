@@ -1,0 +1,84 @@
+<div class="chart-placeholder">
+  <!-- Header -->
+  <div class="chart-placeholder__header">
+    <div>
+      <h3 class="chart-placeholder__title">{{ title() }}</h3>
+      @if (subtitle()) {
+        <p class="chart-placeholder__subtitle">{{ subtitle() }}</p>
+      }
+    </div>
+    <div class="chart-placeholder__legend">
+      <span class="legend-item">
+        <span class="legend-dot legend-dot--income"></span>
+        Income
+      </span>
+      <span class="legend-item">
+        <span class="legend-dot legend-dot--expense"></span>
+        Expenses
+      </span>
+    </div>
+  </div>
+
+  <!-- Chart area -->
+  <div class="chart-placeholder__area">
+    @if (loading()) {
+      <!-- Skeleton bars -->
+      <div class="chart-skeleton">
+        @for (i of [1,2,3,4,5,6]; track i) {
+          <div
+            class="chart-skeleton__bar"
+            [style.height.%]="20 + (i * 12)"
+          ></div>
+        }
+      </div>
+    } @else {
+      <!-- Decorative chart visualization (placeholder) -->
+      <svg class="chart-svg" viewBox="0 0 600 200" preserveAspectRatio="none">
+        <!-- Area fill -->
+        <defs>
+          <linearGradient id="incomeGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="rgba(6, 214, 160, 0.2)" />
+            <stop offset="100%" stop-color="rgba(6, 214, 160, 0)" />
+          </linearGradient>
+          <linearGradient id="expenseGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="rgba(255, 107, 107, 0.15)" />
+            <stop offset="100%" stop-color="rgba(255, 107, 107, 0)" />
+          </linearGradient>
+        </defs>
+        <!-- Income area -->
+        <path
+          d="M0,140 L100,100 L200,120 L300,60 L400,80 L500,40 L600,30 L600,200 L0,200 Z"
+          fill="url(#incomeGrad)"
+        />
+        <!-- Income line -->
+        <path
+          d="M0,140 L100,100 L200,120 L300,60 L400,80 L500,40 L600,30"
+          fill="none"
+          stroke="var(--success)"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <!-- Expense area -->
+        <path
+          d="M0,160 L100,130 L200,150 L300,110 L400,120 L500,100 L600,90 L600,200 L0,200 Z"
+          fill="url(#expenseGrad)"
+        />
+        <!-- Expense line -->
+        <path
+          d="M0,160 L100,130 L200,150 L300,110 L400,120 L500,100 L600,90"
+          fill="none"
+          stroke="var(--danger)"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-dasharray="4 4"
+        />
+        <!-- Data points -->
+        <circle cx="300" cy="60" r="4" fill="var(--success)" />
+        <circle cx="500" cy="40" r="4" fill="var(--success)" />
+        <circle cx="600" cy="30" r="4" fill="var(--success)" />
+      </svg>
+    }
+  </div>
+</div>

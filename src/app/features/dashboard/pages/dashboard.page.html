@@ -1,0 +1,31 @@
+<div class="dashboard-page">
+  <!-- Greeting -->
+  <div class="dashboard-greeting">
+    <div>
+      <h1 class="dashboard-greeting__title">Good afternoon, Juan</h1>
+      <p class="dashboard-greeting__subtitle">
+        Here's your financial overview for this month.
+      </p>
+    </div>
+    <a routerLink="/transactions/new" class="dashboard-greeting__cta">
+      + New Transaction
+    </a>
+  </div>
+
+  <!-- Stats Grid -->
+  <ft-stats-grid [stats]="stats()" [loading]="loading()" />
+
+  <!-- Main content: Chart + Activity -->
+  <div class="dashboard-content">
+    <div class="dashboard-content__chart">
+      <ft-chart-placeholder [loading]="loading()" />
+    </div>
+    <div class="dashboard-content__activity">
+      <ft-recent-activity
+        [items]="activity()"
+        [loading]="loading()"
+        [maxItems]="4"
+      />
+    </div>
+  </div>
+</div>

@@ -1,0 +1,98 @@
+/* ─── Chart Placeholder ───────────────────────────────────────────
+   Visual placeholder for chart area with SVG decoration.
+   Shows skeleton when loading, decorative SVG when ready.
+   ─────────────────────────────────────────────────────────────────── */
+
+.chart-placeholder {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  padding: 24px;
+
+  &__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+
+  &__title {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+  }
+
+  &__subtitle {
+    font-size: 13px;
+    color: var(--text-tertiary);
+    margin: 4px 0 0;
+  }
+
+  &__legend {
+    display: flex;
+    gap: 16px;
+  }
+
+  &__area {
+    height: 200px;
+    position: relative;
+  }
+}
+
+/* Legend dots */
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+
+  &--income {
+    background: var(--success);
+  }
+
+  &--expense {
+    background: var(--danger);
+  }
+}
+
+/* SVG chart */
+.chart-svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Skeleton bars */
+.chart-skeleton {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  height: 100%;
+  padding: 0 4px;
+
+  &__bar {
+    flex: 1;
+    background: var(--bg-elevated);
+  border-radius: 4px 4px 0 0;
+    animation: shimmer 1.5s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes shimmer {
+  from { opacity: 0.3; }
+  to { opacity: 0.6; }
+}

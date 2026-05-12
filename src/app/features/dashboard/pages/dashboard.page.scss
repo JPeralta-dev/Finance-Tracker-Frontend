@@ -1,0 +1,79 @@
+/* ─── Dashboard Page ───────────────────────────────────────────────
+   Orchestrator component: greeting + stats + chart + activity.
+   60/40 split for chart/activity on desktop.
+   ─────────────────────────────────────────────────────────────────── */
+
+.dashboard-page {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* Greeting */
+.dashboard-greeting {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+
+  &__title {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+    letter-spacing: -0.02em;
+  }
+
+  &__subtitle {
+    font-size: 14px;
+    color: var(--text-tertiary);
+    margin: 6px 0 0;
+  }
+
+  &__cta {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-inverse);
+    background: linear-gradient(135deg, var(--accent-start), var(--accent-mid));
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    box-shadow: 0 2px 8px rgba(6, 214, 160, 0.25);
+    transition:
+      box-shadow var(--duration-fast) var(--ease-out),
+      transform var(--duration-fast) var(--ease-out);
+
+    &:hover {
+      box-shadow: 0 4px 16px rgba(6, 214, 160, 0.35);
+      transform: translateY(-1px);
+    }
+
+    &:active {
+      transform: scale(0.97);
+    }
+  }
+}
+
+/* Content split: chart + activity */
+.dashboard-content {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+
+  @media (min-width: 1024px) {
+    grid-template-columns: 3fr 2fr;
+    gap: 24px;
+  }
+
+  &__chart {
+    min-width: 0;
+  }
+
+  &__activity {
+    min-width: 0;
+  }
+}
