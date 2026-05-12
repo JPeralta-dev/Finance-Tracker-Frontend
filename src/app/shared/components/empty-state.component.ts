@@ -45,7 +45,7 @@ import { RouterLink } from '@angular/router';
       50% { transform: translateY(-8px); }
     }
     h3 {
-      font-family: 'Clash Display', sans-serif;
+      font-family: 'Poppins', sans-serif;
       font-size: 20px;
       font-weight: 600;
       color: #111;
@@ -60,7 +60,7 @@ import { RouterLink } from '@angular/router';
     .action-btn {
       margin-top: 12px;
       padding: 10px 22px;
-      background: #FF5C4D;
+      background: #223843;
       color: white;
       border-radius: 9px;
       text-decoration: none;
@@ -68,7 +68,7 @@ import { RouterLink } from '@angular/router';
       font-size: 14px;
       transition: all 0.15s ease;
     }
-    .action-btn:hover { background: #e54535; transform: translateY(-1px); }
+    .action-btn:hover { background: #1A2D36; transform: translateY(-1px); }
   `]
 })
 export class EmptyStateComponent {

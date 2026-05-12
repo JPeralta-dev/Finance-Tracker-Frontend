@@ -123,7 +123,7 @@ import {
         flex-wrap: wrap;
       }
       h1 {
-        font-family: "Clash Display", sans-serif;
+        font-family: "Poppins", sans-serif;
         font-size: 32px;
         font-weight: 700;
         color: #111;
@@ -163,7 +163,7 @@ import {
         letter-spacing: 0.6px;
       }
       .stat-value {
-        font-family: "Clash Display", sans-serif;
+        font-family: "Poppins", sans-serif;
         font-size: 18px;
         font-weight: 700;
         color: #111;
@@ -222,7 +222,7 @@ import {
         color: #111;
       }
       .cat-total {
-        font-family: "Clash Display", sans-serif;
+        font-family: "Poppins", sans-serif;
         font-size: 22px;
         font-weight: 700;
         color: #111;
@@ -249,7 +249,7 @@ import {
 
       .cat-link {
         font-size: 12px;
-        color: #ff5c4d;
+        color: #223843;
         text-decoration: none;
         font-weight: 600;
         margin-top: 2px;

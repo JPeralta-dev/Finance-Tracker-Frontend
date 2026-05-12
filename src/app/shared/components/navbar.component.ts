@@ -157,14 +157,14 @@ interface NavItem {
       width: 32px;
       height: 32px;
       border-radius: 10px;
-      background: rgba(255, 92, 77, 0.12);
-      color: #ff5c4d;
+      background: rgba(34, 56, 67, 0.12);
+      color: #223843;
       font-size: 12px;
       font-weight: 700;
       letter-spacing: 0.08em;
     }
     .brand-name {
-      font-family: 'Clash Display', sans-serif;
+      font-family: 'Poppins', sans-serif;
       font-size: 20px;
       font-weight: 700;
       color: #111;
@@ -190,7 +190,7 @@ interface NavItem {
       transition: all 0.18s ease;
     }
     .nav-link:hover { background: rgba(0,0,0,0.05); color: #111; }
-    .nav-link.active { background: rgba(255, 92, 77, 0.1); color: #FF5C4D; }
+    .nav-link.active { background: rgba(34, 56, 67, 0.1); color: #223843; }
     .nav-icon {
       min-width: 22px;
       font-size: 11px;
@@ -201,7 +201,7 @@ interface NavItem {
     }
     .btn-new {
       padding: 8px 18px;
-      background: #FF5C4D;
+      background: #223843;
       color: white;
       border-radius: 9px;
       text-decoration: none;
@@ -210,7 +210,7 @@ interface NavItem {
       transition: all 0.15s ease;
       white-space: nowrap;
     }
-    .btn-new:hover { background: #e54535; transform: translateY(-1px); }
+    .btn-new:hover { background: #1A2D36; transform: translateY(-1px); }
     .btn-new:active { transform: scale(0.97); }
 
     /* Auth section */
@@ -242,7 +242,7 @@ interface NavItem {
     .btn-logout:disabled { opacity: 0.5; cursor: not-allowed; }
     .btn-login {
       padding: 8px 18px;
-      background: #FF5C4D;
+      background: #223843;
       color: white;
       border-radius: 9px;
       text-decoration: none;
@@ -250,7 +250,7 @@ interface NavItem {
       font-weight: 600;
       transition: all 0.15s;
     }
-    .btn-login:hover { background: #e54535; }
+    .btn-login:hover { background: #1A2D36; }
 
     /* Hamburger */
     .hamburger {
@@ -340,8 +340,8 @@ interface NavItem {
       font-weight: 500;
     }
     .drawer-link.active {
-      background: rgba(255, 92, 77, 0.1);
-      color: #ff5c4d;
+      background: rgba(34, 56, 67, 0.1);
+      color: #223843;
     }
     .drawer-link:hover {
       background: rgba(0,0,0,0.04);
@@ -353,12 +353,12 @@ interface NavItem {
       padding: 12px 14px;
       border-radius: 10px;
       text-decoration: none;
-      background: #FF5C4D;
+      background: #223843;
       color: white;
       font-weight: 600;
       text-align: center;
     }
-    .drawer-new:hover { background: #e54535; }
+    .drawer-new:hover { background: #1A2D36; }
     .drawer-logout {
       display: block;
       width: 100%;

@@ -227,7 +227,7 @@ type SortKey = "date" | "amount" | "category";
         flex-wrap: wrap;
       }
       h1 {
-        font-family: "Clash Display", sans-serif;
+        font-family: "Poppins", sans-serif;
         font-size: 32px;
         font-weight: 700;
         color: #111;
@@ -241,7 +241,7 @@ type SortKey = "date" | "amount" | "category";
       }
       .btn-primary {
         padding: 10px 20px;
-        background: #ff5c4d;
+        background: #223843;
         color: white;
         border-radius: 10px;
         text-decoration: none;
@@ -250,7 +250,7 @@ type SortKey = "date" | "amount" | "category";
         transition: all 0.15s ease;
       }
       .btn-primary:hover {
-        background: #e54535;
+        background: #1A2D36;
         transform: translateY(-1px);
       }
       .btn-primary:active {
@@ -261,7 +261,7 @@ type SortKey = "date" | "amount" | "category";
       .error-banner {
         background: rgba(255, 92, 77, 0.08);
         border: 1px solid rgba(255, 92, 77, 0.25);
-        color: #ff5c4d;
+        color: #223843;
         padding: 12px 16px;
         border-radius: 10px;
         font-size: 14px;
@@ -272,16 +272,16 @@ type SortKey = "date" | "amount" | "category";
       .retry-btn {
         margin-left: auto;
         padding: 6px 14px;
-        background: #ff5c4d;
+        background: #223843;
         color: white;
         border: none;
         border-radius: 7px;
         font-size: 13px;
         cursor: pointer;
-        font-family: "DM Sans", sans-serif;
+        font-family: "Roboto", sans-serif;
       }
       .retry-btn:hover {
-        background: #e54535;
+        background: #1A2D36;
       }
       .toast {
         background: rgba(16, 185, 129, 0.1);
@@ -319,7 +319,7 @@ type SortKey = "date" | "amount" | "category";
         border: 1.5px solid rgba(0, 0, 0, 0.1);
         border-radius: 10px;
         font-size: 14px;
-        font-family: "DM Sans", sans-serif;
+        font-family: "Roboto", sans-serif;
         background: white;
         color: #111;
         transition: border-color 0.15s;
@@ -327,36 +327,36 @@ type SortKey = "date" | "amount" | "category";
       }
       .search-input:focus {
         outline: none;
-        border-color: #ff5c4d;
+        border-color: #223843;
       }
       .filter-select {
         padding: 9px 14px;
         border: 1.5px solid rgba(0, 0, 0, 0.1);
         border-radius: 10px;
         font-size: 14px;
-        font-family: "DM Sans", sans-serif;
+        font-family: "Roboto", sans-serif;
         background: white;
         color: #111;
         cursor: pointer;
       }
       .filter-select:focus {
         outline: none;
-        border-color: #ff5c4d;
+        border-color: #223843;
       }
       .clear-btn {
         padding: 9px 16px;
         border: 1.5px solid rgba(0, 0, 0, 0.1);
         border-radius: 10px;
         font-size: 13px;
-        font-family: "DM Sans", sans-serif;
+        font-family: "Roboto", sans-serif;
         background: white;
         color: #666;
         cursor: pointer;
         transition: all 0.15s;
       }
       .clear-btn:hover:not(:disabled) {
-        border-color: #ff5c4d;
-        color: #ff5c4d;
+        border-color: #223843;
+        color: #223843;
       }
       .clear-btn:disabled {
         opacity: 0.4;
@@ -410,7 +410,7 @@ type SortKey = "date" | "amount" | "category";
         gap: 4px;
       }
       .col-sortable:hover {
-        color: #ff5c4d;
+        color: #223843;
       }
       .col-amount {
         justify-content: flex-end;
@@ -477,7 +477,7 @@ type SortKey = "date" | "amount" | "category";
       }
       .tx-type.expense {
         background: rgba(255, 92, 77, 0.1);
-        color: #ff5c4d;
+        color: #223843;
       }
       .cat-chip {
         font-size: 12px;
@@ -500,7 +500,7 @@ type SortKey = "date" | "amount" | "category";
         color: #10b981;
       }
       .tx-amount.expense {
-        color: #ff5c4d;
+        color: #223843;
       }
       .tx-actions {
         display: flex;
@@ -550,15 +550,15 @@ type SortKey = "date" | "amount" | "category";
         border: 1.5px solid rgba(0, 0, 0, 0.1);
         border-radius: 8px;
         background: white;
-        font-family: "DM Sans", sans-serif;
+        font-family: "Roboto", sans-serif;
         font-size: 13px;
         cursor: pointer;
         color: #555;
         transition: all 0.15s;
       }
       .page-btn:hover:not(:disabled) {
-        border-color: #ff5c4d;
-        color: #ff5c4d;
+        border-color: #223843;
+        color: #223843;
       }
       .page-btn:disabled {
         opacity: 0.4;
@@ -574,7 +574,7 @@ type SortKey = "date" | "amount" | "category";
         border-radius: 8px;
         border: 1.5px solid transparent;
         background: none;
-        font-family: "DM Sans", sans-serif;
+        font-family: "Roboto", sans-serif;
         font-size: 13px;
         cursor: pointer;
         color: #555;
@@ -584,9 +584,9 @@ type SortKey = "date" | "amount" | "category";
         background: rgba(0, 0, 0, 0.05);
       }
       .page-num.active {
-        background: #ff5c4d;
+        background: #223843;
         color: white;
-        border-color: #ff5c4d;
+        border-color: #223843;
         font-weight: 600;
       }
 

@@ -214,7 +214,7 @@ const CATEGORIES = [
         width: fit-content;
       }
       .back-link:hover {
-        color: #ff5c4d;
+        color: #223843;
       }
       .form-card {
         background: white;
@@ -226,7 +226,7 @@ const CATEGORIES = [
         margin-bottom: 28px;
       }
       h1 {
-        font-family: "Clash Display", sans-serif;
+        font-family: "Poppins", sans-serif;
         font-size: 26px;
         font-weight: 700;
         color: #111;
@@ -273,7 +273,7 @@ const CATEGORIES = [
         border: 1.5px solid rgba(0, 0, 0, 0.12);
         border-radius: 10px;
         font-size: 15px;
-        font-family: "DM Sans", sans-serif;
+        font-family: "Roboto", sans-serif;
         color: #111;
         background: white;
         transition:
@@ -286,18 +286,18 @@ const CATEGORIES = [
       }
       .form-input:focus {
         outline: none;
-        border-color: #ff5c4d;
+        border-color: #223843;
         box-shadow: 0 0 0 3px rgba(255, 92, 77, 0.1);
       }
       .form-input.error {
-        border-color: #ff5c4d;
+        border-color: #223843;
       }
       .form-select {
         cursor: pointer;
       }
       .error-msg {
         font-size: 12px;
-        color: #ff5c4d;
+        color: #223843;
         font-weight: 500;
       }
       .type-toggle {
@@ -310,7 +310,7 @@ const CATEGORIES = [
         border: 1.5px solid rgba(0, 0, 0, 0.1);
         border-radius: 10px;
         background: white;
-        font-family: "DM Sans", sans-serif;
+        font-family: "Roboto", sans-serif;
         font-size: 14px;
         font-weight: 500;
         cursor: pointer;
@@ -328,8 +328,8 @@ const CATEGORIES = [
       }
       .type-btn.active-expense {
         background: rgba(255, 92, 77, 0.1);
-        border-color: #ff5c4d;
-        color: #ff5c4d;
+        border-color: #223843;
+        color: #223843;
         font-weight: 700;
       }
       .form-actions {
@@ -355,12 +355,12 @@ const CATEGORIES = [
       .btn-submit {
         flex: 1;
         padding: 12px 22px;
-        background: #ff5c4d;
+        background: #223843;
         color: white;
         border: none;
         border-radius: 10px;
         font-size: 14px;
-        font-family: "DM Sans", sans-serif;
+        font-family: "Roboto", sans-serif;
         font-weight: 700;
         cursor: pointer;
         transition: all 0.15s;
@@ -370,7 +370,7 @@ const CATEGORIES = [
         gap: 8px;
       }
       .btn-submit:hover:not(:disabled) {
-        background: #e54535;
+        background: #1A2D36;
         transform: translateY(-1px);
       }
       .btn-submit:active {
@@ -406,7 +406,7 @@ const CATEGORIES = [
       .error-banner {
         background: rgba(255, 92, 77, 0.08);
         border: 1px solid rgba(255, 92, 77, 0.25);
-        color: #ff5c4d;
+        color: #223843;
         padding: 12px 16px;
         border-radius: 10px;
         font-size: 14px;

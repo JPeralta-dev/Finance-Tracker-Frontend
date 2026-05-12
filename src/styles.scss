@@ -1,20 +1,26 @@
+/* ─── Font Imports ──────────────────────────────────────────────────────────── */
+/* Fonts loaded via Google Fonts CDN in index.html */
+
 /* ─── Design Tokens ─────────────────────────────────────────────────────────── */
 :root {
   --bg:           #F9F9F6;
   --surface:      #FFFFFF;
+  --surface-dark: #192A32;
   --text:         #111111;
-  --text-muted:   #888888;
-  --accent:       #FF5C4D;
-  --accent-hover: #E54535;
+  --text-muted:   #515F69;
+  --accent:       #223843;
+  --accent-hover: #1A2D36;
+  --accent-light: rgba(34, 56, 67, 0.08);
   --success:      #10B981;
-  --border:       rgba(0, 0, 0, 0.08);
+  --border:       #7F868E;
+  --border-light: rgba(127, 134, 142, 0.2);
   --shadow-sm:    0 1px 3px rgba(0, 0, 0, 0.07);
   --shadow-md:    0 4px 12px rgba(0, 0, 0, 0.09);
   --radius-sm:    8px;
   --radius-md:    12px;
   --radius-lg:    16px;
-  --font-body:    'DM Sans', system-ui, sans-serif;
-  --font-display: 'Clash Display', system-ui, sans-serif;
+  --font-body:    'Roboto', system-ui, sans-serif;
+  --font-display: 'Poppins', system-ui, sans-serif;
 }
 
 /* ─── Reset & Base ───────────────────────────────────────────────────────────── */
@@ -56,7 +62,7 @@ input, select, textarea { font-family: var(--font-body); }
 ::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.25); }
 
 /* ─── Selection ──────────────────────────────────────────────────────────────── */
-::selection { background: rgba(255, 92, 77, 0.2); color: #111; }
+::selection { background: rgba(34, 56, 67, 0.2); color: #111; }
 
 /* ─── Focus ring ─────────────────────────────────────────────────────────────── */
 :focus-visible {

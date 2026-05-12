@@ -199,7 +199,7 @@ Chart.register(...registerables);
         flex-wrap: wrap;
       }
       h1 {
-        font-family: "Clash Display", sans-serif;
+        font-family: "Poppins", sans-serif;
         font-size: 32px;
         font-weight: 700;
         color: #111;
@@ -213,7 +213,7 @@ Chart.register(...registerables);
       }
       .btn-primary {
         padding: 10px 22px;
-        background: #ff5c4d;
+        background: #223843;
         color: white;
         border-radius: 10px;
         text-decoration: none;
@@ -223,7 +223,7 @@ Chart.register(...registerables);
         white-space: nowrap;
       }
       .btn-primary:hover {
-        background: #e54535;
+        background: #1A2D36;
         transform: translateY(-1px);
       }
       .btn-primary:active {
@@ -282,7 +282,7 @@ Chart.register(...registerables);
         background: #10b981;
       }
       .card--expense::before {
-        background: #ff5c4d;
+        background: #223843;
       }
       .card--savings::before {
         background: #6366f1;
@@ -296,7 +296,7 @@ Chart.register(...registerables);
         letter-spacing: 0.6px;
       }
       .card-value {
-        font-family: "Clash Display", sans-serif;
+        font-family: "Poppins", sans-serif;
         font-size: 28px;
         font-weight: 700;
         color: #111;
@@ -315,7 +315,7 @@ Chart.register(...registerables);
       }
       .card-badge.negative {
         background: rgba(255, 92, 77, 0.12);
-        color: #ff5c4d;
+        color: #223843;
       }
 
       .savings-bar {
@@ -344,7 +344,7 @@ Chart.register(...registerables);
         margin-bottom: 14px;
       }
       h2 {
-        font-family: "Clash Display", sans-serif;
+        font-family: "Poppins", sans-serif;
         font-size: 20px;
         font-weight: 600;
         color: #111;
@@ -356,7 +356,7 @@ Chart.register(...registerables);
       }
       .see-all {
         font-size: 13px;
-        color: #ff5c4d;
+        color: #223843;
         text-decoration: none;
         font-weight: 600;
       }
@@ -397,7 +397,7 @@ Chart.register(...registerables);
         background: #10b981;
       }
       .legend-dot--expense {
-        background: #ff5c4d;
+        background: #223843;
       }
       .chart-card canvas {
         width: 100%;
@@ -477,7 +477,7 @@ Chart.register(...registerables);
         color: #10b981;
       }
       .tx-amount.expense {
-        color: #ff5c4d;
+        color: #223843;
       }
 
       .empty-tx {
@@ -494,7 +494,7 @@ Chart.register(...registerables);
         font-size: 32px;
       }
       .empty-tx a {
-        color: #ff5c4d;
+        color: #223843;
         text-decoration: none;
         font-weight: 600;
       }
@@ -593,14 +593,14 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           {
             label: "Expenses",
             data: data.map((d) => d.expenses),
-            borderColor: "#FF5C4D",
+            borderColor: "#223843",
             backgroundColor: expenseGradient,
             borderWidth: 2.5,
             tension: 0.4,
             fill: true,
             pointRadius: 4,
             pointHoverRadius: 6,
-            pointBackgroundColor: "#FF5C4D",
+            pointBackgroundColor: "#223843",
           },
         ],
       },
@@ -628,12 +628,12 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         scales: {
           x: {
             grid: { display: false },
-            ticks: { font: { family: "DM Sans", size: 12 }, color: "#aaa" },
+            ticks: { font: { family: "Roboto", size: 12 }, color: "#aaa" },
           },
           y: {
             grid: { color: "rgba(0,0,0,0.04)" },
             ticks: {
-              font: { family: "DM Sans", size: 12 },
+              font: { family: "Roboto", size: 12 },
               color: "#aaa",
               callback: (v) => `$${Number(v).toLocaleString()}`,
             },

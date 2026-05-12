@@ -92,7 +92,7 @@ import { RouterLink } from "@angular/router";
       line-height: 1.15;
       margin: 0 0 16px;
     }
-    .highlight { color: #FF5C4D; }
+    .highlight { color: #223843; }
     .hero-subtitle {
       font-size: 18px;
       color: #555;
@@ -102,7 +102,7 @@ import { RouterLink } from "@angular/router";
     .hero-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
     .btn-primary {
       padding: 14px 28px;
-      background: #FF5C4D;
+      background: #223843;
       color: white;
       border-radius: 10px;
       font-size: 16px;
@@ -110,7 +110,7 @@ import { RouterLink } from "@angular/router";
       text-decoration: none;
       transition: all 0.15s;
     }
-    .btn-primary:hover { background: #e54535; transform: translateY(-1px); }
+    .btn-primary:hover { background: #1A2D36; transform: translateY(-1px); }
     .btn-secondary {
       padding: 14px 28px;
       background: transparent;

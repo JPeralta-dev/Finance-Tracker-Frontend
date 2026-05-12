@@ -126,7 +126,7 @@ import { AuthService } from "../../core/services/auth.service";
       outline: none;
       transition: border-color 0.15s;
     }
-    .field input:focus { border-color: #FF5C4D; }
+    .field input:focus { border-color: #223843; }
     .field-error { font-size: 12px; color: #e53e3e; }
     .error-banner {
       background: #fff5f5;
@@ -138,7 +138,7 @@ import { AuthService } from "../../core/services/auth.service";
     }
     .btn-primary {
       padding: 14px;
-      background: #FF5C4D;
+      background: #223843;
       color: white;
       border: none;
       border-radius: 10px;
@@ -147,7 +147,7 @@ import { AuthService } from "../../core/services/auth.service";
       cursor: pointer;
       transition: all 0.15s;
     }
-    .btn-primary:hover:not(:disabled) { background: #e54535; transform: translateY(-1px); }
+    .btn-primary:hover:not(:disabled) { background: #1A2D36; transform: translateY(-1px); }
     .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
     .auth-footer {
       text-align: center;
@@ -155,7 +155,7 @@ import { AuthService } from "../../core/services/auth.service";
       color: #666;
       font-size: 14px;
     }
-    .auth-footer a { color: #FF5C4D; font-weight: 600; text-decoration: none; }
+    .auth-footer a { color: #223843; font-weight: 600; text-decoration: none; }
     .auth-footer a:hover { text-decoration: underline; }
     .spinner {
       display: inline-block;
