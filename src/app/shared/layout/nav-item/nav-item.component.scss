@@ -1,0 +1,54 @@
+/* ─── Nav Item ─────────────────────────────────────────────────────
+   Single navigation link with icon + label.
+   Active state via RouterLinkActive.
+   Compact mode for mobile menu.
+   ─────────────────────────────────────────────────────────────────── */
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition:
+    background var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out);
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+  }
+
+  &--active {
+    background: rgba(6, 214, 160, 0.1);
+    color: var(--accent-start);
+  }
+
+  &--compact {
+    padding: 10px 16px;
+    font-size: 15px;
+    gap: 12px;
+  }
+
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  &__label {
+    white-space: nowrap;
+  }
+}

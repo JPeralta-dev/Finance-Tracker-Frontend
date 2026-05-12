@@ -1,0 +1,10 @@
+<a
+  [routerLink]="path()"
+  routerLinkActive="nav-item--active"
+  [routerLinkActiveOptions]="{ exact: true }"
+  class="nav-item"
+  [class.nav-item--compact]="compact()"
+>
+  <span class="nav-item__icon" [innerHTML]="icon()"></span>
+  <span class="nav-item__label">{{ label() }}</span>
+</a>
