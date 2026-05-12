@@ -1,0 +1,14 @@
+<div class="app-container">
+  <!-- Ambient background -->
+  <div class="app-background"></div>
+
+  <!-- Existing navbar (will be replaced in Sprint 3) -->
+  <app-navbar />
+
+  <!-- Main content area -->
+  <main class="app-main">
+    <div [@pageTransition]>
+      <router-outlet />
+    </div>
+  </main>
+</div>

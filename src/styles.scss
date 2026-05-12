@@ -1,30 +1,102 @@
-/* ─── Font Imports ──────────────────────────────────────────────────────────── */
-/* Fonts loaded via Google Fonts CDN in index.html */
+/* ═══════════════════════════════════════════════════════════════════
+   Flowr Finance — Obsidian Glass Design System
+   Sprint 1: Foundation Setup
+   ═══════════════════════════════════════════════════════════════════ */
 
-/* ─── Design Tokens ─────────────────────────────────────────────────────────── */
+/* ─── Tailwind Directives ────────────────────────────────────────── */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Font Imports ───────────────────────────────────────────────── */
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/500.css';
+@import '@fontsource/inter/600.css';
+@import '@fontsource/space-grotesk/500.css';
+@import '@fontsource/space-grotesk/600.css';
+@import '@fontsource/space-grotesk/700.css';
+
+/* ─── CSS Custom Properties (Design Tokens) ──────────────────────── */
 :root {
-  --bg:           #F9F9F6;
-  --surface:      #FFFFFF;
-  --surface-dark: #192A32;
-  --text:         #111111;
-  --text-muted:   #515F69;
-  --accent:       #223843;
-  --accent-hover: #1A2D36;
-  --accent-light: rgba(34, 56, 67, 0.08);
-  --success:      #10B981;
-  --border:       #7F868E;
-  --border-light: rgba(127, 134, 142, 0.2);
-  --shadow-sm:    0 1px 3px rgba(0, 0, 0, 0.07);
-  --shadow-md:    0 4px 12px rgba(0, 0, 0, 0.09);
-  --radius-sm:    8px;
-  --radius-md:    12px;
-  --radius-lg:    16px;
-  --font-body:    'Roboto', system-ui, sans-serif;
-  --font-display: 'Poppins', system-ui, sans-serif;
+  /* Backgrounds */
+  --bg-primary: #0A0E17;
+  --bg-secondary: #0F1623;
+  --bg-tertiary: #151D2E;
+  --bg-elevated: #1A2337;
+
+  /* Glass */
+  --glass-bg: rgba(15, 22, 35, 0.72);
+  --glass-border: rgba(255, 255, 255, 0.06);
+  --glass-border-hover: rgba(255, 255, 255, 0.12);
+  --glass-blur: 12px;
+
+  /* Accent gradient */
+  --accent-start: #06D6A0;
+  --accent-mid: #118DFF;
+  --accent-end: #6C63FF;
+  --accent-glow: rgba(6, 214, 160, 0.15);
+
+  /* Semantic */
+  --success: #06D6A0;
+  --success-bg: rgba(6, 214, 160, 0.1);
+  --danger: #FF6B6B;
+  --danger-bg: rgba(255, 107, 107, 0.1);
+  --warning: #FFD93D;
+  --warning-bg: rgba(255, 217, 61, 0.1);
+  --info: #118DFF;
+  --info-bg: rgba(17, 141, 255, 0.1);
+
+  /* Text */
+  --text-primary: #F1F5F9;
+  --text-secondary: #94A3B8;
+  --text-tertiary: #64748B;
+  --text-inverse: #0A0E17;
+
+  /* Borders */
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --border-default: rgba(255, 255, 255, 0.1);
+  --border-strong: rgba(255, 255, 255, 0.16);
+
+  /* Shadows (dark-adapted) */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.4);
+  --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.45);
+
+  /* Glow */
+  --glow-accent: 0 0 24px rgba(6, 214, 160, 0.15);
+  --glow-success: 0 0 20px rgba(6, 214, 160, 0.2);
+  --glow-danger: 0 0 20px rgba(255, 107, 107, 0.2);
+
+  /* Radius */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  /* Animation */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-smooth: cubic-bezier(0.25, 0.8, 0.25, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --duration-slow: 400ms;
+  --duration-slower: 600ms;
+
+  /* Typography */
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 }
 
-/* ─── Reset & Base ───────────────────────────────────────────────────────────── */
-*, *::before, *::after { box-sizing: border-box; }
+/* ─── Base Reset ─────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 
 html {
   -webkit-text-size-adjust: 100%;
@@ -34,44 +106,57 @@ html {
 body {
   margin: 0;
   font-family: var(--font-body);
-  background-color: var(--bg);
-  color: var(--text);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
 }
 
-/* ─── Typography ─────────────────────────────────────────────────────────────── */
+/* ─── Typography ─────────────────────────────────────────────────── */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
   margin: 0;
-  letter-spacing: -0.4px;
-  color: var(--text);
+  color: var(--text-primary);
 }
 
 p { margin: 0; }
-a { color: inherit; }
+a { color: inherit; text-decoration: none; }
 img { max-width: 100%; display: block; }
-button { font-family: var(--font-body); }
+button { font-family: var(--font-body); cursor: pointer; }
 input, select, textarea { font-family: var(--font-body); }
 
-/* ─── Scrollbar ──────────────────────────────────────────────────────────────── */
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 99px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.25); }
-
-/* ─── Selection ──────────────────────────────────────────────────────────────── */
-::selection { background: rgba(34, 56, 67, 0.2); color: #111; }
-
-/* ─── Focus ring ─────────────────────────────────────────────────────────────── */
-:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-  border-radius: 4px;
+/* ─── Custom Scrollbar ───────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
 }
 
-/* ─── View Transitions ───────────────────────────────────────────────────────── */
+/* ─── Selection ──────────────────────────────────────────────────── */
+::selection {
+  background: rgba(6, 214, 160, 0.25);
+  color: var(--text-primary);
+}
+
+/* ─── Focus Ring (accessible) ────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--accent-start);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* ─── View Transitions ───────────────────────────────────────────── */
 @keyframes fade-in {
   from { opacity: 0; }
   to   { opacity: 1; }
@@ -86,4 +171,73 @@ input, select, textarea { font-family: var(--font-body); }
 }
 ::view-transition-new(root) {
   animation: 280ms ease-out fade-in;
+}
+
+/* ─── Background System ──────────────────────────────────────────── */
+.app-background {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(6, 214, 160, 0.08), transparent),
+    radial-gradient(ellipse 60% 40% at 80% 100%, rgba(108, 99, 255, 0.06), transparent),
+    var(--bg-primary);
+}
+
+/* Subtle grid pattern overlay */
+.app-background::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 20%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 20%, transparent 70%);
+}
+
+/* ─── Layout Container ───────────────────────────────────────────── */
+.app-container {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-main {
+  flex: 1;
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 32px 24px 96px;
+}
+
+@media (max-width: 768px) {
+  .app-main {
+    padding: 20px 16px 80px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .app-main {
+    padding: 40px 32px 96px;
+  }
+}
+
+/* ─── Glass Panel (base utility class) ───────────────────────────── */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  transition:
+    border-color var(--duration-normal) var(--ease-smooth),
+    box-shadow var(--duration-normal) var(--ease-smooth);
+}
+
+.glass-panel:hover {
+  border-color: var(--glass-border-hover);
+  box-shadow: var(--shadow-md);
 }

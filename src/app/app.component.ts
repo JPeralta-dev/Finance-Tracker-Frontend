@@ -8,23 +8,7 @@ import { pageTransition } from './shared/animations';
   standalone: true,
   imports: [RouterOutlet, NavbarComponent],
   animations: [pageTransition],
-  template: `
-    <app-navbar />
-    <main class="main-content">
-      <div [@pageTransition]>
-        <router-outlet />
-      </div>
-    </main>
-  `,
-  styles: [`
-    .main-content {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 32px 24px 64px;
-    }
-    @media (max-width: 768px) {
-      .main-content { padding: 20px 16px 48px; }
-    }
-  `]
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.scss',
 })
 export class AppComponent {}
