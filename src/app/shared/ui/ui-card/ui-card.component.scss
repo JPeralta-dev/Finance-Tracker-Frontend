@@ -1,0 +1,77 @@
+/* ─── Card ─────────────────────────────────────────────────────────
+   Glass container with optional header (title + subtitle).
+   Supports hover lift and no-padding mode.
+   ─────────────────────────────────────────────────────────────────── */
+
+.card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  transition:
+    border-color var(--duration-normal) var(--ease-smooth),
+    box-shadow var(--duration-normal) var(--ease-smooth),
+    transform var(--duration-normal) var(--ease-out);
+
+  /* Subtle top highlight */
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--glass-border-hover),
+      transparent
+    );
+    opacity: 0.5;
+  }
+
+  &--hoverable {
+    &:hover {
+      border-color: var(--glass-border-hover);
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-2px);
+    }
+
+    &:active {
+      transform: translateY(0);
+      transition-duration: var(--duration-fast);
+    }
+  }
+
+  &--no-padding {
+    .card__body {
+      padding: 0;
+    }
+  }
+
+  &__header {
+    padding: 20px 24px 0;
+  }
+
+  &__title {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+  }
+
+  &__subtitle {
+    font-size: 13px;
+    color: var(--text-tertiary);
+    margin: 4px 0 0;
+  }
+
+  &__body {
+    padding: 20px 24px;
+  }
+}

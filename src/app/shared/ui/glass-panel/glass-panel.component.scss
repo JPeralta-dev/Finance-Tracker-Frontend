@@ -1,0 +1,52 @@
+/* ─── Glass Panel ──────────────────────────────────────────────────
+   Reusable glassmorphic container.
+   Three variants: default, elevated, subtle.
+   Optional hover lift effect.
+   ─────────────────────────────────────────────────────────────────── */
+
+.glass-panel {
+  border-radius: var(--radius-md);
+  transition:
+    border-color var(--duration-normal) var(--ease-smooth),
+    box-shadow var(--duration-normal) var(--ease-smooth),
+    transform var(--duration-normal) var(--ease-out);
+
+  /* ── Default ── */
+  &--default {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+  }
+
+  /* ── Elevated (more opaque, stronger shadow) ── */
+  &--elevated {
+    background: rgba(21, 29, 46, 0.88);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--border-default);
+    box-shadow: var(--shadow-md);
+  }
+
+  /* ── Subtle (minimal glass, border only) ── */
+  &--subtle {
+    background: transparent;
+    border: 1px solid var(--border-subtle);
+  }
+
+  /* ── Hoverable ── */
+  &--hoverable {
+    cursor: default;
+
+    &:hover {
+      border-color: var(--glass-border-hover);
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-2px);
+    }
+
+    &:active {
+      transform: translateY(0);
+      transition-duration: var(--duration-fast);
+    }
+  }
+}

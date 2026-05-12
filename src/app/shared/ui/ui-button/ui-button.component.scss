@@ -1,0 +1,130 @@
+/* ─── Button ───────────────────────────────────────────────────────
+   Four variants: primary, secondary, ghost, danger.
+   Three sizes: sm, md, lg.
+   Loading state with spinner.
+   ─────────────────────────────────────────────────────────────────── */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-weight: 500;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition:
+    background var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out),
+    opacity var(--duration-fast) var(--ease-out);
+  white-space: nowrap;
+  user-select: none;
+
+  &:active:not(:disabled) {
+    transform: scale(0.97);
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  /* ── Sizes ── */
+  &--sm {
+    padding: 6px 12px;
+    font-size: 12px;
+    line-height: 1;
+  }
+
+  &--md {
+    padding: 10px 20px;
+    font-size: 14px;
+    line-height: 1;
+  }
+
+  &--lg {
+    padding: 14px 28px;
+    font-size: 16px;
+    line-height: 1;
+  }
+
+  &--full {
+    width: 100%;
+  }
+
+  /* ── Variants ── */
+  &--primary {
+    background: linear-gradient(135deg, var(--accent-start), var(--accent-mid));
+    color: var(--text-inverse);
+    box-shadow: 0 2px 8px rgba(6, 214, 160, 0.25);
+
+    &:hover:not(:disabled) {
+      box-shadow: 0 4px 16px rgba(6, 214, 160, 0.35);
+      transform: translateY(-1px);
+    }
+  }
+
+  &--secondary {
+    background: var(--bg-elevated);
+    color: var(--text-primary);
+    border: 1px solid var(--border-default);
+
+    &:hover:not(:disabled) {
+      background: var(--bg-tertiary);
+      border-color: var(--border-strong);
+    }
+  }
+
+  &--ghost {
+    background: transparent;
+    color: var(--text-secondary);
+
+    &:hover:not(:disabled) {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-primary);
+    }
+  }
+
+  &--danger {
+    background: var(--danger-bg);
+    color: var(--danger);
+    border: 1px solid rgba(255, 107, 107, 0.2);
+
+    &:hover:not(:disabled) {
+      background: rgba(255, 107, 107, 0.2);
+      border-color: rgba(255, 107, 107, 0.4);
+    }
+  }
+
+  /* ── Loading ── */
+  &--loading {
+    .btn__content {
+      opacity: 0;
+    }
+  }
+
+  &__content {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: opacity var(--duration-fast) var(--ease-out);
+  }
+
+  &__spinner {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border: 2px solid transparent;
+    border-top-color: currentColor;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+  }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}

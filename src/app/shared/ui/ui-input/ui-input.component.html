@@ -1,0 +1,29 @@
+<div class="input-wrapper" [class.input-wrapper--error]="error()">
+  @if (label()) {
+    <label class="input-label" [class.input-label--float]="shouldFloat">
+      {{ label() }}
+    </label>
+  }
+
+  <div class="input-field-container">
+    @if (icon()) {
+      <span class="input-icon">{{ icon() }}</span>
+    }
+    <input
+      class="input-field"
+      [type]="type()"
+      [placeholder]="!shouldFloat ? placeholder() : ''"
+      [disabled]="disabled()"
+      [value]="value()"
+      (input)="onInput($event)"
+      (focus)="onFocus()"
+      (blur)="onBlur()"
+    />
+  </div>
+
+  @if (error()) {
+    <span class="input-error">{{ error() }}</span>
+  } @else if (hint()) {
+    <span class="input-hint">{{ hint() }}</span>
+  }
+</div>
