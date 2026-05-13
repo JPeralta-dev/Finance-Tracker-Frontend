@@ -241,3 +241,25 @@ input, select, textarea { font-family: var(--font-body); }
   border-color: var(--glass-border-hover);
   box-shadow: var(--shadow-md);
 }
+
+/* ─── Tooltip ────────────────────────────────────────────────────── */
+.ft-tooltip {
+  position: fixed;
+  z-index: 9999;
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-primary);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-md);
+  pointer-events: none;
+  animation: tooltipFade 0.15s ease-out;
+  white-space: nowrap;
+}
+
+@keyframes tooltipFade {
+  from { opacity: 0; transform: translateY(2px); }
+  to { opacity: 1; transform: translateY(0); }
+}

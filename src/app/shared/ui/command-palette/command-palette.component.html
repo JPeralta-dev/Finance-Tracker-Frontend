@@ -1,0 +1,51 @@
+@if (open()) {
+  <div class="cmd-backdrop" (click)="onBackdropClick()" @fadeSlideIn>
+    <div class="cmd-container" @cardEntrance>
+      <!-- Search Input -->
+      <div class="cmd-input-wrapper">
+        <ng-icon name="search" size="1.1rem" class="cmd-input-icon" />
+        <input
+          #input
+          type="text"
+          placeholder="Search commands, navigate, actions..."
+          class="cmd-input"
+          [(ngModel)]="query"
+          (input)="onInput($event)"
+          (keydown)="onKeyDown($event)"
+        />
+        <kbd class="cmd-kbd">ESC</kbd>
+      </div>
+
+      <!-- Results -->
+      @if (groupedItems().length > 0) {
+        <div class="cmd-results">
+          @for (group of groupedItems(); track group.name) {
+            <div class="cmd-group">
+              <span class="cmd-group-label">{{ group.name }}</span>
+              @for (item of group.items; track item.id; let i = $index) {
+                <button
+                  class="cmd-item"
+                  [class.cmd-item--active]="i === selectedIndex()"
+                  (mouseenter)="selectedIndex.set(i)"
+                  (click)="selectItem(item)"
+                >
+                  @if (item.icon) {
+                    <ng-icon [name]="item.icon" size="1rem" class="cmd-item-icon" />
+                  }
+                  <span class="cmd-item-label">{{ item.label }}</span>
+                  @if (item.shortcut) {
+                    <kbd class="cmd-shortcut">{{ item.shortcut }}</kbd>
+                  }
+                </button>
+              }
+            </div>
+          }
+        </div>
+      } @else {
+        <div class="cmd-empty">
+          <p>No results found for "{{ query() }}"</p>
+        </div>
+      }
+    </div>
+  </div>
+}
