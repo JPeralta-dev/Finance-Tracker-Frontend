@@ -1,39 +1,80 @@
 <div class="dashboard-page">
-  <!-- Greeting -->
-  <div class="dashboard-greeting" [ftScrollReveal]="0">
-    <div>
-      <h1 class="dashboard-greeting__title">Good afternoon, Juan</h1>
-      <p class="dashboard-greeting__subtitle">
-        Here's your financial overview for this month.
-      </p>
+  @if (state() === 'loading') {
+    <!-- Loading state -->
+    <div class="dashboard-greeting" [ftScrollReveal]="0">
+      <div>
+        <h1 class="dashboard-greeting__title">Loading...</h1>
+        <p class="dashboard-greeting__subtitle">Fetching your financial data.</p>
+      </div>
     </div>
-    <a routerLink="/transactions/new" class="dashboard-greeting__cta" [ftHoverDepth]="8">
-      + New Transaction
-    </a>
-  </div>
+    <div [ftScrollReveal]="100">
+      <ft-stats-grid [stats]="[]" [loading]="true" />
+    </div>
+  } @else if (state() === 'error') {
+    <!-- Error state -->
+    <ft-empty-state
+      icon="warning"
+      title="Something went wrong"
+      description="We couldn't load your dashboard data. Please try again."
+      actionLabel="Retry"
+      (action)="retry()"
+    />
+  } @else if (state() === 'empty') {
+    <!-- Empty state — no transactions yet -->
+    <div class="dashboard-greeting" [ftScrollReveal]="0">
+      <div>
+        <h1 class="dashboard-greeting__title">Welcome!</h1>
+        <p class="dashboard-greeting__subtitle">
+          Start tracking your finances by adding your first transaction.
+        </p>
+      </div>
+      <a routerLink="/transactions/new" class="dashboard-greeting__cta" [ftHoverDepth]="8">
+        + New Transaction
+      </a>
+    </div>
+    <ft-empty-state
+      icon="wallet"
+      title="No transactions yet"
+      description="Your financial overview will appear here once you start adding transactions."
+      actionLabel="Add Transaction"
+      actionRoute="/transactions/new"
+    />
+  } @else {
+    <!-- Ready state — show real data -->
+    <!-- Greeting -->
+    <div class="dashboard-greeting" [ftScrollReveal]="0">
+      <div>
+        <h1 class="dashboard-greeting__title">Good afternoon</h1>
+        <p class="dashboard-greeting__subtitle">
+          Here's your financial overview for this month.
+        </p>
+      </div>
+      <a routerLink="/transactions/new" class="dashboard-greeting__cta" [ftHoverDepth]="8">
+        + New Transaction
+      </a>
+    </div>
 
-  <!-- Stats Grid -->
-  <div [ftScrollReveal]="100">
-    <ft-stats-grid [stats]="stats()" [loading]="loading()" />
-  </div>
+    <!-- Stats Grid -->
+    <div [ftScrollReveal]="100">
+      <ft-stats-grid [stats]="stats()" [loading]="false" />
+    </div>
 
-  <!-- Main content: Chart + Activity -->
-  <div class="dashboard-content">
-    <div class="dashboard-content__chart" [ftScrollReveal]="200">
-      <ft-area-chart
-        [labels]="chartLabels"
-        [datasets]="chartDatasets"
-        title="Monthly Overview"
-        subtitle="Last 6 months"
-        [loading]="loading()"
-      />
+    <!-- Main content: Chart + Activity -->
+    <div class="dashboard-content">
+      <div class="dashboard-content__chart" [ftScrollReveal]="200">
+        <ft-area-chart
+          [labels]="chartLabels()"
+          [datasets]="chartDatasets()"
+          title="Monthly Overview"
+          subtitle="Last 6 months"
+        />
+      </div>
+      <div class="dashboard-content__activity" [ftScrollReveal]="300">
+        <ft-recent-activity
+          [items]="activity()"
+          [maxItems]="4"
+        />
+      </div>
     </div>
-    <div class="dashboard-content__activity" [ftScrollReveal]="300">
-      <ft-recent-activity
-        [items]="activity()"
-        [loading]="loading()"
-        [maxItems]="4"
-      />
-    </div>
-  </div>
+  }
 </div>

@@ -103,11 +103,11 @@ type SortKey = "date" | "amount" | "category";
             }
           </div>
         } @else if (paginatedTransactions().length === 0) {
-          <app-empty-state
-            icon="TX"
+          <ft-empty-state
+            icon="list"
             title="No transactions found"
-            message="Try adjusting your filters or add a new transaction."
-            actionLink="/transactions/new"
+            description="Try adjusting your filters or add a new transaction."
+            actionRoute="/transactions/new"
             actionLabel="+ New Transaction"
           />
         } @else {

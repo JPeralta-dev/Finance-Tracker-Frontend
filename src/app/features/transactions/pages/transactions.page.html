@@ -1,22 +1,63 @@
 <div class="transactions-page">
-  <!-- Header -->
-  <div class="transactions-page__header">
-    <div>
-      <h1 class="transactions-page__title">Transactions</h1>
-      <p class="transactions-page__subtitle">
-        Manage and track all your financial activity.
-      </p>
+  @if (state() === 'loading') {
+    <!-- Loading state -->
+    <div class="transactions-page__header">
+      <div>
+        <h1 class="transactions-page__title">Loading...</h1>
+        <p class="transactions-page__subtitle">Fetching your transactions.</p>
+      </div>
     </div>
-    <a routerLink="/transactions/new" class="transactions-page__cta">
-      + New Transaction
-    </a>
-  </div>
+    <ft-transaction-table [items]="[]" [loading]="true" [pageSize]="10" />
+  } @else if (state() === 'error') {
+    <!-- Error state -->
+    <ft-empty-state
+      icon="warning"
+      title="Something went wrong"
+      description="We couldn't load your transactions. Please try again."
+      actionLabel="Retry"
+      (action)="retry()"
+    />
+  } @else if (state() === 'empty') {
+    <!-- Empty state -->
+    <div class="transactions-page__header">
+      <div>
+        <h1 class="transactions-page__title">Transactions</h1>
+        <p class="transactions-page__subtitle">
+          Start tracking your finances by adding your first transaction.
+        </p>
+      </div>
+      <a routerLink="/transactions/new" class="transactions-page__cta">
+        + New Transaction
+      </a>
+    </div>
+    <ft-empty-state
+      icon="list"
+      title="No transactions yet"
+      description="Your transaction history will appear here once you start logging expenses and income."
+      actionRoute="/transactions/new"
+      actionLabel="Add Transaction"
+    />
+  } @else {
+    <!-- Ready state -->
+    <!-- Header -->
+    <div class="transactions-page__header">
+      <div>
+        <h1 class="transactions-page__title">Transactions</h1>
+        <p class="transactions-page__subtitle">
+          Manage and track all your financial activity.
+        </p>
+      </div>
+      <a routerLink="/transactions/new" class="transactions-page__cta">
+        + New Transaction
+      </a>
+    </div>
 
-  <!-- Transaction table -->
-  <ft-transaction-table
-    [items]="transactions()"
-    [loading]="loading()"
-    [pageSize]="10"
-    (ftSelect)="onSelect($event)"
-  />
+    <!-- Transaction table -->
+    <ft-transaction-table
+      [items]="transactions()"
+      [loading]="false"
+      [pageSize]="10"
+      (ftSelect)="onSelect($event)"
+    />
+  }
 </div>

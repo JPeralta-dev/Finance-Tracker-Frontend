@@ -67,11 +67,11 @@ import {
           }
         } @else if (categories().length === 0) {
           <div class="empty-wrap">
-            <app-empty-state
-              icon="CT"
+            <ft-empty-state
+              icon="list"
               title="No categories yet"
-              message="Add some transactions to see categories appear here."
-              actionLink="/transactions/new"
+              description="Add some transactions to see categories appear here."
+              actionRoute="/transactions/new"
               actionLabel="+ New Transaction"
             />
           </div>

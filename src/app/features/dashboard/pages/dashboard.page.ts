@@ -1,6 +1,8 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { catchError, forkJoin, of } from 'rxjs';
+
 import { StatsGridComponent } from '../components/stats-grid/stats-grid.component';
 import { AreaChartComponent, AreaDataset } from '../../../shared/charts';
 import { RecentActivityComponent, ActivityItem } from '../components/recent-activity/recent-activity.component';
@@ -8,52 +10,104 @@ import { StatCardData } from '../components/stat-card/stat-card.types';
 import { ScrollRevealDirective } from '../../../shared/directives/scroll-reveal.directive';
 import { HoverDepthDirective } from '../../../shared/directives/hover-depth.directive';
 import { CountUpDirective } from '../../../shared/directives/count-up.directive';
+import { FinanceService } from '../../../core/services/finance.service';
+import { ToastService } from '../../../core/services/toast.service';
+import { EmptyStateComponent } from '../../../shared/components/empty-state.component';
 
-// Demo data — will be replaced by service calls
-const DEMO_STATS: StatCardData[] = [
-  { id: 'balance', label: 'Total Balance', value: 12450.80, icon: 'wallet', trend: 8.2, insight: 'Above last month' },
-  { id: 'income', label: 'Monthly Income', value: 4200.00, icon: 'income', trend: 3.1 },
-  { id: 'expenses', label: 'Monthly Expenses', value: 2840.50, icon: 'expense', trend: -5.4 },
-  { id: 'savings', label: 'Savings Rate', value: 32.4, suffix: '%', icon: 'subscription', trend: 2.8, insight: 'On track' },
-];
-
-const DEMO_ACTIVITY: ActivityItem[] = [
-  { id: '1', description: 'Salary deposit', category: 'Income', amount: 4200, type: 'income', date: '2026-05-10' },
-  { id: '2', description: 'Grocery store', category: 'Food', amount: 85.40, type: 'expense', date: '2026-05-09' },
-  { id: '3', description: 'Netflix subscription', category: 'Subscription', amount: 15.99, type: 'expense', date: '2026-05-08' },
-  { id: '4', description: 'Freelance payment', category: 'Freelance', amount: 650, type: 'income', date: '2026-05-07' },
-  { id: '5', description: 'Gas station', category: 'Transport', amount: 45.00, type: 'expense', date: '2026-05-06' },
-];
-
-const CHART_LABELS = ['Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr'];
-
-const CHART_DATASETS: AreaDataset[] = [
-  { label: 'Income', data: [3800, 4100, 3900, 4200, 4000, 4200], color: '#06D6A0' },
-  { label: 'Expenses', data: [2600, 2900, 3100, 2800, 3000, 2840], color: '#FF6B6B' },
-];
+type DashboardState = 'loading' | 'ready' | 'empty' | 'error';
 
 @Component({
   selector: 'ft-dashboard-page',
   standalone: true,
   imports: [
-    CommonModule, 
-    RouterLink, 
-    StatsGridComponent, 
-    AreaChartComponent, 
+    CommonModule,
+    RouterLink,
+    StatsGridComponent,
+    AreaChartComponent,
     RecentActivityComponent,
     ScrollRevealDirective,
     HoverDepthDirective,
     CountUpDirective,
+    EmptyStateComponent,
   ],
   templateUrl: './dashboard.page.html',
   styleUrl: './dashboard.page.scss',
 })
-export class DashboardPage {
-  readonly stats = signal<StatCardData[]>(DEMO_STATS);
-  readonly activity = signal<ActivityItem[]>(DEMO_ACTIVITY);
-  readonly loading = signal(false);
+export class DashboardPage implements OnInit {
+  private readonly financeService = inject(FinanceService);
+  private readonly toast = inject(ToastService);
+
+  readonly stats = signal<StatCardData[]>([]);
+  readonly activity = signal<ActivityItem[]>([]);
+  readonly state = signal<DashboardState>('loading');
 
   // Chart data
-  readonly chartLabels = CHART_LABELS;
-  readonly chartDatasets = CHART_DATASETS;
+  readonly chartLabels = signal<string[]>([]);
+  readonly chartDatasets = signal<AreaDataset[]>([]);
+
+  ngOnInit(): void {
+    this.loadData();
+  }
+
+  private loadData(): void {
+    this.state.set('loading');
+
+    forkJoin({
+      summary: this.financeService.getSummary().pipe(catchError(() => of(null))),
+      chart: this.financeService.getMonthlyChart().pipe(catchError(() => of(null))),
+      transactions: this.financeService.getTransactions({ limit: 5, sortBy: 'date', sortDir: 'desc' }).pipe(catchError(() => of(null))),
+    }).subscribe({
+      next: ({ summary, chart, transactions }) => {
+        if (!summary && !chart && !transactions) {
+          this.state.set('error');
+          this.toast.error('Failed to load dashboard data. Please try again.');
+          return;
+        }
+
+        if (summary) {
+          this.stats.set(this.mapSummary(summary));
+        }
+
+        if (chart) {
+          this.chartLabels.set(chart.map(d => d.month));
+          this.chartDatasets.set([
+            { label: 'Income', data: chart.map(d => d.income), color: '#06D6A0' },
+            { label: 'Expenses', data: chart.map(d => d.expenses), color: '#FF6B6B' },
+          ]);
+        }
+
+        if (transactions && transactions.length > 0) {
+          this.activity.set(transactions.map(t => ({
+            id: t.id,
+            description: t.description,
+            category: t.category,
+            amount: t.amount,
+            type: t.type,
+            date: t.date,
+          })));
+        }
+
+        // Check if user has any data at all
+        const hasData = summary?.totalIncome !== 0 || summary?.totalExpenses !== 0 || (transactions?.length ?? 0) > 0;
+        this.state.set(hasData ? 'ready' : 'empty');
+      },
+      error: () => {
+        this.state.set('error');
+        this.toast.error('Failed to load dashboard data.');
+      },
+    });
+  }
+
+  private mapSummary(summary: { totalBalance: number; totalIncome: number; totalExpenses: number; savingsRate: number }): StatCardData[] {
+    return [
+      { id: 'balance', label: 'Total Balance', value: summary.totalBalance, icon: 'wallet', insight: summary.totalBalance > 0 ? 'Positive balance' : 'No balance' },
+      { id: 'income', label: 'Monthly Income', value: summary.totalIncome, icon: 'income' },
+      { id: 'expenses', label: 'Monthly Expenses', value: summary.totalExpenses, icon: 'expense' },
+      { id: 'savings', label: 'Savings Rate', value: summary.savingsRate, suffix: '%', icon: 'subscription', insight: summary.savingsRate > 20 ? 'On track' : summary.savingsRate > 0 ? 'Could improve' : undefined },
+    ];
+  }
+
+  retry(): void {
+    this.loadData();
+  }
 }
