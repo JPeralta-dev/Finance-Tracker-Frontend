@@ -1,0 +1,29 @@
+<div class="landing">
+  <!-- Public Navbar -->
+  <ft-public-navbar />
+
+  <!-- Hero Section -->
+  <ft-hero-section />
+
+  <!-- Features Section -->
+  <section class="features">
+    <div class="features__inner">
+      <h2 class="features__title">Everything you need</h2>
+      <div class="features__grid">
+        @for (feature of features; track feature.title) {
+          <ft-feature-card
+            [icon]="feature.icon"
+            [title]="feature.title"
+            [description]="feature.description"
+          />
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Telegram Section -->
+  <ft-telegram-section />
+
+  <!-- Final CTA -->
+  <ft-final-cta />
+</div>

@@ -8,8 +8,10 @@ import {
   OnChanges,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Chart } from 'chart.js';
 import { ChartService } from '../../charts/chart.service';
+
+let Chart: any;
+import('chart.js').then(m => Chart = m.Chart);
 
 export interface DonutData {
   labels: string[];
@@ -33,7 +35,7 @@ export class DonutChartComponent implements OnInit, OnDestroy, OnChanges {
 
   @ViewChild('chartCanvas') private canvas!: ElementRef<HTMLCanvasElement>;
 
-  private chart: Chart | null = null;
+  private chart: any = null;
 
   constructor(private chartService: ChartService) {}
 
@@ -50,21 +52,14 @@ export class DonutChartComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private initChart(): void {
-    if (!this.canvas) return;
-
+    if (!this.canvas || !Chart) return;
     const d = this.data();
-    const config = this.chartService.createDonutConfig(
-      d.labels,
-      d.data,
-      d.colors,
-    );
-
-    this.chart = new Chart(this.canvas.nativeElement, config as never);
+    const config = this.chartService.createDonutConfig(d.labels, d.data, d.colors);
+    this.chart = new Chart(this.canvas.nativeElement, config);
   }
 
   private updateChart(): void {
     if (!this.chart) return;
-
     const d = this.data();
     this.chart.data.labels = d.labels;
     this.chart.data.datasets[0].data = d.data;

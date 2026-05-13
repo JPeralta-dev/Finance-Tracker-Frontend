@@ -8,8 +8,10 @@ import {
   OnChanges,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Chart } from 'chart.js';
 import { ChartService } from '../../charts/chart.service';
+
+let Chart: any;
+import('chart.js').then(m => Chart = m.Chart);
 
 export interface BarDataset {
   label: string;
@@ -34,7 +36,7 @@ export class BarChartComponent implements OnInit, OnDestroy, OnChanges {
 
   @ViewChild('chartCanvas') private canvas!: ElementRef<HTMLCanvasElement>;
 
-  private chart: Chart | null = null;
+  private chart: any = null;
 
   constructor(private chartService: ChartService) {}
 
@@ -51,24 +53,15 @@ export class BarChartComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private initChart(): void {
-    if (!this.canvas) return;
-
-    const config = this.chartService.createBarConfig(
-      this.labels(),
-      this.datasets(),
-    );
-
-    this.chart = new Chart(this.canvas.nativeElement, config as never);
+    if (!this.canvas || !Chart) return;
+    const config = this.chartService.createBarConfig(this.labels(), this.datasets());
+    this.chart = new Chart(this.canvas.nativeElement, config);
   }
 
   private updateChart(): void {
     if (!this.chart) return;
-
     this.chart.data.labels = this.labels();
-    this.chart.data.datasets = this.datasets().map((ds) => ({
-      label: ds.label,
-      data: ds.data,
-    }));
+    this.chart.data.datasets = this.datasets().map((ds) => ({ label: ds.label, data: ds.data }));
     this.chart.update('default');
   }
 }

@@ -1,23 +1,25 @@
 <div class="dashboard-page">
   <!-- Greeting -->
-  <div class="dashboard-greeting">
+  <div class="dashboard-greeting" [ftScrollReveal]="0">
     <div>
       <h1 class="dashboard-greeting__title">Good afternoon, Juan</h1>
       <p class="dashboard-greeting__subtitle">
         Here's your financial overview for this month.
       </p>
     </div>
-    <a routerLink="/transactions/new" class="dashboard-greeting__cta">
+    <a routerLink="/transactions/new" class="dashboard-greeting__cta" [ftHoverDepth]="8">
       + New Transaction
     </a>
   </div>
 
   <!-- Stats Grid -->
-  <ft-stats-grid [stats]="stats()" [loading]="loading()" />
+  <div [ftScrollReveal]="100">
+    <ft-stats-grid [stats]="stats()" [loading]="loading()" />
+  </div>
 
   <!-- Main content: Chart + Activity -->
   <div class="dashboard-content">
-    <div class="dashboard-content__chart">
+    <div class="dashboard-content__chart" [ftScrollReveal]="200">
       <ft-area-chart
         [labels]="chartLabels"
         [datasets]="chartDatasets"
@@ -26,7 +28,7 @@
         [loading]="loading()"
       />
     </div>
-    <div class="dashboard-content__activity">
+    <div class="dashboard-content__activity" [ftScrollReveal]="300">
       <ft-recent-activity
         [items]="activity()"
         [loading]="loading()"

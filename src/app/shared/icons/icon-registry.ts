@@ -42,6 +42,7 @@ import {
   heroUser,
   heroArrowRightOnRectangle,
   heroQuestionMarkCircle,
+  heroPaperAirplane,
 } from '@ng-icons/heroicons/outline';
 
 // ─── Icon Map ────────────────────────────────────────────────────────────────
@@ -96,6 +97,7 @@ export const ICONS = {
   user: heroUser,
   help: heroQuestionMarkCircle,
   list: heroClipboardDocumentList,
+  telegram: heroPaperAirplane,
 };
 
 // ─── Category Icon Mapping ───────────────────────────────────────────────────

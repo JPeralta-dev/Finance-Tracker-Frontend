@@ -8,8 +8,11 @@ import {
   OnChanges,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Chart } from 'chart.js';
 import { ChartService } from '../../charts/chart.service';
+
+// Dynamic import to avoid static analysis issues with Chart.js
+let Chart: any;
+import('chart.js').then(m => Chart = m.Chart);
 
 export interface AreaDataset {
   label: string;
@@ -34,7 +37,7 @@ export class AreaChartComponent implements OnInit, OnDestroy, OnChanges {
 
   @ViewChild('chartCanvas') private canvas!: ElementRef<HTMLCanvasElement>;
 
-  private chart: Chart | null = null;
+  private chart: any = null;
 
   constructor(private chartService: ChartService) {}
 
@@ -51,14 +54,14 @@ export class AreaChartComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private initChart(): void {
-    if (!this.canvas) return;
+    if (!this.canvas || !Chart) return;
 
     const config = this.chartService.createAreaConfig(
       this.labels(),
       this.datasets(),
     );
 
-    this.chart = new Chart(this.canvas.nativeElement, config as never);
+    this.chart = new Chart(this.canvas.nativeElement, config);
   }
 
   private updateChart(): void {

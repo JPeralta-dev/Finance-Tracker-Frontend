@@ -1,7 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Chart, registerables } from 'chart.js';
-
-Chart.register(...registerables);
 
 /**
  * ChartService — Central configuration for Chart.js with Obsidian Glass theme.

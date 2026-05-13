@@ -12,9 +12,9 @@
     <span class="stat-card__label">{{ data().label }}</span>
   </div>
 
-  <!-- Value -->
+  <!-- Value with CountUp animation -->
   <div class="stat-card__value">
-    {{ formatValue(data().value) }}
+    <span [ftCountUp]="data().value" [ftCountUpDecimals]="2"></span>
   </div>
 
   <!-- Footer: trend + optional insight -->
@@ -26,9 +26,9 @@
           [class]="trendDirection() === 'up' ? 'trend--up' : trendDirection() === 'down' ? 'trend--down' : 'trend--neutral'"
         >
           @if (trendDirection() === 'up') {
-            <ng-icon name="heroOutlineArrowTrendingUp" size="0.85rem" />
+            <ng-icon name="heroArrowTrendingUp" size="0.85rem" />
           } @else if (trendDirection() === 'down') {
-            <ng-icon name="heroOutlineArrowTrendingDown" size="0.85rem" />
+            <ng-icon name="heroArrowTrendingDown" size="0.85rem" />
           }
           {{ trendLabel() }}
         </span>

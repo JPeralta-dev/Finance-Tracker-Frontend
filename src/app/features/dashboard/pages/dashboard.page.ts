@@ -5,6 +5,9 @@ import { StatsGridComponent } from '../components/stats-grid/stats-grid.componen
 import { AreaChartComponent, AreaDataset } from '../../../shared/charts';
 import { RecentActivityComponent, ActivityItem } from '../components/recent-activity/recent-activity.component';
 import { StatCardData } from '../components/stat-card/stat-card.types';
+import { ScrollRevealDirective } from '../../../shared/directives/scroll-reveal.directive';
+import { HoverDepthDirective } from '../../../shared/directives/hover-depth.directive';
+import { CountUpDirective } from '../../../shared/directives/count-up.directive';
 
 // Demo data — will be replaced by service calls
 const DEMO_STATS: StatCardData[] = [
@@ -32,7 +35,16 @@ const CHART_DATASETS: AreaDataset[] = [
 @Component({
   selector: 'ft-dashboard-page',
   standalone: true,
-  imports: [CommonModule, RouterLink, StatsGridComponent, AreaChartComponent, RecentActivityComponent],
+  imports: [
+    CommonModule, 
+    RouterLink, 
+    StatsGridComponent, 
+    AreaChartComponent, 
+    RecentActivityComponent,
+    ScrollRevealDirective,
+    HoverDepthDirective,
+    CountUpDirective,
+  ],
   templateUrl: './dashboard.page.html',
   styleUrl: './dashboard.page.scss',
 })
