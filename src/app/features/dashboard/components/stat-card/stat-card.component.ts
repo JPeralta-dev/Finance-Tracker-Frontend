@@ -1,11 +1,14 @@
 import { Component, input, computed } from '@angular/core';
 import { CommonModule, CurrencyPipe, DecimalPipe } from '@angular/common';
+import { NgIcon, provideIcons } from '@ng-icons/core';
 import { StatCardData } from './stat-card.types';
+import { ICONS } from '../../../../shared/icons/icon-registry';
 
 @Component({
   selector: 'ft-stat-card',
   standalone: true,
-  imports: [CommonModule, CurrencyPipe, DecimalPipe],
+  imports: [CommonModule, CurrencyPipe, DecimalPipe, NgIcon],
+  providers: [provideIcons(ICONS)],
   templateUrl: './stat-card.component.html',
   styleUrl: './stat-card.component.scss',
 })

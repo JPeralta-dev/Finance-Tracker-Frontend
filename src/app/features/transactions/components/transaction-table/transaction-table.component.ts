@@ -1,14 +1,17 @@
 import { Component, input, output, computed, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgIcon, provideIcons } from '@ng-icons/core';
 import { TransactionRowComponent } from '../transaction-row/transaction-row.component';
 import { TransactionFiltersComponent } from '../transaction-filters/transaction-filters.component';
 import { PaginationComponent } from '../../../../shared/ui/pagination/pagination.component';
 import { TransactionRowData, TransactionFilter, SortField, SortDirection, SortConfig } from '../../transaction.types';
+import { ICONS } from '../../../../shared/icons/icon-registry';
 
 @Component({
   selector: 'ft-transaction-table',
   standalone: true,
-  imports: [CommonModule, TransactionRowComponent, TransactionFiltersComponent, PaginationComponent],
+  imports: [CommonModule, NgIcon, TransactionRowComponent, TransactionFiltersComponent, PaginationComponent],
+  providers: [provideIcons(ICONS)],
   templateUrl: './transaction-table.component.html',
   styleUrl: './transaction-table.component.scss',
 })
@@ -70,6 +73,16 @@ export class TransactionTableComponent {
     return this.filteredItems().slice(start, start + this.pageSize());
   });
 
+  readonly isEmpty = computed(() => !this.loading() && this.filteredItems().length === 0);
+
+  readonly emptyMessage = computed(() => {
+    const q = this._search();
+    const f = this._filter();
+    if (q) return `No results for "${q}"`;
+    if (f !== 'all') return `No ${f} transactions found`;
+    return 'No transactions yet';
+  });
+
   onFilterChange(filter: TransactionFilter): void {
     this._filter.set(filter);
     this._page.set(1);
@@ -92,14 +105,4 @@ export class TransactionTableComponent {
   onSelect(id: string): void {
     this.ftSelect.emit(id);
   }
-
-  readonly isEmpty = computed(() => !this.loading() && this.filteredItems().length === 0);
-
-  readonly emptyMessage = computed(() => {
-    const q = this._search();
-    const f = this._filter();
-    if (q) return `No results for "${q}"`;
-    if (f !== 'all') return `No ${f} transactions found`;
-    return 'No transactions yet';
-  });
 }

@@ -1,13 +1,16 @@
 import { Component, input, output, computed } from '@angular/core';
 import { CommonModule, DatePipe, CurrencyPipe } from '@angular/common';
+import { NgIcon, provideIcons } from '@ng-icons/core';
 import { UiBadgeComponent } from '../../../../shared/ui/ui-badge/ui-badge.component';
 import { TransactionRowData } from '../../transaction.types';
-import { getCategoryMeta } from '../../components/transaction.utils';
+import { getCategoryMeta, getCategoryIcon } from '../../components/transaction.utils';
+import { ICONS } from '../../../../shared/icons/icon-registry';
 
 @Component({
   selector: 'ft-transaction-row',
   standalone: true,
-  imports: [CommonModule, DatePipe, CurrencyPipe, UiBadgeComponent],
+  imports: [CommonModule, DatePipe, CurrencyPipe, UiBadgeComponent, NgIcon],
+  providers: [provideIcons(ICONS)],
   templateUrl: './transaction-row.component.html',
   styleUrl: './transaction-row.component.scss',
 })
@@ -22,6 +25,7 @@ export class TransactionRowComponent {
   }
 
   readonly categoryMeta = computed(() => getCategoryMeta(this.data().category));
+  readonly categoryIcon = computed(() => getCategoryIcon(this.data().category));
 
   readonly amountSign = computed(() =>
     this.data().type === 'income' ? '+' : '-'

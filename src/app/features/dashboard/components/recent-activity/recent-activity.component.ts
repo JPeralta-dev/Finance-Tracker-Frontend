@@ -1,6 +1,9 @@
 import { Component, input, computed } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
+import { NgIcon, provideIcons } from '@ng-icons/core';
 import { UiBadgeComponent } from '../../../../shared/ui/ui-badge/ui-badge.component';
+import { getCategoryIcon } from '../../../../shared/icons/icon-registry';
+import { ICONS } from '../../../../shared/icons/icon-registry';
 
 export interface ActivityItem {
   id: string;
@@ -9,13 +12,13 @@ export interface ActivityItem {
   amount: number;
   type: 'income' | 'expense';
   date: string;
-  icon?: string;
 }
 
 @Component({
   selector: 'ft-recent-activity',
   standalone: true,
-  imports: [CommonModule, DatePipe, UiBadgeComponent],
+  imports: [CommonModule, DatePipe, UiBadgeComponent, NgIcon],
+  providers: [provideIcons(ICONS)],
   templateUrl: './recent-activity.component.html',
   styleUrl: './recent-activity.component.scss',
 })
@@ -31,6 +34,10 @@ export class RecentActivityComponent {
   readonly isEmpty = computed<boolean>(() =>
     !this.loading() && this.items().length === 0
   );
+
+  getItemIcon(category: string): string {
+    return getCategoryIcon(category);
+  }
 
   formatAmount(item: ActivityItem): string {
     const sign = item.type === 'income' ? '+' : '-';

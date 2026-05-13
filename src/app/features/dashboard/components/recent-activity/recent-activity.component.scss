@@ -155,8 +155,15 @@
 
 /* Empty state */
 .empty-icon {
-  font-size: 32px;
-  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 12px;
+  border-radius: var(--radius-md);
+  background: var(--bg-elevated);
+  color: var(--text-tertiary);
   opacity: 0.6;
 }
 

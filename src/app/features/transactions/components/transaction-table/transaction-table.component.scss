@@ -34,8 +34,15 @@
   }
 
   &__empty-icon {
-    font-size: 36px;
-    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 16px;
+    border-radius: var(--radius-lg);
+    background: var(--bg-elevated);
+    color: var(--text-tertiary);
     opacity: 0.5;
   }
 

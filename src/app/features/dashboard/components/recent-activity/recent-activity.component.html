@@ -29,7 +29,9 @@
   <!-- Empty state -->
   @if (isEmpty()) {
     <div class="recent-activity__empty">
-      <div class="empty-icon">📭</div>
+      <div class="empty-icon">
+        <ng-icon name="heroOutlineClipboardDocumentList" size="2rem" />
+      </div>
       <p class="empty-title">No transactions yet</p>
       <p class="empty-desc">
         Start tracking your finances by adding your first transaction.
@@ -44,7 +46,7 @@
       @for (item of visibleItems(); track item.id) {
         <div class="activity-row">
           <div class="activity-row__icon">
-            {{ item.icon ?? '💳' }}
+            <ng-icon [name]="getItemIcon(item.category)" size="1.1rem" />
           </div>
           <div class="activity-row__info">
             <span class="activity-row__desc">{{ item.description }}</span>

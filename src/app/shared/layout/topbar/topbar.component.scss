@@ -55,7 +55,8 @@
   }
 
   &__logo-icon {
-    font-size: 18px;
+    display: flex;
+    align-items: center;
     color: var(--accent-start);
   }
 
@@ -149,31 +150,23 @@
   /* ── Hamburger (mobile only) ── */
   &__hamburger {
     display: none;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 4px;
     width: 36px;
     height: 36px;
     border: none;
     background: transparent;
+    color: var(--text-secondary);
     cursor: pointer;
     padding: 8px;
     border-radius: var(--radius-sm);
+    transition:
+      background var(--duration-fast) var(--ease-out),
+      color var(--duration-fast) var(--ease-out);
 
-    span {
-      display: block;
-      width: 18px;
-      height: 2px;
-      background: var(--text-secondary);
-      border-radius: 1px;
-      transition:
-        background var(--duration-fast) var(--ease-out),
-        transform var(--duration-fast) var(--ease-out);
-    }
-
-    &:hover span {
-      background: var(--text-primary);
+    &:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-primary);
     }
   }
 

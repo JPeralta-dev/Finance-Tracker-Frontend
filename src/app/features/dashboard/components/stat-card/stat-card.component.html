@@ -4,8 +4,10 @@
 
   <!-- Header: icon + label -->
   <div class="stat-card__header">
-    @if (data().icon) {
-      <span class="stat-card__icon">{{ data().icon }}</span>
+    @if (data().icon; as iconName) {
+      <span class="stat-card__icon">
+        <ng-icon [name]="iconName" size="1rem" />
+      </span>
     }
     <span class="stat-card__label">{{ data().label }}</span>
   </div>
@@ -23,7 +25,11 @@
           class="stat-card__trend"
           [class]="trendDirection() === 'up' ? 'trend--up' : trendDirection() === 'down' ? 'trend--down' : 'trend--neutral'"
         >
-          @if (trendDirection() === 'up') { ↑ } @else if (trendDirection() === 'down') { ↓ }
+          @if (trendDirection() === 'up') {
+            <ng-icon name="heroOutlineArrowTrendingUp" size="0.85rem" />
+          } @else if (trendDirection() === 'down') {
+            <ng-icon name="heroOutlineArrowTrendingDown" size="0.85rem" />
+          }
           {{ trendLabel() }}
         </span>
       }

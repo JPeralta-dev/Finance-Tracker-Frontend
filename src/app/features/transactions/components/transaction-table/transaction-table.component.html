@@ -37,7 +37,9 @@
   <!-- Empty state -->
   @if (isEmpty()) {
     <div class="tx-table__empty">
-      <div class="tx-table__empty-icon">📭</div>
+      <div class="tx-table__empty-icon">
+        <ng-icon name="heroOutlineClipboardDocumentList" size="2rem" />
+      </div>
       <p class="tx-table__empty-title">{{ emptyMessage() }}</p>
       <p class="tx-table__empty-desc">
         Start tracking your finances by adding your first transaction.

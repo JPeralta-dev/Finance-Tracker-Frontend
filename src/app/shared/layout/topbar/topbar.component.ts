@@ -1,22 +1,25 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { NgIcon, provideIcons } from '@ng-icons/core';
 import { LayoutService, NavItem } from '../../../core/services/layout.service';
 import { NavItemComponent } from '../../layout/nav-item/nav-item.component';
 import { MobileMenuComponent } from '../../layout/mobile-menu/mobile-menu.component';
 import { MobileMenuItem } from '../../layout/mobile-menu/mobile-menu.types';
+import { ICONS } from '../../../shared/icons/icon-registry';
 
 const NAV_ITEMS: NavItem[] = [
-  { label: 'Dashboard', path: '/dashboard', icon: '📊' },
-  { label: 'Transactions', path: '/transactions', icon: '💳' },
-  { label: 'Categories', path: '/categories', icon: '🏷️' },
-  { label: 'Analytics', path: '/analytics', icon: '📈' },
+  { label: 'Dashboard', path: '/dashboard', icon: 'dashboard' },
+  { label: 'Transactions', path: '/transactions', icon: 'transactions' },
+  { label: 'Categories', path: '/categories', icon: 'categories' },
+  { label: 'Analytics', path: '/analytics', icon: 'analytics' },
 ];
 
 @Component({
   selector: 'ft-topbar',
   standalone: true,
-  imports: [CommonModule, RouterLink, NavItemComponent, MobileMenuComponent],
+  imports: [CommonModule, RouterLink, NgIcon, NavItemComponent, MobileMenuComponent],
+  providers: [provideIcons(ICONS)],
   templateUrl: './topbar.component.html',
   styleUrl: './topbar.component.scss',
 })
