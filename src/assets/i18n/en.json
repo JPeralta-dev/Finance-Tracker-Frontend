@@ -1,0 +1,74 @@
+{
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "search": "Search",
+    "filter": "Filter",
+    "viewAll": "View all"
+  },
+  "auth": {
+    "login": "Sign In",
+    "register": "Create Account",
+    "logout": "Sign Out",
+    "email": "Email",
+    "password": "Password",
+    "forgotPassword": "Forgot password?",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "createAccount": "Create account",
+    "signIn": "Sign in",
+    "displayName": "Display name",
+    "displayNamePlaceholder": "How should we call you?"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "transactions": "Transactions",
+    "categories": "Categories",
+    "analytics": "Analytics",
+    "settings": "Settings",
+    "newTransaction": "New Transaction"
+  },
+  "landing": {
+    "heroBadge": "AI-Powered Finance",
+    "heroTitle": "Intelligent Finance <br />Tracking",
+    "heroSubtitle": "Track, analyze, and optimize your spending with real-time insights. Connect your accounts or use our Telegram bot for instant logging.",
+    "getStarted": "Get Started",
+    "telegramBot": "Telegram Bot",
+    "trustFree": "Free forever",
+    "trustNoCard": "No credit card",
+    "trustEncrypted": "Encrypted",
+    "featuresTitle": "Everything you need",
+    "viewFeatures": "View all features",
+    "telegramTitle": "Telegram Integration",
+    "telegramDesc": "Log transactions instantly via Telegram bot. Just send a message and it's tracked automatically. No app opening required.",
+    "openBot": "Open Bot",
+    "ctaTitle": "Ready to take control?",
+    "ctaSubtitle": "Join thousands of users tracking their finances with Flowr. It's free and takes less than a minute to set up.",
+    "ctaButton": "Get Started for Free"
+  },
+  "dashboard": {
+    "greeting": "Good afternoon",
+    "greetingSubtitle": "Here's your financial overview for this month.",
+    "totalBalance": "Total Balance",
+    "monthlyIncome": "Monthly Income",
+    "monthlyExpenses": "Monthly Expenses",
+    "savingsRate": "Savings Rate",
+    "insightAbove": "Above last month",
+    "insightOnTrack": "On track",
+    "insightCouldImprove": "Could improve",
+    "monthlyOverview": "Monthly Overview",
+    "last6Months": "Last 6 months"
+  },
+  "transactions": {
+    "title": "Transactions",
+    "subtitle": "Manage and track all your financial activity.",
+    "new": "New Transaction",
+    "noTransactions": "No transactions yet",
+    "addFirst": "Add your first transaction"
+  }
+}

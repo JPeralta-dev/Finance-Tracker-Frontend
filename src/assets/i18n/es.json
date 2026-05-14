@@ -1,0 +1,74 @@
+{
+  "common": {
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "loading": "Cargando...",
+    "error": "Error",
+    "success": "Éxito",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "viewAll": "Ver todo"
+  },
+  "auth": {
+    "login": "Iniciar Sesión",
+    "register": "Crear Cuenta",
+    "logout": "Cerrar Sesión",
+    "email": "Correo Electrónico",
+    "password": "Contraseña",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "noAccount": "¿No tienes cuenta?",
+    "hasAccount": "¿Ya tienes cuenta?",
+    "createAccount": "Crear cuenta",
+    "signIn": "Iniciar sesión",
+    "displayName": "Nombre para mostrar",
+    "displayNamePlaceholder": "¿Cómo deberíamos llamarte?"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "transactions": "Transacciones",
+    "categories": "Categorías",
+    "analytics": "Análisis",
+    "settings": "Configuración",
+    "newTransaction": "Nueva Transacción"
+  },
+  "landing": {
+    "heroBadge": "Finanzas con IA",
+    "heroTitle": "Seguimiento Financiero <br />Inteligente",
+    "heroSubtitle": "Rastrea, analiza y optimiza tus gastos con información en tiempo real. Conecta tus cuentas o usa nuestro bot de Telegram para registrar al instante.",
+    "getStarted": "Comenzar",
+    "telegramBot": "Bot de Telegram",
+    "trustFree": "Gratis para siempre",
+    "trustNoCard": "Sin tarjeta de crédito",
+    "trustEncrypted": "Encriptado",
+    "featuresTitle": "Todo lo que necesitas",
+    "viewFeatures": "Ver todas las funciones",
+    "telegramTitle": "Integración con Telegram",
+    "telegramDesc": "Registra transacciones al instante con nuestro bot de Telegram. Solo envía un mensaje y queda registrado. No necesitas abrir la app.",
+    "openBot": "Abrir Bot",
+    "ctaTitle": "¿Listo para tomar el control?",
+    "ctaSubtitle": "Únete a miles de usuarios que rastrean sus finanzas con Flowr. Es gratis y toma menos de un minuto configurarlo.",
+    "ctaButton": "Comenzar Gratis"
+  },
+  "dashboard": {
+    "greeting": "Buenas tardes",
+    "greetingSubtitle": "Aquí tienes tu resumen financiero de este mes.",
+    "totalBalance": "Balance Total",
+    "monthlyIncome": "Ingreso Mensual",
+    "monthlyExpenses": "Gastos Mensuales",
+    "savingsRate": "Tasa de Ahorro",
+    "insightAbove": "Por encima del mes pasado",
+    "insightOnTrack": "En camino",
+    "insightCouldImprove": "Podría mejorar",
+    "monthlyOverview": "Resumen Mensual",
+    "last6Months": "Últimos 6 meses"
+  },
+  "transactions": {
+    "title": "Transacciones",
+    "subtitle": "Gestiona y rastrea toda tu actividad financiera.",
+    "new": "Nueva Transacción",
+    "noTransactions": "No hay transacciones todavía",
+    "addFirst": "Agrega tu primera transacción"
+  }
+}

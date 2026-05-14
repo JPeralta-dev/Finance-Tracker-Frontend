@@ -1,0 +1,74 @@
+{
+  "common": {
+    "save": "Sauvegarder",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "success": "Succès",
+    "search": "Rechercher",
+    "filter": "Filtrer",
+    "viewAll": "Voir tout"
+  },
+  "auth": {
+    "login": "Connexion",
+    "register": "Créer un compte",
+    "logout": "Déconnexion",
+    "email": "E-mail",
+    "password": "Mot de passe",
+    "forgotPassword": "Mot de passe oublié ?",
+    "noAccount": "Pas encore de compte ?",
+    "hasAccount": "Déjà un compte ?",
+    "createAccount": "Créer un compte",
+    "signIn": "Se connecter",
+    "displayName": "Nom d'affichage",
+    "displayNamePlaceholder": "Comment devons-nous vous appeler ?"
+  },
+  "nav": {
+    "dashboard": "Tableau de bord",
+    "transactions": "Transactions",
+    "categories": "Catégories",
+    "analytics": "Analytique",
+    "settings": "Paramètres",
+    "newTransaction": "Nouvelle Transaction"
+  },
+  "landing": {
+    "heroBadge": "Finance IA",
+    "heroTitle": "Suivi Financier <br />Intelligent",
+    "heroSubtitle": "Suivez, analysez et optimisez vos dépenses avec des informations en temps réel. Connectez vos comptes ou utilisez notre bot Telegram.",
+    "getStarted": "Commencer",
+    "telegramBot": "Bot Telegram",
+    "trustFree": "Gratuit pour toujours",
+    "trustNoCard": "Sans carte de crédit",
+    "trustEncrypted": "Chiffré",
+    "featuresTitle": "Tout ce dont vous avez besoin",
+    "viewFeatures": "Voir toutes les fonctionnalités",
+    "telegramTitle": "Intégration Telegram",
+    "telegramDesc": "Enregistrez des transactions instantanément via le bot Telegram. Envoyez simplement un message et c'est suivi automatiquement.",
+    "openBot": "Ouvrir le Bot",
+    "ctaTitle": "Prêt à prendre le contrôle ?",
+    "ctaSubtitle": "Rejoignez des milliers d'utilisateurs qui suivent leurs finances avec Flowr. C'est gratuit et cela prend moins d'une minute.",
+    "ctaButton": "Commencer Gratuitement"
+  },
+  "dashboard": {
+    "greeting": "Bon après-midi",
+    "greetingSubtitle": "Voici votre aperçu financier pour ce mois-ci.",
+    "totalBalance": "Solde Total",
+    "monthlyIncome": "Revenu Mensuel",
+    "monthlyExpenses": "Dépenses Mensuelles",
+    "savingsRate": "Taux d'Épargne",
+    "insightAbove": "Au-dessus du mois dernier",
+    "insightOnTrack": "Sur la bonne voie",
+    "insightCouldImprove": "Pourrait s'améliorer",
+    "monthlyOverview": "Aperçu Mensuel",
+    "last6Months": "6 derniers mois"
+  },
+  "transactions": {
+    "title": "Transactions",
+    "subtitle": "Gérez et suivez toute votre activité financière.",
+    "new": "Nouvelle Transaction",
+    "noTransactions": "Pas encore de transactions",
+    "addFirst": "Ajoutez votre première transaction"
+  }
+}
