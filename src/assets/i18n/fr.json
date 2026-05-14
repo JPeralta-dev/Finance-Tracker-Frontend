@@ -13,17 +13,32 @@
   },
   "auth": {
     "login": "Connexion",
+    "login_subtitle": "Connectez-vous pour gérer vos finances",
     "register": "Créer un compte",
+    "register_subtitle": "Commencez à suivre vos finances aujourd'hui",
     "logout": "Déconnexion",
     "email": "E-mail",
+    "email_placeholder": "vous@exemple.com",
     "password": "Mot de passe",
+    "password_placeholder": "Votre mot de passe",
+    "password_min": "Au moins 8 caractères",
     "forgotPassword": "Mot de passe oublié ?",
     "noAccount": "Pas encore de compte ?",
     "hasAccount": "Déjà un compte ?",
     "createAccount": "Créer un compte",
     "signIn": "Se connecter",
-    "displayName": "Nom d'affichage",
-    "displayNamePlaceholder": "Comment devons-nous vous appeler ?"
+    "displayName": "Nom d'affichage (optionnel)",
+    "displayNamePlaceholder": "Comment devons-nous vous appeler ?",
+    "signing_in": "Connexion en cours...",
+    "creating_account": "Création du compte...",
+    "errors": {
+      "invalid_credentials": "E-mail ou mot de passe invalide",
+      "email_exists": "Cet e-mail est déjà enregistré",
+      "email_required": "Un e-mail valide est requis",
+      "password_required": "Le mot de passe est requis",
+      "password_min": "Le mot de passe doit contenir au moins 8 caractères",
+      "generic": "Quelque chose s'est mal passé. Réessayez."
+    }
   },
   "nav": {
     "dashboard": "Tableau de bord",
@@ -80,6 +95,38 @@
     "subtitle": "Gérez et suivez toute votre activité financière.",
     "new": "Nouvelle Transaction",
     "noTransactions": "Pas encore de transactions",
-    "addFirst": "Ajoutez votre première transaction"
+    "addFirst": "Ajoutez votre première transaction",
+    "form": {
+      "back": "← Retour aux transactions",
+      "new_title": "Nouvelle Transaction",
+      "edit_title": "Modifier la Transaction",
+      "new_subtitle": "Remplissez les détails pour enregistrer une transaction",
+      "edit_subtitle": "Modifiez les détails ci-dessous",
+      "type": "Type",
+      "income": "Revenu",
+      "expense": "Dépense",
+      "amount": "Montant",
+      "description": "Description",
+      "description_placeholder": "ex. Courses mensuelles",
+      "category": "Catégorie",
+      "category_placeholder": "Sélectionnez une catégorie",
+      "date": "Date",
+      "create": "Ajouter Transaction",
+      "update": "Modifier Transaction",
+      "saving": "Enregistrement…",
+      "success": {
+        "created": "✅ Transaction créée avec succès",
+        "updated": "✅ Transaction modifiée avec succès"
+      },
+      "errors": {
+        "required": "Ce champ est obligatoire",
+        "min_value": "Le montant doit être supérieur à 0",
+        "max_length": "Maximum 140 caractères",
+        "connection_error": "Impossible de se connecter au serveur",
+        "invalid_data": "Données invalides. Vérifiez tous les champs",
+        "not_found": "Transaction non trouvée",
+        "server_error": "Erreur serveur. Veuillez réessayer"
+      }
+    }
   }
 }

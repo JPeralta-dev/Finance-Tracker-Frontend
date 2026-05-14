@@ -42,13 +42,13 @@
     background: linear-gradient(135deg, var(--accent-start), var(--accent-mid));
     border-radius: var(--radius-sm);
     text-decoration: none;
-    box-shadow: 0 2px 8px rgba(6, 214, 160, 0.25);
+    box-shadow: var(--glow-accent);
     transition:
       box-shadow var(--duration-fast) var(--ease-out),
       transform var(--duration-fast) var(--ease-out);
 
     &:hover {
-      box-shadow: 0 4px 16px rgba(6, 214, 160, 0.35);
+      box-shadow: 0 0 40px rgba(157, 80, 187, 0.4);
       transform: translateY(-1px);
     }
 

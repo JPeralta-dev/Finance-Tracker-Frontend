@@ -1,0 +1,173 @@
+<div class="form-page" ftScrollAnimate="fade-up">
+  <a routerLink="/transactions" class="back-link">
+    <ng-icon name="chevronLeft" size="1rem" />
+    {{ 'transactions.form.back' | translate }}
+  </a>
+
+  <div class="form-card" ftScrollAnimate="scale-in" [delay]="100">
+    <div class="form-header">
+      <h1 class="form-title">
+        {{ (isEdit() ? 'transactions.form.edit_title' : 'transactions.form.new_title') | translate }}
+      </h1>
+      <p class="form-subtitle">
+        {{ (isEdit() ? 'transactions.form.edit_subtitle' : 'transactions.form.new_subtitle') | translate }}
+      </p>
+    </div>
+
+    @if (loadingEdit()) {
+      <div class="loading-skeleton">
+        @for (s of [1, 2, 3, 4, 5]; track s) {
+          <div class="sk-field">
+            <div class="sk-label"></div>
+            <div class="sk-input"></div>
+          </div>
+        }
+      </div>
+    } @else {
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="tx-form" novalidate>
+        <!-- Type toggle -->
+        <div class="form-group">
+          <label class="form-label">{{ 'transactions.form.type' | translate }}</label>
+          <div class="type-toggle">
+            <button
+              type="button"
+              class="type-btn type-btn--income"
+              [class.active]="form.get('type')?.value === 'income'"
+              (click)="setType('income')"
+            >
+              <ng-icon name="arrowUp" size="0.875rem" />
+              {{ 'transactions.form.income' | translate }}
+            </button>
+            <button
+              type="button"
+              class="type-btn type-btn--expense"
+              [class.active]="form.get('type')?.value === 'expense'"
+              (click)="setType('expense')"
+            >
+              <ng-icon name="arrowDown" size="0.875rem" />
+              {{ 'transactions.form.expense' | translate }}
+            </button>
+          </div>
+        </div>
+
+        <!-- Amount -->
+        <div class="form-group">
+          <label class="form-label" for="amount">{{ 'transactions.form.amount' | translate }}</label>
+          <div class="input-wrap currency-wrap">
+            <span class="currency-symbol">$</span>
+            <input
+              id="amount"
+              type="number"
+              formControlName="amount"
+              placeholder="0.00"
+              class="form-input currency-input"
+              [class.error]="isInvalid('amount')"
+              min="0"
+              step="0.01"
+            />
+          </div>
+          @if (isInvalid('amount')) {
+            <span class="error-msg">
+              {{ 'transactions.form.errors.' + getErrorMessage('amount') | translate }}
+            </span>
+          }
+        </div>
+
+        <!-- Description -->
+        <div class="form-group">
+          <label class="form-label" for="description">{{ 'transactions.form.description' | translate }}</label>
+          <div class="input-wrap">
+            <input
+              id="description"
+              type="text"
+              formControlName="description"
+              [placeholder]="'transactions.form.description_placeholder' | translate"
+              class="form-input"
+              [class.error]="isInvalid('description')"
+              maxlength="140"
+            />
+          </div>
+          @if (isInvalid('description')) {
+            <span class="error-msg">
+              {{ 'transactions.form.errors.' + getErrorMessage('description') | translate }}
+            </span>
+          }
+        </div>
+
+        <!-- Category -->
+        <div class="form-group">
+          <label class="form-label" for="category">{{ 'transactions.form.category' | translate }}</label>
+          <div class="input-wrap">
+            <select
+              id="category"
+              formControlName="category"
+              class="form-input form-select"
+              [class.error]="isInvalid('category')"
+            >
+              <option value="" disabled>{{ 'transactions.form.category_placeholder' | translate }}</option>
+              @for (cat of filteredCategories(); track cat.id) {
+                <option [value]="cat.name">
+                  {{ cat.name }}
+                </option>
+              }
+            </select>
+          </div>
+          @if (isInvalid('category')) {
+            <span class="error-msg">
+              {{ 'transactions.form.errors.' + getErrorMessage('category') | translate }}
+            </span>
+          }
+        </div>
+
+        <!-- Date -->
+        <div class="form-group">
+          <label class="form-label" for="date">{{ 'transactions.form.date' | translate }}</label>
+          <div class="input-wrap">
+            <input
+              id="date"
+              type="date"
+              formControlName="date"
+              class="form-input"
+              [class.error]="isInvalid('date')"
+            />
+          </div>
+          @if (isInvalid('date')) {
+            <span class="error-msg">
+              {{ 'transactions.form.errors.' + getErrorMessage('date') | translate }}
+            </span>
+          }
+        </div>
+
+        <!-- Actions -->
+        <div class="form-actions">
+          <a routerLink="/transactions" class="btn-cancel">
+            {{ 'common.cancel' | translate }}
+          </a>
+          <button
+            type="submit"
+            class="btn-submit"
+            [class.loading]="submitting()"
+            [disabled]="submitting()"
+          >
+            @if (submitting()) {
+              <span class="spinner"></span> {{ 'transactions.form.saving' | translate }}
+            } @else {
+              {{ (isEdit() ? 'transactions.form.update' : 'transactions.form.create') | translate }}
+            }
+          </button>
+        </div>
+
+        @if (successMsg()) {
+          <div class="success-banner" ftScrollAnimate="fade-in">
+            {{ 'transactions.form.success.' + successMsg() | translate }}
+          </div>
+        }
+        @if (errorMsg()) {
+          <div class="error-banner" ftScrollAnimate="fade-in">
+            {{ 'transactions.form.errors.' + errorMsg() | translate }}
+          </div>
+        }
+      </form>
+    }
+  </div>
+</div>

@@ -13,17 +13,32 @@
   },
   "auth": {
     "login": "Sign In",
+    "login_subtitle": "Sign in to manage your finances",
     "register": "Create Account",
+    "register_subtitle": "Start tracking your finances today",
     "logout": "Sign Out",
     "email": "Email",
+    "email_placeholder": "you@example.com",
     "password": "Password",
+    "password_placeholder": "Your password",
+    "password_min": "At least 8 characters",
     "forgotPassword": "Forgot password?",
     "noAccount": "Don't have an account?",
     "hasAccount": "Already have an account?",
     "createAccount": "Create account",
     "signIn": "Sign in",
-    "displayName": "Display name",
-    "displayNamePlaceholder": "How should we call you?"
+    "displayName": "Display name (optional)",
+    "displayNamePlaceholder": "How should we call you?",
+    "signing_in": "Signing in...",
+    "creating_account": "Creating account...",
+    "errors": {
+      "invalid_credentials": "Invalid email or password",
+      "email_exists": "This email is already registered",
+      "email_required": "Valid email is required",
+      "password_required": "Password is required",
+      "password_min": "Password must be at least 8 characters",
+      "generic": "Something went wrong. Try again."
+    }
   },
   "nav": {
     "dashboard": "Dashboard",
@@ -80,6 +95,38 @@
     "subtitle": "Manage and track all your financial activity.",
     "new": "New Transaction",
     "noTransactions": "No transactions yet",
-    "addFirst": "Add your first transaction"
+    "addFirst": "Add your first transaction",
+    "form": {
+      "back": "← Back to transactions",
+      "new_title": "New Transaction",
+      "edit_title": "Edit Transaction",
+      "new_subtitle": "Fill in the details to record a transaction",
+      "edit_subtitle": "Update the details below",
+      "type": "Type",
+      "income": "Income",
+      "expense": "Expense",
+      "amount": "Amount",
+      "description": "Description",
+      "description_placeholder": "e.g. Monthly groceries",
+      "category": "Category",
+      "category_placeholder": "Select a category",
+      "date": "Date",
+      "create": "Add Transaction",
+      "update": "Update Transaction",
+      "saving": "Saving…",
+      "success": {
+        "created": "✅ Transaction created successfully",
+        "updated": "✅ Transaction updated successfully"
+      },
+      "errors": {
+        "required": "This field is required",
+        "min_value": "Amount must be greater than 0",
+        "max_length": "Maximum 140 characters",
+        "connection_error": "Cannot connect to server",
+        "invalid_data": "Invalid data. Check all fields",
+        "not_found": "Transaction not found",
+        "server_error": "Server error. Please try again"
+      }
+    }
   }
 }

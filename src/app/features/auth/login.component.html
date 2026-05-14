@@ -1,0 +1,61 @@
+<div class="auth-container">
+  <div class="auth-card">
+    <h1 class="auth-title">{{ 'auth.login' | translate }}</h1>
+    <p class="auth-subtitle">{{ 'auth.login_subtitle' | translate }}</p>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="auth-form">
+      @if (error) {
+        <div class="error-banner">{{ error | translate }}</div>
+      }
+
+      <div class="field">
+        <label for="email">{{ 'auth.email' | translate }}</label>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          [placeholder]="'auth.email_placeholder' | translate"
+          autocomplete="email"
+        />
+        @if (email.invalid && email.touched) {
+          <span class="field-error">{{ 'auth.errors.email_required' | translate }}</span>
+        }
+      </div>
+
+      <div class="field">
+        <div class="field-header">
+          <label for="password">{{ 'auth.password' | translate }}</label>
+          <a routerLink="/forgot-password" class="forgot-link">{{ 'auth.forgotPassword' | translate }}</a>
+        </div>
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          [placeholder]="'auth.password_placeholder' | translate"
+          autocomplete="current-password"
+        />
+        @if (password.invalid && password.touched) {
+          <span class="field-error">{{ 'auth.errors.password_required' | translate }}</span>
+        }
+      </div>
+
+      <button
+        type="submit"
+        class="btn-primary"
+        [class.btn-primary--disabled]="form.invalid || loading"
+        [disabled]="form.invalid || loading"
+      >
+        @if (loading) {
+          <span class="spinner"></span> {{ 'auth.signing_in' | translate }}
+        } @else {
+          {{ 'auth.signIn' | translate }}
+        }
+      </button>
+    </form>
+
+    <p class="auth-footer">
+      {{ 'auth.noAccount' | translate }}
+      <a routerLink="/register">{{ 'auth.createAccount' | translate }}</a>
+    </p>
+  </div>
+</div>

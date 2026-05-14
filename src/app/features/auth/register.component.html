@@ -1,0 +1,69 @@
+<div class="auth-container">
+  <div class="auth-card">
+    <h1 class="auth-title">{{ 'auth.register' | translate }}</h1>
+    <p class="auth-subtitle">{{ 'auth.register_subtitle' | translate }}</p>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="auth-form">
+      @if (error) {
+        <div class="error-banner">{{ error | translate }}</div>
+      }
+
+      <div class="field">
+        <label for="email">{{ 'auth.email' | translate }}</label>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          [placeholder]="'auth.email_placeholder' | translate"
+          autocomplete="email"
+        />
+        @if (email.invalid && email.touched) {
+          <span class="field-error">{{ 'auth.errors.email_required' | translate }}</span>
+        }
+      </div>
+
+      <div class="field">
+        <label for="displayName">{{ 'auth.displayName' | translate }}</label>
+        <input
+          id="displayName"
+          type="text"
+          formControlName="displayName"
+          [placeholder]="'auth.displayNamePlaceholder' | translate"
+          maxlength="50"
+        />
+      </div>
+
+      <div class="field">
+        <label for="password">{{ 'auth.password' | translate }}</label>
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          [placeholder]="'auth.password_min' | translate"
+          autocomplete="new-password"
+        />
+        @if (password.invalid && password.touched) {
+          <span class="field-error">{{ 'auth.errors.password_min' | translate }}</span>
+        }
+      </div>
+
+      <button
+        type="submit"
+        class="btn-primary"
+        [class.btn-primary--disabled]="form.invalid || loading"
+        [disabled]="form.invalid || loading"
+      >
+        @if (loading) {
+          <span class="spinner"></span> {{ 'auth.creating_account' | translate }}
+        } @else {
+          {{ 'auth.createAccount' | translate }}
+        }
+      </button>
+    </form>
+
+    <p class="auth-footer">
+      {{ 'auth.hasAccount' | translate }}
+      <a routerLink="/login">{{ 'auth.signIn' | translate }}</a>
+    </p>
+  </div>
+</div>

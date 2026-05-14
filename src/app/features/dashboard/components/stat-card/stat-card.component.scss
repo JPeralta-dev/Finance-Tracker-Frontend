@@ -26,7 +26,7 @@
     background: linear-gradient(
       90deg,
       transparent,
-      rgba(6, 214, 160, 0.3),
+      rgba(157, 80, 187, 0.4),
       transparent
     );
     opacity: 0.6;
@@ -61,7 +61,7 @@
     width: 28px;
     height: 28px;
     border-radius: var(--radius-sm);
-    background: rgba(6, 214, 160, 0.1);
+    background: var(--accent-glow);
     font-size: 14px;
     flex-shrink: 0;
   }
