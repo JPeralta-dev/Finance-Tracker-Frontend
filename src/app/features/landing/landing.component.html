@@ -1,4 +1,7 @@
 <div class="landing">
+  <!-- Scroll Progress Indicator -->
+  <div class="scroll-progress" [style.transform]="'scaleX(' + scrollProgress() / 100 + ')'"></div>
+
   <!-- Public Navbar -->
   <ft-public-navbar />
 
@@ -6,15 +9,16 @@
   <ft-hero-section />
 
   <!-- Features Section -->
-  <section class="features">
+  <section class="features section-full" ftScrollAnimate="fade-up">
     <div class="features__inner">
       <h2 class="features__title">Everything you need</h2>
       <div class="features__grid">
-        @for (feature of features; track feature.title) {
+        @for (feature of features; track feature.title; let i = $index) {
           <ft-feature-card
             [icon]="feature.icon"
             [title]="feature.title"
             [description]="feature.description"
+            [style.animation-delay]="(i * 100) + 'ms'"
           />
         }
       </div>
@@ -22,8 +26,12 @@
   </section>
 
   <!-- Telegram Section -->
-  <ft-telegram-section />
+  <section class="telegram-wrapper section-full" ftScrollAnimate="fade-up">
+    <ft-telegram-section />
+  </section>
 
   <!-- Final CTA -->
-  <ft-final-cta />
+  <section class="final-cta-wrapper section-full" ftScrollAnimate="scale-in">
+    <ft-final-cta />
+  </section>
 </div>

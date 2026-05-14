@@ -263,3 +263,136 @@ input, select, textarea { font-family: var(--font-body); }
   from { opacity: 0; transform: translateY(2px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+/* ═══════════════════════════════════════════════════════════════════
+   Scroll-Driven Animations
+   Uses CSS scroll-timeline where supported, IntersectionObserver fallback
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Base scroll animation state */
+.scroll-animate {
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  will-change: opacity, transform;
+}
+
+/* Animation variants — initial state */
+.scroll-animate--fade-up {
+  transform: translateY(40px);
+}
+
+.scroll-animate--fade-in {
+  transform: none;
+}
+
+.scroll-animate--slide-left {
+  transform: translateX(-40px);
+}
+
+.scroll-animate--slide-right {
+  transform: translateX(40px);
+}
+
+.scroll-animate--scale-in {
+  transform: scale(0.95);
+}
+
+/* Visible state (IntersectionObserver fallback) */
+.scroll-animate--visible {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* CSS scroll-timeline (native support) */
+@supports (animation-timeline: view()) {
+  .scroll-animate--css-timeline {
+    animation: scrollFadeUp 0.6s ease-out both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 30%;
+  }
+
+  .scroll-animate--css-timeline.scroll-animate--slide-left,
+  .scroll-animate--css-timeline.scroll-animate--slide-right {
+    animation-name: scrollSlideX;
+  }
+
+  .scroll-animate--css-timeline.scroll-animate--scale-in {
+    animation-name: scrollScaleIn;
+  }
+
+  .scroll-animate--css-timeline.scroll-animate--fade-in {
+    animation-name: scrollFadeIn;
+  }
+}
+
+@keyframes scrollFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scrollFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scrollSlideX {
+  from {
+    opacity: 0;
+    transform: translateX(var(--slide-offset, 40px));
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scrollScaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Scroll Progress Indicator */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent-start), var(--accent-mid));
+  z-index: 9999;
+  transform-origin: left;
+  transform: scaleX(0);
+  width: 100%;
+  pointer-events: none;
+}
+
+/* Full-viewport section base */
+.section-full {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+/* Parallax glow effect */
+.parallax-glow {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  filter: blur(150px);
+  opacity: 0.08;
+  pointer-events: none;
+  transition: transform 0.1s linear;
+  will-change: transform;
+}

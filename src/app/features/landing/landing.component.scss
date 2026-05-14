@@ -1,8 +1,20 @@
 .landing {
   min-height: 100vh;
   background: var(--bg-primary);
+  overflow-x: hidden;
 }
 
+/* Full-viewport sections */
+.section-full {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 24px;
+  position: relative;
+}
+
+/* Features Section */
 .features {
   padding: 80px 24px;
 }
@@ -10,6 +22,7 @@
 .features__inner {
   max-width: 1440px;
   margin: 0 auto;
+  width: 100%;
 }
 
 .features__title {
@@ -27,9 +40,40 @@
   gap: 24px;
 }
 
+/* Feature cards stagger animation */
+.features__grid ft-feature-card {
+  opacity: 0;
+  animation: cardFadeIn 0.5s ease-out forwards;
+}
+
+@keyframes cardFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Telegram & Final CTA wrappers */
+.telegram-wrapper,
+.final-cta-wrapper {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+/* Responsive */
 @media (max-width: 1024px) {
   .features__grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .section-full {
+    padding: 60px 24px;
+    min-height: auto;
   }
 }
 
@@ -45,5 +89,10 @@
 
   .features__grid {
     grid-template-columns: 1fr;
+  }
+
+  .section-full {
+    padding: 40px 16px;
+    min-height: auto;
   }
 }

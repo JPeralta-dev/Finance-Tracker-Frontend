@@ -2,19 +2,19 @@
   <div class="hero__inner">
     <!-- Left: Content -->
     <div class="hero__content">
-      <div class="hero__badge">
+      <div class="hero__badge" ftScrollAnimate="fade-in" [delay]="100">
         <span class="hero__badge-dot"></span>
         AI-Powered Finance
       </div>
-      <h1 class="hero__title">
+      <h1 class="hero__title" ftScrollAnimate="fade-up" [delay]="200">
         Intelligent Finance <br />
         <span class="hero__title-accent">Tracking</span>
       </h1>
-      <p class="hero__subtitle">
+      <p class="hero__subtitle" ftScrollAnimate="fade-up" [delay]="300">
         Track, analyze, and optimize your spending with real-time insights.
         Connect your accounts or use our Telegram bot for instant logging.
       </p>
-      <div class="hero__actions">
+      <div class="hero__actions" ftScrollAnimate="fade-up" [delay]="400">
         <a routerLink="/register" class="hero__btn hero__btn--primary">
           Get Started
           <ng-icon name="chevronRight" size="1rem" />
@@ -24,7 +24,7 @@
           Telegram Bot
         </a>
       </div>
-      <div class="hero__trust">
+      <div class="hero__trust" ftScrollAnimate="fade-in" [delay]="500">
         <span class="hero__trust-item">✓ Free forever</span>
         <span class="hero__trust-item">✓ No credit card</span>
         <span class="hero__trust-item">✓ Encrypted</span>
@@ -32,7 +32,7 @@
     </div>
 
     <!-- Right: Visual -->
-    <div class="hero__visual">
+    <div class="hero__visual" ftScrollAnimate="scale-in" [delay]="300">
       <ft-hero-visual />
     </div>
   </div>
