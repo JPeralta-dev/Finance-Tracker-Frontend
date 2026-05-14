@@ -113,7 +113,7 @@
   font-family: var(--font-display);
 
   &--income { color: var(--success); }
-  &--expense { color: var(--error); }
+  &--expense { color: var(--danger); }
   &--savings { color: var(--info); }
 }
 
