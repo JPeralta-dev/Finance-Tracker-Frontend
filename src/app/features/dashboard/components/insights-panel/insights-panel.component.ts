@@ -1,12 +1,12 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
-import type { Insight } from '../../../core/models/insight.model';
+import { TranslatePipe } from '../../../../core/pipes/translate.pipe';
+import type { Insight } from '../../../../core/models/insight.model';
 
 @Component({
   selector: 'ft-insights-panel',
   standalone: true,
-  imports: [CommonModule, TranslateModule],
+  imports: [CommonModule, TranslatePipe],
   templateUrl: './insights-panel.component.html',
   styleUrl: './insights-panel.component.scss',
 })
