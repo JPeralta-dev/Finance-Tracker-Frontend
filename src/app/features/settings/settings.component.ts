@@ -1,10 +1,12 @@
-import { Component, signal, inject } from '@angular/core';
+import { Component, signal, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { ICONS } from '../../shared/icons/icon-registry';
 import { TranslatePipe } from '../../core/pipes/translate.pipe';
 import { ScrollAnimateDirective } from '../../shared/directives/scroll-animate/scroll-animate.directive';
+import { AuthService } from '../../core/services/auth.service';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-settings',
@@ -20,7 +22,39 @@ import { ScrollAnimateDirective } from '../../shared/directives/scroll-animate/s
   templateUrl: './settings.component.html',
   styleUrl: './settings.component.scss',
 })
-export class SettingsComponent {
-  // Placeholder for future integrations (Telegram, AI, etc.)
-  // Telegram integration will be handled by a separate microservice
+export class SettingsComponent implements OnInit {
+  private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
+
+  userEmail = signal('');
+  logoutLoading = signal(false);
+
+  ngOnInit(): void {
+    if (this.authService.isAuthenticated()) {
+      this.authService.getProfile().subscribe({
+        next: (user) => {
+          this.userEmail.set(user.displayName ?? user.email);
+        },
+        error: () => {
+          this.authService.clearTokens();
+        },
+      });
+    }
+  }
+
+  onSignOut(): void {
+    this.logoutLoading.set(true);
+    this.authService.logout().pipe(
+      finalize(() => {
+        this.logoutLoading.set(false);
+      }),
+    ).subscribe({
+      next: () => {
+        this.router.navigate(['/login']);
+      },
+      error: () => {
+        this.router.navigate(['/login']);
+      },
+    });
+  }
 }

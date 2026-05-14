@@ -20,6 +20,29 @@
     </div>
   </div>
 
+  <!-- Session / Account section -->
+  <div class="settings-section settings-section--danger" ftScrollAnimate="fade-up" [delay]="200">
+    <div class="section-header">
+      <div class="section-icon section-icon--danger">
+        <ng-icon name="logout" size="1.5rem" />
+      </div>
+      <div class="section-info">
+        <h2 class="section-title">{{ 'settings.session.title' | translate }}</h2>
+        @if (userEmail()) {
+          <p class="section-desc">{{ 'settings.session.logged_as' | translate }} <strong>{{ userEmail() }}</strong></p>
+        }
+      </div>
+    </div>
+    <div class="session-actions">
+      <button class="btn-sign-out" (click)="onSignOut()" [disabled]="logoutLoading()">
+        @if (logoutLoading()) {
+          <span class="spinner-sm"></span>
+        }
+        {{ 'settings.session.sign_out' | translate }}
+      </button>
+    </div>
+  </div>
+
   <!-- Back to dashboard -->
   <div class="back-link-wrap">
     <a routerLink="/dashboard" class="back-link">

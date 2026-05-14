@@ -229,16 +229,16 @@ interface NavItem {
     }
     .btn-logout {
       padding: 8px 14px;
-      background: transparent;
-      border: 1px solid #ddd;
+      background: var(--danger-bg);
+      border: 1px solid var(--danger);
       border-radius: 8px;
       font-size: 13px;
       font-weight: 600;
-      color: #555;
+      color: var(--danger);
       cursor: pointer;
       transition: all 0.15s;
     }
-    .btn-logout:hover { border-color: #999; color: #111; }
+    .btn-logout:hover { background: var(--danger); color: #fff; }
     .btn-logout:disabled { opacity: 0.5; cursor: not-allowed; }
     .btn-login {
       padding: 8px 18px;
@@ -363,16 +363,17 @@ interface NavItem {
       display: block;
       width: 100%;
       padding: 12px 14px;
-      border: none;
-      background: transparent;
-      color: #666;
+      border: 1px solid var(--danger);
+      background: var(--danger-bg);
+      color: var(--danger);
       font-size: 14px;
-      font-weight: 500;
+      font-weight: 600;
       cursor: pointer;
       text-align: left;
       border-radius: 10px;
+      transition: all 0.15s;
     }
-    .drawer-logout:hover { background: rgba(0,0,0,0.04); }
+    .drawer-logout:hover { background: var(--danger); color: #fff; }
 
     .desktop-only { display: flex; }
     .mobile-only { display: none; }
@@ -388,8 +389,8 @@ interface NavItem {
       display: inline-block;
       width: 12px;
       height: 12px;
-      border: 2px solid rgba(0,0,0,0.15);
-      border-top-color: #555;
+      border: 2px solid rgba(255, 107, 107, 0.2);
+      border-top-color: var(--danger);
       border-radius: 50%;
       animation: spin 0.6s linear infinite;
       margin-right: 6px;

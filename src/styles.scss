@@ -94,6 +94,13 @@
   --font-display: 'Space Grotesk', system-ui, sans-serif;
   --font-body: 'Inter', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  /* Spacing / Layout */
+  --section-padding: 100px 24px;
+  --section-padding-tablet: 60px 24px;
+  --section-padding-mobile: 60px 16px;
+  --content-max-width: 1440px;
+  --content-max-width-wide: 1320px;
 }
 
 /* LIGHT THEME — "Sky Lavender" */
@@ -455,7 +462,6 @@ input, select, textarea { font-family: var(--font-body); }
 
 /* Full-viewport section base */
 .section-full {
-  min-height: 100vh;
   display: flex;
   align-items: center;
   position: relative;

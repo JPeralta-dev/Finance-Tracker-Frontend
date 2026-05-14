@@ -4,9 +4,8 @@
   overflow-x: hidden;
 }
 
-/* Sections - fill viewport height */
+/* Sections - content-driven height */
 .section-full {
-  min-height: 100vh;
   padding: 100px 24px;
   position: relative;
   display: flex;
@@ -16,7 +15,6 @@
 
 /* Features Section */
 .features {
-  min-height: 100vh;
   padding: 100px 24px;
   display: flex;
   flex-direction: column;
@@ -24,7 +22,7 @@
 }
 
 .features__inner {
-  max-width: 1600px;
+  max-width: 1440px;
   margin: 0 auto;
   width: 100%;
 }
@@ -92,7 +90,7 @@
 }
 
 .telegram-wrapper__inner {
-  max-width: 1600px;
+  max-width: 1440px;
   margin: 0 auto;
   width: 100%;
 }
@@ -135,11 +133,7 @@
 
 /* Final CTA Wrapper */
 .final-cta-wrapper {
-  padding: 100px 24px 120px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+  padding: 80px 24px;
 }
 
 /* Responsive */
@@ -188,5 +182,46 @@
 
   .section-full {
     padding: 60px 16px;
+  }
+}
+
+/* Wide screens (≥1440px) — proportional scaling */
+@media (min-width: 1440px) {
+  .section-full {
+    padding: 120px 32px;
+  }
+
+  .features {
+    padding: 120px 32px;
+  }
+
+  .features__inner,
+  .telegram-wrapper__inner {
+    max-width: var(--content-max-width-wide, 1320px);
+  }
+
+  .features__header {
+    margin-bottom: 60px;
+  }
+
+  .features__title,
+  .telegram-wrapper__title {
+    font-size: 36px;
+  }
+
+  .features__grid {
+    gap: 32px;
+  }
+
+  .telegram-wrapper {
+    padding: 120px 32px;
+  }
+
+  .telegram-wrapper__header {
+    margin-bottom: 60px;
+  }
+
+  .final-cta-wrapper {
+    padding: 100px 32px;
   }
 }

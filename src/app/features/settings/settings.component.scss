@@ -119,3 +119,60 @@
     gap: 12px;
   }
 }
+
+/* Session / Danger section */
+.settings-section--danger {
+  border-color: rgba(255, 107, 107, 0.2);
+}
+
+.section-icon--danger {
+  background: var(--danger-bg);
+  border-color: rgba(255, 107, 107, 0.3);
+  color: var(--danger);
+}
+
+.session-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 8px;
+}
+
+.btn-sign-out {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 24px;
+  background: var(--danger-bg);
+  border: 1px solid var(--danger);
+  border-radius: var(--radius-md);
+  color: var(--danger);
+  font-size: 14px;
+  font-weight: 600;
+  font-family: var(--font-body);
+  cursor: pointer;
+  transition: all 0.15s ease;
+
+  &:hover:not(:disabled) {
+    background: var(--danger);
+    color: #fff;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.spinner-sm {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 107, 107, 0.2);
+  border-top-color: var(--danger);
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
