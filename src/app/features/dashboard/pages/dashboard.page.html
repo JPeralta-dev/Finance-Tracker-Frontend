@@ -59,6 +59,14 @@
       <ft-stats-grid [stats]="stats()" [loading]="false" />
     </div>
 
+    <!-- AI Insights Panel -->
+    @if (insights().length > 0) {
+      <div [ftScrollReveal]="150" class="dashboard-insights">
+        <h2 class="dashboard-insights__title">{{ 'insights.title' | translate }}</h2>
+        <ft-insights-panel [insights]="insights()" />
+      </div>
+    }
+
     <!-- Main content: Chart + Activity + Donut -->
     <div class="dashboard-content">
       <div class="dashboard-content__chart" [ftScrollReveal]="200">

@@ -61,7 +61,7 @@ export class TranslationService {
     }
   }
 
-  translate(key: string): string {
+  translate(key: string, params?: Record<string, number | string>): string {
     if (!this._loaded()) return key;
 
     const keys = key.split('.');
@@ -75,6 +75,15 @@ export class TranslationService {
       }
     }
 
-    return typeof value === 'string' ? value : key;
+    let result = typeof value === 'string' ? value : key;
+
+    // Interpolate params: {{ paramName }}
+    if (params && typeof result === 'string') {
+      Object.entries(params).forEach(([k, v]) => {
+        result = result.replace(new RegExp(`\\{\\{\\s*${k}\\s*\\}\\}`, 'g'), String(v));
+      });
+    }
+
+    return result;
   }
 }

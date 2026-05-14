@@ -111,6 +111,34 @@
     "expenseBreakdown": "Desglose de Gastos",
     "byCategory": "Por categoría"
   },
+  "insights": {
+    "title": "Insights IA",
+    "empty": "Aún no hay insights disponibles. Comienza a agregar transacciones para obtener recomendaciones personalizadas.",
+    "mom_increase": {
+      "title": "Gastos aumentaron",
+      "message": "Gastaste un {{percentage}}% más este mes comparado con el mes pasado."
+    },
+    "mom_decrease": {
+      "title": "Gastos disminuyeron",
+      "message": "¡Excelente! Gastaste un {{percentage}}% menos este mes comparado con el mes pasado."
+    },
+    "top_category": {
+      "title": "Categoría principal de gasto",
+      "message": "{{category}} representa el {{percentage}}% de tus gastos totales este mes."
+    },
+    "no_income": {
+      "title": "Sin ingresos registrados",
+      "message": "No registraste ingresos este mes. Agrega tus ingresos para rastrear tu tasa de ahorro."
+    },
+    "good_savings": {
+      "title": "Excelente tasa de ahorro",
+      "message": "Estás ahorrando el {{rate}}% de tus ingresos este mes. ¡Sigue así!"
+    },
+    "negative_savings": {
+      "title": "Gastando más de lo que ganas",
+      "message": "Tus gastos superan tus ingresos este mes. Revisa tus gastos para volver al camino."
+    }
+  },
   "transactions": {
     "title": "Transacciones",
     "subtitle": "Gestiona y rastrea toda tu actividad financiera.",
@@ -183,17 +211,10 @@
     "title": "Configuración",
     "subtitle": "Gestiona tu cuenta e integraciones",
     "back_to_dashboard": "Volver al dashboard",
-    "telegram": {
-      "title": "Integración con Telegram",
-      "desc": "Vincula tu cuenta de Telegram para registrar transacciones al instante desde el bot.",
-      "linked": "✅ Cuenta vinculada exitosamente",
-      "not_linked": "Tu cuenta no está vinculada a Telegram",
-      "unlink": "Desvincular",
-      "link": "Vincular",
-      "code_label": "Código de vinculación",
-      "step1": "Abre Telegram y busca @hormigaTrackerBot",
-      "step2": "Envía /start para obtener un código",
-      "step3": "Ingresa el código aquí"
+    "coming_soon": "Próximamente: Integraciones con Telegram, IA y más.",
+    "integrations": {
+      "title": "Integraciones",
+      "desc": "Conecta herramientas externas para potenciar tu experiencia."
     }
   }
 }

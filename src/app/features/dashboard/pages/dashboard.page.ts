@@ -7,6 +7,7 @@ import { StatsGridComponent } from '../components/stats-grid/stats-grid.componen
 import { AreaChartComponent, AreaDataset } from '../../../shared/charts';
 import { DonutChartComponent, DonutData } from '../../../shared/charts';
 import { RecentActivityComponent, ActivityItem } from '../components/recent-activity/recent-activity.component';
+import { InsightsPanelComponent } from '../components/insights-panel/insights-panel.component';
 import { StatCardData } from '../components/stat-card/stat-card.types';
 import { ScrollRevealDirective } from '../../../shared/directives/scroll-reveal.directive';
 import { HoverDepthDirective } from '../../../shared/directives/hover-depth.directive';
@@ -16,6 +17,7 @@ import { ToastService } from '../../../core/services/toast.service';
 import { EmptyStateComponent } from '../../../shared/components/empty-state.component';
 import { TranslatePipe } from '../../../core/pipes/translate.pipe';
 import { Category } from '../../../core/models/category.model';
+import { Insight } from '../../../core/models/insight.model';
 
 type DashboardState = 'loading' | 'ready' | 'empty' | 'error';
 
@@ -36,6 +38,7 @@ const CHART_COLORS = {
     AreaChartComponent,
     DonutChartComponent,
     RecentActivityComponent,
+    InsightsPanelComponent,
     ScrollRevealDirective,
     HoverDepthDirective,
     CountUpDirective,
@@ -51,6 +54,7 @@ export class DashboardPage implements OnInit {
 
   readonly stats = signal<StatCardData[]>([]);
   readonly activity = signal<ActivityItem[]>([]);
+  readonly insights = signal<Insight[]>([]);
   readonly state = signal<DashboardState>('loading');
   readonly categories = signal<Category[]>([]);
 
@@ -81,8 +85,9 @@ export class DashboardPage implements OnInit {
       chart: this.financeService.getMonthlyChart().pipe(catchError(() => of(null))),
       transactions: this.financeService.getTransactions({ limit: 5, sortBy: 'date', sortDir: 'desc' }).pipe(catchError(() => of(null))),
       categories: this.financeService.getCategories().pipe(catchError(() => of([]))),
+      insights: this.financeService.getInsights().pipe(catchError(() => of([]))),
     }).subscribe({
-      next: ({ summary, chart, transactions, categories }) => {
+      next: ({ summary, chart, transactions, categories, insights }) => {
         if (!summary && !chart && !transactions) {
           this.state.set('error');
           this.toast.error('Failed to load dashboard data. Please try again.');
@@ -121,6 +126,11 @@ export class DashboardPage implements OnInit {
             data: expenseCats.map(c => c.total),
             colors: expenseCats.map((_, i) => CHART_COLORS.categories[i % CHART_COLORS.categories.length]),
           });
+        }
+
+        // Set insights
+        if (insights && insights.length > 0) {
+          this.insights.set(insights);
         }
 
         // Check if user has any data at all

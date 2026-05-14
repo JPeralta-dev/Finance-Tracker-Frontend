@@ -4,89 +4,20 @@
     <p class="page-subtitle">{{ 'settings.subtitle' | translate }}</p>
   </div>
 
-  <!-- Telegram Section -->
+  <!-- Placeholder for future integrations -->
   <div class="settings-section" ftScrollAnimate="fade-up" [delay]="100">
     <div class="section-header">
       <div class="section-icon">
-        <ng-icon name="telegram" size="1.5rem" />
+        <ng-icon name="settings" size="1.5rem" />
       </div>
       <div class="section-info">
-        <h2 class="section-title">{{ 'settings.telegram.title' | translate }}</h2>
-        <p class="section-desc">{{ 'settings.telegram.desc' | translate }}</p>
+        <h2 class="section-title">{{ 'settings.integrations.title' | translate }}</h2>
+        <p class="section-desc">{{ 'settings.integrations.desc' | translate }}</p>
       </div>
     </div>
-
-    @if (loading()) {
-      <div class="loading-state">
-        <span class="spinner"></span>
-        {{ 'common.loading' | translate }}
-      </div>
-    } @else if (telegramStatus()) {
-      @if (telegramStatus()!.linked) {
-        <!-- Linked state -->
-        <div class="telegram-status telegram-status--linked">
-          <div class="status-icon">
-            <ng-icon name="check" size="1.25rem" />
-          </div>
-          <div class="status-info">
-            <p class="status-text">{{ 'settings.telegram.linked' | translate }}</p>
-            <p class="status-chat">Chat ID: {{ telegramStatus()!.chatId }}</p>
-          </div>
-          <button
-            class="btn-unlink"
-            (click)="unlinkTelegram()"
-            [disabled]="unlinking()"
-          >
-            @if (unlinking()) {
-              <span class="spinner-small"></span>
-            }
-            {{ 'settings.telegram.unlink' | translate }}
-          </button>
-        </div>
-      } @else {
-        <!-- Not linked state -->
-        <div class="telegram-status telegram-status--not-linked">
-          <div class="status-icon">
-            <ng-icon name="info" size="1.25rem" />
-          </div>
-          <div class="status-info">
-            <p class="status-text">{{ 'settings.telegram.not_linked' | translate }}</p>
-            <p class="status-steps">
-              1. {{ 'settings.telegram.step1' | translate }}<br />
-              2. {{ 'settings.telegram.step2' | translate }}<br />
-              3. {{ 'settings.telegram.step3' | translate }}
-            </p>
-          </div>
-        </div>
-
-        <!-- Link form -->
-        <div class="link-form">
-          <div class="form-group">
-            <label>{{ 'settings.telegram.code_label' | translate }}</label>
-            <div class="code-input-wrap">
-              <input
-                type="text"
-                [(ngModel)]="linkCode"
-                maxlength="6"
-                placeholder="000000"
-                class="code-input"
-                (keyup.enter)="linkTelegram()"
-              />
-              <button
-                class="btn-link"
-                (click)="linkTelegram()"
-                [disabled]="linking() || linkCode().length !== 6"
-              >
-                @if (linking()) {
-                  <span class="spinner-small"></span>
-                }
-                {{ 'settings.telegram.link' | translate }}
-              </button>
-            </div>
-          </div>
-        </div>
-      }
-    }
+    <div class="coming-soon">
+      <p>{{ 'settings.coming_soon' | translate }}</p>
+    </div>
   </div>
 
   <!-- Back to dashboard -->

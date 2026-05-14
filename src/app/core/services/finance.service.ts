@@ -7,6 +7,7 @@ import { Summary } from "../models/summary.model";
 import { Transaction, TransactionFilters } from "../models/transaction.model";
 import { Category } from "../models/category.model";
 import { ChartData } from "../models/chart.model";
+import { Insight } from "../models/insight.model";
 
 @Injectable({ providedIn: "root" })
 export class FinanceService {
@@ -92,5 +93,11 @@ export class FinanceService {
   getMonthlyChart(): Observable<ChartData[]> {
     return this.http.get<ChartData[]>(`${this.base}/chart/monthly`);
     // MOCK: return of(MOCK_CHART_DATA).pipe(delay(700));
+  }
+
+  // ── Insights ──────────────────────────────────────────────────────────────
+
+  getInsights(): Observable<Insight[]> {
+    return this.http.get<Insight[]>(`${this.base}/insights`);
   }
 }
