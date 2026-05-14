@@ -8,8 +8,30 @@
 
     <!-- Actions -->
     <div class="public-navbar__actions">
-      <a routerLink="/login" class="public-navbar__link">Sign In</a>
-      <a routerLink="/register" class="public-navbar__btn">Get Started</a>
+      <!-- Language Selector -->
+      <div class="public-navbar__lang">
+        @for (lang of languages; track lang.code) {
+          <button
+            class="public-navbar__lang-btn"
+            [class.active]="translationService.currentLang() === lang.code"
+            (click)="setLanguage(lang.code)"
+          >
+            {{ lang.label }}
+          </button>
+        }
+      </div>
+
+      <!-- Theme Toggle -->
+      <button class="public-navbar__theme" (click)="toggleTheme()" [attr.aria-label]="'Toggle theme'">
+        @if (themeService.currentTheme() === 'dark') {
+          <ng-icon name="sun" size="1rem" />
+        } @else {
+          <ng-icon name="moon" size="1rem" />
+        }
+      </button>
+
+      <a routerLink="/login" class="public-navbar__link">{{ 'auth.signIn' | translate }}</a>
+      <a routerLink="/register" class="public-navbar__btn">{{ 'auth.createAccount' | translate }}</a>
     </div>
   </div>
 </nav>

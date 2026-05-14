@@ -1,4 +1,4 @@
-import { Component, HostListener, signal } from '@angular/core';
+import { Component, HostListener, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { NgIcon, provideIcons } from '@ng-icons/core';
@@ -9,6 +9,8 @@ import { FeatureCardComponent } from './components/feature-card/feature-card.com
 import { TelegramSectionComponent } from './components/telegram-section/telegram-section.component';
 import { FinalCtaComponent } from './components/final-cta/final-cta.component';
 import { ScrollAnimateDirective } from '../../shared/directives/scroll-animate/scroll-animate.directive';
+import { TranslatePipe } from '../../core/pipes/translate.pipe';
+import { TranslationService } from '../../core/services/translation.service';
 
 @Component({
   selector: 'app-landing',
@@ -23,12 +25,14 @@ import { ScrollAnimateDirective } from '../../shared/directives/scroll-animate/s
     TelegramSectionComponent,
     FinalCtaComponent,
     ScrollAnimateDirective,
+    TranslatePipe,
   ],
   providers: [provideIcons(ICONS)],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.scss',
 })
 export class LandingComponent {
+  private readonly translationService = inject(TranslationService);
   readonly scrollProgress = signal(0);
 
   @HostListener('window:scroll', [])
@@ -40,11 +44,11 @@ export class LandingComponent {
   }
 
   features = [
-    { icon: 'dashboard', title: 'Dashboard Overview', description: 'See your balance, income, and expenses at a glance with real-time summaries.' },
-    { icon: 'transactions', title: 'Transaction Tracking', description: 'Log and categorize every transaction. Filter by date, type, or category.' },
-    { icon: 'analytics', title: 'Monthly Charts', description: 'Visualize your financial trends over the last 6 months with interactive charts.' },
-    { icon: 'info', title: 'AI Insights', description: 'Get personalized recommendations to optimize your spending and savings.' },
-    { icon: 'categories', title: 'Smart Categories', description: 'Auto-categorize transactions and create custom categories for better tracking.' },
-    { icon: 'telegram', title: 'Telegram Integration', description: 'Log transactions instantly via Telegram bot. No app opening required.' },
+    { icon: 'dashboard', title: 'landing.features.dashboard.title', description: 'landing.features.dashboard.description' },
+    { icon: 'transactions', title: 'landing.features.transactions.title', description: 'landing.features.transactions.description' },
+    { icon: 'analytics', title: 'landing.features.analytics.title', description: 'landing.features.analytics.description' },
+    { icon: 'info', title: 'landing.features.ai_insights.title', description: 'landing.features.ai_insights.description' },
+    { icon: 'categories', title: 'landing.features.categories.title', description: 'landing.features.categories.description' },
+    { icon: 'telegram', title: 'landing.features.telegram.title', description: 'landing.features.telegram.description' },
   ];
 }

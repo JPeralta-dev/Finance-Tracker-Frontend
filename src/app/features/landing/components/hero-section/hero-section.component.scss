@@ -23,8 +23,8 @@
   align-items: center;
   gap: 8px;
   padding: 6px 12px;
-  background: rgba(6, 214, 160, 0.1);
-  border: 1px solid rgba(6, 214, 160, 0.2);
+  background: var(--accent-glow);
+  border: 1px solid rgba(157, 80, 187, 0.3);
   border-radius: var(--radius-full);
   font-size: 12px;
   font-weight: 600;
@@ -80,27 +80,28 @@
   font-weight: 600;
   border-radius: var(--radius-sm);
   text-decoration: none;
-  transition: all 0.2s ease;
+  transition: all var(--duration-normal) var(--ease-out);
 
   &--primary {
     background: linear-gradient(135deg, var(--accent-start), var(--accent-mid));
     color: var(--text-inverse);
-    box-shadow: 0 4px 16px rgba(6, 214, 160, 0.25);
+    box-shadow: var(--glow-accent);
 
     &:hover {
-      box-shadow: 0 6px 24px rgba(6, 214, 160, 0.35);
+      box-shadow: 0 0 40px rgba(157, 80, 187, 0.4);
       transform: translateY(-2px);
     }
   }
 
   &--secondary {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
     color: var(--text-primary);
+    backdrop-filter: blur(var(--glass-blur));
 
     &:hover {
-      background: rgba(255, 255, 255, 0.1);
-      border-color: rgba(255, 255, 255, 0.2);
+      background: var(--bg-elevated);
+      border-color: var(--glass-border-hover);
     }
   }
 }

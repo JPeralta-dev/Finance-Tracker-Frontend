@@ -42,14 +42,25 @@
     "trustFree": "Gratis para siempre",
     "trustNoCard": "Sin tarjeta de crédito",
     "trustEncrypted": "Encriptado",
-    "featuresTitle": "Todo lo que necesitas",
-    "viewFeatures": "Ver todas las funciones",
-    "telegramTitle": "Integración con Telegram",
-    "telegramDesc": "Registra transacciones al instante con nuestro bot de Telegram. Solo envía un mensaje y queda registrado. No necesitas abrir la app.",
-    "openBot": "Abrir Bot",
-    "ctaTitle": "¿Listo para tomar el control?",
-    "ctaSubtitle": "Únete a miles de usuarios que rastrean sus finanzas con Flowr. Es gratis y toma menos de un minuto configurarlo.",
-    "ctaButton": "Comenzar Gratis"
+    "features": {
+      "title": "Todo lo que necesitas",
+      "view_all": "Ver todas las funciones",
+      "dashboard": { "title": "Dashboard Overview", "description": "Ve tu balance, ingresos y gastos de un vistazo con resúmenes en tiempo real." },
+      "transactions": { "title": "Seguimiento de Transacciones", "description": "Registra y categoriza cada transacción. Filtra por fecha, tipo o categoría." },
+      "analytics": { "title": "Gráficos Mensuales", "description": "Visualiza tus tendencias financieras de los últimos 6 meses con gráficos interactivos." },
+      "ai_insights": { "title": "Insights de IA", "description": "Obtén recomendaciones personalizadas para optimizar tus gastos y ahorros." },
+      "categories": { "title": "Categorías Inteligentes", "description": "Categoriza transacciones automáticamente y crea categorías personalizadas." },
+      "telegram": { "title": "Integración con Telegram", "description": "Registra transacciones al instante vía bot de Telegram. Sin abrir la app." }
+    },
+    "telegram": {
+      "title": "Integración con Telegram",
+      "open_bot": "Abrir Bot"
+    },
+    "cta": {
+      "title": "¿Listo para tomar el control?",
+      "subtitle": "Únete a miles de usuarios que rastrean sus finanzas con Flowr. Es gratis y toma menos de un minuto configurarlo.",
+      "button": "Comenzar Gratis"
+    }
   },
   "dashboard": {
     "greeting": "Buenas tardes",

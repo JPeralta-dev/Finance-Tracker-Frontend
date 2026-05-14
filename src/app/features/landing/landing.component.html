@@ -12,9 +12,9 @@
   <section class="features section-full" ftScrollAnimate="fade-up">
     <div class="features__inner">
       <div class="features__header">
-        <h2 class="features__title">Everything you need</h2>
+        <h2 class="features__title">{{ 'landing.features.title' | translate }}</h2>
         <a routerLink="/dashboard" class="features__view-all">
-          View all features
+          {{ 'landing.features.view_all' | translate }}
           <ng-icon name="chevronRight" size="0.875rem" />
         </a>
       </div>
@@ -22,8 +22,8 @@
         @for (feature of features; track feature.title; let i = $index) {
           <ft-feature-card
             [icon]="feature.icon"
-            [title]="feature.title"
-            [description]="feature.description"
+            [title]="feature.title | translate"
+            [description]="feature.description | translate"
             [style.animation-delay]="(i * 100) + 'ms'"
           />
         }
@@ -35,9 +35,9 @@
   <section class="telegram-wrapper section-full" ftScrollAnimate="fade-up">
     <div class="telegram-wrapper__inner">
       <div class="telegram-wrapper__header">
-        <h2 class="telegram-wrapper__title">Telegram Integration</h2>
+        <h2 class="telegram-wrapper__title">{{ 'landing.telegram.title' | translate }}</h2>
         <a href="https://t.me/hormigaTrackerBot" target="_blank" class="telegram-wrapper__view-all">
-          Open bot
+          {{ 'landing.telegram.open_bot' | translate }}
           <ng-icon name="heroPaperPlane" size="0.875rem" />
         </a>
       </div>

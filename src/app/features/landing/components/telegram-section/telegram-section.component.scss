@@ -10,12 +10,13 @@
   grid-template-columns: 1fr 1fr;
   gap: 64px;
   align-items: center;
-  background: rgba(15, 22, 35, 0.6);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
   border-radius: var(--radius-xl);
   padding: 64px;
+  box-shadow: var(--shadow-lg);
 }
 
 .telegram-section__badge {
@@ -23,8 +24,8 @@
   align-items: center;
   gap: 8px;
   padding: 6px 12px;
-  background: rgba(17, 141, 255, 0.1);
-  border: 1px solid rgba(17, 141, 255, 0.2);
+  background: var(--info-bg);
+  border: 1px solid rgba(167, 139, 250, 0.2);
   border-radius: var(--radius-full);
   font-size: 12px;
   font-weight: 600;
@@ -42,7 +43,10 @@
 }
 
 .telegram-section__accent {
-  color: var(--info);
+  background: linear-gradient(135deg, var(--accent-start), var(--accent-mid));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .telegram-section__description {
@@ -57,26 +61,26 @@
   align-items: center;
   gap: 8px;
   padding: 12px 24px;
-  background: rgba(17, 141, 255, 0.15);
-  border: 1px solid rgba(17, 141, 255, 0.3);
+  background: linear-gradient(135deg, var(--accent-start), var(--accent-mid));
+  border: none;
   border-radius: var(--radius-sm);
-  color: var(--info);
+  color: var(--text-inverse);
   font-size: 15px;
   font-weight: 600;
   text-decoration: none;
   transition: all 0.2s ease;
+  box-shadow: var(--glow-accent);
 
   &:hover {
-    background: rgba(17, 141, 255, 0.25);
-    border-color: rgba(17, 141, 255, 0.5);
     transform: translateY(-2px);
+    box-shadow: 0 0 40px rgba(157, 80, 187, 0.4);
   }
 }
 
 /* Chat Preview */
 .chat-preview {
-  background: rgba(10, 14, 23, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--bg-secondary);
+  border: 1px solid var(--glass-border);
   border-radius: var(--radius-lg);
   overflow: hidden;
   box-shadow: var(--shadow-xl);
@@ -88,7 +92,7 @@
   gap: 12px;
   padding: 16px;
   background: rgba(0, 0, 0, 0.2);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid var(--glass-border);
 }
 
 .chat-preview__avatar {
@@ -97,7 +101,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(17, 141, 255, 0.1);
+  background: var(--info-bg);
+  border: 1px solid rgba(167, 139, 250, 0.2);
   border-radius: 50%;
   font-size: 20px;
 }
@@ -133,14 +138,15 @@
   max-width: 85%;
 
   &--user {
-    background: rgba(17, 141, 255, 0.15);
+    background: var(--info-bg);
     color: var(--text-primary);
     align-self: flex-end;
     border-bottom-right-radius: 4px;
   }
 
   &--bot {
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
     color: var(--text-secondary);
     align-self: flex-start;
     border-bottom-left-radius: 4px;

@@ -42,14 +42,25 @@
     "trustFree": "Free forever",
     "trustNoCard": "No credit card",
     "trustEncrypted": "Encrypted",
-    "featuresTitle": "Everything you need",
-    "viewFeatures": "View all features",
-    "telegramTitle": "Telegram Integration",
-    "telegramDesc": "Log transactions instantly via Telegram bot. Just send a message and it's tracked automatically. No app opening required.",
-    "openBot": "Open Bot",
-    "ctaTitle": "Ready to take control?",
-    "ctaSubtitle": "Join thousands of users tracking their finances with Flowr. It's free and takes less than a minute to set up.",
-    "ctaButton": "Get Started for Free"
+    "features": {
+      "title": "Everything you need",
+      "view_all": "View all features",
+      "dashboard": { "title": "Dashboard Overview", "description": "See your balance, income, and expenses at a glance with real-time summaries." },
+      "transactions": { "title": "Transaction Tracking", "description": "Log and categorize every transaction. Filter by date, type, or category." },
+      "analytics": { "title": "Monthly Charts", "description": "Visualize your financial trends over the last 6 months with interactive charts." },
+      "ai_insights": { "title": "AI Insights", "description": "Get personalized recommendations to optimize your spending and savings." },
+      "categories": { "title": "Smart Categories", "description": "Auto-categorize transactions and create custom categories for better tracking." },
+      "telegram": { "title": "Telegram Integration", "description": "Log transactions instantly via Telegram bot. No app opening required." }
+    },
+    "telegram": {
+      "title": "Telegram Integration",
+      "open_bot": "Open Bot"
+    },
+    "cta": {
+      "title": "Ready to take control?",
+      "subtitle": "Join thousands of users tracking their finances with Flowr. It's free and takes less than a minute to set up.",
+      "button": "Get Started for Free"
+    }
   },
   "dashboard": {
     "greeting": "Good afternoon",

@@ -4,30 +4,27 @@
     <div class="hero__content">
       <div class="hero__badge" ftScrollAnimate="fade-in" [delay]="100">
         <span class="hero__badge-dot"></span>
-        AI-Powered Finance
+        {{ 'landing.heroBadge' | translate }}
       </div>
-      <h1 class="hero__title" ftScrollAnimate="fade-up" [delay]="200">
-        Intelligent Finance <br />
-        <span class="hero__title-accent">Tracking</span>
+      <h1 class="hero__title" ftScrollAnimate="fade-up" [delay]="200" [innerHTML]="'landing.heroTitle' | translate">
       </h1>
       <p class="hero__subtitle" ftScrollAnimate="fade-up" [delay]="300">
-        Track, analyze, and optimize your spending with real-time insights.
-        Connect your accounts or use our Telegram bot for instant logging.
+        {{ 'landing.heroSubtitle' | translate }}
       </p>
       <div class="hero__actions" ftScrollAnimate="fade-up" [delay]="400">
         <a routerLink="/register" class="hero__btn hero__btn--primary">
-          Get Started
+          {{ 'landing.getStarted' | translate }}
           <ng-icon name="chevronRight" size="1rem" />
         </a>
         <a href="https://t.me/hormigaTrackerBot" target="_blank" class="hero__btn hero__btn--secondary">
-          <ng-icon name="heroPaperPlane" size="1rem" />
-          Telegram Bot
+          <ng-icon name="telegram" size="1rem" />
+          {{ 'landing.telegramBot' | translate }}
         </a>
       </div>
       <div class="hero__trust" ftScrollAnimate="fade-in" [delay]="500">
-        <span class="hero__trust-item">✓ Free forever</span>
-        <span class="hero__trust-item">✓ No credit card</span>
-        <span class="hero__trust-item">✓ Encrypted</span>
+        <span class="hero__trust-item">✓ {{ 'landing.trustFree' | translate }}</span>
+        <span class="hero__trust-item">✓ {{ 'landing.trustNoCard' | translate }}</span>
+        <span class="hero__trust-item">✓ {{ 'landing.trustEncrypted' | translate }}</span>
       </div>
     </div>
 
