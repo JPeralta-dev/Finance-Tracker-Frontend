@@ -58,7 +58,7 @@
   }
 }
 
-/* Content split: chart + activity */
+/* Content split: chart + sidebar (activity + donut) */
 .dashboard-content {
   display: grid;
   grid-template-columns: 1fr;
@@ -73,7 +73,14 @@
     min-width: 0;
   }
 
-  &__activity {
+  &__sidebar {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  &__donut {
     min-width: 0;
   }
 }

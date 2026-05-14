@@ -1,10 +1,11 @@
-import { Component, signal, inject, OnInit } from '@angular/core';
+import { Component, signal, inject, OnInit, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { catchError, forkJoin, of } from 'rxjs';
 
 import { StatsGridComponent } from '../components/stats-grid/stats-grid.component';
 import { AreaChartComponent, AreaDataset } from '../../../shared/charts';
+import { DonutChartComponent, DonutData } from '../../../shared/charts';
 import { RecentActivityComponent, ActivityItem } from '../components/recent-activity/recent-activity.component';
 import { StatCardData } from '../components/stat-card/stat-card.types';
 import { ScrollRevealDirective } from '../../../shared/directives/scroll-reveal.directive';
@@ -13,8 +14,17 @@ import { CountUpDirective } from '../../../shared/directives/count-up.directive'
 import { FinanceService } from '../../../core/services/finance.service';
 import { ToastService } from '../../../core/services/toast.service';
 import { EmptyStateComponent } from '../../../shared/components/empty-state.component';
+import { TranslatePipe } from '../../../core/pipes/translate.pipe';
+import { Category } from '../../../core/models/category.model';
 
 type DashboardState = 'loading' | 'ready' | 'empty' | 'error';
+
+// Purple theme colors for charts
+const CHART_COLORS = {
+  income: '#9D50BB',
+  expense: '#FF6B6B',
+  categories: ['#9D50BB', '#6E48AA', '#C77DFF', '#E0AAFF', '#FF6B6B', '#FF9E7D', '#FFD166', '#06D6A0', '#4DA6FF', '#A3A3A3'],
+};
 
 @Component({
   selector: 'ft-dashboard-page',
@@ -24,11 +34,13 @@ type DashboardState = 'loading' | 'ready' | 'empty' | 'error';
     RouterLink,
     StatsGridComponent,
     AreaChartComponent,
+    DonutChartComponent,
     RecentActivityComponent,
     ScrollRevealDirective,
     HoverDepthDirective,
     CountUpDirective,
     EmptyStateComponent,
+    TranslatePipe,
   ],
   templateUrl: './dashboard.page.html',
   styleUrl: './dashboard.page.scss',
@@ -40,10 +52,22 @@ export class DashboardPage implements OnInit {
   readonly stats = signal<StatCardData[]>([]);
   readonly activity = signal<ActivityItem[]>([]);
   readonly state = signal<DashboardState>('loading');
+  readonly categories = signal<Category[]>([]);
 
   // Chart data
   readonly chartLabels = signal<string[]>([]);
   readonly chartDatasets = signal<AreaDataset[]>([]);
+
+  // Donut chart data
+  readonly donutData = signal<DonutData>({ labels: [], data: [], colors: [] });
+
+  // Greeting based on time of day
+  readonly greeting = computed(() => {
+    const hour = new Date().getHours();
+    if (hour < 12) return 'dashboard.greeting_morning';
+    if (hour < 18) return 'dashboard.greeting_afternoon';
+    return 'dashboard.greeting_evening';
+  });
 
   ngOnInit(): void {
     this.loadData();
@@ -56,8 +80,9 @@ export class DashboardPage implements OnInit {
       summary: this.financeService.getSummary().pipe(catchError(() => of(null))),
       chart: this.financeService.getMonthlyChart().pipe(catchError(() => of(null))),
       transactions: this.financeService.getTransactions({ limit: 5, sortBy: 'date', sortDir: 'desc' }).pipe(catchError(() => of(null))),
+      categories: this.financeService.getCategories().pipe(catchError(() => of([]))),
     }).subscribe({
-      next: ({ summary, chart, transactions }) => {
+      next: ({ summary, chart, transactions, categories }) => {
         if (!summary && !chart && !transactions) {
           this.state.set('error');
           this.toast.error('Failed to load dashboard data. Please try again.');
@@ -71,8 +96,8 @@ export class DashboardPage implements OnInit {
         if (chart) {
           this.chartLabels.set(chart.map(d => d.month));
           this.chartDatasets.set([
-            { label: 'Income', data: chart.map(d => d.income), color: '#06D6A0' },
-            { label: 'Expenses', data: chart.map(d => d.expenses), color: '#FF6B6B' },
+            { label: 'Income', data: chart.map(d => d.income), color: CHART_COLORS.income },
+            { label: 'Expenses', data: chart.map(d => d.expenses), color: CHART_COLORS.expense },
           ]);
         }
 
@@ -85,6 +110,17 @@ export class DashboardPage implements OnInit {
             type: t.type,
             date: t.date,
           })));
+        }
+
+        // Process categories for donut chart (expense categories only)
+        if (categories && categories.length > 0) {
+          this.categories.set(categories);
+          const expenseCats = categories.filter(c => c.kind === 'expense' || c.kind === 'mixed').filter(c => c.total > 0);
+          this.donutData.set({
+            labels: expenseCats.map(c => c.name),
+            data: expenseCats.map(c => c.total),
+            colors: expenseCats.map((_, i) => CHART_COLORS.categories[i % CHART_COLORS.categories.length]),
+          });
         }
 
         // Check if user has any data at all
@@ -100,10 +136,33 @@ export class DashboardPage implements OnInit {
 
   private mapSummary(summary: { totalBalance: number; totalIncome: number; totalExpenses: number; savingsRate: number }): StatCardData[] {
     return [
-      { id: 'balance', label: 'Total Balance', value: summary.totalBalance, icon: 'wallet', insight: summary.totalBalance > 0 ? 'Positive balance' : 'No balance' },
-      { id: 'income', label: 'Monthly Income', value: summary.totalIncome, icon: 'income' },
-      { id: 'expenses', label: 'Monthly Expenses', value: summary.totalExpenses, icon: 'expense' },
-      { id: 'savings', label: 'Savings Rate', value: summary.savingsRate, suffix: '%', icon: 'subscription', insight: summary.savingsRate > 20 ? 'On track' : summary.savingsRate > 0 ? 'Could improve' : undefined },
+      {
+        id: 'balance',
+        label: 'dashboard.totalBalance',
+        value: summary.totalBalance,
+        icon: 'wallet',
+        insight: summary.totalBalance > 0 ? 'dashboard.positiveBalance' : 'dashboard.noBalance',
+      },
+      {
+        id: 'income',
+        label: 'dashboard.monthlyIncome',
+        value: summary.totalIncome,
+        icon: 'income',
+      },
+      {
+        id: 'expenses',
+        label: 'dashboard.monthlyExpenses',
+        value: summary.totalExpenses,
+        icon: 'expense',
+      },
+      {
+        id: 'savings',
+        label: 'dashboard.savingsRate',
+        value: summary.savingsRate,
+        suffix: '%',
+        icon: 'subscription',
+        insight: summary.savingsRate > 20 ? 'dashboard.onTrack' : summary.savingsRate > 0 ? 'dashboard.couldImprove' : undefined,
+      },
     ];
   }
 

@@ -9,7 +9,7 @@
         <ng-icon [name]="iconName" size="1rem" />
       </span>
     }
-    <span class="stat-card__label">{{ data().label }}</span>
+    <span class="stat-card__label">{{ data().label | translate }}</span>
   </div>
 
   <!-- Value with CountUp animation -->
@@ -36,7 +36,7 @@
       @if (data().insight) {
         <span class="stat-card__insight">
           <span class="insight-dot"></span>
-          {{ data().insight }}
+          {{ (data().insight || '') | translate }}
         </span>
       }
     </div>

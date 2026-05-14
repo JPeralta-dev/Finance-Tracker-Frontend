@@ -2,11 +2,11 @@
   <!-- Header -->
   <div class="recent-activity__header">
     <div>
-      <h3 class="recent-activity__title">Recent Activity</h3>
-      <p class="recent-activity__subtitle">Your latest transactions</p>
+      <h3 class="recent-activity__title">{{ 'dashboard.recentActivity' | translate }}</h3>
+      <p class="recent-activity__subtitle">{{ 'dashboard.latestTransactions' | translate }}</p>
     </div>
-    <a href="/transactions" class="recent-activity__link">
-      View all →
+    <a routerLink="/transactions" class="recent-activity__link">
+      {{ 'dashboard.viewAll' | translate }}
     </a>
   </div>
 
@@ -32,11 +32,11 @@
       <div class="empty-icon">
         <ng-icon name="heroOutlineClipboardDocumentList" size="2rem" />
       </div>
-      <p class="empty-title">No transactions yet</p>
+      <p class="empty-title">{{ 'dashboard.noTransactions' | translate }}</p>
       <p class="empty-desc">
-        Start tracking your finances by adding your first transaction.
+        {{ 'dashboard.noTransactionsDesc' | translate }}
       </p>
-      <a href="/transactions/new" class="empty-cta">Add transaction</a>
+      <a routerLink="/transactions/new" class="empty-cta">{{ 'dashboard.addTransaction' | translate }}</a>
     </div>
   }
 

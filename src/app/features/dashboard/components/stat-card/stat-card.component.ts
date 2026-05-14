@@ -4,11 +4,12 @@ import { NgIcon, provideIcons } from '@ng-icons/core';
 import { CountUpDirective } from '../../../../shared/directives/count-up.directive';
 import { StatCardData } from './stat-card.types';
 import { ICONS } from '../../../../shared/icons/icon-registry';
+import { TranslatePipe } from '../../../../core/pipes/translate.pipe';
 
 @Component({
   selector: 'ft-stat-card',
   standalone: true,
-  imports: [CommonModule, CurrencyPipe, DecimalPipe, NgIcon, CountUpDirective],
+  imports: [CommonModule, CurrencyPipe, DecimalPipe, NgIcon, CountUpDirective, TranslatePipe],
   providers: [provideIcons(ICONS)],
   templateUrl: './stat-card.component.html',
   styleUrl: './stat-card.component.scss',

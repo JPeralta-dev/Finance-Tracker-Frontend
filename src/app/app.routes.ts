@@ -25,23 +25,11 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     loadComponent: () =>
-      import('./features/dashboard/dashboard.component').then(m => m.DashboardComponent),
-    canActivate: [authGuard],
-  },
-  {
-    path: 'dashboard-new',
-    loadComponent: () =>
       import('./features/dashboard/pages/dashboard.page').then(m => m.DashboardPage),
     canActivate: [authGuard],
   },
   {
     path: 'transactions',
-    loadComponent: () =>
-      import('./features/transactions/transactions-list.component').then(m => m.TransactionsListComponent),
-    canActivate: [authGuard],
-  },
-  {
-    path: 'transactions-new',
     loadComponent: () =>
       import('./features/transactions/pages/transactions.page').then(m => m.TransactionsPage),
     canActivate: [authGuard],

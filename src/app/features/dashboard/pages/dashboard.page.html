@@ -3,8 +3,8 @@
     <!-- Loading state -->
     <div class="dashboard-greeting" [ftScrollReveal]="0">
       <div>
-        <h1 class="dashboard-greeting__title">Loading...</h1>
-        <p class="dashboard-greeting__subtitle">Fetching your financial data.</p>
+        <h1 class="dashboard-greeting__title">{{ 'dashboard.loading' | translate }}</h1>
+        <p class="dashboard-greeting__subtitle">{{ 'dashboard.fetchingData' | translate }}</p>
       </div>
     </div>
     <div [ftScrollReveal]="100">
@@ -14,29 +14,29 @@
     <!-- Error state -->
     <ft-empty-state
       icon="warning"
-      title="Something went wrong"
-      description="We couldn't load your dashboard data. Please try again."
-      actionLabel="Retry"
+      [title]="'dashboard.errorTitle' | translate"
+      [description]="'dashboard.errorDesc' | translate"
+      [actionLabel]="'dashboard.retry' | translate"
       (action)="retry()"
     />
   } @else if (state() === 'empty') {
     <!-- Empty state — no transactions yet -->
     <div class="dashboard-greeting" [ftScrollReveal]="0">
       <div>
-        <h1 class="dashboard-greeting__title">Welcome!</h1>
+        <h1 class="dashboard-greeting__title">{{ 'dashboard.welcomeTitle' | translate }}</h1>
         <p class="dashboard-greeting__subtitle">
-          Start tracking your finances by adding your first transaction.
+          {{ 'dashboard.welcomeSubtitle' | translate }}
         </p>
       </div>
       <a routerLink="/transactions/new" class="dashboard-greeting__cta" [ftHoverDepth]="8">
-        + New Transaction
+        {{ 'dashboard.newTransaction' | translate }}
       </a>
     </div>
     <ft-empty-state
       icon="wallet"
-      title="No transactions yet"
-      description="Your financial overview will appear here once you start adding transactions."
-      actionLabel="Add Transaction"
+      [title]="'dashboard.emptyOverview' | translate"
+      [description]="'dashboard.emptyOverviewDesc' | translate"
+      [actionLabel]="'dashboard.addTransaction' | translate"
       actionRoute="/transactions/new"
     />
   } @else {
@@ -44,13 +44,13 @@
     <!-- Greeting -->
     <div class="dashboard-greeting" [ftScrollReveal]="0">
       <div>
-        <h1 class="dashboard-greeting__title">Good afternoon</h1>
+        <h1 class="dashboard-greeting__title">{{ greeting() | translate }}</h1>
         <p class="dashboard-greeting__subtitle">
-          Here's your financial overview for this month.
+          {{ 'dashboard.greetingSubtitle' | translate }}
         </p>
       </div>
       <a routerLink="/transactions/new" class="dashboard-greeting__cta" [ftHoverDepth]="8">
-        + New Transaction
+        {{ 'dashboard.newTransaction' | translate }}
       </a>
     </div>
 
@@ -59,21 +59,30 @@
       <ft-stats-grid [stats]="stats()" [loading]="false" />
     </div>
 
-    <!-- Main content: Chart + Activity -->
+    <!-- Main content: Chart + Activity + Donut -->
     <div class="dashboard-content">
       <div class="dashboard-content__chart" [ftScrollReveal]="200">
         <ft-area-chart
           [labels]="chartLabels()"
           [datasets]="chartDatasets()"
-          title="Monthly Overview"
-          subtitle="Last 6 months"
+          [title]="'dashboard.monthlyOverview' | translate"
+          [subtitle]="'dashboard.last6Months' | translate"
         />
       </div>
-      <div class="dashboard-content__activity" [ftScrollReveal]="300">
+      <div class="dashboard-content__sidebar" [ftScrollReveal]="300">
         <ft-recent-activity
           [items]="activity()"
           [maxItems]="4"
         />
+        @if (donutData().labels.length > 0) {
+          <div class="dashboard-content__donut">
+            <ft-donut-chart
+              [data]="donutData()"
+              [title]="'dashboard.expenseBreakdown' | translate"
+              [subtitle]="'dashboard.byCategory' | translate"
+            />
+          </div>
+        }
       </div>
     </div>
   }
