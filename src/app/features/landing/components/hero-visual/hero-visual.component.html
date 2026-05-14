@@ -1,0 +1,95 @@
+<div class="hero-visual">
+  <!-- Main Dashboard Card -->
+  <div class="hero-visual__main-card">
+    <!-- Card Header -->
+    <div class="main-card__header">
+      <div class="main-card__header-left">
+        <div class="main-card__icon">
+          <ng-icon name="dashboard" size="1rem" />
+        </div>
+        <div>
+          <span class="main-card__title">Financial Overview</span>
+          <span class="main-card__subtitle">Last 30 days</span>
+        </div>
+      </div>
+      <div class="main-card__badge">
+        <ng-icon name="trendUp" size="0.75rem" />
+        +12.5%
+      </div>
+    </div>
+
+    <!-- Mini Chart Area -->
+    <div class="main-card__chart">
+      <svg viewBox="0 0 400 120" class="chart-svg">
+        <defs>
+          <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#06D6A0" stop-opacity="0.3" />
+            <stop offset="100%" stop-color="#06D6A0" stop-opacity="0" />
+          </linearGradient>
+        </defs>
+        <!-- Area fill -->
+        <path
+          d="M0,80 C30,70 60,60 100,50 C140,40 170,55 200,45 C230,35 260,25 300,30 C340,35 370,20 400,15 L400,120 L0,120 Z"
+          fill="url(#chartGradient)"
+        />
+        <!-- Line -->
+        <path
+          d="M0,80 C30,70 60,60 100,50 C140,40 170,55 200,45 C230,35 260,25 300,30 C340,35 370,20 400,15"
+          fill="none"
+          stroke="#06D6A0"
+          stroke-width="2"
+          stroke-linecap="round"
+        />
+        <!-- Data points -->
+        <circle cx="100" cy="50" r="3" fill="#06D6A0" />
+        <circle cx="200" cy="45" r="3" fill="#06D6A0" />
+        <circle cx="300" cy="30" r="3" fill="#06D6A0" />
+        <circle cx="400" cy="15" r="4" fill="#06D6A0" stroke="#0a0e17" stroke-width="2" />
+      </svg>
+    </div>
+
+    <!-- Stats Row -->
+    <div class="main-card__stats">
+      <div class="stat-item">
+        <span class="stat-item__label">Income</span>
+        <span class="stat-item__value stat-item__value--income">$4,280</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-item__label">Expenses</span>
+        <span class="stat-item__value stat-item__value--expense">$2,840</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-item__label">Savings</span>
+        <span class="stat-item__value stat-item__value--savings">33.6%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Card: AI Insight -->
+  <div class="hero-visual__float-card hero-visual__float-card--insight">
+    <div class="float-card__icon float-card__icon--info">
+      <ng-icon name="info" size="0.875rem" />
+    </div>
+    <div class="float-card__content">
+      <span class="float-card__label">AI Insight</span>
+      <span class="float-card__text">Food spending down 18% this month</span>
+    </div>
+  </div>
+
+  <!-- Floating Card: Recent Transaction -->
+  <div class="hero-visual__float-card hero-visual__float-card--transaction">
+    <div class="float-card__icon float-card__icon--success">
+      <ng-icon name="check" size="0.875rem" />
+    </div>
+    <div class="float-card__content">
+      <span class="float-card__label">Logged</span>
+      <span class="float-card__text">Coffee — $5.50 in Food & Dining</span>
+    </div>
+  </div>
+
+  <!-- Decorative elements -->
+  <div class="hero-visual__glow hero-visual__glow--top"></div>
+  <div class="hero-visual__glow hero-visual__glow--bottom"></div>
+</div>
