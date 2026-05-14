@@ -1,58 +1,72 @@
 import { Injectable } from '@angular/core';
 
 /**
- * ChartService — Central configuration for Chart.js with Obsidian Glass theme.
- * Provides factory methods for consistent dark-themed charts.
+ * ChartService — Theme-aware Chart.js configuration.
+ * Reads CSS custom properties so charts adapt to dark/light themes automatically.
  */
 @Injectable({ providedIn: 'root' })
 export class ChartService {
-  // ─── Theme Colors ────────────────────────────────────────────────
-  private readonly colors = {
-    text: { primary: '#F1F5F9', secondary: '#94A3B8', tertiary: '#64748B' },
-    grid: 'rgba(255, 255, 255, 0.04)',
-    success: '#06D6A0',
-    danger: '#FF6B6B',
-    accent: '#118DFF',
-    purple: '#6C63FF',
-    bg: { primary: '#0A0E17', secondary: '#0F1623', tertiary: '#151D2E' },
-  };
+  // ─── Read colors from CSS custom properties (theme-aware) ────────
+  private get css() {
+    const root = document.documentElement;
+    const style = getComputedStyle(root);
+    const get = (name: string) => style.getPropertyValue(name).trim();
+
+    return {
+      textPrimary: get('--text-primary') || '#F3E8FF',
+      textSecondary: get('--text-secondary') || 'rgba(243,232,255,0.7)',
+      textTertiary: get('--text-tertiary') || 'rgba(243,232,255,0.4)',
+      gridColor: get('--chart-grid') || 'rgba(255,255,255,0.06)',
+      bgSecondary: get('--bg-secondary') || '#1D1426',
+      bgTertiary: get('--bg-tertiary') || '#2A1E35',
+      borderColor: get('--glass-border') || 'rgba(255,255,255,0.08)',
+      success: get('--success') || '#06D6A0',
+      danger: get('--danger') || '#FF6B6B',
+    };
+  }
 
   // ─── Default Scale Config ────────────────────────────────────────
-  private defaultScales = {
-    x: {
-      grid: { display: false },
-      ticks: {
-        color: this.colors.text.tertiary,
-        font: { family: 'Inter, sans-serif', size: 11 },
+  private get defaultScales() {
+    const c = this.css;
+    return {
+      x: {
+        grid: { display: false },
+        ticks: {
+          color: c.textTertiary,
+          font: { family: 'Inter, sans-serif', size: 11 },
+        },
       },
-    },
-    y: {
-      grid: { color: this.colors.grid },
-      ticks: {
-        color: this.colors.text.tertiary,
-        font: { family: 'Inter, sans-serif', size: 11 },
-        callback: (v: number) => `$${v >= 1000 ? `${(v / 1000).toFixed(1)}k` : v}`,
+      y: {
+        grid: { color: c.gridColor },
+        ticks: {
+          color: c.textTertiary,
+          font: { family: 'Inter, sans-serif', size: 11 },
+          callback: (v: number) => `$${v >= 1000 ? `${(v / 1000).toFixed(1)}k` : v}`,
+        },
       },
-    },
-  };
+    };
+  }
 
   // ─── Default Plugin Config ───────────────────────────────────────
-  private defaultPlugins = {
-    legend: { display: false },
-    tooltip: {
-      backgroundColor: this.colors.bg.tertiary,
-      titleColor: this.colors.text.primary,
-      bodyColor: this.colors.text.secondary,
-      borderColor: 'rgba(255, 255, 255, 0.1)',
-      borderWidth: 1,
-      padding: 12,
-      cornerRadius: 8,
-      titleFont: { family: 'Space Grotesk, sans-serif', weight: '600' as const },
-      bodyFont: { family: 'Inter, sans-serif' },
-      displayColors: true,
-      boxPadding: 4,
-    },
-  };
+  private get defaultPlugins() {
+    const c = this.css;
+    return {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: c.bgTertiary,
+        titleColor: c.textPrimary,
+        bodyColor: c.textSecondary,
+        borderColor: c.borderColor,
+        borderWidth: 1,
+        padding: 12,
+        cornerRadius: 8,
+        titleFont: { family: 'Space Grotesk, sans-serif', weight: '600' as const },
+        bodyFont: { family: 'Inter, sans-serif' },
+        displayColors: true,
+        boxPadding: 4,
+      },
+    };
+  }
 
   /**
    * Create area chart config with gradient fills.
@@ -63,6 +77,7 @@ export class ChartService {
   ): unknown {
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d')!;
+    const c = this.css;
 
     return {
       type: 'line',
@@ -84,7 +99,7 @@ export class ChartService {
             pointRadius: 0,
             pointHoverRadius: 5,
             pointHoverBackgroundColor: ds.color,
-            pointHoverBorderColor: this.colors.bg.secondary,
+            pointHoverBorderColor: c.bgSecondary,
             pointHoverBorderWidth: 2,
           };
         }),
@@ -151,6 +166,7 @@ export class ChartService {
     data: number[],
     colors: string[],
   ): unknown {
+    const c = this.css;
     return {
       type: 'doughnut',
       data: {
@@ -158,10 +174,10 @@ export class ChartService {
         datasets: [
           {
             data,
-            backgroundColor: colors.map((c) => c + 'CC'),
-            borderColor: this.colors.bg.secondary,
+            backgroundColor: colors.map((col) => col + 'CC'),
+            borderColor: c.bgSecondary,
             borderWidth: 2,
-            hoverBorderColor: this.colors.bg.secondary,
+            hoverBorderColor: c.bgSecondary,
             hoverBorderWidth: 3,
             hoverOffset: 8,
           },
@@ -176,7 +192,7 @@ export class ChartService {
             display: true,
             position: 'bottom' as const,
             labels: {
-              color: this.colors.text.secondary,
+              color: c.textSecondary,
               padding: 16,
               usePointStyle: true,
               pointStyle: 'circle' as const,

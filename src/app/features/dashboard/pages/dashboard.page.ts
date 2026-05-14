@@ -21,12 +21,23 @@ import { Insight } from '../../../core/models/insight.model';
 
 type DashboardState = 'loading' | 'ready' | 'empty' | 'error';
 
-// Purple theme colors for charts
-const CHART_COLORS = {
-  income: '#9D50BB',
-  expense: '#FF6B6B',
-  categories: ['#9D50BB', '#6E48AA', '#C77DFF', '#E0AAFF', '#FF6B6B', '#FF9E7D', '#FFD166', '#06D6A0', '#4DA6FF', '#A3A3A3'],
-};
+// Theme-aware chart colors (reads from CSS custom properties)
+function getChartColors() {
+  const style = getComputedStyle(document.documentElement);
+  const get = (name: string) => style.getPropertyValue(name).trim();
+  return {
+    income: get('--success') || '#06D6A0',
+    expense: get('--danger') || '#FF6B6B',
+    categories: [
+      get('--accent-start') || '#9D50BB',
+      get('--accent-mid') || '#7B42F6',
+      get('--accent-end') || '#6E48AA',
+      get('--info') || '#A78BFA',
+      get('--danger') || '#FF6B6B',
+      '#FF9E7D', '#FFD166', get('--success') || '#06D6A0', '#4DA6FF', '#A3A3A3',
+    ],
+  };
+}
 
 @Component({
   selector: 'ft-dashboard-page',
@@ -99,10 +110,11 @@ export class DashboardPage implements OnInit {
         }
 
         if (chart) {
+          const colors = getChartColors();
           this.chartLabels.set(chart.map(d => d.month));
           this.chartDatasets.set([
-            { label: 'Income', data: chart.map(d => d.income), color: CHART_COLORS.income },
-            { label: 'Expenses', data: chart.map(d => d.expenses), color: CHART_COLORS.expense },
+            { label: 'Income', data: chart.map(d => d.income), color: colors.income },
+            { label: 'Expenses', data: chart.map(d => d.expenses), color: colors.expense },
           ]);
         }
 
@@ -121,10 +133,11 @@ export class DashboardPage implements OnInit {
         if (categories && categories.length > 0) {
           this.categories.set(categories);
           const expenseCats = categories.filter(c => c.kind === 'expense' || c.kind === 'mixed').filter(c => c.total > 0);
+          const colors = getChartColors();
           this.donutData.set({
             labels: expenseCats.map(c => c.name),
             data: expenseCats.map(c => c.total),
-            colors: expenseCats.map((_, i) => CHART_COLORS.categories[i % CHART_COLORS.categories.length]),
+            colors: expenseCats.map((_, i) => colors.categories[i % colors.categories.length]),
           });
         }
 
