@@ -4,5 +4,6 @@ export interface Category {
   icon: string;
   color: string;
   total: number;
-  kind?: 'income' | 'expense' | 'mixed';
+  kind: 'income' | 'expense' | 'mixed';
+  isDefault: boolean;
 }

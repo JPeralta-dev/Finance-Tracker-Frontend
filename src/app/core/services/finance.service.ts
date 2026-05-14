@@ -70,6 +70,23 @@ export class FinanceService {
     // MOCK: return of(MOCK_CATEGORIES).pipe(delay(700));
   }
 
+  createCategory(
+    payload: Omit<Category, 'id' | 'total' | 'isDefault'>,
+  ): Observable<Category> {
+    return this.http.post<Category>(`${this.base}/categories`, payload);
+  }
+
+  updateCategory(
+    id: string,
+    payload: Partial<Omit<Category, 'id' | 'total' | 'isDefault'>>,
+  ): Observable<Category> {
+    return this.http.put<Category>(`${this.base}/categories/${id}`, payload);
+  }
+
+  deleteCategory(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.base}/categories/${id}`);
+  }
+
   // ── Chart ─────────────────────────────────────────────────────────────────
 
   getMonthlyChart(): Observable<ChartData[]> {

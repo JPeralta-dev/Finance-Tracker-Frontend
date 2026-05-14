@@ -149,5 +149,34 @@
         "server_error": "Server error. Please try again"
       }
     }
+  },
+  "categories": {
+    "title": "Categories",
+    "subtitle": "Spending breakdown by category",
+    "new": "+ New Category",
+    "default": "Default",
+    "of_total": "of total",
+    "view_transactions": "View transactions",
+    "edit_title": "Edit Category",
+    "new_title": "New Category",
+    "stats": {
+      "total": "Total tracked",
+      "highest": "Highest spend",
+      "total_expenses": "Total expenses"
+    },
+    "empty": {
+      "title": "No categories yet",
+      "desc": "Add some transactions to see categories appear here.",
+      "action": "+ New Transaction"
+    },
+    "form": {
+      "name": "Name",
+      "name_placeholder": "e.g. Food",
+      "kind": "Type",
+      "expense": "Expense",
+      "income": "Income",
+      "mixed": "Mixed",
+      "color": "Color"
+    }
   }
 }

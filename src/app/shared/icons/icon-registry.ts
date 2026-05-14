@@ -45,6 +45,7 @@ import {
   heroPaperAirplane,
   heroSun,
   heroMoon,
+  heroPencilSquare,
 } from '@ng-icons/heroicons/outline';
 
 // ─── Icon Map ────────────────────────────────────────────────────────────────
@@ -104,6 +105,9 @@ export const ICONS = {
   // Theme
   sun: heroSun,
   moon: heroMoon,
+
+  // Actions
+  edit: heroPencilSquare,
 };
 
 // ─── Category Icon Mapping ───────────────────────────────────────────────────

@@ -149,5 +149,34 @@
         "server_error": "Error del servidor. Intenta nuevamente"
       }
     }
+  },
+  "categories": {
+    "title": "Categorías",
+    "subtitle": "Desglose de gastos por categoría",
+    "new": "+ Nueva Categoría",
+    "default": "Por defecto",
+    "of_total": "del total",
+    "view_transactions": "Ver transacciones",
+    "edit_title": "Editar Categoría",
+    "new_title": "Nueva Categoría",
+    "stats": {
+      "total": "Total rastreadas",
+      "highest": "Mayor gasto",
+      "total_expenses": "Gastos totales"
+    },
+    "empty": {
+      "title": "No hay categorías aún",
+      "desc": "Agrega transacciones para ver las categorías aquí.",
+      "action": "+ Nueva Transacción"
+    },
+    "form": {
+      "name": "Nombre",
+      "name_placeholder": "ej. Comida",
+      "kind": "Tipo",
+      "expense": "Gasto",
+      "income": "Ingreso",
+      "mixed": "Mixto",
+      "color": "Color"
+    }
   }
 }

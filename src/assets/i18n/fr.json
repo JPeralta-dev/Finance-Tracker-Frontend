@@ -149,5 +149,34 @@
         "server_error": "Erreur serveur. Veuillez réessayer"
       }
     }
+  },
+  "categories": {
+    "title": "Catégories",
+    "subtitle": "Répartition des dépenses par catégorie",
+    "new": "+ Nouvelle Catégorie",
+    "default": "Par défaut",
+    "of_total": "du total",
+    "view_transactions": "Voir les transactions",
+    "edit_title": "Modifier la Catégorie",
+    "new_title": "Nouvelle Catégorie",
+    "stats": {
+      "total": "Total suivies",
+      "highest": "Plus grande dépense",
+      "total_expenses": "Dépenses totales"
+    },
+    "empty": {
+      "title": "Pas encore de catégories",
+      "desc": "Ajoutez des transactions pour voir les catégories apparaître ici.",
+      "action": "+ Nouvelle Transaction"
+    },
+    "form": {
+      "name": "Nom",
+      "name_placeholder": "ex. Nourriture",
+      "kind": "Type",
+      "expense": "Dépense",
+      "income": "Revenu",
+      "mixed": "Mixte",
+      "color": "Couleur"
+    }
   }
 }

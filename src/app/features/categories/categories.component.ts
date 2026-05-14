@@ -1,323 +1,78 @@
-import { Component, OnInit, signal, inject } from "@angular/core";
-import { CommonModule, CurrencyPipe } from "@angular/common";
-import { RouterLink } from "@angular/router";
-
-import { FinanceService } from "../../core/services/finance.service";
-import { Category } from "../../core/models/category.model";
-import { SkeletonComponent } from "../../shared/components/skeleton.component";
-import { EmptyStateComponent } from "../../shared/components/empty-state.component";
-import {
-  fadeSlideIn,
-  staggerList,
-  cardEntrance,
-} from "../../shared/animations";
+import { Component, OnInit, signal, inject, computed } from '@angular/core';
+import { CommonModule, CurrencyPipe } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import { ICONS } from '../../shared/icons/icon-registry';
+import { FinanceService } from '../../core/services/finance.service';
+import { Category } from '../../core/models/category.model';
+import { SkeletonComponent } from '../../shared/components/skeleton.component';
+import { EmptyStateComponent } from '../../shared/components/empty-state.component';
+import { TranslatePipe } from '../../core/pipes/translate.pipe';
+import { ScrollAnimateDirective } from '../../shared/directives/scroll-animate/scroll-animate.directive';
+import { ToastService } from '../../core/services/toast.service';
 
 @Component({
-  selector: "app-categories",
+  selector: 'app-categories',
   standalone: true,
   imports: [
     CommonModule,
+    FormsModule,
     RouterLink,
     CurrencyPipe,
     SkeletonComponent,
     EmptyStateComponent,
+    NgIcon,
+    TranslatePipe,
+    ScrollAnimateDirective,
   ],
-  animations: [fadeSlideIn, staggerList, cardEntrance],
-  template: `
-    <div class="cat-page" @fadeSlideIn>
-      <div class="page-header">
-        <div>
-          <h1>Categories</h1>
-          <p class="subtitle">Spending breakdown by category</p>
-        </div>
-      </div>
-
-      <!-- Stats row -->
-      @if (!loading() && categories().length > 0) {
-        <div class="stats-row" @fadeSlideIn>
-          <div class="stat-item">
-            <span class="stat-label">Total tracked</span>
-            <span class="stat-value">{{ categories().length }} categories</span>
-          </div>
-          <div class="stat-divider"></div>
-          <div class="stat-item">
-            <span class="stat-label">Highest spend</span>
-            <span class="stat-value">{{ topCategory().name }}</span>
-          </div>
-          <div class="stat-divider"></div>
-          <div class="stat-item">
-            <span class="stat-label">Total expenses</span>
-            <span class="stat-value">{{
-              totalExpenses() | currency: "USD" : "symbol" : "1.0-0"
-            }}</span>
-          </div>
-        </div>
-      }
-
-      <!-- Grid -->
-      <div class="cat-grid" [@staggerList]="categories().length">
-        @if (loading()) {
-          @for (s of [1, 2, 3, 4, 5, 6, 7, 8, 9]; track s) {
-            <div class="cat-card skeleton-card" @cardEntrance>
-              <div class="sk-icon"></div>
-              <app-skeleton height="16px" width="80px" radius="5px" />
-              <app-skeleton height="24px" width="100px" radius="5px" />
-              <app-skeleton height="6px" width="100%" radius="99px" />
-            </div>
-          }
-        } @else if (categories().length === 0) {
-          <div class="empty-wrap">
-            <ft-empty-state
-              icon="list"
-              title="No categories yet"
-              description="Add some transactions to see categories appear here."
-              actionRoute="/transactions/new"
-              actionLabel="+ New Transaction"
-            />
-          </div>
-        } @else {
-          @for (cat of categories(); track cat.id) {
-            <div class="cat-card" @cardEntrance [style.--cat-color]="cat.color">
-              <div class="cat-icon-wrap" [style.background]="cat.color + '22'">
-                <span class="cat-icon">{{ categoryMark(cat.name) }}</span>
-              </div>
-              <span class="cat-name">{{ cat.name }}</span>
-              <span class="cat-total">{{
-                cat.total | currency: "USD" : "symbol" : "1.0-0"
-              }}</span>
-              <div class="cat-bar">
-                <div
-                  class="cat-fill"
-                  [style.width.%]="percentage(cat.total)"
-                  [style.background]="cat.color"
-                ></div>
-              </div>
-              <span class="cat-pct"
-                >{{ percentage(cat.total) | number: "1.0-0" }}% of total</span
-              >
-              <a
-                [routerLink]="['/transactions']"
-                [queryParams]="{ category: cat.name }"
-                class="cat-link"
-                >View transactions →</a
-              >
-            </div>
-          }
-        }
-      </div>
-    </div>
-  `,
-  styles: [
-    `
-      .cat-page {
-        display: flex;
-        flex-direction: column;
-        gap: 28px;
-      }
-
-      .page-header {
-        display: flex;
-        align-items: flex-start;
-        justify-content: space-between;
-        gap: 16px;
-        flex-wrap: wrap;
-      }
-      h1 {
-        font-family: "Poppins", sans-serif;
-        font-size: 32px;
-        font-weight: 700;
-        color: #111;
-        margin: 0;
-        letter-spacing: -0.5px;
-      }
-      .subtitle {
-        color: #888;
-        margin: 4px 0 0;
-        font-size: 15px;
-      }
-
-      /* Stats */
-      .stats-row {
-        display: flex;
-        align-items: center;
-        gap: 0;
-        background: white;
-        border-radius: 12px;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.07);
-        padding: 18px 24px;
-        flex-wrap: wrap;
-        gap: 16px;
-      }
-      .stat-item {
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
-        flex: 1;
-        min-width: 140px;
-      }
-      .stat-label {
-        font-size: 11px;
-        font-weight: 700;
-        color: #aaa;
-        text-transform: uppercase;
-        letter-spacing: 0.6px;
-      }
-      .stat-value {
-        font-family: "Poppins", sans-serif;
-        font-size: 18px;
-        font-weight: 700;
-        color: #111;
-      }
-      .stat-divider {
-        width: 1px;
-        height: 36px;
-        background: rgba(0, 0, 0, 0.07);
-        flex-shrink: 0;
-      }
-
-      /* Grid */
-      .cat-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-        gap: 16px;
-      }
-      .empty-wrap {
-        grid-column: 1 / -1;
-      }
-
-      .cat-card {
-        background: white;
-        border-radius: 14px;
-        padding: 22px;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.07);
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        transition:
-          transform 0.18s ease,
-          box-shadow 0.18s ease;
-        cursor: default;
-        border: 1.5px solid transparent;
-      }
-      .cat-card:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
-        border-color: var(--cat-color, rgba(0, 0, 0, 0.08));
-      }
-
-      .cat-icon-wrap {
-        width: 48px;
-        height: 48px;
-        border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      .cat-icon {
-        font-size: 22px;
-      }
-      .cat-name {
-        font-size: 15px;
-        font-weight: 700;
-        color: #111;
-      }
-      .cat-total {
-        font-family: "Poppins", sans-serif;
-        font-size: 22px;
-        font-weight: 700;
-        color: #111;
-        letter-spacing: -0.3px;
-      }
-
-      .cat-bar {
-        height: 5px;
-        background: #f0f0ec;
-        border-radius: 99px;
-        overflow: hidden;
-      }
-      .cat-fill {
-        height: 100%;
-        border-radius: 99px;
-        transition: width 1s cubic-bezier(0.34, 1.56, 0.64, 1);
-      }
-
-      .cat-pct {
-        font-size: 11px;
-        color: #aaa;
-        font-weight: 600;
-      }
-
-      .cat-link {
-        font-size: 12px;
-        color: #223843;
-        text-decoration: none;
-        font-weight: 600;
-        margin-top: 2px;
-        opacity: 0;
-        transition: opacity 0.15s;
-      }
-      .cat-card:hover .cat-link {
-        opacity: 1;
-      }
-
-      /* Skeleton */
-      .skeleton-card {
-        gap: 12px;
-      }
-      .sk-icon {
-        width: 48px;
-        height: 48px;
-        border-radius: 12px;
-        background: linear-gradient(
-          90deg,
-          #e8e8e4 25%,
-          #f0f0ec 50%,
-          #e8e8e4 75%
-        );
-        background-size: 200% 100%;
-        animation: shimmer 1.4s ease-in-out infinite;
-      }
-      @keyframes shimmer {
-        0% {
-          background-position: 200% 0;
-        }
-        100% {
-          background-position: -200% 0;
-        }
-      }
-
-      @media (max-width: 480px) {
-        .cat-grid {
-          grid-template-columns: 1fr 1fr;
-        }
-        .stat-divider {
-          display: none;
-        }
-      }
-    `,
-  ],
+  providers: [provideIcons(ICONS)],
+  templateUrl: './categories.component.html',
+  styleUrl: './categories.component.scss',
 })
 export class CategoriesComponent implements OnInit {
-  categoryMark(name: string) {
-    return name
-      .split(/[^A-Za-z0-9]+/)
-      .filter(Boolean)
-      .slice(0, 2)
-      .map((part) => part[0]!.toUpperCase())
-      .join("") || "OT";
-  }
-
   private financeService = inject(FinanceService);
+  private toast = inject(ToastService);
 
   categories = signal<Category[]>([]);
   loading = signal(true);
+  submitting = signal(false);
 
-  topCategory = (): Category => {
+  // Form state
+  showForm = signal(false);
+  editingCategory = signal<Category | null>(null);
+  formName = signal('');
+  formIcon = signal('');
+  formColor = signal('#9D50BB');
+  formKind = signal<'income' | 'expense' | 'mixed'>('expense');
+
+  // Computed
+  topCategory = computed(() => {
     const sorted = [...this.categories()].sort((a, b) => b.total - a.total);
-    return sorted[0] ?? { id: "", name: "", icon: "", color: "", total: 0 };
-  };
+    return sorted[0] ?? { name: '-' };
+  });
 
-  totalExpenses = () => this.categories().reduce((sum, c) => sum + c.total, 0);
+  totalExpenses = computed(() =>
+    this.categories().reduce((sum, c) => sum + c.total, 0)
+  );
+
+  ngOnInit(): void {
+    this.loadCategories();
+  }
+
+  private loadCategories(): void {
+    this.loading.set(true);
+    this.financeService.getCategories().subscribe({
+      next: (data) => {
+        this.categories.set(data);
+        this.loading.set(false);
+      },
+      error: () => {
+        this.loading.set(false);
+        this.toast.error('Failed to load categories.');
+      },
+    });
+  }
 
   percentage(total: number): number {
     const max = this.totalExpenses();
@@ -325,10 +80,86 @@ export class CategoriesComponent implements OnInit {
     return (total / max) * 100;
   }
 
-  ngOnInit() {
-    this.financeService.getCategories().subscribe((data) => {
-      this.categories.set(data);
-      this.loading.set(false);
+  categoryMark(name: string): string {
+    return name
+      .split(/[^A-Za-z0-9]+/)
+      .filter(Boolean)
+      .slice(0, 2)
+      .map((part) => part[0]!.toUpperCase())
+      .join('') || 'OT';
+  }
+
+  // CRUD Actions
+  openCreateForm(): void {
+    this.editingCategory.set(null);
+    this.formName.set('');
+    this.formIcon.set('');
+    this.formColor.set('#9D50BB');
+    this.formKind.set('expense');
+    this.showForm.set(true);
+  }
+
+  openEditForm(cat: Category): void {
+    this.editingCategory.set(cat);
+    this.formName.set(cat.name);
+    this.formIcon.set(cat.icon);
+    this.formColor.set(cat.color);
+    this.formKind.set(cat.kind);
+    this.showForm.set(true);
+  }
+
+  closeForm(): void {
+    this.showForm.set(false);
+    this.editingCategory.set(null);
+  }
+
+  submitForm(): void {
+    if (!this.formName() || !this.formColor()) return;
+
+    this.submitting.set(true);
+    const payload = {
+      name: this.formName(),
+      icon: this.formIcon() || this.categoryMark(this.formName()),
+      color: this.formColor(),
+      kind: this.formKind(),
+    };
+
+    const request = this.editingCategory()
+      ? this.financeService.updateCategory(this.editingCategory()!.id, payload)
+      : this.financeService.createCategory(payload);
+
+    request.subscribe({
+      next: () => {
+        this.submitting.set(false);
+        this.closeForm();
+        this.loadCategories();
+        this.toast.success(
+          this.editingCategory() ? 'Category updated' : 'Category created'
+        );
+      },
+      error: (err) => {
+        this.submitting.set(false);
+        this.toast.error(err.error?.message || 'Failed to save category.');
+      },
     });
+  }
+
+  deleteCategory(cat: Category): void {
+    if (cat.isDefault) {
+      this.toast.error('Cannot delete default categories.');
+      return;
+    }
+
+    if (confirm(`Delete "${cat.name}"? Transactions will be moved to "Other".`)) {
+      this.financeService.deleteCategory(cat.id).subscribe({
+        next: () => {
+          this.loadCategories();
+          this.toast.success('Category deleted.');
+        },
+        error: (err) => {
+          this.toast.error(err.error?.message || 'Failed to delete category.');
+        },
+      });
+    }
   }
 }
