@@ -1,16 +1,20 @@
 .hero {
+  min-height: 100vh;
   padding: 80px 24px 80px;
   position: relative;
   overflow: visible;
+  display: flex;
+  align-items: center;
 }
 
 .hero__inner {
-  max-width: 1440px;
+  max-width: 1600px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 64px;
   align-items: center;
+  width: 100%;
 }
 
 /* Content */

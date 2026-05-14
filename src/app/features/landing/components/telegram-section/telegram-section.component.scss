@@ -1,10 +1,14 @@
 .telegram-section {
+  min-height: 100vh;
   padding: 80px 24px;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .telegram-section__inner {
-  max-width: 1440px;
+  max-width: 1600px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 1fr;

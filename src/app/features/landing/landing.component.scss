@@ -4,20 +4,27 @@
   overflow-x: hidden;
 }
 
-/* Sections - natural flow, not forced full-height */
+/* Sections - fill viewport height */
 .section-full {
-  min-height: auto;
+  min-height: 100vh;
   padding: 100px 24px;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 /* Features Section */
 .features {
+  min-height: 100vh;
   padding: 100px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .features__inner {
-  max-width: 1440px;
+  max-width: 1600px;
   margin: 0 auto;
   width: 100%;
 }
@@ -85,7 +92,7 @@
 }
 
 .telegram-wrapper__inner {
-  max-width: 1440px;
+  max-width: 1600px;
   margin: 0 auto;
   width: 100%;
 }
@@ -129,6 +136,10 @@
 /* Final CTA Wrapper */
 .final-cta-wrapper {
   padding: 100px 24px 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 /* Responsive */
