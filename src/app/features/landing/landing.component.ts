@@ -1,6 +1,8 @@
 import { Component, HostListener, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import { ICONS } from '../../shared/icons/icon-registry';
 import { PublicNavbarComponent } from './components/public-navbar/public-navbar.component';
 import { HeroSectionComponent } from './components/hero-section/hero-section.component';
 import { FeatureCardComponent } from './components/feature-card/feature-card.component';
@@ -14,6 +16,7 @@ import { ScrollAnimateDirective } from '../../shared/directives/scroll-animate/s
   imports: [
     CommonModule,
     RouterLink,
+    NgIcon,
     PublicNavbarComponent,
     HeroSectionComponent,
     FeatureCardComponent,
@@ -21,6 +24,7 @@ import { ScrollAnimateDirective } from '../../shared/directives/scroll-animate/s
     FinalCtaComponent,
     ScrollAnimateDirective,
   ],
+  providers: [provideIcons(ICONS)],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.scss',
 })

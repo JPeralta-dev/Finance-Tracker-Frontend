@@ -11,7 +11,13 @@
   <!-- Features Section -->
   <section class="features section-full" ftScrollAnimate="fade-up">
     <div class="features__inner">
-      <h2 class="features__title">Everything you need</h2>
+      <div class="features__header">
+        <h2 class="features__title">Everything you need</h2>
+        <a routerLink="/dashboard" class="features__view-all">
+          View all features
+          <ng-icon name="chevronRight" size="0.875rem" />
+        </a>
+      </div>
       <div class="features__grid">
         @for (feature of features; track feature.title; let i = $index) {
           <ft-feature-card
@@ -27,7 +33,16 @@
 
   <!-- Telegram Section -->
   <section class="telegram-wrapper section-full" ftScrollAnimate="fade-up">
-    <ft-telegram-section />
+    <div class="telegram-wrapper__inner">
+      <div class="telegram-wrapper__header">
+        <h2 class="telegram-wrapper__title">Telegram Integration</h2>
+        <a href="https://t.me/hormigaTrackerBot" target="_blank" class="telegram-wrapper__view-all">
+          Open bot
+          <ng-icon name="heroPaperPlane" size="0.875rem" />
+        </a>
+      </div>
+      <ft-telegram-section />
+    </div>
   </section>
 
   <!-- Final CTA -->
