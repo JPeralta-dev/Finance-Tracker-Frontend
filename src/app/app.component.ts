@@ -1,10 +1,11 @@
-import { Component, HostListener, inject, AfterViewInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, HostListener, inject, AfterViewInit, signal } from '@angular/core';
+import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs';
 import { TopbarComponent } from './shared/layout/topbar/topbar.component';
 import { CommandPaletteComponent } from './shared/ui/command-palette/command-palette.component';
 import { ToastContainerComponent } from './shared/ui/toast/toast.component';
 import { CommandService } from './core/services/command.service';
-import { Router } from '@angular/router';
+import { AuthService } from './core/services/auth.service';
 import { pageTransition } from './shared/animations';
 
 @Component({
@@ -18,6 +19,12 @@ import { pageTransition } from './shared/animations';
 export class AppComponent implements AfterViewInit {
   private commandService = inject(CommandService);
   private router = inject(Router);
+  private authService = inject(AuthService);
+
+  // Rutas públicas donde no se muestra el topbar privado
+  private readonly publicRoutes = ['', 'login', 'register'];
+
+  readonly showTopbar = signal(false);
 
   ngAfterViewInit(): void {
     // Register global commands
@@ -28,6 +35,23 @@ export class AppComponent implements AfterViewInit {
       { id: 'nav-analytics', label: 'Go to Analytics', icon: 'analytics', shortcut: 'G A', group: 'Navigation', action: () => this.router.navigate(['/analytics']) },
       { id: 'action-new-transaction', label: 'New Transaction', icon: 'plus', shortcut: 'N', group: 'Actions', action: () => this.router.navigate(['/transactions/new']) },
     ]);
+
+    // Listen to route changes to update topbar visibility
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe(() => {
+      this.updateTopbarVisibility();
+    });
+
+    // Initial check
+    this.updateTopbarVisibility();
+  }
+
+  private updateTopbarVisibility(): void {
+    const currentUrl = this.router.url.split('?')[0].split('#')[0];
+    const isPublicRoute = this.publicRoutes.includes(currentUrl);
+    // Only show topbar if user is authenticated AND NOT on a public route
+    this.showTopbar.set(!isPublicRoute && this.authService.isAuthenticated());
   }
 
   @HostListener('document:keydown', ['$event'])

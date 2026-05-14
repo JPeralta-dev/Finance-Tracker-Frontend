@@ -1,7 +1,7 @@
 .hero {
-  padding: 120px 24px 80px;
+  padding: 80px 24px 80px;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .hero__inner {
@@ -203,27 +203,27 @@
   animation: blink 1s step-end infinite;
 }
 
-/* Glows */
+/* Glows — diffuse into background, no hard edges */
 .hero__glow {
   position: absolute;
-  width: 300px;
-  height: 300px;
+  width: 400px;
+  height: 400px;
   border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0.3;
+  filter: blur(120px);
+  opacity: 0.15;
   z-index: 0;
   pointer-events: none;
 
   &--top {
-    top: -50px;
-    right: -50px;
-    background: var(--accent-start);
+    top: -100px;
+    right: -100px;
+    background: radial-gradient(circle, var(--accent-start), transparent 70%);
   }
 
   &--bottom {
-    bottom: -50px;
-    left: -50px;
-    background: var(--accent-end);
+    bottom: -100px;
+    left: -100px;
+    background: radial-gradient(circle, var(--accent-end), transparent 70%);
   }
 }
 

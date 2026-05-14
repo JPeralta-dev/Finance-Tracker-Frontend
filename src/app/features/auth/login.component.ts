@@ -40,7 +40,10 @@ import { AuthService } from "../../core/services/auth.service";
           </div>
 
           <div class="field">
-            <label for="password">Password</label>
+            <div class="field-header">
+              <label for="password">Password</label>
+              <a routerLink="/forgot-password" class="forgot-link">Forgot password?</a>
+            </div>
             <input
               id="password"
               type="password"
@@ -56,6 +59,7 @@ import { AuthService } from "../../core/services/auth.service";
           <button
             type="submit"
             class="btn-primary"
+            [class.btn-primary--disabled]="form.invalid || loading"
             [disabled]="form.invalid || loading"
           >
             @if (loading) {
@@ -75,76 +79,111 @@ import { AuthService } from "../../core/services/auth.service";
   `,
   styles: [`
     .auth-container {
-      min-height: calc(100vh - 60px);
+      min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 32px 16px;
+      background: var(--bg-primary);
     }
     .auth-card {
       width: 100%;
       max-width: 420px;
-      background: white;
-      border-radius: 16px;
+      background: var(--surface);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
       padding: 40px 32px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.04);
     }
     .auth-title {
+      font-family: var(--font-display);
       font-size: 28px;
       font-weight: 700;
-      color: #111;
+      color: var(--text-primary);
       margin: 0 0 4px;
     }
     .auth-subtitle {
-      color: #666;
+      color: var(--text-secondary);
       margin: 0 0 32px;
       font-size: 15px;
     }
     .auth-form { display: flex; flex-direction: column; gap: 20px; }
     .field { display: flex; flex-direction: column; gap: 6px; }
+    .field-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
     .field label {
       font-size: 13px;
       font-weight: 600;
-      color: #333;
+      color: var(--text-secondary);
     }
+    .forgot-link {
+      font-size: 12px;
+      color: var(--info);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .forgot-link:hover { color: var(--accent-start); text-decoration: underline; }
     .field input {
       padding: 12px 14px;
-      border: 1px solid #ddd;
-      border-radius: 10px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
       font-size: 15px;
+      color: var(--text-primary);
+      background: rgba(255, 255, 255, 0.03);
       outline: none;
-      transition: border-color 0.15s;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      caret-color: var(--accent-start);
     }
-    .field input:focus { border-color: #223843; }
-    .field-error { font-size: 12px; color: #e53e3e; }
+    .field input::placeholder { color: var(--text-tertiary); }
+    .field input:focus {
+      border-color: var(--accent-start);
+      box-shadow: 0 0 0 3px rgba(6, 214, 160, 0.15);
+    }
+    .field input:-webkit-autofill {
+      -webkit-box-shadow: 0 0 0 30px rgba(10, 14, 23, 1) inset !important;
+      -webkit-text-fill-color: var(--text-primary) !important;
+    }
+    .field-error { font-size: 12px; color: var(--error); }
     .error-banner {
-      background: #fff5f5;
-      color: #c53030;
+      background: rgba(255, 107, 107, 0.1);
+      border: 1px solid rgba(255, 107, 107, 0.2);
+      color: var(--error);
       padding: 10px 14px;
-      border-radius: 8px;
+      border-radius: var(--radius-sm);
       font-size: 14px;
       font-weight: 500;
     }
     .btn-primary {
       padding: 14px;
-      background: #223843;
-      color: white;
+      background: linear-gradient(135deg, var(--accent-start), var(--accent-mid));
+      color: var(--text-inverse);
       border: none;
-      border-radius: 10px;
+      border-radius: var(--radius-sm);
       font-size: 15px;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.15s;
+      transition: all 0.2s;
     }
-    .btn-primary:hover:not(:disabled) { background: #1A2D36; transform: translateY(-1px); }
-    .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
+    .btn-primary:hover:not(.btn-primary--disabled) {
+      box-shadow: 0 4px 16px rgba(6, 214, 160, 0.3);
+      transform: translateY(-1px);
+    }
+    .btn-primary--disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      filter: grayscale(0.5);
+    }
     .auth-footer {
       text-align: center;
       margin-top: 24px;
-      color: #666;
+      color: var(--text-secondary);
       font-size: 14px;
     }
-    .auth-footer a { color: #223843; font-weight: 600; text-decoration: none; }
+    .auth-footer a { color: var(--info); font-weight: 600; text-decoration: none; }
     .auth-footer a:hover { text-decoration: underline; }
     .spinner {
       display: inline-block;

@@ -2,8 +2,10 @@
   <!-- Ambient background -->
   <div class="app-background"></div>
 
-  <!-- Top navigation bar -->
-  <ft-topbar />
+  <!-- Top navigation bar - only show on authenticated private routes -->
+  @if (showTopbar()) {
+    <ft-topbar />
+  }
 
   <!-- Main content area -->
   <main class="app-main">
