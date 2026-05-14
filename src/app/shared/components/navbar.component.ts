@@ -412,6 +412,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     { path: '/dashboard', label: 'Dashboard', icon: 'DB' },
     { path: '/transactions', label: 'Transactions', icon: 'TX' },
     { path: '/categories', label: 'Categories', icon: 'CT' },
+    { path: '/settings', label: 'Settings', icon: 'ST' },
   ];
 
   ngOnInit(): void {

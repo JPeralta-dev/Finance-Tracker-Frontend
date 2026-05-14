@@ -178,5 +178,22 @@
       "mixed": "Mixte",
       "color": "Couleur"
     }
+  },
+  "settings": {
+    "title": "Paramètres",
+    "subtitle": "Gérez votre compte et vos intégrations",
+    "back_to_dashboard": "Retour au tableau de bord",
+    "telegram": {
+      "title": "Intégration Telegram",
+      "desc": "Liez votre compte Telegram pour enregistrer des transactions instantanément depuis le bot.",
+      "linked": "✅ Compte lié avec succès",
+      "not_linked": "Votre compte n'est pas lié à Telegram",
+      "unlink": "Dissocier",
+      "link": "Lier",
+      "code_label": "Code de liaison",
+      "step1": "Ouvrez Telegram et recherchez @hormigaTrackerBot",
+      "step2": "Envoyez /start pour obtenir un code",
+      "step3": "Entrez le code ici"
+    }
   }
 }
