@@ -5,8 +5,8 @@
   [class]="fullClass"
   [class]="loadingClass"
   [disabled]="disabled() || loading()"
+  [type]="type()"
   (click)="onClick($event)"
-  type="button"
 >
   @if (loading()) {
     <span class="btn__spinner"></span>

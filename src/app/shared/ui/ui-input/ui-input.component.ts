@@ -28,6 +28,8 @@ export class UiInputComponent implements ControlValueAccessor {
   hint = input<string | null>(null);
   disabled = input<boolean>(false);
   icon = input<string | null>(null);
+  autocomplete = input<string>('off');
+  maxlength = input<number | null>(null);
 
   /** Internal focus state for float label */
   focused = signal(false);
