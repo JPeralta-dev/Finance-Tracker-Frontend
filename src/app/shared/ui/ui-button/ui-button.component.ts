@@ -12,6 +12,7 @@ import { ButtonVariant, ButtonSize } from './ui-button.types';
 export class UiButtonComponent {
   variant = input<ButtonVariant>('primary');
   size = input<ButtonSize>('md');
+  type = input<string>('button');
   disabled = input<boolean>(false);
   fullWidth = input<boolean>(false);
   loading = input<boolean>(false);
