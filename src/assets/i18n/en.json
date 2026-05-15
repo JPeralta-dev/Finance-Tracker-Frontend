@@ -182,6 +182,9 @@
     "title": "Categories",
     "subtitle": "Spending breakdown by category",
     "new": "+ New Category",
+    "add": "Add",
+    "edit": "Edit",
+    "delete": "Delete",
     "default": "Default",
     "of_total": "of total",
     "view_transactions": "View transactions",
@@ -210,11 +213,20 @@
   "settings": {
     "title": "Settings",
     "subtitle": "Manage your account and integrations",
+    "signOut": "Sign Out",
     "back_to_dashboard": "Back to dashboard",
     "coming_soon": "Coming soon: Telegram, AI, and more integrations.",
     "integrations": {
       "title": "Integrations",
       "desc": "Connect external tools to enhance your experience."
     }
+  },
+  "profile": {
+    "title": "Profile",
+    "subtitle": "Manage your personal information",
+    "displayName": "Display Name",
+    "email": "Email",
+    "save": "Save Changes",
+    "cancel": "Cancel"
   }
 }

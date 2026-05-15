@@ -182,6 +182,9 @@
     "title": "Catégories",
     "subtitle": "Répartition des dépenses par catégorie",
     "new": "+ Nouvelle Catégorie",
+    "add": "Ajouter",
+    "edit": "Modifier",
+    "delete": "Supprimer",
     "default": "Par défaut",
     "of_total": "du total",
     "view_transactions": "Voir les transactions",
@@ -210,11 +213,20 @@
   "settings": {
     "title": "Paramètres",
     "subtitle": "Gérez votre compte et vos intégrations",
+    "signOut": "Déconnexion",
     "back_to_dashboard": "Retour au tableau de bord",
     "coming_soon": "Bientôt : Telegram, IA et plus d'intégrations.",
     "integrations": {
       "title": "Intégrations",
       "desc": "Connectez des outils externes pour améliorer votre expérience."
     }
+  },
+  "profile": {
+    "title": "Profil",
+    "subtitle": "Gérez vos informations personnelles",
+    "displayName": "Nom d'affichage",
+    "email": "E-mail",
+    "save": "Sauvegarder les modifications",
+    "cancel": "Annuler"
   }
 }

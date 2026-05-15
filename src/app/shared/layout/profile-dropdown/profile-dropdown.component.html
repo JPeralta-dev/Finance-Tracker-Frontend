@@ -1,0 +1,78 @@
+<div class="profile-dropdown" (clickOutside)="closeDropdown()">
+  <button
+    class="profile-dropdown__trigger"
+    (click)="toggleDropdown()"
+    [attr.aria-expanded]="isOpen()"
+    aria-label="Open user menu"
+  >
+    <div class="profile-dropdown__avatar">
+      {{ initials() }}
+    </div>
+    <span class="profile-dropdown__name">
+      {{ displayName() }}
+    </span>
+    <ng-icon
+      class="profile-dropdown__chevron"
+      [class.profile-dropdown__chevron--open]="isOpen()"
+      name="chevronDown"
+      size="1rem"
+    />
+  </button>
+
+  @if (isOpen()) {
+    <div class="profile-dropdown__menu" (click)="onMenuClick($event)">
+      <div class="profile-dropdown__user-info">
+        <div class="profile-dropdown__user-avatar">
+          {{ initials() }}
+        </div>
+        <div class="profile-dropdown__user-details">
+          <div class="profile-dropdown__user-name">
+            {{ displayName() }}
+          </div>
+          @if (user()) {
+            <div class="profile-dropdown__user-email">
+              {{ user()?.email }}
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="profile-dropdown__divider"></div>
+
+      <a
+        routerLink="/profile"
+        class="profile-dropdown__item"
+        (click)="closeDropdown()"
+      >
+        <ng-icon name="user" size="1rem" />
+        <span>Profile</span>
+      </a>
+
+      <a
+        routerLink="/settings"
+        class="profile-dropdown__item"
+        (click)="closeDropdown()"
+      >
+        <ng-icon name="settings" size="1rem" />
+        <span>Settings</span>
+      </a>
+
+      <div class="profile-dropdown__divider"></div>
+
+      <button
+        class="profile-dropdown__item profile-dropdown__item--danger"
+        (click)="onLogout()"
+        [disabled]="isLoggingOut()"
+      >
+        <ng-icon name="logout" size="1rem" />
+        <span>
+          @if (isLoggingOut()) {
+            Signing out...
+          } @else {
+            Sign out
+          }
+        </span>
+      </button>
+    </div>
+  }
+</div>

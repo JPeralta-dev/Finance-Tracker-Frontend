@@ -7,6 +7,7 @@ import { NavItemComponent } from '../../layout/nav-item/nav-item.component';
 import { MobileMenuComponent } from '../../layout/mobile-menu/mobile-menu.component';
 import { MobileMenuItem } from '../../layout/mobile-menu/mobile-menu.types';
 import { ICONS } from '../../../shared/icons/icon-registry';
+import { ProfileDropdownComponent } from '../../layout/profile-dropdown/profile-dropdown.component';
 
 const NAV_ITEMS: NavItem[] = [
   { label: 'Dashboard', path: '/dashboard', icon: 'dashboard' },
@@ -18,7 +19,7 @@ const NAV_ITEMS: NavItem[] = [
 @Component({
   selector: 'ft-topbar',
   standalone: true,
-  imports: [CommonModule, RouterLink, NgIcon, NavItemComponent, MobileMenuComponent],
+  imports: [CommonModule, RouterLink, NgIcon, NavItemComponent, MobileMenuComponent, ProfileDropdownComponent],
   providers: [provideIcons(ICONS)],
   templateUrl: './topbar.component.html',
   styleUrl: './topbar.component.scss',

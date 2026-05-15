@@ -1,7 +1,8 @@
-import { Injectable, inject } from "@angular/core";
+import { Injectable, inject, signal, computed } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
 import { Observable, tap } from "rxjs";
+import { toObservable } from "@angular/core";
 
 import { environment } from "../../../environments/environment";
 import { AuthResponse, RefreshResponse, User } from "../models/user.model";
@@ -15,13 +16,46 @@ export class AuthService {
   private readonly router = inject(Router);
   private readonly base = `${environment.apiUrl}/api/auth`;
 
+  // Signal privado como fuente de verdad
+  private readonly _userSignal = signal<User | null>(null);
+
+  // Signal público computed para isAuthenticated
+  readonly isAuthenticated = computed(() => this._userSignal() !== null);
+
+  // Signal público para el usuario actual
+  readonly currentUser = this._userSignal.asReadonly();
+
+  // Observable para backward compatibility
+  readonly user$: Observable<User | null> = toObservable(this._userSignal);
+
+  constructor() {
+    // Inicializar desde localStorage al boot
+    this.loadUserFromStorage();
+  }
+
+  private loadUserFromStorage(): void {
+    const token = this.getAccessToken();
+    if (token) {
+      // Si hay token, fetchear el perfil
+      this.getProfile().subscribe({
+        next: (user) => this._userSignal.set(user),
+        error: () => this._userSignal.set(null),
+      });
+    }
+  }
+
   login(
     email: string,
     password: string,
   ): Observable<AuthResponse> {
     return this.http
       .post<AuthResponse>(`${this.base}/login`, { email, password })
-      .pipe(tap((res) => this.setTokens(res.accessToken, res.refreshToken)));
+      .pipe(
+        tap((res) => {
+          this.setTokens(res.accessToken, res.refreshToken);
+          this._userSignal.set(res.user);
+        }),
+      );
   }
 
   register(
@@ -35,7 +69,12 @@ export class AuthService {
         password,
         displayName,
       })
-      .pipe(tap((res) => this.setTokens(res.accessToken, res.refreshToken)));
+      .pipe(
+        tap((res) => {
+          this.setTokens(res.accessToken, res.refreshToken);
+          this._userSignal.set(res.user);
+        }),
+      );
   }
 
   logout(): Observable<void> {
@@ -44,8 +83,14 @@ export class AuthService {
       .post<void>(`${this.base}/logout`, { refreshToken })
       .pipe(
         tap({
-          next: () => this.clearTokens(),
-          error: () => this.clearTokens(),
+          next: () => {
+            this.clearTokens();
+            this._userSignal.set(null);
+          },
+          error: () => {
+            this.clearTokens();
+            this._userSignal.set(null);
+          },
         }),
       );
   }
@@ -63,10 +108,6 @@ export class AuthService {
 
   getAccessToken(): string | null {
     return localStorage.getItem(ACCESS_TOKEN_KEY);
-  }
-
-  isAuthenticated(): boolean {
-    return this.getAccessToken() !== null;
   }
 
   setTokens(accessToken: string, refreshToken: string): void {

@@ -182,6 +182,9 @@
     "title": "Categorías",
     "subtitle": "Desglose de gastos por categoría",
     "new": "+ Nueva Categoría",
+    "add": "Agregar",
+    "edit": "Editar",
+    "delete": "Eliminar",
     "default": "Por defecto",
     "of_total": "del total",
     "view_transactions": "Ver transacciones",
@@ -210,11 +213,20 @@
   "settings": {
     "title": "Configuración",
     "subtitle": "Gestiona tu cuenta e integraciones",
+    "signOut": "Cerrar Sesión",
     "back_to_dashboard": "Volver al dashboard",
     "coming_soon": "Próximamente: Integraciones con Telegram, IA y más.",
     "integrations": {
       "title": "Integraciones",
       "desc": "Conecta herramientas externas para potenciar tu experiencia."
     }
+  },
+  "profile": {
+    "title": "Perfil",
+    "subtitle": "Gestiona tu información personal",
+    "displayName": "Nombre para mostrar",
+    "email": "Correo electrónico",
+    "save": "Guardar cambios",
+    "cancel": "Cancelar"
   }
 }

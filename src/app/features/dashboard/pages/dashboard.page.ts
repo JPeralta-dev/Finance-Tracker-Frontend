@@ -22,10 +22,14 @@ import { Insight } from '../../../core/models/insight.model';
 type DashboardState = 'loading' | 'ready' | 'empty' | 'error';
 
 // Theme-aware chart colors (reads from CSS custom properties)
+// Module-level cache to avoid repeated getComputedStyle calls
+let cachedColors: ReturnType<typeof getChartColors> | null = null;
+
 function getChartColors() {
+  if (cachedColors) return cachedColors;
   const style = getComputedStyle(document.documentElement);
   const get = (name: string) => style.getPropertyValue(name).trim();
-  return {
+  cachedColors = {
     income: get('--success') || '#06D6A0',
     expense: get('--danger') || '#FF6B6B',
     categories: [
@@ -37,6 +41,7 @@ function getChartColors() {
       '#FF9E7D', '#FFD166', get('--success') || '#06D6A0', '#4DA6FF', '#A3A3A3',
     ],
   };
+  return cachedColors;
 }
 
 @Component({
