@@ -62,10 +62,15 @@ export class ProfilePage implements OnInit {
     }
 
     const displayName = this.profileForm.get('displayName')?.value;
+    if (!displayName) return;
 
-    // TODO: Call authService.updateProfile() when available
-    // For now, just show success feedback
-    this.toast.success('Profile updated successfully!');
-    console.log('Profile update requested:', { displayName });
+    this.authService.updateProfile(displayName).subscribe({
+      next: () => {
+        this.toast.success('Profile updated successfully!');
+      },
+      error: () => {
+        this.toast.error('Failed to save profile. Please try again.');
+      },
+    });
   }
 }

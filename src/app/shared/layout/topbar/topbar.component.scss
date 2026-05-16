@@ -60,6 +60,38 @@
     color: var(--accent-start);
   }
 
+  /* ── Home Button ── */
+  &__home-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition:
+      background var(--duration-fast) var(--ease-out),
+      color var(--duration-fast) var(--ease-out);
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-primary);
+    }
+  }
+
+  /* ── Dynamic Page Title ── */
+  &__title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    padding-left: 4px;
+    border-left: 1px solid var(--glass-border);
+    margin-left: 4px;
+  }
+
   &__logo-text {
     font-family: var(--font-display);
     font-size: 18px;

@@ -125,6 +125,16 @@ export class AuthService {
     this.router.navigate(["/login"]);
   }
 
+  updateProfile(displayName: string): Observable<User> {
+    return this.http.put<User>(`${this.base}/profile`, { displayName }).pipe(
+      tap((user) => this._userSignal.set(user)),
+    );
+  }
+
+  forgotPassword(email: string): Observable<void> {
+    return this.http.post<void>(`${this.base}/forgot-password`, { email });
+  }
+
   private getRefreshToken(): string {
     return localStorage.getItem(REFRESH_TOKEN_KEY) ?? "";
   }

@@ -8,7 +8,6 @@
 
 export { GlassPanelComponent } from './glass-panel/glass-panel.component';
 export { UiButtonComponent } from './ui-button/ui-button.component';
-export { UiInputComponent } from './ui-input/ui-input.component';
 export { UiCardComponent } from './ui-card/ui-card.component';
 export { UiBadgeComponent } from './ui-badge/ui-badge.component';
 export { SectionHeaderComponent } from './section-header/section-header.component';

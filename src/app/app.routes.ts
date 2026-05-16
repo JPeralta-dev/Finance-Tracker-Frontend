@@ -64,5 +64,12 @@ export const routes: Routes = [
       import('./features/profile/profile.page').then(m => m.ProfilePage),
     canActivate: [authGuard],
   },
+  {
+    path: 'forgot-password',
+    loadComponent: () =>
+      import('./features/auth/forgot-password.component').then(m => m.ForgotPasswordComponent),
+    canActivate: [redirectIfAuthGuard],
+  },
+  { path: 'analytics', redirectTo: 'dashboard', pathMatch: 'full' },
   { path: '**', redirectTo: '' }
 ];

@@ -18,5 +18,24 @@
         />
       }
     </nav>
+
+    <!-- User section + logout -->
+    <div class="mobile-menu-user">
+      @if (user(); as currentUser) {
+        <div class="mobile-menu-user-info">
+          <div class="mobile-menu-user-avatar">
+            {{ getInitials(currentUser.displayName || currentUser.email) }}
+          </div>
+          <div class="mobile-menu-user-details">
+            <span class="mobile-menu-user-name">{{ currentUser.displayName || 'User' }}</span>
+            <span class="mobile-menu-user-email">{{ currentUser.email }}</span>
+          </div>
+        </div>
+      }
+      <button class="mobile-menu-logout" (click)="onLogout()" aria-label="Logout">
+        <ng-icon name="logout" size="1rem" />
+        <span>Logout</span>
+      </button>
+    </div>
   </div>
 }

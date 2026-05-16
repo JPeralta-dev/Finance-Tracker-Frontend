@@ -1,13 +1,29 @@
 <header class="topbar" [class.topbar--scrolled]="isScrolled()">
   <div class="topbar__inner">
-    <!-- Left: Logo + Desktop Nav -->
+    <!-- Left: Logo + Home Button + Title + Desktop Nav -->
     <div class="topbar__left">
-      <a routerLink="/" class="topbar__logo">
+      <a [routerLink]="getLogoLink()" class="topbar__logo">
         <span class="topbar__logo-icon">
           <ng-icon name="wallet" size="1.2rem" />
         </span>
         <span class="topbar__logo-text">Flowr</span>
       </a>
+
+      <!-- Home button: visible only on private routes -->
+      @if (showHomeButton()) {
+        <button
+          class="topbar__home-btn"
+          [routerLink]="['/']"
+          aria-label="Go to home"
+        >
+          <ng-icon name="home" size="1rem" />
+        </button>
+      }
+
+      <!-- Dynamic page title -->
+      @if (pageTitle()) {
+        <span class="topbar__title">{{ pageTitle() }}</span>
+      }
 
       <nav class="topbar__nav" aria-label="Main navigation">
         @for (item of navItems; track item.path) {
@@ -22,10 +38,7 @@
 
     <!-- Right: Actions + Profile -->
     <div class="topbar__right">
-      <button class="topbar__action" aria-label="Notifications">
-        <ng-icon name="bell" size="1.1rem" />
-        <span class="topbar__badge"></span>
-      </button>
+      <ft-notifications-dropdown />
 
       <ft-profile-dropdown />
 
@@ -45,5 +58,6 @@
 <ft-mobile-menu
   [items]="mobileItems"
   [isOpen]="mobileMenuOpen()"
+  [user]="currentUser()"
   (close)="onCloseMenu()"
 />
