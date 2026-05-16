@@ -96,6 +96,28 @@
   font-size: 16px;
 }
 
+.back-home {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.back-home:hover {
+  color: var(--text-primary);
+}
+
+.back-home span {
+  font-size: 16px;
+}
+
 .auth-card {
   width: 100%;
   max-width: 420px;
