@@ -32,7 +32,7 @@ export class ProfilePage implements OnInit {
     this.loadUserProfile();
   }
 
-  private loadUserProfile(): void {
+  loadUserProfile(): void {
     this.state.set('loading');
 
     this.authService.getProfile()

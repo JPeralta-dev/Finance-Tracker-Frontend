@@ -2,7 +2,7 @@ import { Injectable, inject, signal, computed } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
 import { Observable, tap } from "rxjs";
-import { toObservable } from "@angular/core";
+import { toObservable } from "@angular/core/rxjs-interop";
 
 import { environment } from "../../../environments/environment";
 import { AuthResponse, RefreshResponse, User } from "../models/user.model";

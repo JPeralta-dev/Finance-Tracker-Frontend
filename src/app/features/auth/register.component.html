@@ -8,38 +8,49 @@
         <div class="error-banner">{{ error | translate }}</div>
       }
 
-      <ft-input
-        formControlName="email"
-        type="email"
-        [label]="'auth.email' | translate"
-        [placeholder]="'auth.email_placeholder' | translate"
-        [error]="email.invalid && email.touched ? 'auth.errors.email_required' : null"
-        autocomplete="email"
-      />
+      <div class="field">
+        <label for="email">{{ 'auth.email' | translate }}</label>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          [placeholder]="'auth.email_placeholder' | translate"
+          autocomplete="email"
+        />
+        @if (email.invalid && email.touched) {
+          <span class="field-error">{{ 'auth.errors.email_required' | translate }}</span>
+        }
+      </div>
 
-      <ft-input
-        formControlName="displayName"
-        type="text"
-        [label]="'auth.displayName' | translate"
-        [placeholder]="'auth.displayNamePlaceholder' | translate"
-        maxlength="50"
-      />
+      <div class="field">
+        <label for="displayName">{{ 'auth.displayName' | translate }}</label>
+        <input
+          id="displayName"
+          type="text"
+          formControlName="displayName"
+          [placeholder]="'auth.displayNamePlaceholder' | translate"
+          maxlength="50"
+        />
+      </div>
 
-      <ft-input
-        formControlName="password"
-        type="password"
-        [label]="'auth.password' | translate"
-        [placeholder]="'auth.password_min' | translate"
-        [error]="password.invalid && password.touched ? 'auth.errors.password_min' : null"
-        autocomplete="new-password"
-      />
+      <div class="field">
+        <label for="password">{{ 'auth.password' | translate }}</label>
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          [placeholder]="'auth.password_min' | translate"
+          autocomplete="new-password"
+        />
+        @if (password.invalid && password.touched) {
+          <span class="field-error">{{ 'auth.errors.password_min' | translate }}</span>
+        }
+      </div>
 
-      <ft-button
+      <button
         type="submit"
-        variant="primary"
-        size="md"
-        [fullWidth]="true"
-        [loading]="loading"
+        class="btn-primary"
+        [class.btn-primary--disabled]="form.invalid || loading"
         [disabled]="form.invalid || loading"
       >
         @if (loading) {
@@ -47,7 +58,7 @@
         } @else {
           {{ 'auth.createAccount' | translate }}
         }
-      </ft-button>
+      </button>
     </form>
 
     <p class="auth-footer">

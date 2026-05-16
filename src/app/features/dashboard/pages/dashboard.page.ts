@@ -23,9 +23,15 @@ type DashboardState = 'loading' | 'ready' | 'empty' | 'error';
 
 // Theme-aware chart colors (reads from CSS custom properties)
 // Module-level cache to avoid repeated getComputedStyle calls
-let cachedColors: ReturnType<typeof getChartColors> | null = null;
+interface ChartColors {
+  income: string;
+  expense: string;
+  categories: string[];
+}
 
-function getChartColors() {
+let cachedColors: ChartColors | null = null;
+
+function getChartColors(): ChartColors {
   if (cachedColors) return cachedColors;
   const style = getComputedStyle(document.documentElement);
   const get = (name: string) => style.getPropertyValue(name).trim();

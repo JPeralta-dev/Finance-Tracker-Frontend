@@ -8,33 +8,41 @@
         <div class="error-banner">{{ error | translate }}</div>
       }
 
-      <ft-input
-        formControlName="email"
-        type="email"
-        [label]="'auth.email' | translate"
-        [placeholder]="'auth.email_placeholder' | translate"
-        [error]="email.invalid && email.touched ? 'auth.errors.email_required' : null"
-        autocomplete="email"
-      />
-
-      <div class="field-wrapper">
-        <ft-input
-          formControlName="password"
-          type="password"
-          [label]="'auth.password' | translate"
-          [placeholder]="'auth.password_placeholder' | translate"
-          [error]="password.invalid && password.touched ? 'auth.errors.password_required' : null"
-          autocomplete="current-password"
+      <div class="field">
+        <label for="email">{{ 'auth.email' | translate }}</label>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          [placeholder]="'auth.email_placeholder' | translate"
+          autocomplete="email"
         />
-        <a routerLink="/forgot-password" class="forgot-link">{{ 'auth.forgotPassword' | translate }}</a>
+        @if (email.invalid && email.touched) {
+          <span class="field-error">{{ 'auth.errors.email_required' | translate }}</span>
+        }
       </div>
 
-      <ft-button
+      <div class="field">
+        <div class="field-header">
+          <label for="password">{{ 'auth.password' | translate }}</label>
+          <a routerLink="/forgot-password" class="forgot-link">{{ 'auth.forgotPassword' | translate }}</a>
+        </div>
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          [placeholder]="'auth.password_placeholder' | translate"
+          autocomplete="current-password"
+        />
+        @if (password.invalid && password.touched) {
+          <span class="field-error">{{ 'auth.errors.password_required' | translate }}</span>
+        }
+      </div>
+
+      <button
         type="submit"
-        variant="primary"
-        size="md"
-        [fullWidth]="true"
-        [loading]="loading"
+        class="btn-primary"
+        [class.btn-primary--disabled]="form.invalid || loading"
         [disabled]="form.invalid || loading"
       >
         @if (loading) {
@@ -42,7 +50,7 @@
         } @else {
           {{ 'auth.signIn' | translate }}
         }
-      </ft-button>
+      </button>
     </form>
 
     <p class="auth-footer">

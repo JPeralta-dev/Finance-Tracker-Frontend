@@ -4,7 +4,7 @@ import { Router, RouterLink } from '@angular/router';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { AuthService } from '../../../core/services/auth.service';
 import { ICONS } from '../../../shared/icons/icon-registry';
-import { ClickOutsideDirective } from '../../../directives/click-outside.directive';
+import { ClickOutsideDirective } from '../../directives/click-outside.directive';
 
 @Component({
   selector: 'ft-profile-dropdown',
