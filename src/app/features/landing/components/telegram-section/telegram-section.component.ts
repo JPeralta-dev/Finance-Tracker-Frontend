@@ -4,6 +4,7 @@ import { NgIcon, provideIcons } from '@ng-icons/core';
 import { ICONS } from '../../../../shared/icons/icon-registry';
 import { ScrollAnimateDirective } from '../../../../shared/directives/scroll-animate/scroll-animate.directive';
 import { TranslatePipe } from '../../../../core/pipes/translate.pipe';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'ft-telegram-section',
@@ -13,4 +14,6 @@ import { TranslatePipe } from '../../../../core/pipes/translate.pipe';
   templateUrl: './telegram-section.component.html',
   styleUrl: './telegram-section.component.scss',
 })
-export class TelegramSectionComponent {}
+export class TelegramSectionComponent {
+  readonly telegramBotUrl = environment.telegramBotUrl;
+}
