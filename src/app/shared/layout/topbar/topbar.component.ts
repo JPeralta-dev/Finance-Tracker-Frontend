@@ -19,6 +19,8 @@ const NAV_ITEMS: NavItem[] = [
   { label: 'Analytics', path: '/analytics', icon: 'analytics' },
 ];
 
+const NAV_ITEM_LABELS = NAV_ITEMS.map((item) => item.label);
+
 const ROUTE_TITLES: Record<string, string> = {
   '/dashboard': 'Dashboard',
   '/transactions': 'Transactions',
@@ -61,13 +63,16 @@ export class TopbarComponent {
       .subscribe((event: NavigationEnd) => {
         const url = event.urlAfterRedirects.split('?')[0].split('#')[0];
         const title = ROUTE_TITLES[url] ?? '';
-        this.pageTitle.set(title);
+        const isNavMatch = title !== '' && NAV_ITEM_LABELS.includes(title);
+        this.pageTitle.set(isNavMatch ? '' : title);
         this.showHomeButton.set(PRIVATE_PATHS.some(path => url.startsWith(path)));
       });
 
     // Initialize on component creation
     const currentUrl = this.router.url.split('?')[0].split('#')[0];
-    this.pageTitle.set(ROUTE_TITLES[currentUrl] ?? '');
+    const initTitle = ROUTE_TITLES[currentUrl] ?? '';
+    const isInitNavMatch = initTitle !== '' && NAV_ITEM_LABELS.includes(initTitle);
+    this.pageTitle.set(isInitNavMatch ? '' : initTitle);
     this.showHomeButton.set(PRIVATE_PATHS.some(path => currentUrl.startsWith(path)));
   }
 
