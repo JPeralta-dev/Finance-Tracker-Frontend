@@ -4,7 +4,7 @@ import { Router, RouterLink } from '@angular/router';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { ICONS } from '../../shared/icons/icon-registry';
 import { TranslatePipe } from '../../core/pipes/translate.pipe';
-import { ScrollAnimateDirective } from '../../shared/directives/scroll-animate/scroll-animate.directive';
+import { FtSubtleRevealDirective } from '../../shared/directives/ft-subtle-reveal.directive';
 import { AuthService } from '../../core/services/auth.service';
 import { finalize } from 'rxjs';
 
@@ -16,7 +16,7 @@ import { finalize } from 'rxjs';
     RouterLink,
     NgIcon,
     TranslatePipe,
-    ScrollAnimateDirective,
+    FtSubtleRevealDirective,
   ],
   providers: [provideIcons(ICONS)],
   templateUrl: './settings.component.html',

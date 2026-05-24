@@ -24,9 +24,9 @@ describe('AnalyticsPage', () => {
   ];
 
   const mockCategories: Category[] = [
-    { id: '1', name: 'Food', kind: 'expense', total: 500, isDefault: false },
-    { id: '2', name: 'Transport', kind: 'expense', total: 300, isDefault: false },
-    { id: '3', name: 'Salary', kind: 'income', total: 5000, isDefault: false },
+    { id: '1', name: 'Food', icon: 'food', color: '#ff0', kind: 'expense', total: 500, isDefault: false },
+    { id: '2', name: 'Transport', icon: 'transport', color: '#0ff', kind: 'expense', total: 300, isDefault: false },
+    { id: '3', name: 'Salary', icon: 'salary', color: '#0f0', kind: 'income', total: 5000, isDefault: false },
   ];
 
   const mockSummary = {
@@ -87,7 +87,7 @@ describe('AnalyticsPage', () => {
 
       it('should return empty DonutData when no expense categories have totals', () => {
         const noExpenseCats: Category[] = [
-          { id: '1', name: 'Salary', kind: 'income', total: 5000, isDefault: false },
+          { id: '1', name: 'Salary', icon: 'salary', color: '#0f0', kind: 'income', total: 5000, isDefault: false },
         ];
         const result = mapCategoryToDonut(noExpenseCats, ['#A']);
 
@@ -98,10 +98,10 @@ describe('AnalyticsPage', () => {
 
       it('should cycle colors when more categories than colors', () => {
         const manyCats: Category[] = [
-          { id: '1', name: 'A', kind: 'expense', total: 100, isDefault: false },
-          { id: '2', name: 'B', kind: 'expense', total: 200, isDefault: false },
-          { id: '3', name: 'C', kind: 'expense', total: 300, isDefault: false },
-          { id: '4', name: 'D', kind: 'expense', total: 400, isDefault: false },
+          { id: '1', name: 'A', icon: 'a', color: '#a', kind: 'expense', total: 100, isDefault: false },
+          { id: '2', name: 'B', icon: 'b', color: '#b', kind: 'expense', total: 200, isDefault: false },
+          { id: '3', name: 'C', icon: 'c', color: '#c', kind: 'expense', total: 300, isDefault: false },
+          { id: '4', name: 'D', icon: 'd', color: '#d', kind: 'expense', total: 400, isDefault: false },
         ];
         const result = mapCategoryToDonut(manyCats, ['#A', '#B']);
 

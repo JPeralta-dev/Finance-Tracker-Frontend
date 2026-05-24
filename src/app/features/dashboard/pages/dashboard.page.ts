@@ -9,9 +9,8 @@ import { DonutChartComponent, DonutData } from '../../../shared/charts';
 import { RecentActivityComponent, ActivityItem } from '../components/recent-activity/recent-activity.component';
 import { InsightsPanelComponent } from '../../../shared/components/insights-panel/insights-panel.component';
 import { StatCardData } from '../components/stat-card/stat-card.types';
-import { ScrollRevealDirective } from '../../../shared/directives/scroll-reveal.directive';
+import { FtSubtleRevealDirective } from '../../../shared/directives/ft-subtle-reveal.directive';
 import { HoverDepthDirective } from '../../../shared/directives/hover-depth.directive';
-import { CountUpDirective } from '../../../shared/directives/count-up.directive';
 import { FinanceService } from '../../../core/services/finance.service';
 import { ToastService } from '../../../core/services/toast.service';
 import { EmptyStateComponent } from '../../../shared/components/empty-state.component';
@@ -71,9 +70,8 @@ function getChartColors(): ChartColors {
     DonutChartComponent,
     RecentActivityComponent,
     InsightsPanelComponent,
-    ScrollRevealDirective,
+    FtSubtleRevealDirective,
     HoverDepthDirective,
-    CountUpDirective,
     EmptyStateComponent,
     TranslatePipe,
   ],

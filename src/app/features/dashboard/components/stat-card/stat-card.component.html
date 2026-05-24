@@ -12,9 +12,9 @@
     <span class="stat-card__label">{{ data().label | translate }}</span>
   </div>
 
-  <!-- Value with CountUp animation -->
+  <!-- Value with micro-scale-fade animation -->
   <div class="stat-card__value">
-    <span [ftCountUp]="data().value" [ftCountUpDecimals]="2" [ftCountUpPrefix]="countUpPrefix()" [ftCountUpSuffix]="countUpSuffix()" [ftCountUpLocale]="countUpLocale()"></span>
+    <span ftSubtleReveal="micro-scale-fade">{{ formatValue(data().value) }}</span>
   </div>
 
   <!-- Footer: trend + optional insight -->

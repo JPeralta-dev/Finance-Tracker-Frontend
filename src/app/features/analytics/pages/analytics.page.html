@@ -1,11 +1,11 @@
 <div class="analytics-page">
   @if (state() === 'loading') {
     <!-- Loading state -->
-    <div class="analytics-loading" [ftScrollReveal]="0">
+    <div class="analytics-loading" ftSubtleReveal="fade-up">
       <h1 class="analytics-loading__title">{{ 'analytics.loading' | translate }}</h1>
       <p class="analytics-loading__subtitle">{{ 'analytics.fetchingData' | translate }}</p>
     </div>
-    <div class="analytics-skeleton" [ftScrollReveal]="100">
+    <div class="analytics-skeleton" ftSubtleReveal="fade-up" [delay]="100">
       <div class="skeleton-card skeleton-card--full"></div>
       <div class="skeleton-card"></div>
       <div class="skeleton-card"></div>
@@ -31,14 +31,14 @@
     />
   } @else {
     <!-- Ready state -->
-    <div class="page-header" [ftScrollReveal]="0">
+    <div class="page-header" ftSubtleReveal="fade-up">
       <h1 class="page-header__title">{{ 'analytics.title' | translate }}</h1>
       <p class="page-header__subtitle">{{ 'analytics.subtitle' | translate }}</p>
     </div>
 
     <div class="analytics-grid">
       <!-- Monthly Trends Chart -->
-      <div class="analytics-card analytics-card--full" [ftScrollReveal]="100">
+      <div class="analytics-card analytics-card--full" ftSubtleReveal="fade-up" [delay]="100">
         @if (monthlyLabels().length > 0 && monthlyDatasets().length > 0) {
           <ft-area-chart
             [labels]="monthlyLabels()"
@@ -55,7 +55,7 @@
       </div>
 
       <!-- Category Breakdown -->
-      <div class="analytics-card" [ftScrollReveal]="200">
+      <div class="analytics-card" ftSubtleReveal="fade-up" [delay]="200">
         @if (donutData().labels.length > 0) {
           <ft-donut-chart
             [data]="donutData()"
@@ -71,7 +71,7 @@
       </div>
 
       <!-- Summary Comparison -->
-      <div class="analytics-card" [ftScrollReveal]="300">
+      <div class="analytics-card" ftSubtleReveal="fade-up" [delay]="300">
         <div class="summary-section">
           <h3 class="summary-section__title">{{ 'analytics.summary' | translate }}</h3>
 

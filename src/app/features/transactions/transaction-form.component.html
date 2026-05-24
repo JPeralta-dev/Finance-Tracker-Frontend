@@ -1,10 +1,10 @@
-<div class="form-page" ftScrollAnimate="fade-up">
+<div class="form-page" ftSubtleReveal="fade-up">
   <a routerLink="/transactions" class="back-link">
     <ng-icon name="chevronLeft" size="1rem" />
     {{ 'transactions.form.back' | translate }}
   </a>
 
-  <div class="form-card" ftScrollAnimate="scale-in" [delay]="100">
+  <div class="form-card" ftSubtleReveal="fade-up" [delay]="100">
     <div class="form-header">
       <h1 class="form-title">
         {{ (isEdit() ? 'transactions.form.edit_title' : 'transactions.form.new_title') | translate }}
@@ -158,12 +158,12 @@
         </div>
 
         @if (successMsg()) {
-          <div class="success-banner" ftScrollAnimate="fade-in">
+          <div class="success-banner" ftSubtleReveal="fade-up">
             {{ 'transactions.form.success.' + successMsg() | translate }}
           </div>
         }
         @if (errorMsg()) {
-          <div class="error-banner" ftScrollAnimate="fade-in">
+          <div class="error-banner" ftSubtleReveal="fade-up">
             {{ 'transactions.form.errors.' + errorMsg() | translate }}
           </div>
         }

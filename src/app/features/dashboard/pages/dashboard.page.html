@@ -1,13 +1,13 @@
 <div class="dashboard-page">
   @if (state() === 'loading') {
     <!-- Loading state -->
-    <div class="dashboard-greeting" [ftScrollReveal]="0">
+    <div class="dashboard-greeting" ftSubtleReveal="fade-up">
       <div>
         <h1 class="dashboard-greeting__title">{{ 'dashboard.loading' | translate }}</h1>
         <p class="dashboard-greeting__subtitle">{{ 'dashboard.fetchingData' | translate }}</p>
       </div>
     </div>
-    <div [ftScrollReveal]="100">
+    <div ftSubtleReveal="fade-up" [delay]="100">
       <ft-stats-grid [stats]="[]" [loading]="true" />
     </div>
   } @else if (state() === 'error') {
@@ -21,7 +21,7 @@
     />
   } @else if (state() === 'empty') {
     <!-- Empty state — no transactions yet -->
-    <div class="dashboard-greeting" [ftScrollReveal]="0">
+    <div class="dashboard-greeting" ftSubtleReveal="fade-up">
       <div>
         <h1 class="dashboard-greeting__title">{{ 'dashboard.welcomeTitle' | translate }}</h1>
         <p class="dashboard-greeting__subtitle">
@@ -42,7 +42,7 @@
   } @else {
     <!-- Ready state — show real data -->
     <!-- Greeting -->
-    <div class="dashboard-greeting" [ftScrollReveal]="0">
+    <div class="dashboard-greeting" ftSubtleReveal="fade-up">
       <div>
         <h1 class="dashboard-greeting__title">{{ greeting() | translate }}</h1>
         <p class="dashboard-greeting__subtitle">
@@ -55,13 +55,13 @@
     </div>
 
     <!-- Stats Grid -->
-    <div [ftScrollReveal]="100">
+    <div ftSubtleReveal="fade-up" [delay]="100">
       <ft-stats-grid [stats]="stats()" [loading]="false" />
     </div>
 
     <!-- AI Insights Panel -->
     @if (insights().length > 0) {
-      <div [ftScrollReveal]="150" class="dashboard-insights">
+      <div ftSubtleReveal="fade-up" [delay]="150" class="dashboard-insights">
         <h2 class="dashboard-insights__title">{{ 'insights.title' | translate }}</h2>
         <ft-insights-panel [insights]="insights()" />
       </div>
@@ -69,7 +69,7 @@
 
     <!-- Main content: Chart + Activity + Donut -->
     <div class="dashboard-content">
-      <div class="dashboard-content__chart" [ftScrollReveal]="200">
+      <div class="dashboard-content__chart" ftSubtleReveal="fade-up" [delay]="200">
         <ft-area-chart
           [labels]="chartLabels()"
           [datasets]="chartDatasets()"
@@ -77,7 +77,7 @@
           [subtitle]="'dashboard.last6Months' | translate"
         />
       </div>
-      <div class="dashboard-content__sidebar" [ftScrollReveal]="300">
+      <div class="dashboard-content__sidebar" ftSubtleReveal="fade-up" [delay]="300">
         <ft-recent-activity
           [items]="activity()"
           [maxItems]="4"

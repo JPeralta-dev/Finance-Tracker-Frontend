@@ -1,10 +1,6 @@
-# Dashboard Specification
+# Delta for dashboard
 
-## Purpose
-
-Defines the scroll-reveal animation behavior for dashboard stat cards using the unified `FtSubtleReveal` directive with micro-scale-fade effect, replacing the legacy count-up animation system.
-
-## Requirements
+## MODIFIED Requirements
 
 ### Requirement: Stat Card Animation Style
 
@@ -44,3 +40,13 @@ The system SHALL trigger the numeric-settle animation when the stat card becomes
 - GIVEN user loads the dashboard
 - WHEN stat cards enter the viewport
 - THEN the numeric-settle animation plays once via FtSubtleReveal
+
+## REMOVED Requirements
+
+### Requirement: Gentler Easing Function
+
+(Reason: Replaced by micro-scale-fade effect in the scroll-animations registry; quadratic easeOut is no longer used for stat cards)
+
+### Requirement: Configurable Animation Duration
+
+(Reason: Duration is now controlled by the `numeric-settle` effect registry entry (~600ms fixed); per-component duration override is out of scope for this change)

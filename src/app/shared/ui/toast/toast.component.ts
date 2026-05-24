@@ -12,7 +12,7 @@ import { ICONS } from '../../../shared/icons/icon-registry';
   template: `
     <div class="toast-container">
       @for (toast of toasts(); track toast.id) {
-        <div class="toast toast--{{ toast.type }}" @fadeSlideIn>
+        <div class="toast toast--{{ toast.type }}">
           <div class="toast__icon">
             @switch (toast.type) {
               @case ('success') { <ng-icon name="check" size="1rem" /> }

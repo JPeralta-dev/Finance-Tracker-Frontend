@@ -155,7 +155,7 @@ describe('ProfilePage', () => {
     it('should call updateProfile with display name on submit', () => {
       authServiceSpy.getProfile.and.returnValue(of(mockUser));
       financeServiceSpy.getInsights.and.returnValue(of([]));
-      authServiceSpy.updateProfile.and.returnValue(of(undefined));
+      authServiceSpy.updateProfile.and.returnValue(of(mockUser));
 
       component.ngOnInit();
       component.profileForm.patchValue({ displayName: 'New Name' });
@@ -167,7 +167,7 @@ describe('ProfilePage', () => {
     it('should show success toast on successful update', () => {
       authServiceSpy.getProfile.and.returnValue(of(mockUser));
       financeServiceSpy.getInsights.and.returnValue(of([]));
-      authServiceSpy.updateProfile.and.returnValue(of(undefined));
+      authServiceSpy.updateProfile.and.returnValue(of(mockUser));
 
       component.ngOnInit();
       component.profileForm.patchValue({ displayName: 'New Name' });

@@ -5,7 +5,7 @@ import { catchError, forkJoin, of } from 'rxjs';
 
 import { AreaChartComponent, AreaDataset } from '../../../shared/charts';
 import { DonutChartComponent, DonutData } from '../../../shared/charts';
-import { ScrollRevealDirective } from '../../../shared/directives/scroll-reveal.directive';
+import { FtSubtleRevealDirective } from '../../../shared/directives/ft-subtle-reveal.directive';
 import { EmptyStateComponent } from '../../../shared/components/empty-state.component';
 import { TranslatePipe } from '../../../core/pipes/translate.pipe';
 import { FinanceService } from '../../../core/services/finance.service';
@@ -100,7 +100,7 @@ export function mapMonthlyChartData(
     NgIcon,
     AreaChartComponent,
     DonutChartComponent,
-    ScrollRevealDirective,
+    FtSubtleRevealDirective,
     EmptyStateComponent,
     TranslatePipe,
   ],

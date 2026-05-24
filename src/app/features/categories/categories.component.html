@@ -1,4 +1,4 @@
-<div class="cat-page" ftScrollAnimate="fade-up">
+<div class="cat-page" ftSubtleReveal="fade-up">
   <!-- Header -->
   <div class="page-header">
     <div>
@@ -13,7 +13,7 @@
 
   <!-- Stats row -->
   @if (!loading() && categories().length > 0) {
-    <div class="stats-row" ftScrollAnimate="fade-in" [delay]="100">
+    <div class="stats-row" ftSubtleReveal="fade-up" [delay]="100">
       <div class="stat-item">
         <span class="stat-label">{{ 'categories.stats.total' | translate }}</span>
         <span class="stat-value">{{ categories().length }}</span>
@@ -32,7 +32,7 @@
   }
 
   <!-- Grid -->
-  <div class="cat-grid" ftScrollAnimate="fade-up" [delay]="200">
+  <div class="cat-grid" ftSubtleReveal="fade-up" [delay]="200">
     @if (loading()) {
       @for (s of [1, 2, 3, 4, 5, 6, 7, 8, 9]; track s) {
         <div class="cat-card skeleton-card">
