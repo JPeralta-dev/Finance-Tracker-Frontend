@@ -3,7 +3,6 @@ import {
   HttpErrorResponse,
 } from "@angular/common/http";
 import { inject } from "@angular/core";
-import { Router } from "@angular/router";
 import {
   catchError,
   throwError,
@@ -19,8 +18,13 @@ const ACCESS_TOKEN_KEY = "accessToken";
 let isRefreshing = false;
 const refreshTokenSubject = new BehaviorSubject<any>(null);
 
+/** Reset module-level state — for testing only */
+export function resetInterceptorState(): void {
+  isRefreshing = false;
+  refreshTokenSubject.next(null);
+}
+
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  const router = inject(Router);
   const authService = inject(AuthService);
   const token = localStorage.getItem(ACCESS_TOKEN_KEY);
 
@@ -49,9 +53,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
             isRefreshing = false;
             refreshTokenSubject.next(null);
 
-            localStorage.removeItem(ACCESS_TOKEN_KEY);
-            localStorage.removeItem("refreshToken");
-            router.navigate(["/login"]);
+            authService.clearTokens();
             return throwError(() => refreshError);
           }),
         );

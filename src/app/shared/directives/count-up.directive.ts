@@ -6,7 +6,7 @@ import { Directive, ElementRef, Input, OnInit, OnDestroy } from '@angular/core';
 })
 export class CountUpDirective implements OnInit, OnDestroy {
   @Input() ftCountUp = 0;
-  @Input() ftCountUpDuration = 1500;
+  @Input() ftCountUpDuration = 2500;
   @Input() ftCountUpPrefix = '';
   @Input() ftCountUpSuffix = '';
   @Input() ftCountUpDecimals = 2;
@@ -42,7 +42,7 @@ export class CountUpDirective implements OnInit, OnDestroy {
     const animate = (currentTime: number) => {
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / this.ftCountUpDuration, 1);
-      const ease = 1 - Math.pow(1 - progress, 3);
+      const ease = 1 - Math.pow(1 - progress, 2);
       const current = start + (end - start) * ease;
 
       this.el.nativeElement.textContent = `${this.ftCountUpPrefix}${current.toFixed(this.ftCountUpDecimals)}${this.ftCountUpSuffix}`;

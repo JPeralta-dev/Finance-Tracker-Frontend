@@ -3,10 +3,10 @@ import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { signal } from '@angular/core';
 
-import { authGuard } from './auth.guard';
+import { redirectIfAuthGuard } from './redirect-if-auth.guard';
 import { AuthService } from '../services/auth.service';
 
-describe('AuthGuard', () => {
+describe('RedirectIfAuthGuard', () => {
   let router: Router;
   let authServiceSpy: jasmine.SpyObj<AuthService>;
 
@@ -31,13 +31,13 @@ describe('AuthGuard', () => {
     localStorage.clear();
   });
 
-  it('should allow activation when authService.isAuthenticated() is true', fakeAsync(() => {
+  it('should allow activation when authService.isAuthenticated() is false (not logged in)', fakeAsync(() => {
     // Arrange
-    (authServiceSpy.isAuthenticated as any).set(true);
+    (authServiceSpy.isAuthenticated as any).set(false);
 
     // Act
     TestBed.runInInjectionContext(() => {
-      authGuard(null as any, null as any);
+      redirectIfAuthGuard(null as any, null as any);
     });
     tick();
 
@@ -45,30 +45,30 @@ describe('AuthGuard', () => {
     expect(router.navigate).not.toHaveBeenCalled();
   }));
 
-  it('should redirect to login when authService.isAuthenticated() is false', fakeAsync(() => {
+  it('should redirect to dashboard when authService.isAuthenticated() is true (logged in)', fakeAsync(() => {
     // Arrange
-    (authServiceSpy.isAuthenticated as any).set(false);
+    (authServiceSpy.isAuthenticated as any).set(true);
 
     // Act
     TestBed.runInInjectionContext(() => {
-      authGuard(null as any, null as any);
+      redirectIfAuthGuard(null as any, null as any);
     });
     tick();
 
     // Assert
-    expect(router.navigate).toHaveBeenCalledWith(['/login']);
+    expect(router.navigate).toHaveBeenCalledWith(['/dashboard']);
   }));
 
-  it('should redirect to login when no token exists (isAuthenticated false)', fakeAsync(() => {
+  it('should allow access to login page when no token exists', fakeAsync(() => {
     // Arrange — no token, isAuthenticated defaults to false
 
     // Act
     TestBed.runInInjectionContext(() => {
-      authGuard(null as any, null as any);
+      redirectIfAuthGuard(null as any, null as any);
     });
     tick();
 
     // Assert
-    expect(router.navigate).toHaveBeenCalledWith(['/login']);
+    expect(router.navigate).not.toHaveBeenCalled();
   }));
 });
