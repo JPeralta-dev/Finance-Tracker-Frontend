@@ -1,4 +1,4 @@
-import { Component, input, computed } from '@angular/core';
+import { Component, input, computed, inject } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { NgIcon, provideIcons } from '@ng-icons/core';
@@ -6,6 +6,7 @@ import { UiBadgeComponent } from '../../../../shared/ui/ui-badge/ui-badge.compon
 import { getCategoryIcon } from '../../../../shared/icons/icon-registry';
 import { ICONS } from '../../../../shared/icons/icon-registry';
 import { TranslatePipe } from '../../../../core/pipes/translate.pipe';
+import { CurrencyService } from '../../../../core/services/currency.service';
 
 export interface ActivityItem {
   id: string;
@@ -25,6 +26,8 @@ export interface ActivityItem {
   styleUrl: './recent-activity.component.scss',
 })
 export class RecentActivityComponent {
+  private currencyService = inject(CurrencyService);
+
   items = input.required<ActivityItem[]>();
   loading = input<boolean>(false);
   maxItems = input<number>(5);
@@ -43,7 +46,7 @@ export class RecentActivityComponent {
 
   formatAmount(item: ActivityItem): string {
     const sign = item.type === 'income' ? '+' : '-';
-    return `${sign}$${item.amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
+    return `${sign}${this.currencyService.format(item.amount)}`;
   }
 
   amountClass(item: ActivityItem): string {

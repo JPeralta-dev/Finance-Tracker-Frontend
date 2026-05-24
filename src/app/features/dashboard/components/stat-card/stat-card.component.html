@@ -14,7 +14,7 @@
 
   <!-- Value with CountUp animation -->
   <div class="stat-card__value">
-    <span [ftCountUp]="data().value" [ftCountUpDecimals]="2"></span>
+    <span [ftCountUp]="data().value" [ftCountUpDecimals]="2" [ftCountUpPrefix]="countUpPrefix()" [ftCountUpSuffix]="countUpSuffix()" [ftCountUpLocale]="countUpLocale()"></span>
   </div>
 
   <!-- Footer: trend + optional insight -->

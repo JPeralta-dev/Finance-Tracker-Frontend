@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
+import { CurrencyService } from '../../core/services/currency.service';
 
 /**
  * ChartService — Theme-aware Chart.js configuration.
@@ -6,6 +7,7 @@ import { Injectable } from '@angular/core';
  */
 @Injectable({ providedIn: 'root' })
 export class ChartService {
+  private currencyService = inject(CurrencyService);
   // ─── Read colors from CSS custom properties (theme-aware) ────────
   private get css() {
     const root = document.documentElement;
@@ -41,7 +43,7 @@ export class ChartService {
         ticks: {
           color: c.textTertiary,
           font: { family: 'Inter, sans-serif', size: 11 },
-          callback: (v: number) => `$${v >= 1000 ? `${(v / 1000).toFixed(1)}k` : v}`,
+          callback: (v: number) => this.currencyService.formatShort(v),
         },
       },
     };
@@ -115,7 +117,7 @@ export class ChartService {
             callbacks: {
               label: (context: { parsed: { y?: number }; dataset: { label?: string } }) => {
                 const val = context.parsed.y ?? 0;
-                return ` ${context.dataset.label}: $${val.toLocaleString()}`;
+                return ` ${context.dataset.label}: ${this.currencyService.formatShort(val)}`;
               },
             },
           },
@@ -205,7 +207,7 @@ export class ChartService {
               label: (context: { parsed: number; label: string; chart: { data: { datasets: { data: number[] }[] } } }) => {
                 const total = context.chart.data.datasets[0].data.reduce((a: number, b: number) => a + b, 0);
                 const pct = ((context.parsed / total) * 100).toFixed(1);
-                return ` ${context.label}: $${context.parsed.toLocaleString()} (${pct}%)`;
+                return ` ${context.label}: ${this.currencyService.format(context.parsed)} (${pct}%)`;
               },
             },
           },

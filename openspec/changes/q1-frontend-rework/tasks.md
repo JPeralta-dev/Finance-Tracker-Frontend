@@ -11,9 +11,9 @@
 | Delivery strategy | ask-on-risk |
 | Chain strategy | feature-branch-chain (target: develop) |
 
-Decision needed before apply: Yes
+Decision needed before apply: Resolved — feature-branch-chain accepted
 Chained PRs recommended: Yes
-Chain strategy: pending
+Chain strategy: feature-branch-chain (target: develop)
 400-line budget risk: High
 
 ### Suggested Work Units
@@ -27,8 +27,8 @@ Chain strategy: pending
 
 ## Phase 1: Foundation
 
-- [ ] 1.1 Create `core/services/currency.service.ts` — `CurrencyConfig` interface, signal, `format()` method
-- [ ] 1.2 Create `core/pipes/ft-currency.pipe.ts` wrapping `CurrencyService`
+- [x] 1.1 Create `core/services/currency.service.ts` — `CurrencyConfig` interface, signal, `format()` method
+- [x] 1.2 Create `core/pipes/ft-currency.pipe.ts` wrapping `CurrencyService`
 - [ ] 1.3 Move `InsightsPanelComponent` from `dashboard/components/` to `shared/components/insights-panel/`
 - [ ] 1.4 Delete old `features/dashboard/components/insights-panel/`
 
@@ -49,11 +49,11 @@ Chain strategy: pending
 
 ## Phase 4: Currency Migration
 
-- [ ] 4.1 `chart.service.ts` — inject `CurrencyService`; tooltips use captured config
-- [ ] 4.2 `stat-card.component.ts` — `formatValue()` uses `CurrencyService`
-- [ ] 4.3 `recent-activity.component.ts` — `formatAmount()` uses `CurrencyService`
-- [ ] 4.4 `transaction-row.component.ts` — amount display uses `CurrencyService`
-- [ ] 4.5 `categories.component.html` — replace `| currency:'USD'` with `ftCurrency` pipe
+- [x] 4.1 `chart.service.ts` — inject `CurrencyService`; tooltips use captured config
+- [x] 4.2 `stat-card.component.ts` — `formatValue()` uses `CurrencyService`
+- [x] 4.3 `recent-activity.component.ts` — `formatAmount()` uses `CurrencyService`
+- [x] 4.4 `transaction-row.component.ts` — amount display uses `CurrencyService`
+- [x] 4.5 `categories.component.html` — replace `| currency:'USD'` with `ftCurrency` pipe
 
 ## Phase 5: Analytics Page
 
@@ -67,10 +67,10 @@ Chain strategy: pending
 
 ## Phase 7: Tests
 
-- [ ] 7.1 Unit: `CurrencyService` — format, default config, signal reactivity
+- [x] 7.1 Unit: `CurrencyService` — format, default config, signal reactivity
 - [x] 7.2 Unit: Auth guards — valid/expired/no token
 - [x] 7.3 Unit: `LanguageDropdown` — open/close, click-outside, selection
 - [x] 7.4 Unit: `CountUpDirective` — quadratic easing, 2500ms default
 - [ ] 7.5 Integration: `AuthInterceptor` — 401 triggers `clearTokens()`
 - [x] 7.6 Unit: `TopbarComponent` — title suppressed on nav match
-- [ ] 7.7 Integration: `ChartService` — tooltip uses `CurrencyService`
+- [x] 7.7 Integration: `ChartService` — tooltip uses `CurrencyService`
