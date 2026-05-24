@@ -1,33 +1,23 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { ICONS } from '../../../../shared/icons/icon-registry';
 import { ThemeService } from '../../../../core/services/theme.service';
-import { TranslationService, Language } from '../../../../core/services/translation.service';
 import { TranslatePipe } from '../../../../core/pipes/translate.pipe';
+import { LanguageDropdownComponent } from '../../../../shared/components/language-dropdown/language-dropdown.component';
 
 @Component({
   selector: 'ft-public-navbar',
   standalone: true,
-  imports: [CommonModule, RouterLink, NgIcon, TranslatePipe],
+  imports: [CommonModule, RouterLink, NgIcon, TranslatePipe, LanguageDropdownComponent],
   providers: [provideIcons(ICONS)],
   templateUrl: './public-navbar.component.html',
   styleUrl: './public-navbar.component.scss',
 })
 export class PublicNavbarComponent {
   readonly themeService = inject(ThemeService);
-  readonly translationService = inject(TranslationService);
-
-  readonly languages: { code: Language; label: string }[] = [
-    { code: 'es', label: 'ES' },
-    { code: 'en', label: 'EN' },
-    { code: 'fr', label: 'FR' },
-  ];
-
-  async setLanguage(lang: Language): Promise<void> {
-    await this.translationService.setLanguage(lang);
-  }
+  readonly mobileMenuOpen = signal(false);
 
   toggleTheme(): void {
     this.themeService.toggleTheme();

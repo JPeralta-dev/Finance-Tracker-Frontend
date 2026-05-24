@@ -42,10 +42,10 @@ Chain strategy: pending
 
 ## Phase 3: Language + Mobile Navbar
 
-- [ ] 3.1 Create `shared/components/language-dropdown/` — globe icon, ES/EN/FR dropdown
-- [ ] 3.2 `public-navbar` — replace text buttons with `<ft-language-dropdown>`
-- [ ] 3.3 `public-navbar.component.scss` — responsive collapse below 768px
-- [ ] 3.4 Add `<ft-language-dropdown>` to `topbar.component.html`
+- [x] 3.1 Create `shared/components/language-dropdown/` — globe icon, ES/EN/FR dropdown
+- [x] 3.2 `public-navbar` — replace text buttons with `<ft-language-dropdown>`
+- [x] 3.3 `public-navbar.component.scss` — responsive collapse below 768px
+- [x] 3.4 Add `<ft-language-dropdown>` to `topbar.component.html`
 
 ## Phase 4: Currency Migration
 
@@ -69,7 +69,7 @@ Chain strategy: pending
 
 - [ ] 7.1 Unit: `CurrencyService` — format, default config, signal reactivity
 - [x] 7.2 Unit: Auth guards — valid/expired/no token
-- [ ] 7.3 Unit: `LanguageDropdown` — open/close, click-outside, selection
+- [x] 7.3 Unit: `LanguageDropdown` — open/close, click-outside, selection
 - [x] 7.4 Unit: `CountUpDirective` — quadratic easing, 2500ms default
 - [ ] 7.5 Integration: `AuthInterceptor` — 401 triggers `clearTokens()`
 - [x] 7.6 Unit: `TopbarComponent` — title suppressed on nav match

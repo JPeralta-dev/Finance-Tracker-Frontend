@@ -9,6 +9,7 @@ import { MobileMenuItem } from '../../layout/mobile-menu/mobile-menu.types';
 import { ICONS } from '../../../shared/icons/icon-registry';
 import { ProfileDropdownComponent } from '../../layout/profile-dropdown/profile-dropdown.component';
 import { NotificationsDropdownComponent } from '../../layout/notifications-dropdown/notifications-dropdown.component';
+import { LanguageDropdownComponent } from '../../components/language-dropdown/language-dropdown.component';
 import { AuthService } from '../../../core/services/auth.service';
 import { filter } from 'rxjs';
 
@@ -36,7 +37,7 @@ const PRIVATE_PATHS = Object.keys(ROUTE_TITLES);
 @Component({
   selector: 'ft-topbar',
   standalone: true,
-  imports: [CommonModule, RouterLink, NgIcon, NavItemComponent, MobileMenuComponent, ProfileDropdownComponent, NotificationsDropdownComponent],
+  imports: [CommonModule, RouterLink, NgIcon, NavItemComponent, MobileMenuComponent, ProfileDropdownComponent, NotificationsDropdownComponent, LanguageDropdownComponent],
   providers: [provideIcons(ICONS)],
   templateUrl: './topbar.component.html',
   styleUrl: './topbar.component.scss',

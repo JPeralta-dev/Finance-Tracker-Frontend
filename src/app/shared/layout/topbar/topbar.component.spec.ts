@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { signal } from '@angular/core';
 import { Subject } from 'rxjs';
 
@@ -51,7 +52,7 @@ describe('TopbarComponent', () => {
     eventsSubject = new Subject<NavigationEnd>();
 
     TestBed.configureTestingModule({
-      imports: [TopbarComponent, RouterTestingModule.withRoutes([])],
+      imports: [TopbarComponent, RouterTestingModule.withRoutes([]), HttpClientTestingModule],
       providers: [
         { provide: LayoutService, useValue: mockLayoutService },
         { provide: AuthService, useValue: mockAuthService },
