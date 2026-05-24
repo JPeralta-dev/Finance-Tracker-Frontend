@@ -6,11 +6,12 @@ import { Directive, ElementRef, Input, OnInit, OnDestroy } from '@angular/core';
 })
 export class CountUpDirective implements OnInit, OnDestroy {
   @Input() ftCountUp = 0;
-  @Input() ftCountUpDuration = 2500;
+  @Input() ftCountUpDuration = 4000;
   @Input() ftCountUpPrefix = '';
   @Input() ftCountUpSuffix = '';
   @Input() ftCountUpDecimals = 2;
   @Input() ftCountUpLocale = 'en-US';
+  @Input() ftCountUpAnimate = true;
 
   private observer: IntersectionObserver | null = null;
   private animationFrame: number | null = null;
@@ -46,11 +47,17 @@ export class CountUpDirective implements OnInit, OnDestroy {
     const end = this.ftCountUp;
     const startTime = performance.now();
 
+    // For very large numbers, skip animation and just show final value
+    if (!this.ftCountUpAnimate || Math.abs(end) > 1000000) {
+      this.el.nativeElement.textContent = `${this.ftCountUpPrefix}${this.formatValue(end)}${this.ftCountUpSuffix}`;
+      return;
+    }
+
     const animate = (currentTime: number) => {
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / this.ftCountUpDuration, 1);
-      const ease = 1 - Math.pow(1 - progress, 2);
-      const current = end * ease;
+      // Linear easing — no acceleration, smooth and subtle
+      const current = end * progress;
 
       this.el.nativeElement.textContent = `${this.ftCountUpPrefix}${this.formatValue(current)}${this.ftCountUpSuffix}`;
 

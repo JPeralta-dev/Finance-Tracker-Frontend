@@ -70,5 +70,32 @@
     "new": "New Transaction",
     "noTransactions": "No transactions yet",
     "addFirst": "Add your first transaction"
+  },
+  "analytics": {
+    "title": "Analytics",
+    "subtitle": "Visualize your financial trends and breakdowns.",
+    "monthlyTrends": "Monthly Trends",
+    "last6Months": "Last 6 months",
+    "byCategory": "By Category",
+    "expenseBreakdown": "Expense Breakdown",
+    "summary": "Summary",
+    "totalIncome": "Total Income",
+    "totalExpenses": "Total Expenses",
+    "netSavings": "Net Savings",
+    "emptyTitle": "No data yet",
+    "emptyDesc": "Start logging transactions to see your financial analytics.",
+    "loading": "Loading analytics...",
+    "fetchingData": "Fetching financial data",
+    "errorTitle": "Error loading",
+    "errorDesc": "We couldn't load analytics data. Please try again.",
+    "retry": "Retry",
+    "addTransaction": "Add transaction",
+    "noCategoryData": "No category data yet",
+    "noChartData": "No monthly data yet"
+  },
+  "profile": {
+    "insights": "Insights",
+    "accountAge": "Account Age",
+    "totalTransactions": "Transactions"
   }
 }

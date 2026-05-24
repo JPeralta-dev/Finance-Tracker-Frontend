@@ -1,5 +1,6 @@
 import { Component, signal, inject, OnInit, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgIcon, provideIcons } from '@ng-icons/core';
 import { catchError, forkJoin, of } from 'rxjs';
 
 import { AreaChartComponent, AreaDataset } from '../../../shared/charts';
@@ -10,6 +11,7 @@ import { TranslatePipe } from '../../../core/pipes/translate.pipe';
 import { FinanceService } from '../../../core/services/finance.service';
 import { CurrencyService } from '../../../core/services/currency.service';
 import { ToastService } from '../../../core/services/toast.service';
+import { ICONS } from '../../../shared/icons/icon-registry';
 import type { ChartData } from '../../../core/models/chart.model';
 import type { Category } from '../../../core/models/category.model';
 
@@ -78,12 +80,14 @@ export function mapMonthlyChartData(
   standalone: true,
   imports: [
     CommonModule,
+    NgIcon,
     AreaChartComponent,
     DonutChartComponent,
     ScrollRevealDirective,
     EmptyStateComponent,
     TranslatePipe,
   ],
+  providers: [provideIcons(ICONS)],
   templateUrl: './analytics.page.html',
   styleUrl: './analytics.page.scss',
 })

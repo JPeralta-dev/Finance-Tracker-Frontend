@@ -70,5 +70,32 @@
     "new": "Nueva Transacción",
     "noTransactions": "No hay transacciones todavía",
     "addFirst": "Agrega tu primera transacción"
+  },
+  "analytics": {
+    "title": "Análisis",
+    "subtitle": "Visualiza tus tendencias financieras y desgloses.",
+    "monthlyTrends": "Tendencias Mensuales",
+    "last6Months": "Últimos 6 meses",
+    "byCategory": "Por Categoría",
+    "expenseBreakdown": "Desglose de Gastos",
+    "summary": "Resumen",
+    "totalIncome": "Ingreso Total",
+    "totalExpenses": "Gastos Totales",
+    "netSavings": "Ahorro Neto",
+    "emptyTitle": "Sin datos aún",
+    "emptyDesc": "Comienza a registrar transacciones para ver tu análisis financiero.",
+    "loading": "Cargando análisis...",
+    "fetchingData": "Obteniendo datos financieros",
+    "errorTitle": "Error al cargar",
+    "errorDesc": "No pudimos cargar los datos de análisis. Intentá de nuevo.",
+    "retry": "Reintentar",
+    "addTransaction": "Agregar transacción",
+    "noCategoryData": "Sin datos de categorías aún",
+    "noChartData": "Sin datos mensuales aún"
+  },
+  "profile": {
+    "insights": "Insights",
+    "accountAge": "Antigüedad",
+    "totalTransactions": "Transacciones"
   }
 }

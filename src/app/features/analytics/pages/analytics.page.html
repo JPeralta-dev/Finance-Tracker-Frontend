@@ -39,12 +39,19 @@
     <div class="analytics-grid">
       <!-- Monthly Trends Chart -->
       <div class="analytics-card analytics-card--full" [ftScrollReveal]="100">
-        <ft-area-chart
-          [labels]="monthlyLabels()"
-          [datasets]="monthlyDatasets()"
-          [title]="'analytics.monthlyTrends' | translate"
-          [subtitle]="'analytics.last6Months' | translate"
-        />
+        @if (monthlyLabels().length > 0 && monthlyDatasets().length > 0) {
+          <ft-area-chart
+            [labels]="monthlyLabels()"
+            [datasets]="monthlyDatasets()"
+            [title]="'analytics.monthlyTrends' | translate"
+            [subtitle]="'analytics.last6Months' | translate"
+          />
+        } @else {
+          <div class="analytics-card__empty">
+            <ng-icon name="chart" size="2rem" />
+            <p>{{ 'analytics.noChartData' | translate }}</p>
+          </div>
+        }
       </div>
 
       <!-- Category Breakdown -->
@@ -57,6 +64,7 @@
           />
         } @else {
           <div class="analytics-card__empty">
+            <ng-icon name="chart" size="2rem" />
             <p>{{ 'analytics.noCategoryData' | translate }}</p>
           </div>
         }
