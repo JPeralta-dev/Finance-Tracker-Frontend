@@ -26,7 +26,7 @@
       <div class="stat-divider"></div>
       <div class="stat-item">
         <span class="stat-label">{{ 'categories.stats.total_expenses' | translate }}</span>
-        <span class="stat-value">{{ totalExpenses() | currency: 'USD' : 'symbol' : '1.0-0' }}</span>
+        <span class="stat-value">{{ totalExpenses() | ftCurrency:'short' }}</span>
       </div>
     </div>
   }
@@ -76,7 +76,7 @@
 
           <!-- Card Body -->
           <span class="cat-name">{{ cat.name }}</span>
-          <span class="cat-total">{{ cat.total | currency: 'USD' : 'symbol' : '1.0-0' }}</span>
+          <span class="cat-total">{{ cat.total | ftCurrency:'short' }}</span>
 
           <!-- Progress Bar -->
           <div class="cat-bar">

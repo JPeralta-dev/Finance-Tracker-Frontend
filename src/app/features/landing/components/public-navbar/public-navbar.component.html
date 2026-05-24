@@ -8,30 +8,59 @@
 
     <!-- Actions -->
     <div class="public-navbar__actions">
-      <!-- Language Selector -->
-      <div class="public-navbar__lang">
-        @for (lang of languages; track lang.code) {
-          <button
-            class="public-navbar__lang-btn"
-            [class.active]="translationService.currentLang() === lang.code"
-            (click)="setLanguage(lang.code)"
-          >
-            {{ lang.label }}
-          </button>
-        }
+      <!-- Language Dropdown -->
+      <ft-language-dropdown />
+
+      <!-- Desktop Actions -->
+      <div class="public-navbar__desktop">
+        <!-- Theme Toggle -->
+        <button class="public-navbar__theme" (click)="toggleTheme()" [attr.aria-label]="'Toggle theme'">
+          @if (themeService.currentTheme() === 'dark') {
+            <ng-icon name="sun" size="1rem" />
+          } @else {
+            <ng-icon name="moon" size="1rem" />
+          }
+        </button>
+
+        <a routerLink="/login" class="public-navbar__link">{{ 'auth.signIn' | translate }}</a>
+        <a routerLink="/register" class="public-navbar__btn">{{ 'auth.createAccount' | translate }}</a>
       </div>
 
+      <!-- Mobile Toggle -->
+      <button
+        class="public-navbar__mobile-toggle"
+        (click)="mobileMenuOpen.set(!mobileMenuOpen())"
+        [attr.aria-label]="mobileMenuOpen() ? 'Close menu' : 'Open menu'"
+      >
+        @if (mobileMenuOpen()) {
+          <ng-icon name="close" size="1.2rem" />
+        } @else {
+          <ng-icon name="menu" size="1.2rem" />
+        }
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  @if (mobileMenuOpen()) {
+    <div class="public-navbar__mobile-menu">
       <!-- Theme Toggle -->
-      <button class="public-navbar__theme" (click)="toggleTheme()" [attr.aria-label]="'Toggle theme'">
+      <button class="public-navbar__mobile-item" (click)="toggleTheme()" [attr.aria-label]="'Toggle theme'">
         @if (themeService.currentTheme() === 'dark') {
           <ng-icon name="sun" size="1rem" />
         } @else {
           <ng-icon name="moon" size="1rem" />
         }
+        <span>{{ 'theme.toggle' | translate }}</span>
       </button>
 
-      <a routerLink="/login" class="public-navbar__link">{{ 'auth.signIn' | translate }}</a>
-      <a routerLink="/register" class="public-navbar__btn">{{ 'auth.createAccount' | translate }}</a>
+      <a routerLink="/login" class="public-navbar__mobile-item public-navbar__mobile-link">
+        <ng-icon name="user" size="1rem" />
+        <span>{{ 'auth.signIn' | translate }}</span>
+      </a>
+      <a routerLink="/register" class="public-navbar__mobile-item public-navbar__mobile-cta">
+        {{ 'auth.createAccount' | translate }}
+      </a>
     </div>
-  </div>
+  }
 </nav>

@@ -10,6 +10,7 @@ export class CountUpDirective implements OnInit, OnDestroy {
   @Input() ftCountUpPrefix = '';
   @Input() ftCountUpSuffix = '';
   @Input() ftCountUpDecimals = 2;
+  @Input() ftCountUpLocale = 'en-US';
 
   private observer: IntersectionObserver | null = null;
   private animationFrame: number | null = null;
@@ -34,8 +35,14 @@ export class CountUpDirective implements OnInit, OnDestroy {
     if (this.animationFrame) cancelAnimationFrame(this.animationFrame);
   }
 
+  private formatValue(value: number): string {
+    return value.toLocaleString(this.ftCountUpLocale, {
+      minimumFractionDigits: this.ftCountUpDecimals,
+      maximumFractionDigits: this.ftCountUpDecimals,
+    });
+  }
+
   private startCount(): void {
-    const start = 0;
     const end = this.ftCountUp;
     const startTime = performance.now();
 
@@ -43,9 +50,9 @@ export class CountUpDirective implements OnInit, OnDestroy {
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / this.ftCountUpDuration, 1);
       const ease = 1 - Math.pow(1 - progress, 2);
-      const current = start + (end - start) * ease;
+      const current = end * ease;
 
-      this.el.nativeElement.textContent = `${this.ftCountUpPrefix}${current.toFixed(this.ftCountUpDecimals)}${this.ftCountUpSuffix}`;
+      this.el.nativeElement.textContent = `${this.ftCountUpPrefix}${this.formatValue(current)}${this.ftCountUpSuffix}`;
 
       if (progress < 1) {
         this.animationFrame = requestAnimationFrame(animate);

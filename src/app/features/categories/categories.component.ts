@@ -1,5 +1,5 @@
 import { Component, OnInit, signal, inject, computed } from '@angular/core';
-import { CommonModule, CurrencyPipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { NgIcon, provideIcons } from '@ng-icons/core';
@@ -11,6 +11,7 @@ import { EmptyStateComponent } from '../../shared/components/empty-state.compone
 import { TranslatePipe } from '../../core/pipes/translate.pipe';
 import { ScrollAnimateDirective } from '../../shared/directives/scroll-animate/scroll-animate.directive';
 import { ToastService } from '../../core/services/toast.service';
+import { FtCurrencyPipe } from '../../core/pipes/ft-currency.pipe';
 
 @Component({
   selector: 'app-categories',
@@ -19,7 +20,7 @@ import { ToastService } from '../../core/services/toast.service';
     CommonModule,
     FormsModule,
     RouterLink,
-    CurrencyPipe,
+    FtCurrencyPipe,
     SkeletonComponent,
     EmptyStateComponent,
     NgIcon,

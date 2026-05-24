@@ -1,0 +1,19 @@
+<div class="lang-dropdown" (clickOutside)="closeDropdown()">
+  <button class="lang-dropdown__trigger" (click)="toggleDropdown()" aria-label="Select language">
+    <ng-icon name="globe" size="1rem" />
+  </button>
+  @if (isOpen()) {
+    <div class="lang-dropdown__menu">
+      @for (lang of languages; track lang.code) {
+        <button
+          class="lang-dropdown__item"
+          [class.active]="translationService.currentLang() === lang.code"
+          (click)="setLanguage(lang.code)"
+        >
+          <span class="lang-dropdown__flag">{{ lang.flag }}</span>
+          <span class="lang-dropdown__label">{{ lang.label }}</span>
+        </button>
+      }
+    </div>
+  }
+</div>
