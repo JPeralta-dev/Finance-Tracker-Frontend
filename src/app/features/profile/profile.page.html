@@ -51,6 +51,28 @@
           </button>
         </div>
       </form>
+
+      <!-- Insights Section -->
+      @if (insights().length > 0 || userStats()) {
+        <div class="profile-insights">
+          <h2 class="profile-section-title">{{ 'profile.insights' | translate }}</h2>
+
+          @if (userStats(); as stats) {
+            <div class="profile-stats">
+              <div class="profile-stat">
+                <span class="profile-stat__label">{{ 'profile.accountAge' | translate }}</span>
+                <span class="profile-stat__value">{{ stats.accountAge }}</span>
+              </div>
+              <div class="profile-stat">
+                <span class="profile-stat__label">{{ 'profile.totalTransactions' | translate }}</span>
+                <span class="profile-stat__value">{{ stats.totalTransactions }}</span>
+              </div>
+            </div>
+          }
+
+          <ft-insights-panel [insights]="insights()" />
+        </div>
+      }
     </div>
   }
 </div>

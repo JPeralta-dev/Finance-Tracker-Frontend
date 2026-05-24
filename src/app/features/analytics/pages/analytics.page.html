@@ -1,0 +1,94 @@
+<div class="analytics-page">
+  @if (state() === 'loading') {
+    <!-- Loading state -->
+    <div class="analytics-loading" [ftScrollReveal]="0">
+      <h1 class="analytics-loading__title">{{ 'analytics.loading' | translate }}</h1>
+      <p class="analytics-loading__subtitle">{{ 'analytics.fetchingData' | translate }}</p>
+    </div>
+    <div class="analytics-skeleton" [ftScrollReveal]="100">
+      <div class="skeleton-card skeleton-card--full"></div>
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+    </div>
+  } @else if (state() === 'error') {
+    <!-- Error state -->
+    <ft-empty-state
+      icon="warning"
+      [title]="'analytics.errorTitle' | translate"
+      [description]="'analytics.errorDesc' | translate"
+      [actionLabel]="'analytics.retry' | translate"
+      [showActionBtn]="true"
+      (action)="retry()"
+    />
+  } @else if (state() === 'empty') {
+    <!-- Empty state -->
+    <ft-empty-state
+      icon="chart"
+      [title]="'analytics.emptyTitle' | translate"
+      [description]="'analytics.emptyDesc' | translate"
+      actionRoute="/transactions/new"
+      [actionLabel]="'analytics.addTransaction' | translate"
+    />
+  } @else {
+    <!-- Ready state -->
+    <div class="page-header" [ftScrollReveal]="0">
+      <h1 class="page-header__title">{{ 'analytics.title' | translate }}</h1>
+      <p class="page-header__subtitle">{{ 'analytics.subtitle' | translate }}</p>
+    </div>
+
+    <div class="analytics-grid">
+      <!-- Monthly Trends Chart -->
+      <div class="analytics-card analytics-card--full" [ftScrollReveal]="100">
+        <ft-area-chart
+          [labels]="monthlyLabels()"
+          [datasets]="monthlyDatasets()"
+          [title]="'analytics.monthlyTrends' | translate"
+          [subtitle]="'analytics.last6Months' | translate"
+        />
+      </div>
+
+      <!-- Category Breakdown -->
+      <div class="analytics-card" [ftScrollReveal]="200">
+        @if (donutData().labels.length > 0) {
+          <ft-donut-chart
+            [data]="donutData()"
+            [title]="'analytics.byCategory' | translate"
+            [subtitle]="'analytics.expenseBreakdown' | translate"
+          />
+        } @else {
+          <div class="analytics-card__empty">
+            <p>{{ 'analytics.noCategoryData' | translate }}</p>
+          </div>
+        }
+      </div>
+
+      <!-- Summary Comparison -->
+      <div class="analytics-card" [ftScrollReveal]="300">
+        <div class="summary-section">
+          <h3 class="summary-section__title">{{ 'analytics.summary' | translate }}</h3>
+
+          <div class="summary-row">
+            <span class="summary-row__label">{{ 'analytics.totalIncome' | translate }}</span>
+            <span class="summary-row__value text-income">{{ formatAmount(totalIncome()) }}</span>
+          </div>
+
+          <div class="summary-row">
+            <span class="summary-row__label">{{ 'analytics.totalExpenses' | translate }}</span>
+            <span class="summary-row__value text-expense">{{ formatAmount(totalExpense()) }}</span>
+          </div>
+
+          <div class="summary-row summary-row--total">
+            <span class="summary-row__label">{{ 'analytics.netSavings' | translate }}</span>
+            <span
+              class="summary-row__value"
+              [class.text-income]="netSavings() >= 0"
+              [class.text-expense]="netSavings() < 0"
+            >
+              {{ formatAmount(netSavings()) }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+</div>

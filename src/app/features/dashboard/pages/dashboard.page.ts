@@ -7,7 +7,7 @@ import { StatsGridComponent } from '../components/stats-grid/stats-grid.componen
 import { AreaChartComponent, AreaDataset } from '../../../shared/charts';
 import { DonutChartComponent, DonutData } from '../../../shared/charts';
 import { RecentActivityComponent, ActivityItem } from '../components/recent-activity/recent-activity.component';
-import { InsightsPanelComponent } from '../components/insights-panel/insights-panel.component';
+import { InsightsPanelComponent } from '../../../shared/components/insights-panel/insights-panel.component';
 import { StatCardData } from '../components/stat-card/stat-card.types';
 import { ScrollRevealDirective } from '../../../shared/directives/scroll-reveal.directive';
 import { HoverDepthDirective } from '../../../shared/directives/hover-depth.directive';
