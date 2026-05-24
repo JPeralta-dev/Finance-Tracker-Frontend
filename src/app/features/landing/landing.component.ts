@@ -11,6 +11,7 @@ import { FinalCtaComponent } from './components/final-cta/final-cta.component';
 import { ScrollAnimateDirective } from '../../shared/directives/scroll-animate/scroll-animate.directive';
 import { TranslatePipe } from '../../core/pipes/translate.pipe';
 import { TranslationService } from '../../core/services/translation.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-landing',
@@ -34,6 +35,7 @@ import { TranslationService } from '../../core/services/translation.service';
 export class LandingComponent {
   private readonly translationService = inject(TranslationService);
   readonly scrollProgress = signal(0);
+  readonly telegramBotUrl = environment.telegramBotUrl;
 
   @HostListener('window:scroll', [])
   onScroll(): void {
