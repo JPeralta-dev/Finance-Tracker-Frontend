@@ -15,6 +15,23 @@ import { ICONS } from '../../../shared/icons/icon-registry';
 import type { ChartData } from '../../../core/models/chart.model';
 import type { Category } from '../../../core/models/category.model';
 
+// MOCK DATA — Remove when backend has real data
+const MOCK_MONTHLY_DATA = [
+  { month: 'Nov', income: 1850000, expenses: 450000 },
+  { month: 'Dec', income: 1920000, expenses: 680000 },
+  { month: 'Ene', income: 1780000, expenses: 520000 },
+  { month: 'Feb', income: 2100000, expenses: 590000 },
+  { month: 'Mar', income: 1950000, expenses: 480000 },
+  { month: 'Abr', income: 1856000, expenses: 2000 },
+];
+
+const MOCK_CATEGORIES = [
+  { name: 'Comida', total: 450000, kind: 'expense' as const, color: '#9D50BB' },
+  { name: 'Servicios', total: 180000, kind: 'expense' as const, color: '#7B42F6' },
+  { name: 'Transporte', total: 120000, kind: 'expense' as const, color: '#6E48AA' },
+  { name: 'Entretenimiento', total: 85000, kind: 'expense' as const, color: '#A78BFA' },
+];
+
 type AnalyticsState = 'loading' | 'ready' | 'empty' | 'error';
 
 // ── Pure functions (exported for testing) ──────────────────────────────
@@ -129,43 +146,57 @@ export class AnalyticsPage implements OnInit {
       summary: this.financeService.getSummary().pipe(catchError(() => of(null))),
     }).subscribe({
       next: ({ chart, categories, summary }) => {
-        // If everything failed
-        if (!chart && !summary && (!categories || categories.length === 0)) {
-          this.state.set('error');
-          this.toast.error('Failed to load analytics data. Please try again.');
-          return;
-        }
-
         const colors = getChartColors();
 
-        // Monthly chart data
+        // Monthly chart data — use mock if API returns empty
         if (chart && chart.length > 0) {
           const mapped = mapMonthlyChartData(chart, colors);
           this.monthlyLabels.set(mapped.labels);
           this.monthlyDatasets.set(mapped.datasets);
+        } else {
+          // Fallback to mock data
+          const mapped = mapMonthlyChartData(MOCK_MONTHLY_DATA, colors);
+          this.monthlyLabels.set(mapped.labels);
+          this.monthlyDatasets.set(mapped.datasets);
         }
 
-        // Category donut data
+        // Category donut data — use mock if API returns empty
         if (categories && categories.length > 0) {
           this.donutData.set(mapCategoryToDonut(categories, colors.categories));
+        } else {
+          // Fallback to mock data
+          this.donutData.set(mapCategoryToDonut(MOCK_CATEGORIES as Category[], colors.categories));
         }
 
         // Summary
         if (summary) {
           this.totalIncome.set(summary.totalIncome);
           this.totalExpense.set(summary.totalExpenses);
+        } else {
+          // Fallback to mock summary
+          const totalIncome = MOCK_MONTHLY_DATA.reduce((sum, m) => sum + m.income, 0);
+          const totalExpense = MOCK_MONTHLY_DATA.reduce((sum, m) => sum + m.expenses, 0);
+          this.totalIncome.set(totalIncome);
+          this.totalExpense.set(totalExpense);
         }
 
-        // Check if user has any data
-        const hasData = (summary?.totalIncome ?? 0) !== 0
-          || (summary?.totalExpenses ?? 0) !== 0
-          || (chart?.length ?? 0) > 0;
-
-        this.state.set(hasData ? 'ready' : 'empty');
+        // Always show ready state when we have mock data
+        this.state.set('ready');
       },
       error: () => {
-        this.state.set('error');
-        this.toast.error('Failed to load analytics data.');
+        // Even on error, show mock data
+        const colors = getChartColors();
+        const mapped = mapMonthlyChartData(MOCK_MONTHLY_DATA, colors);
+        this.monthlyLabels.set(mapped.labels);
+        this.monthlyDatasets.set(mapped.datasets);
+        this.donutData.set(mapCategoryToDonut(MOCK_CATEGORIES as Category[], colors.categories));
+        
+        const totalIncome = MOCK_MONTHLY_DATA.reduce((sum, m) => sum + m.income, 0);
+        const totalExpense = MOCK_MONTHLY_DATA.reduce((sum, m) => sum + m.expenses, 0);
+        this.totalIncome.set(totalIncome);
+        this.totalExpense.set(totalExpense);
+        
+        this.state.set('ready');
       },
     });
   }

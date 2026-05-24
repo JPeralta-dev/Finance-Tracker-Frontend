@@ -21,6 +21,16 @@ import { Insight } from '../../../core/models/insight.model';
 
 type DashboardState = 'loading' | 'ready' | 'empty' | 'error';
 
+// MOCK DATA — Remove when backend has real data
+const MOCK_CHART_DATA = [
+  { month: 'Nov', income: 1850000, expenses: 450000 },
+  { month: 'Dec', income: 1920000, expenses: 680000 },
+  { month: 'Ene', income: 1780000, expenses: 520000 },
+  { month: 'Feb', income: 2100000, expenses: 590000 },
+  { month: 'Mar', income: 1950000, expenses: 480000 },
+  { month: 'Abr', income: 1856000, expenses: 2000 },
+];
+
 // Theme-aware chart colors (reads from CSS custom properties)
 // Module-level cache to avoid repeated getComputedStyle calls
 interface ChartColors {
@@ -120,12 +130,20 @@ export class DashboardPage implements OnInit {
           this.stats.set(this.mapSummary(summary));
         }
 
-        if (chart) {
+        if (chart && chart.length > 0) {
           const colors = getChartColors();
           this.chartLabels.set(chart.map(d => d.month));
           this.chartDatasets.set([
             { label: 'Income', data: chart.map(d => d.income), color: colors.income },
             { label: 'Expenses', data: chart.map(d => d.expenses), color: colors.expense },
+          ]);
+        } else {
+          // Fallback to mock data
+          const colors = getChartColors();
+          this.chartLabels.set(MOCK_CHART_DATA.map(d => d.month));
+          this.chartDatasets.set([
+            { label: 'Income', data: MOCK_CHART_DATA.map(d => d.income), color: colors.income },
+            { label: 'Expenses', data: MOCK_CHART_DATA.map(d => d.expenses), color: colors.expense },
           ]);
         }
 
@@ -145,6 +163,20 @@ export class DashboardPage implements OnInit {
           this.categories.set(categories);
           const expenseCats = categories.filter(c => c.kind === 'expense' || c.kind === 'mixed').filter(c => c.total > 0);
           const colors = getChartColors();
+          this.donutData.set({
+            labels: expenseCats.map(c => c.name),
+            data: expenseCats.map(c => c.total),
+            colors: expenseCats.map((_, i) => colors.categories[i % colors.categories.length]),
+          });
+        } else {
+          // Fallback to mock categories
+          const colors = getChartColors();
+          const mockCats = [
+            { name: 'Comida', total: 450000, kind: 'expense' as const },
+            { name: 'Servicios', total: 180000, kind: 'expense' as const },
+            { name: 'Transporte', total: 120000, kind: 'expense' as const },
+          ];
+          const expenseCats = mockCats.filter(c => c.total > 0);
           this.donutData.set({
             labels: expenseCats.map(c => c.name),
             data: expenseCats.map(c => c.total),
