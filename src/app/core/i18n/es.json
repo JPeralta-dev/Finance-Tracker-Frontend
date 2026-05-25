@@ -97,5 +97,33 @@
     "insights": "Insights",
     "accountAge": "Antigüedad",
     "totalTransactions": "Transacciones"
+  },
+  "settings": {
+    "title": "Configuración",
+    "subtitle": "Gestioná tus preferencias y conexiones.",
+    "integrations": {
+      "title": "Integraciones",
+      "desc": "Conectá tus servicios para una experiencia completa."
+    },
+    "telegram": {
+      "title": "Vincular Telegram",
+      "desc": "Conectá tu cuenta de Telegram para registrar gastos desde el bot.",
+      "generate_code": "Generar código",
+      "code_label": "Tu código de vinculación",
+      "code_expires": "Expira en",
+      "code_instructions": "Enviá este código al bot de Telegram con el comando /link",
+      "linked": "✅ Vinculado",
+      "linked_desc": "Tu cuenta de Telegram está vinculada. Podés registrar gastos desde el bot.",
+      "link_telegram": "Abrir Telegram",
+      "error_generate": "Error al generar el código",
+      "error_link": "Error al verificar el estado de vinculación"
+    },
+    "coming_soon": "Próximamente...",
+    "session": {
+      "title": "Sesión",
+      "logged_as": "Sesión iniciada como",
+      "sign_out": "Cerrar Sesión"
+    },
+    "back_to_dashboard": "Volver al Dashboard"
   }
 }

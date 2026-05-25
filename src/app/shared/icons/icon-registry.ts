@@ -47,6 +47,7 @@ import {
   heroMoon,
   heroPencilSquare,
   heroGlobeAlt,
+  heroClock,
 } from '@ng-icons/heroicons/outline';
 
 // ─── Icon Map ────────────────────────────────────────────────────────────────
@@ -112,6 +113,9 @@ export const ICONS = {
 
   // Language / i18n
   globe: heroGlobeAlt,
+
+  // Misc
+  clock: heroClock,
 };
 
 // ─── Category Icon Mapping ───────────────────────────────────────────────────

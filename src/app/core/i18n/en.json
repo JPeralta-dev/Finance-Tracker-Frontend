@@ -97,5 +97,33 @@
     "insights": "Insights",
     "accountAge": "Account Age",
     "totalTransactions": "Transactions"
+  },
+  "settings": {
+    "title": "Settings",
+    "subtitle": "Manage your preferences and connections.",
+    "integrations": {
+      "title": "Integrations",
+      "desc": "Connect your services for a complete experience."
+    },
+    "telegram": {
+      "title": "Link Telegram",
+      "desc": "Connect your Telegram account to log expenses from the bot.",
+      "generate_code": "Generate code",
+      "code_label": "Your linking code",
+      "code_expires": "Expires in",
+      "code_instructions": "Send this code to the Telegram bot with /link command",
+      "linked": "✅ Linked",
+      "linked_desc": "Your Telegram account is linked. You can log expenses from the bot.",
+      "link_telegram": "Open Telegram",
+      "error_generate": "Error generating code",
+      "error_link": "Error checking link status"
+    },
+    "coming_soon": "Coming Soon...",
+    "session": {
+      "title": "Session",
+      "logged_as": "Logged in as",
+      "sign_out": "Sign Out"
+    },
+    "back_to_dashboard": "Back to Dashboard"
   }
 }

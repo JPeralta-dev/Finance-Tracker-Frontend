@@ -221,11 +221,46 @@
     "subtitle": "Manage your account and integrations",
     "signOut": "Sign Out",
     "back_to_dashboard": "Back to dashboard",
-    "coming_soon": "Coming soon: Telegram, AI, and more integrations.",
+    "coming_soon": "Coming Soon...",
     "integrations": {
       "title": "Integrations",
       "desc": "Connect external tools to enhance your experience."
+    },
+    "telegram": {
+      "title": "Link Telegram",
+      "desc": "Connect your Telegram account to log expenses from the bot.",
+      "generate_code": "Generate code",
+      "code_label": "Your linking code",
+      "code_expires": "Expires in",
+      "code_instructions": "Send this code to the Telegram bot with /link",
+      "linked": "✅ Linked",
+      "linked_desc": "Your Telegram account is linked. You can log expenses from the bot.",
+      "link_telegram": "Open Telegram",
+      "error_generate": "Error generating code",
+      "error_link": "Error checking link status"
     }
+  },
+  "analytics": {
+    "title": "Analytics",
+    "subtitle": "Visualize your financial trends and breakdowns.",
+    "monthlyTrends": "Monthly Trends",
+    "last6Months": "Last 6 months",
+    "byCategory": "By Category",
+    "expenseBreakdown": "Expense Breakdown",
+    "summary": "Summary",
+    "totalIncome": "Total Income",
+    "totalExpenses": "Total Expenses",
+    "netSavings": "Net Savings",
+    "emptyTitle": "No data yet",
+    "emptyDesc": "Start logging transactions to see your financial analytics.",
+    "loading": "Loading analytics...",
+    "fetchingData": "Fetching financial data",
+    "errorTitle": "Error loading",
+    "errorDesc": "We couldn't load analytics data. Please try again.",
+    "retry": "Retry",
+    "addTransaction": "Add transaction",
+    "noCategoryData": "No category data yet",
+    "noChartData": "No monthly data yet"
   },
   "profile": {
     "title": "Profile",
