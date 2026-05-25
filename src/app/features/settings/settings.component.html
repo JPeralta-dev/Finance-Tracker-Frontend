@@ -21,7 +21,13 @@
         <span class="spinner-sm"></span>
       </div>
     } @else if (isLinked()) {
-      <div class="linked-state">
+      <div class="linked-state" [class.just-linked]="justLinked()">
+        @if (justLinked()) {
+          <div class="linked-flash">
+            <ng-icon name="check" size="2rem" />
+            <span>✅ ¡Cuenta vinculada correctamente!</span>
+          </div>
+        }
         <div class="linked-badge">
           <ng-icon name="check" size="1.25rem" />
           <span>{{ 'settings.telegram.linked' | translate }}</span>

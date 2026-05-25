@@ -52,7 +52,9 @@ export class SettingsComponent implements OnInit, OnDestroy {
   generatingCode = signal(false);
   linkError = signal<string | null>(null);
   linkLoading = signal(true);
+  justLinked = signal(false); // para mostrar el mensaje de vinculación exitosa
   private countdownTimer: ReturnType<typeof setInterval> | null = null;
+  private linkPollTimer: ReturnType<typeof setInterval> | null = null;
 
   ngOnInit(): void {
     if (this.authService.isAuthenticated()) {
@@ -71,6 +73,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.stopCountdown();
+    this.stopLinkPoll();
   }
 
   private checkLinkStatus(): void {
@@ -92,7 +95,9 @@ export class SettingsComponent implements OnInit, OnDestroy {
     this.generatingCode.set(true);
     this.linkError.set(null);
     this.linkCode.set(null);
+    this.justLinked.set(false);
     this.stopCountdown();
+    this.stopLinkPoll();
 
     this.http.post<LinkCodeResponse>(`${this.api}/auth/link-code`, {}).subscribe({
       next: (res) => {
@@ -100,6 +105,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
         const expiresAt = new Date(res.expiresAt).getTime();
         this.codeExpiresAt.set(expiresAt);
         this.startCountdown(expiresAt);
+        this.startLinkPoll(); // 👈 arranca el polling
         this.generatingCode.set(false);
       },
       error: () => {
@@ -109,6 +115,32 @@ export class SettingsComponent implements OnInit, OnDestroy {
     });
   }
 
+  // ── Polling: detecta cuando el bot vincula la cuenta ──
+
+  private startLinkPoll(): void {
+    this.linkPollTimer = setInterval(() => {
+      this.http.get<LinkStatusResponse>(`${this.api}/auth/link-status`).subscribe({
+        next: (res) => {
+          if (res.linked) {
+            this.isLinked.set(true);
+            this.telegramId.set(res.telegramId);
+            this.linkCode.set(null);
+            this.justLinked.set(true);
+            this.stopCountdown();
+            this.stopLinkPoll();
+          }
+        },
+      });
+    }, 3000);
+  }
+
+  private stopLinkPoll(): void {
+    if (this.linkPollTimer) {
+      clearInterval(this.linkPollTimer);
+      this.linkPollTimer = null;
+    }
+  }
+
   private startCountdown(expiresAt: number): void {
     const tick = () => {
       const remaining = Math.max(0, Math.floor((expiresAt - Date.now()) / 1000));
@@ -116,6 +148,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
       if (remaining <= 0) {
         this.stopCountdown();
+        this.stopLinkPoll(); // 👈 para de pollear si expiró
         this.linkCode.set(null);
       }
     };
@@ -140,7 +173,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
   }
 
   openTelegram(): void {
-    // TODO: load bot username from config
     window.open('https://t.me/your_bot_username', '_blank');
   }
 
