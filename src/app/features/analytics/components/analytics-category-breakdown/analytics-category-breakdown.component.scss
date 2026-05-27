@@ -1,0 +1,116 @@
+.category-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  &__row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 80px;
+    align-items: center;
+    gap: 16px;
+    padding: 10px 12px;
+    border-radius: var(--radius-sm);
+    transition: background var(--duration-fast) var(--ease-out);
+
+    &:hover {
+      background: var(--bg-tertiary);
+    }
+  }
+
+  &__info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+  }
+
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-sm);
+    flex-shrink: 0;
+  }
+
+  &__meta {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    min-width: 0;
+  }
+
+  &__name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__pct {
+    font-size: 11px;
+    color: var(--text-tertiary);
+  }
+
+  &__bar-track {
+    height: 6px;
+    background: var(--bg-tertiary);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  &__bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.6s var(--ease-out);
+  }
+
+  &__stats {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  &__change {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: var(--radius-xs);
+    color: var(--success);
+    background: var(--success-bg);
+    white-space: nowrap;
+
+    &.negative {
+      color: var(--danger);
+      background: var(--danger-bg);
+    }
+
+    ng-icon {
+      flex-shrink: 0;
+    }
+  }
+}
+
+.cat-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  &__row {
+    height: 52px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-sm);
+    animation: shimmer 1.5s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes shimmer {
+  from { opacity: 0.3; }
+  to { opacity: 0.6; }
+}

@@ -1,0 +1,28 @@
+<div class="analytics-header" ftSubtleReveal="fade-up">
+  <div class="analytics-header__content">
+    <div class="analytics-header__text">
+      <h1 class="analytics-header__title">{{ title() }}</h1>
+      <p class="analytics-header__subtitle">{{ subtitle() }}</p>
+      @if (variation() !== null) {
+        <div class="analytics-header__variation" [class.negative]="!isPositive()">
+          <ng-icon [name]="isPositive() ? 'trendUp' : 'trendDown'" size="1.1rem" />
+          <span>{{ absVariation() }}%</span>
+          <span class="analytics-header__variation-label">
+            {{ isPositive() ? ('analytics.vsLastMonth' | translate) : ('analytics.vsLastMonth' | translate) }}
+          </span>
+        </div>
+      }
+    </div>
+    <div class="analytics-header__periods">
+      @for (p of periods; track p.value) {
+        <button
+          class="analytics-header__period-btn"
+          [class.active]="period() === p.value"
+          (click)="periodChange.emit(p.value)"
+        >
+          {{ p.labelKey | translate }}
+        </button>
+      }
+    </div>
+  </div>
+</div>

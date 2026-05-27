@@ -1,0 +1,37 @@
+<div class="kpi-card" [class.kpi-card--animated]="animated()" [@.disabled]="!animated()">
+  <div class="kpi-card__glow"></div>
+  <div class="kpi-card__header">
+    <span class="kpi-card__icon">
+      <ng-icon [name]="data().icon" size="1rem" />
+    </span>
+    <span class="kpi-card__label">{{ data().labelKey | translate }}</span>
+  </div>
+  <div class="kpi-card__value">
+    <span>{{ data().prefix ?? currencySymbol() }}{{ formatValue(data().value) }}{{ data().suffix ?? '' }}</span>
+  </div>
+  <div class="kpi-card__footer">
+    <span
+      class="kpi-card__trend"
+      [class.trend--up]="trendDirection() === 'up'"
+      [class.trend--down]="trendDirection() === 'down'"
+      [class.trend--neutral]="trendDirection() === 'neutral'"
+    >
+      @if (trendDirection() === 'up') {
+        <ng-icon name="trendUp" size="0.8rem" />
+      } @else if (trendDirection() === 'down') {
+        <ng-icon name="trendDown" size="0.8rem" />
+      }
+      {{ absTrend() }}%
+    </span>
+    @if (data().chart && data().chart!.length > 0) {
+      <div class="kpi-card__micro-chart">
+        @for (v of data().chart; track $index) {
+          <span
+            class="kpi-card__micro-bar"
+            [style.height.%]="normalizeChartValue(v)"
+          ></span>
+        }
+      </div>
+    }
+  </div>
+</div>

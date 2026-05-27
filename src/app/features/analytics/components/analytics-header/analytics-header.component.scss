@@ -1,0 +1,90 @@
+.analytics-header {
+  &__content {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  &__text {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__title {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+    letter-spacing: -0.02em;
+  }
+
+  &__subtitle {
+    font-size: 14px;
+    color: var(--text-tertiary);
+    margin: 6px 0 0;
+  }
+
+  &__variation {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 12px;
+    padding: 6px 14px;
+    border-radius: var(--radius-full);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--success);
+    background: var(--success-bg);
+    border: 1px solid transparent;
+
+    &.negative {
+      color: var(--danger);
+      background: var(--danger-bg);
+    }
+
+    ng-icon {
+      flex-shrink: 0;
+    }
+  }
+
+  &__variation-label {
+    font-weight: 400;
+    opacity: 0.8;
+    font-size: 12px;
+  }
+
+  &__periods {
+    display: flex;
+    gap: 4px;
+    padding: 4px;
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-subtle);
+    flex-shrink: 0;
+  }
+
+  &__period-btn {
+    padding: 6px 14px;
+    border: none;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    background: transparent;
+    cursor: pointer;
+    transition: all var(--duration-fast) var(--ease-out);
+
+    &.active {
+      color: var(--text-primary);
+      background: var(--bg-elevated);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    &:hover:not(.active) {
+      color: var(--text-secondary);
+    }
+  }
+}

@@ -1,0 +1,112 @@
+.analytics-insights {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.insight-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--glass-border);
+  transition: border-color var(--duration-normal) var(--ease-smooth),
+    box-shadow var(--duration-normal) var(--ease-smooth);
+
+  &:hover {
+    border-color: var(--glass-border-hover);
+    box-shadow: var(--shadow-md);
+  }
+
+  &--success {
+    background: linear-gradient(135deg, var(--success-bg), transparent);
+    .insight-card__icon { color: var(--success); }
+  }
+  &--warning {
+    background: linear-gradient(135deg, var(--warning-bg), transparent);
+    .insight-card__icon { color: var(--warning); }
+  }
+  &--info {
+    background: linear-gradient(135deg, var(--info-bg), transparent);
+    .insight-card__icon { color: var(--info); }
+  }
+  &--trend {
+    background: linear-gradient(135deg, var(--accent-glow), transparent);
+    .insight-card__icon { color: var(--accent-start); }
+  }
+
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-sm);
+    background: var(--glass-bg);
+    flex-shrink: 0;
+  }
+
+  &__content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__title {
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0 0 4px;
+  }
+
+  &__message {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  &__badge {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: var(--radius-full);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    flex-shrink: 0;
+    margin-top: 2px;
+
+    &.badge--high {
+      color: var(--danger);
+      background: var(--danger-bg);
+    }
+    &.badge--medium {
+      color: var(--warning);
+      background: var(--warning-bg);
+    }
+    &.badge--low {
+      color: var(--text-tertiary);
+      background: var(--bg-elevated);
+    }
+  }
+}
+
+.insights-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  &__card {
+    height: 80px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    animation: shimmer 1.5s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes shimmer {
+  from { opacity: 0.3; }
+  to { opacity: 0.6; }
+}
