@@ -65,7 +65,7 @@ describe('AuthService', () => {
     });
 
     // Assert
-    const req = httpMock.expectOne('/api/auth/login');
+    const req = httpMock.expectOne(r => r.url.endsWith('/api/auth/login'));
     expect(req.request.method).toBe('POST');
     expect(req.request.body).toEqual({
       email: 'test@example.com',
@@ -86,17 +86,30 @@ describe('AuthService', () => {
       expect(service.currentUser()).toBeNull();
       expect(localStorage.getItem('accessToken')).toBeNull();
       expect(localStorage.getItem('refreshToken')).toBeNull();
-      expect(router.navigate).toHaveBeenCalledWith(['/login']);
     });
 
     // Assert
-    const req = httpMock.expectOne('/api/auth/logout');
+    const req = httpMock.expectOne(r => r.url.endsWith('/api/auth/logout'));
     expect(req.request.method).toBe('POST');
     expect(req.request.body).toEqual({
       refreshToken: 'test-refresh-token',
     });
 
     req.flush({});
+  });
+
+  it('clearTokens should NOT call router.navigate', () => {
+    // Arrange
+    localStorage.setItem('accessToken', 'test-token');
+    localStorage.setItem('refreshToken', 'test-refresh-token');
+
+    // Act
+    service.clearTokens();
+
+    // Assert
+    expect(localStorage.getItem('accessToken')).toBeNull();
+    expect(localStorage.getItem('refreshToken')).toBeNull();
+    expect(router.navigate).not.toHaveBeenCalled();
   });
 
   it('isAuthenticated should return true when logged in', () => {
