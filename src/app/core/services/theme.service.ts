@@ -17,7 +17,10 @@ export class ThemeService {
     effect(() => {
       const theme = this._currentTheme();
       document.documentElement.setAttribute('data-theme', theme);
-
+      // Sync class on <html> for inline script consistency
+      document.documentElement.classList.remove('dark', 'light');
+      document.documentElement.classList.add(theme);
+      // body.class management stays as-is
       if (theme === 'light') {
         document.body.classList.add('theme-light');
       } else {
