@@ -3,12 +3,13 @@ import { CommonModule } from '@angular/common';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { ICONS } from '../../../shared/icons/icon-registry';
 import { TranslatePipe } from '../../../core/pipes/translate.pipe';
+import { FtSubtleRevealDirective } from '../../../shared/directives/ft-subtle-reveal.directive';
 import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-profile-section',
   standalone: true,
-  imports: [CommonModule, NgIcon, TranslatePipe],
+  imports: [CommonModule, NgIcon, TranslatePipe, FtSubtleRevealDirective],
   providers: [provideIcons(ICONS)],
   templateUrl: './profile-section.component.html',
   styleUrl: './profile-section.component.scss',

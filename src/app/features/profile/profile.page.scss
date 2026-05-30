@@ -1,4 +1,4 @@
-@import '../../styles/responsive';
+@import '../../../styles/responsive';
 
 .profile-page { max-width: 600px; margin: 0 auto; @include safe-padding($vertical: 24px); }
 

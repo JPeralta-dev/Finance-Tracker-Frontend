@@ -1,6 +1,8 @@
 import { Component, signal, inject, OnInit, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormControl, FormGroup } from '@angular/forms';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import { ICONS } from '../../shared/icons/icon-registry';
 import { catchError, forkJoin, of } from 'rxjs';
 import { AuthService } from '../../core/services/auth.service';
 import { FinanceService } from '../../core/services/finance.service';
@@ -28,8 +30,9 @@ export function calculateAccountAge(createdAt: string): string {
 @Component({
   selector: 'ft-profile-page',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, TranslatePipe, FtSubtleRevealDirective,
+  imports: [CommonModule, ReactiveFormsModule, TranslatePipe, FtSubtleRevealDirective, NgIcon,
     ProfileAvatarCardComponent, ProfilePersonalInfoComponent, ProfileInsightsCardComponent],
+  providers: [provideIcons(ICONS)],
   templateUrl: './profile.page.html',
   styleUrl: './profile.page.scss',
 })

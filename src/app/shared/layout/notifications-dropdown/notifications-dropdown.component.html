@@ -3,7 +3,7 @@
     class="notifications-dropdown__trigger"
     (click)="toggleDropdown()"
     [attr.aria-expanded]="isOpen()"
-    aria-label="{{ 'notifications.bellLabel' | translate }}"
+    [attr.aria-label]="'notifications.bellLabel' | translate"
   >
     <ng-icon name="bell" size="1.1rem" />
     @if (unreadCount() > 0) {
