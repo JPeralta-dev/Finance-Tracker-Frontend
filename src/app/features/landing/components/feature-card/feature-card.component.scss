@@ -17,7 +17,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(135deg, rgba(157, 80, 187, 0.05), transparent);
+    background: linear-gradient(135deg, rgba(217, 70, 239, 0.05), transparent);
     opacity: 0;
     transition: opacity var(--duration-normal) var(--ease-out);
     pointer-events: none;
@@ -40,7 +40,7 @@
     align-items: center;
     justify-content: center;
     background: var(--accent-glow);
-    border: 1px solid rgba(157, 80, 187, 0.3);
+    border: 1px solid rgba(217, 70, 239, 0.3);
     border-radius: var(--radius-sm);
     color: var(--accent-start);
     margin-bottom: 20px;

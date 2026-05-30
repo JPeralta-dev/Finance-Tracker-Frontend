@@ -77,6 +77,18 @@
       "title": "Telegram Integration",
       "open_bot": "Open Bot"
     },
+    "telegram_section": {
+      "badge": "Telegram Integration",
+      "title": "Track expenses directly<br />from <span class=\"telegram-section__accent\">Telegram</span>",
+      "description": "Log transactions on the go with our Telegram bot. Just send a message like \"Coffee $5\" and it's tracked automatically. No app opening required.",
+      "open_bot": "Open Telegram Bot",
+      "chat_name": "Hormiga Tracker",
+      "chat_status": "Online",
+      "demo_user_1": "Coffee $5.50",
+      "demo_bot_1": "✅ Logged: <strong>$5.50</strong> in <strong>Food & Dining</strong><br /><span class=\"chat-preview__meta\">Today, 10:42 AM</span>",
+      "demo_user_2": "Uber $12.00",
+      "demo_bot_2": "✅ Logged: <strong>$12.00</strong> in <strong>Transport</strong><br /><span class=\"chat-preview__meta\">Today, 11:15 AM</span>"
+    },
     "cta": {
       "title": "Ready to take control?",
       "subtitle": "Join thousands of users tracking their finances with Flowr. It's free and takes less than a minute to set up.",
