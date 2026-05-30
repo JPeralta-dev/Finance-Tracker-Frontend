@@ -241,6 +241,7 @@
       "linked": "✅ Lié",
       "linked_desc": "Votre compte Telegram est lié. Vous pouvez enregistrer des dépenses depuis le bot.",
       "link_telegram": "Ouvrir Telegram",
+      "open_with_code": "Ouvrir Telegram avec le code",
       "error_generate": "Erreur lors de la génération du code",
       "error_link": "Erreur lors de la vérification du statut de liaison"
     }

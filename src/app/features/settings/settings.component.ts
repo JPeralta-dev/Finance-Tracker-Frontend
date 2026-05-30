@@ -176,6 +176,11 @@ export class SettingsComponent implements OnInit, OnDestroy {
     window.open('https://t.me/your_bot_username', '_blank');
   }
 
+  openTelegramWithCode(code: string): void {
+    const message = encodeURIComponent(`/link ${code}`);
+    window.open(`https://t.me/your_bot_username?text=${message}`, '_blank');
+  }
+
   onSignOut(): void {
     this.logoutLoading.set(true);
     this.authService.logout().pipe(

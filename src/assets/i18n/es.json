@@ -241,6 +241,7 @@
       "linked": "✅ Vinculado",
       "linked_desc": "Tu cuenta de Telegram está vinculada. Podés registrar gastos desde el bot.",
       "link_telegram": "Abrir Telegram",
+      "open_with_code": "Abrir Telegram con código",
       "error_generate": "Error al generar el código",
       "error_link": "Error al verificar el estado de vinculación"
     }

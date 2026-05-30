@@ -50,6 +50,12 @@
               {{ countdownMinutes }}:{{ countdownSeconds.toString().padStart(2, '0') }}
             </div>
             <p class="code-instructions">{{ 'settings.telegram.code_instructions' | translate }}</p>
+            
+            <!-- Botón para abrir Telegram con código pre-llenado -->
+            <button class="btn-telegram-auto" (click)="openTelegramWithCode(code)">
+              <ng-icon name="telegram" size="1rem" />
+              {{ 'settings.telegram.open_with_code' | translate }}
+            </button>
           </div>
         } @else {
           <button class="btn-generate" (click)="generateCode()" [disabled]="generatingCode()">

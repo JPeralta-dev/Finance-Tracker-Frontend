@@ -241,6 +241,7 @@
       "linked": "✅ Linked",
       "linked_desc": "Your Telegram account is linked. You can log expenses from the bot.",
       "link_telegram": "Open Telegram",
+      "open_with_code": "Open Telegram with code",
       "error_generate": "Error generating code",
       "error_link": "Error checking link status"
     }
