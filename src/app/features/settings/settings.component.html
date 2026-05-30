@@ -1,11 +1,80 @@
-<div class="settings-page" ftScrollAnimate="fade-up">
+<div class="settings-page" ftSubtleReveal="fade-up">
   <div class="page-header">
     <h1 class="page-title">{{ 'settings.title' | translate }}</h1>
     <p class="page-subtitle">{{ 'settings.subtitle' | translate }}</p>
   </div>
 
-  <!-- Placeholder for future integrations -->
-  <div class="settings-section" ftScrollAnimate="fade-up" [delay]="100">
+  <!-- Telegram Linking -->
+  <div class="settings-section" ftSubtleReveal="fade-up" [delay]="50">
+    <div class="section-header">
+      <div class="section-icon">
+        <ng-icon name="telegram" size="1.5rem" />
+      </div>
+      <div class="section-info">
+        <h2 class="section-title">{{ 'settings.telegram.title' | translate }}</h2>
+        <p class="section-desc">{{ 'settings.telegram.desc' | translate }}</p>
+      </div>
+    </div>
+
+    @if (linkLoading()) {
+      <div class="link-loading">
+        <span class="spinner-sm"></span>
+      </div>
+    } @else if (isLinked()) {
+      <div class="linked-state" [class.just-linked]="justLinked()">
+        @if (justLinked()) {
+          <div class="linked-flash">
+            <ng-icon name="check" size="2rem" />
+            <span>✅ ¡Cuenta vinculada correctamente!</span>
+          </div>
+        }
+        <div class="linked-badge">
+          <ng-icon name="check" size="1.25rem" />
+          <span>{{ 'settings.telegram.linked' | translate }}</span>
+        </div>
+        <p class="linked-desc">{{ 'settings.telegram.linked_desc' | translate }}</p>
+        <button class="btn-telegram" (click)="openTelegram()">
+          <ng-icon name="telegram" size="1rem" />
+          {{ 'settings.telegram.link_telegram' | translate }}
+        </button>
+      </div>
+    } @else {
+      <div class="link-action">
+        @if (linkCode(); as code) {
+          <div class="code-display">
+            <span class="code-label">{{ 'settings.telegram.code_label' | translate }}</span>
+            <div class="code-value">{{ code }}</div>
+            <div class="code-timer">
+              <ng-icon name="clock" size="0.875rem" />
+              {{ 'settings.telegram.code_expires' | translate }}:
+              {{ countdownMinutes }}:{{ countdownSeconds.toString().padStart(2, '0') }}
+            </div>
+            <p class="code-instructions">{{ 'settings.telegram.code_instructions' | translate }}</p>
+            
+            <!-- Botón para abrir Telegram con código pre-llenado -->
+            <button class="btn-telegram-auto" (click)="openTelegramWithCode(code)">
+              <ng-icon name="telegram" size="1rem" />
+              {{ 'settings.telegram.open_with_code' | translate }}
+            </button>
+          </div>
+        } @else {
+          <button class="btn-generate" (click)="generateCode()" [disabled]="generatingCode()">
+            @if (generatingCode()) {
+              <span class="spinner-sm"></span>
+            }
+            {{ 'settings.telegram.generate_code' | translate }}
+          </button>
+        }
+
+        @if (linkError(); as error) {
+          <p class="link-error">{{ error | translate }}</p>
+        }
+      </div>
+    }
+  </div>
+
+  <!-- Integrations placeholder -->
+  <div class="settings-section" ftSubtleReveal="fade-up" [delay]="100">
     <div class="section-header">
       <div class="section-icon">
         <ng-icon name="settings" size="1.5rem" />
@@ -21,7 +90,7 @@
   </div>
 
   <!-- Session / Account section -->
-  <div class="settings-section settings-section--danger" ftScrollAnimate="fade-up" [delay]="200">
+  <div class="settings-section settings-section--danger" ftSubtleReveal="fade-up" [delay]="200">
     <div class="section-header">
       <div class="section-icon section-icon--danger">
         <ng-icon name="logout" size="1.5rem" />

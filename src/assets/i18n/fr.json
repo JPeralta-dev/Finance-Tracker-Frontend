@@ -222,9 +222,28 @@
     "signOut": "Déconnexion",
     "back_to_dashboard": "Retour au tableau de bord",
     "coming_soon": "Bientôt : Telegram, IA et plus d'intégrations.",
+    "session": {
+      "title": "Session",
+      "logged_as": "Connecté comme",
+      "sign_out": "Se déconnecter"
+    },
     "integrations": {
       "title": "Intégrations",
       "desc": "Connectez des outils externes pour améliorer votre expérience."
+    },
+    "telegram": {
+      "title": "Lier Telegram",
+      "desc": "Connectez votre compte Telegram pour enregistrer des dépenses depuis le bot.",
+      "generate_code": "Générer un code",
+      "code_label": "Votre code de liaison",
+      "code_expires": "Expire dans",
+      "code_instructions": "Envoyez ce code au bot Telegram avec /link",
+      "linked": "✅ Lié",
+      "linked_desc": "Votre compte Telegram est lié. Vous pouvez enregistrer des dépenses depuis le bot.",
+      "link_telegram": "Ouvrir Telegram",
+      "open_with_code": "Ouvrir Telegram avec le code",
+      "error_generate": "Erreur lors de la génération du code",
+      "error_link": "Erreur lors de la vérification du statut de liaison"
     }
   },
   "profile": {
@@ -234,5 +253,8 @@
     "email": "E-mail",
     "save": "Sauvegarder les modifications",
     "cancel": "Annuler"
+  },
+  "theme": {
+    "toggle": "Changer de thème"
   }
 }

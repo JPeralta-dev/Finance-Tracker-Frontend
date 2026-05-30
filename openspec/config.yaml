@@ -1,0 +1,82 @@
+# openspec/config.yaml
+schema: spec-driven
+
+context: |
+  Tech stack: Angular 17.3 standalone, TypeScript 5.4 strict, TailwindCSS 3.4, SCSS
+  Architecture: Standalone components, lazy-loaded feature modules, core/shared/features layering
+    - Core: guards, interceptors, services, models, pipes, i18n
+    - Features: auth, dashboard, transactions, categories, settings, profile, landing
+    - Shared: UI components, layout, icons, animations, directives, charts
+  Build: @angular-devkit/build-angular:application (esbuild)
+  Deploy: Vercel static build, SPA rewrites
+  State: Angular signals, HTTP interceptor-based auth, localStorage for tokens
+  Testing: Karma 6.4 + Jasmine 5.1, ChromeHeadless CI
+  Design: Dark-themed obsidian palette, glassmorphism, Space Grotesk + Inter fonts
+
+rules:
+  proposal:
+    - Include rollback plan for risky changes
+    - Scope changes per feature domain
+  specs:
+    - Use Given/When/Then for scenarios
+    - Use RFC 2119 keywords (MUST, SHALL, SHOULD, MAY)
+  design:
+    - Prefer standalone components over NgModules
+    - Use Angular signals for reactive state
+    - Document API contracts with backend
+  tasks:
+    - Group by phase, use hierarchical numbering
+    - Keep tasks completable in one session
+    - Include test tasks alongside implementation
+  apply:
+    - Follow existing code patterns
+    - Generate components using Angular CLI conventions
+    tdd: true
+    test_command: "ng test --no-watch --browsers=ChromeHeadless --code-coverage"
+  verify:
+    test_command: "ng test --no-watch --browsers=ChromeHeadless --code-coverage"
+    build_command: "ng build --configuration production"
+    coverage_threshold: 0
+  archive:
+    - Warn before merging destructive deltas
+
+testing:
+  strict_tdd: true
+  runner:
+    command: "ng test"
+    framework: Karma + Jasmine
+    watch_command: "ng test --watch"
+    ci_command: "ng test --no-watch --browsers=ChromeHeadless --code-coverage"
+  layers:
+    unit:
+      available: true
+      tool: "Karma + Jasmine"
+    integration:
+      available: true
+      tool: "HttpClientTestingModule + Jasmine"
+    e2e:
+      available: false
+      tool: "—"
+  coverage:
+    available: true
+    command: "ng test --no-watch --browsers=ChromeHeadless --code-coverage"
+    tool: karma-coverage
+    reporters: ["html", "text-summary"]
+  quality:
+    linter:
+      available: false
+      command: "—"
+    type_checker:
+      available: true
+      command: "ng build (TypeScript strict + Angular strict templates)"
+    formatter:
+      available: false
+      command: "—"
+  existing_tests:
+    count: 5
+    locations:
+      - "src/app/core/services/auth.service.spec.ts"
+      - "src/app/core/services/toast.service.spec.ts"
+      - "src/app/core/interceptors/auth.interceptor.spec.ts"
+      - "src/app/core/guards/auth.guard.spec.ts"
+      - "src/app/shared/layout/profile-dropdown/profile-dropdown.component.spec.ts"

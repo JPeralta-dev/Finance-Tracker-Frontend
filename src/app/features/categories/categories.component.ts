@@ -1,5 +1,5 @@
 import { Component, OnInit, signal, inject, computed } from '@angular/core';
-import { CommonModule, CurrencyPipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { NgIcon, provideIcons } from '@ng-icons/core';
@@ -9,8 +9,9 @@ import { Category } from '../../core/models/category.model';
 import { SkeletonComponent } from '../../shared/components/skeleton.component';
 import { EmptyStateComponent } from '../../shared/components/empty-state.component';
 import { TranslatePipe } from '../../core/pipes/translate.pipe';
-import { ScrollAnimateDirective } from '../../shared/directives/scroll-animate/scroll-animate.directive';
+import { FtSubtleRevealDirective } from '../../shared/directives/ft-subtle-reveal.directive';
 import { ToastService } from '../../core/services/toast.service';
+import { FtCurrencyPipe } from '../../core/pipes/ft-currency.pipe';
 
 @Component({
   selector: 'app-categories',
@@ -19,12 +20,12 @@ import { ToastService } from '../../core/services/toast.service';
     CommonModule,
     FormsModule,
     RouterLink,
-    CurrencyPipe,
+    FtCurrencyPipe,
     SkeletonComponent,
     EmptyStateComponent,
     NgIcon,
     TranslatePipe,
-    ScrollAnimateDirective,
+    FtSubtleRevealDirective,
   ],
   providers: [provideIcons(ICONS)],
   templateUrl: './categories.component.html',

@@ -1,0 +1,18 @@
+@if (loading()) {
+  <div class="kpis-skeleton">
+    @for (_ of [1, 2, 3, 4]; track _) {
+      <div class="kpis-skeleton__card">
+        <div class="kpis-skeleton__icon"></div>
+        <div class="kpis-skeleton__label"></div>
+        <div class="kpis-skeleton__value"></div>
+        <div class="kpis-skeleton__trend"></div>
+      </div>
+    }
+  </div>
+} @else {
+  <div class="kpis-grid">
+    @for (kpi of kpis(); track kpi.labelKey) {
+      <ft-kpi-card [data]="kpi" />
+    }
+  </div>
+}

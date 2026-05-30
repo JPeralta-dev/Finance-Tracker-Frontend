@@ -1,0 +1,40 @@
+@if (loading()) {
+  <div class="cat-skeleton">
+    @for (_ of [1, 2, 3, 4, 5]; track _) {
+      <div class="cat-skeleton__row"></div>
+    }
+  </div>
+} @else {
+  <div class="category-breakdown">
+    @for (cat of categories().slice(0, max()); track cat.name) {
+      <div class="category-breakdown__row" ftSubtleReveal="fade-up" [delay]="$index * 50">
+        <div class="category-breakdown__info">
+          <span class="category-breakdown__icon" [style.background]="cat.color + '20'" [style.color]="cat.color">
+            <ng-icon [name]="cat.icon" size="0.9rem" />
+          </span>
+          <div class="category-breakdown__meta">
+            <span class="category-breakdown__name">{{ cat.name }}</span>
+            <span class="category-breakdown__pct">{{ cat.percentage.toFixed(1) }}%</span>
+          </div>
+        </div>
+        <div class="category-breakdown__bar-track">
+          <div
+            class="category-breakdown__bar-fill"
+            [style.width.%]="cat.percentage"
+            [style.background]="cat.color"
+          ></div>
+        </div>
+        <div class="category-breakdown__stats">
+          <span class="category-breakdown__change" [class.negative]="cat.trend === 'up'">
+            @if (cat.trend === 'up') {
+              <ng-icon name="trendUp" size="0.75rem" />
+            } @else if (cat.trend === 'down') {
+              <ng-icon name="trendDown" size="0.75rem" />
+            }
+            {{ cat.change > 0 ? '+' : '' }}{{ cat.change.toFixed(1) }}%
+          </span>
+        </div>
+      </div>
+    }
+  </div>
+}

@@ -2,26 +2,26 @@
   <div class="hero__inner">
     <!-- Left: Content -->
     <div class="hero__content">
-      <div class="hero__badge" ftScrollAnimate="fade-in" [delay]="100">
+      <div class="hero__badge" ftSubtleReveal="fade-up" [delay]="100">
         <span class="hero__badge-dot"></span>
         {{ 'landing.heroBadge' | translate }}
       </div>
-      <h1 class="hero__title" ftScrollAnimate="fade-up" [delay]="200" [innerHTML]="'landing.heroTitle' | translate">
+      <h1 class="hero__title" ftSubtleReveal="fade-up" [delay]="200" [innerHTML]="'landing.heroTitle' | translate">
       </h1>
-      <p class="hero__subtitle" ftScrollAnimate="fade-up" [delay]="300">
+      <p class="hero__subtitle" ftSubtleReveal="fade-up" [delay]="300">
         {{ 'landing.heroSubtitle' | translate }}
       </p>
-      <div class="hero__actions" ftScrollAnimate="fade-up" [delay]="400">
+      <div class="hero__actions" ftSubtleReveal="fade-up" [delay]="400">
         <a routerLink="/register" class="hero__btn hero__btn--primary">
           {{ 'landing.getStarted' | translate }}
           <ng-icon name="chevronRight" size="1rem" />
         </a>
-        <a href="https://t.me/hormigaTrackerBot" target="_blank" class="hero__btn hero__btn--secondary">
+        <a [href]="telegramBotUrl" target="_blank" class="hero__btn hero__btn--secondary">
           <ng-icon name="telegram" size="1rem" />
           {{ 'landing.telegramBot' | translate }}
         </a>
       </div>
-      <div class="hero__trust" ftScrollAnimate="fade-in" [delay]="500">
+      <div class="hero__trust" ftSubtleReveal="fade-up" [delay]="500">
         <span class="hero__trust-item">✓ {{ 'landing.trustFree' | translate }}</span>
         <span class="hero__trust-item">✓ {{ 'landing.trustNoCard' | translate }}</span>
         <span class="hero__trust-item">✓ {{ 'landing.trustEncrypted' | translate }}</span>
@@ -29,7 +29,7 @@
     </div>
 
     <!-- Right: Visual -->
-    <div class="hero__visual" ftScrollAnimate="scale-in" [delay]="300">
+    <div class="hero__visual" ftSubtleReveal="fade-up" [delay]="300">
       <ft-hero-visual />
     </div>
   </div>

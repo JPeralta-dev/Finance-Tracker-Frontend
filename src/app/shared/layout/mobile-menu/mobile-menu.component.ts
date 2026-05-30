@@ -1,7 +1,8 @@
 import { Component, input, output, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 import { NgIcon, provideIcons } from '@ng-icons/core';
+import { tap } from 'rxjs/operators';
 import { NavItemComponent } from '../nav-item/nav-item.component';
 import { MobileMenuItem } from './mobile-menu.types';
 import { ICONS } from '../../../shared/icons/icon-registry';
@@ -18,6 +19,7 @@ import { User } from '../../../core/models/user.model';
 })
 export class MobileMenuComponent {
   private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
 
   items = input.required<MobileMenuItem[]>();
   isOpen = input<boolean>(false);
@@ -32,8 +34,12 @@ export class MobileMenuComponent {
   }
 
   onLogout(): void {
-    this.authService.logout().subscribe();
-    this.onClose();
+    this.authService.logout().pipe(
+      tap(() => this.onClose())
+    ).subscribe({
+      next: () => this.router.navigate(['/login']),
+      error: () => this.router.navigate(['/login']),
+    });
   }
 
   getInitials(name: string): string {

@@ -9,7 +9,7 @@ import { ICONS, getCategoryIcon } from '../../shared/icons/icon-registry';
 import { FinanceService } from '../../core/services/finance.service';
 import { Category } from '../../core/models/category.model';
 import { TranslatePipe } from '../../core/pipes/translate.pipe';
-import { ScrollAnimateDirective } from '../../shared/directives/scroll-animate/scroll-animate.directive';
+import { FtSubtleRevealDirective } from '../../shared/directives/ft-subtle-reveal.directive';
 
 interface CategoryOption extends Category {
   iconKey: string;
@@ -24,7 +24,7 @@ interface CategoryOption extends Category {
     RouterLink,
     NgIcon,
     TranslatePipe,
-    ScrollAnimateDirective,
+    FtSubtleRevealDirective,
   ],
   providers: [provideIcons(ICONS)],
   templateUrl: './transaction-form.component.html',

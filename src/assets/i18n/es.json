@@ -218,14 +218,55 @@
   },
   "settings": {
     "title": "Configuración",
-    "subtitle": "Gestiona tu cuenta e integraciones",
+    "subtitle": "Gestioná tu cuenta e integraciones",
     "signOut": "Cerrar Sesión",
     "back_to_dashboard": "Volver al dashboard",
-    "coming_soon": "Próximamente: Integraciones con Telegram, IA y más.",
+    "coming_soon": "Próximamente...",
+    "session": {
+      "title": "Sesión",
+      "logged_as": "Conectado como",
+      "sign_out": "Cerrar sesión"
+    },
     "integrations": {
       "title": "Integraciones",
-      "desc": "Conecta herramientas externas para potenciar tu experiencia."
+      "desc": "Conectá herramientas externas para potenciar tu experiencia."
+    },
+    "telegram": {
+      "title": "Vincular Telegram",
+      "desc": "Conectá tu cuenta de Telegram para registrar gastos desde el bot.",
+      "generate_code": "Generar código",
+      "code_label": "Tu código de vinculación",
+      "code_expires": "Expira en",
+      "code_instructions": "Enviá este código al bot de Telegram con /link",
+      "linked": "✅ Vinculado",
+      "linked_desc": "Tu cuenta de Telegram está vinculada. Podés registrar gastos desde el bot.",
+      "link_telegram": "Abrir Telegram",
+      "open_with_code": "Abrir Telegram con código",
+      "error_generate": "Error al generar el código",
+      "error_link": "Error al verificar el estado de vinculación"
     }
+  },
+  "analytics": {
+    "title": "Análisis",
+    "subtitle": "Visualizá tus tendencias financieras y desgloses.",
+    "monthlyTrends": "Tendencias Mensuales",
+    "last6Months": "Últimos 6 meses",
+    "byCategory": "Por Categoría",
+    "expenseBreakdown": "Desglose de Gastos",
+    "summary": "Resumen",
+    "totalIncome": "Ingreso Total",
+    "totalExpenses": "Gastos Totales",
+    "netSavings": "Ahorro Neto",
+    "emptyTitle": "Sin datos aún",
+    "emptyDesc": "Empezá a registrar transacciones para ver tu análisis financiero.",
+    "loading": "Cargando análisis...",
+    "fetchingData": "Obteniendo datos financieros",
+    "errorTitle": "Error al cargar",
+    "errorDesc": "No pudimos cargar los datos de análisis. Intentá de nuevo.",
+    "retry": "Reintentar",
+    "addTransaction": "Agregar transacción",
+    "noCategoryData": "Sin datos de categorías aún",
+    "noChartData": "Sin datos mensuales aún"
   },
   "profile": {
     "title": "Perfil",
@@ -234,5 +275,8 @@
     "email": "Correo electrónico",
     "save": "Guardar cambios",
     "cancel": "Cancelar"
+  },
+  "theme": {
+    "toggle": "Cambiar tema"
   }
 }

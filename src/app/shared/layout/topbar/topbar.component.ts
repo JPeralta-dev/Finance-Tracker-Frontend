@@ -9,6 +9,7 @@ import { MobileMenuItem } from '../../layout/mobile-menu/mobile-menu.types';
 import { ICONS } from '../../../shared/icons/icon-registry';
 import { ProfileDropdownComponent } from '../../layout/profile-dropdown/profile-dropdown.component';
 import { NotificationsDropdownComponent } from '../../layout/notifications-dropdown/notifications-dropdown.component';
+import { LanguageDropdownComponent } from '../../components/language-dropdown/language-dropdown.component';
 import { AuthService } from '../../../core/services/auth.service';
 import { filter } from 'rxjs';
 
@@ -18,6 +19,8 @@ const NAV_ITEMS: NavItem[] = [
   { label: 'Categories', path: '/categories', icon: 'categories' },
   { label: 'Analytics', path: '/analytics', icon: 'analytics' },
 ];
+
+const NAV_ITEM_LABELS = NAV_ITEMS.map((item) => item.label);
 
 const ROUTE_TITLES: Record<string, string> = {
   '/dashboard': 'Dashboard',
@@ -34,7 +37,7 @@ const PRIVATE_PATHS = Object.keys(ROUTE_TITLES);
 @Component({
   selector: 'ft-topbar',
   standalone: true,
-  imports: [CommonModule, RouterLink, NgIcon, NavItemComponent, MobileMenuComponent, ProfileDropdownComponent, NotificationsDropdownComponent],
+  imports: [CommonModule, RouterLink, NgIcon, NavItemComponent, MobileMenuComponent, ProfileDropdownComponent, NotificationsDropdownComponent, LanguageDropdownComponent],
   providers: [provideIcons(ICONS)],
   templateUrl: './topbar.component.html',
   styleUrl: './topbar.component.scss',
@@ -61,13 +64,16 @@ export class TopbarComponent {
       .subscribe((event: NavigationEnd) => {
         const url = event.urlAfterRedirects.split('?')[0].split('#')[0];
         const title = ROUTE_TITLES[url] ?? '';
-        this.pageTitle.set(title);
+        const isNavMatch = title !== '' && NAV_ITEM_LABELS.includes(title);
+        this.pageTitle.set(isNavMatch ? '' : title);
         this.showHomeButton.set(PRIVATE_PATHS.some(path => url.startsWith(path)));
       });
 
     // Initialize on component creation
     const currentUrl = this.router.url.split('?')[0].split('#')[0];
-    this.pageTitle.set(ROUTE_TITLES[currentUrl] ?? '');
+    const initTitle = ROUTE_TITLES[currentUrl] ?? '';
+    const isInitNavMatch = initTitle !== '' && NAV_ITEM_LABELS.includes(initTitle);
+    this.pageTitle.set(isInitNavMatch ? '' : initTitle);
     this.showHomeButton.set(PRIVATE_PATHS.some(path => currentUrl.startsWith(path)));
   }
 

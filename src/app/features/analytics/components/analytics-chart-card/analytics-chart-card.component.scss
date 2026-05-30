@@ -1,0 +1,42 @@
+.analytics-chart-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  transition: border-color var(--duration-normal) var(--ease-smooth),
+    box-shadow var(--duration-normal) var(--ease-smooth);
+
+  &:hover {
+    border-color: var(--glass-border-hover);
+    box-shadow: var(--shadow-lg);
+  }
+
+  &--full {
+    grid-column: 1 / -1;
+  }
+
+  &__header {
+    margin-bottom: 20px;
+  }
+
+  &__title {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+  }
+
+  &__subtitle {
+    font-size: 13px;
+    color: var(--text-tertiary);
+    margin: 4px 0 0;
+  }
+
+  &__body {
+    position: relative;
+    width: 100%;
+  }
+}

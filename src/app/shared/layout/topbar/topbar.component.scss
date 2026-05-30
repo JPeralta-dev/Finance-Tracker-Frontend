@@ -7,6 +7,8 @@
   position: sticky;
   top: 0;
   z-index: 100;
+  will-change: transform;
+  transform: translateZ(0);
   transition:
     background var(--duration-normal) var(--ease-smooth),
     border-color var(--duration-normal) var(--ease-smooth),

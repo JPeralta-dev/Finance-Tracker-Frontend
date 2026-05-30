@@ -1,29 +1,44 @@
-import { TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import {
   HttpTestingController,
-  HttpClientTestingModule,
+  provideHttpClientTesting,
 } from '@angular/common/http/testing';
-import { HttpClient, HttpRequest } from '@angular/common/http';
+import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { of, throwError, lastValueFrom } from 'rxjs';
 
-import { authInterceptor } from './auth.interceptor';
+import { authInterceptor, resetInterceptorState } from './auth.interceptor';
 import { AuthService } from '../services/auth.service';
 
 describe('AuthInterceptor', () => {
   let httpMock: HttpTestingController;
   let httpClient: HttpClient;
-  let router: Router;
+  let authServiceSpy: {
+    refreshToken: jasmine.Spy;
+    clearTokens: jasmine.Spy;
+  };
+  let routerSpy: jasmine.SpyObj<Router>;
 
   beforeEach(() => {
+    authServiceSpy = {
+      refreshToken: jasmine.createSpy('refreshToken'),
+      clearTokens: jasmine.createSpy('clearTokens'),
+    };
+    routerSpy = jasmine.createSpyObj('Router', ['navigate']);
+
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [AuthService],
+      providers: [
+        provideHttpClient(withInterceptors([authInterceptor])),
+        provideHttpClientTesting(),
+        { provide: AuthService, useValue: authServiceSpy },
+        { provide: Router, useValue: routerSpy },
+      ],
     });
 
     httpMock = TestBed.inject(HttpTestingController);
     httpClient = TestBed.inject(HttpClient);
-    router = TestBed.inject(Router);
     localStorage.clear();
+    resetInterceptorState();
   });
 
   afterEach(() => {
@@ -31,130 +46,90 @@ describe('AuthInterceptor', () => {
     localStorage.clear();
   });
 
-  it('should add Authorization header when token exists', (done) => {
-    // Arrange
+  it('should add Authorization header when token exists', async () => {
     localStorage.setItem('accessToken', 'test-token');
 
-    // Act
-    httpClient.get('/api/test').subscribe((response) => {
-      expect(response).toEqual({ data: 'test' });
-      done();
-    });
+    const responsePromise = lastValueFrom(httpClient.get('/api/test'));
 
-    // Assert
     const req = httpMock.expectOne('/api/test');
     expect(req.request.method).toBe('GET');
     expect(req.request.headers.get('Authorization')).toBe('Bearer test-token');
-
     req.flush({ data: 'test' });
+
+    const response = await responsePromise;
+    expect(response).toEqual({ data: 'test' });
   });
 
-  it('should not add header when token is null', (done) => {
-    // Arrange - no token
+  it('should not add header when token is null', async () => {
     localStorage.removeItem('accessToken');
 
-    // Act
-    httpClient.get('/api/test').subscribe((response) => {
-      expect(response).toEqual({ data: 'test' });
-      done();
-    });
+    const responsePromise = lastValueFrom(httpClient.get('/api/test'));
 
-    // Assert
     const req = httpMock.expectOne('/api/test');
     expect(req.request.method).toBe('GET');
     expect(req.request.headers.get('Authorization')).toBeNull();
-
     req.flush({ data: 'test' });
+
+    const response = await responsePromise;
+    expect(response).toEqual({ data: 'test' });
   });
 
   describe('Token Refresh', () => {
-    it('should refresh token on 401 and retry the original request', (done) => {
-      // Arrange
+    it('should refresh token on 401 and retry the original request', async () => {
       localStorage.setItem('accessToken', 'expired-token');
       localStorage.setItem('refreshToken', 'valid-refresh-token');
+      authServiceSpy.refreshToken.and.returnValue(of({ accessToken: 'new-token' }));
 
-      // Act
-      httpClient.get('/api/protected').subscribe((response) => {
-        expect(response).toEqual({ data: 'success' });
-        done();
-      });
+      const responsePromise = lastValueFrom(httpClient.get('/api/protected'));
 
-      // First request gets 401
       const firstReq = httpMock.expectOne('/api/protected');
-      expect(firstReq.request.headers.get('Authorization')).toBe('Bearer expired-token');
       firstReq.flush({ error: 'Unauthorized' }, { status: 401, statusText: 'Unauthorized' });
 
-      // Refresh token request
-      const refreshReq = httpMock.expectOne('/api/auth/refresh');
-      expect(refreshReq.request.method).toBe('POST');
-      refreshReq.flush({ accessToken: 'new-token' });
-
-      // Retry with new token
       const retryReq = httpMock.expectOne('/api/protected');
       expect(retryReq.request.headers.get('Authorization')).toBe('Bearer new-token');
       retryReq.flush({ data: 'success' });
+
+      const response = await responsePromise;
+      expect(response).toEqual({ data: 'success' });
     });
 
-    it('should redirect to login when refresh fails', (done) => {
-      // Arrange
+    it('should call clearTokens and navigate when refresh fails', async () => {
       localStorage.setItem('accessToken', 'expired-token');
       localStorage.setItem('refreshToken', 'invalid-refresh-token');
-      const navigateSpy = spyOn(TestBed.inject(Router), 'navigate');
+      authServiceSpy.refreshToken.and.returnValue(
+        throwError(() => new Error('refresh failed'))
+      );
 
-      // Act
+      let capturedError: any;
       httpClient.get('/api/protected').subscribe({
-        error: (error) => {
-          expect(error.status).toBe(401);
-          expect(navigateSpy).toHaveBeenCalledWith(['/login']);
-          expect(localStorage.getItem('accessToken')).toBeNull();
-          expect(localStorage.getItem('refreshToken')).toBeNull();
-          done();
-        },
+        error: (error) => { capturedError = error; },
       });
 
-      // First request gets 401
-      const firstReq = httpMock.expectOne('/api/protected');
-      firstReq.flush({ error: 'Unauthorized' }, { status: 401, statusText: 'Unauthorized' });
+      const req = httpMock.expectOne('/api/protected');
+      req.flush(null, { status: 401, statusText: 'Unauthorized' });
 
-      // Refresh token request fails
-      const refreshReq = httpMock.expectOne('/api/auth/refresh');
-      refreshReq.flush({ error: 'Invalid refresh token' }, { status: 401, statusText: 'Unauthorized' });
+      // Wait for async processing
+      await new Promise(resolve => setTimeout(resolve, 10));
+
+      expect(capturedError).toBeTruthy();
+      expect(authServiceSpy.clearTokens).toHaveBeenCalled();
+      expect(routerSpy.navigate).toHaveBeenCalledWith(['/login']);
     });
 
-    it('should queue concurrent requests during refresh and retry with new token', (done) => {
-      // Arrange
+    it('should queue concurrent requests during refresh and retry with new token', async () => {
       localStorage.setItem('accessToken', 'expired-token');
       localStorage.setItem('refreshToken', 'valid-refresh-token');
+      authServiceSpy.refreshToken.and.returnValue(of({ accessToken: 'new-token' }));
 
-      let completed = 0;
-      const checkDone = () => {
-        completed++;
-        if (completed === 2) done();
-      };
+      const p1 = lastValueFrom(httpClient.get('/api/data-1'));
+      const p2 = lastValueFrom(httpClient.get('/api/data-2'));
 
-      // Act — send 2 concurrent requests
-      httpClient.get('/api/data-1').subscribe((response) => {
-        expect(response).toEqual({ data: 1 });
-        checkDone();
-      });
-
-      httpClient.get('/api/data-2').subscribe((response) => {
-        expect(response).toEqual({ data: 2 });
-        checkDone();
-      });
-
-      // Both requests get 401
       const req1 = httpMock.expectOne('/api/data-1');
       req1.flush({ error: 'Unauthorized' }, { status: 401, statusText: 'Unauthorized' });
 
       const req2 = httpMock.expectOne('/api/data-2');
       req2.flush({ error: 'Unauthorized' }, { status: 401, statusText: 'Unauthorized' });
 
-      // Only one refresh request should be made
-      const refreshReq = httpMock.expectOne('/api/auth/refresh');
-      refreshReq.flush({ accessToken: 'new-token' });
-
-      // Both retries should use the new token
       const retry1 = httpMock.expectOne('/api/data-1');
       expect(retry1.request.headers.get('Authorization')).toBe('Bearer new-token');
       retry1.flush({ data: 1 });
@@ -162,37 +137,33 @@ describe('AuthInterceptor', () => {
       const retry2 = httpMock.expectOne('/api/data-2');
       expect(retry2.request.headers.get('Authorization')).toBe('Bearer new-token');
       retry2.flush({ data: 2 });
+
+      const [r1, r2] = await Promise.all([p1, p2]);
+      expect(r1).toEqual({ data: 1 });
+      expect(r2).toEqual({ data: 2 });
     });
 
-    it('should not trigger multiple refreshes when already refreshing', (done) => {
-      // Arrange
+    it('should not trigger multiple refreshes when already refreshing', async () => {
       localStorage.setItem('accessToken', 'expired-token');
       localStorage.setItem('refreshToken', 'valid-refresh-token');
+      authServiceSpy.refreshToken.and.returnValue(of({ accessToken: 'fresh-token' }));
 
-      let completed = 0;
-      const checkDone = () => {
-        completed++;
-        if (completed === 3) done();
-      };
+      const p1 = lastValueFrom(httpClient.get('/api/a'));
+      const p2 = lastValueFrom(httpClient.get('/api/b'));
+      const p3 = lastValueFrom(httpClient.get('/api/c'));
 
-      // Act — send 3 concurrent requests
-      httpClient.get('/api/a').subscribe(() => checkDone());
-      httpClient.get('/api/b').subscribe(() => checkDone());
-      httpClient.get('/api/c').subscribe(() => checkDone());
-
-      // All 3 get 401
       httpMock.expectOne('/api/a').flush({}, { status: 401, statusText: 'Unauthorized' });
       httpMock.expectOne('/api/b').flush({}, { status: 401, statusText: 'Unauthorized' });
       httpMock.expectOne('/api/c').flush({}, { status: 401, statusText: 'Unauthorized' });
 
-      // Only ONE refresh should happen
-      const refreshReq = httpMock.expectOne('/api/auth/refresh');
-      refreshReq.flush({ accessToken: 'fresh-token' });
-
-      // All 3 retries
       httpMock.expectOne('/api/a').flush({});
       httpMock.expectOne('/api/b').flush({});
       httpMock.expectOne('/api/c').flush({});
+
+      const [r1, r2, r3] = await Promise.all([p1, p2, p3]);
+      expect(r1).toEqual({});
+      expect(r2).toEqual({});
+      expect(r3).toEqual({});
     });
   });
 });

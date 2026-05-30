@@ -122,7 +122,7 @@ export class AuthService {
   clearTokens(): void {
     localStorage.removeItem(ACCESS_TOKEN_KEY);
     localStorage.removeItem(REFRESH_TOKEN_KEY);
-    this.router.navigate(["/login"]);
+    // Navigation moved to caller sites
   }
 
   updateProfile(displayName: string): Observable<User> {

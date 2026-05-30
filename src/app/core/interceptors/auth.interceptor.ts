@@ -19,9 +19,15 @@ const ACCESS_TOKEN_KEY = "accessToken";
 let isRefreshing = false;
 const refreshTokenSubject = new BehaviorSubject<any>(null);
 
+/** Reset module-level state — for testing only */
+export function resetInterceptorState(): void {
+  isRefreshing = false;
+  refreshTokenSubject.next(null);
+}
+
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  const router = inject(Router);
   const authService = inject(AuthService);
+  const router = inject(Router);
   const token = localStorage.getItem(ACCESS_TOKEN_KEY);
 
   const authReq =
@@ -49,9 +55,8 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
             isRefreshing = false;
             refreshTokenSubject.next(null);
 
-            localStorage.removeItem(ACCESS_TOKEN_KEY);
-            localStorage.removeItem("refreshToken");
-            router.navigate(["/login"]);
+            authService.clearTokens();
+            router.navigate(['/login']);
             return throwError(() => refreshError);
           }),
         );

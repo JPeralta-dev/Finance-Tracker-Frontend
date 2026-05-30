@@ -1,0 +1,16 @@
+<div
+  class="analytics-chart-card"
+  [class.analytics-chart-card--full]="fullWidth()"
+  ftSubtleReveal="fade-up"
+  [delay]="revealDelay()"
+>
+  <div class="analytics-chart-card__header">
+    <h3 class="analytics-chart-card__title">{{ title() }}</h3>
+    @if (subtitle()) {
+      <p class="analytics-chart-card__subtitle">{{ subtitle() }}</p>
+    }
+  </div>
+  <div class="analytics-chart-card__body" [style.min-height]="height()">
+    <ng-content />
+  </div>
+</div>

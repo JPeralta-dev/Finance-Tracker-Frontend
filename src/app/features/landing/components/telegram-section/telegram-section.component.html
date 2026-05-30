@@ -1,6 +1,6 @@
 <section class="telegram-section">
   <div class="telegram-section__inner">
-    <div class="telegram-section__content" ftScrollAnimate="slide-right" [delay]="100">
+    <div class="telegram-section__content" ftSubtleReveal="fade-up" [delay]="100">
       <div class="telegram-section__badge">
         <ng-icon name="heroPaperPlane" size="1rem" />
         Telegram Integration
@@ -13,12 +13,12 @@
         Log transactions on the go with our Telegram bot. Just send a message like
         "Coffee $5" and it's tracked automatically. No app opening required.
       </p>
-      <a href="https://t.me/hormigaTrackerBot" target="_blank" class="telegram-section__btn">
+      <a [href]="telegramBotUrl" target="_blank" class="telegram-section__btn">
         <ng-icon name="heroPaperPlane" size="1rem" />
         Open Telegram Bot
       </a>
     </div>
-    <div class="telegram-section__visual" ftScrollAnimate="slide-left" [delay]="200">
+    <div class="telegram-section__visual" ftSubtleReveal="fade-up" [delay]="200">
       <div class="chat-preview">
         <div class="chat-preview__header">
           <div class="chat-preview__avatar">🤖</div>
