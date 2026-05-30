@@ -1,5 +1,5 @@
 export const environment = {
   production: false,
-  apiUrl: "http://localhost:3010",
+  apiUrl: "https://q1tbtdmw-3010.use2.devtunnels.ms",
   telegramBotUrl: "https://t.me/hormigaTrackerBot",
 };

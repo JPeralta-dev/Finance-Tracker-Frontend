@@ -1,5 +1,5 @@
 /**
- * Design Tokens — Obsidian Glass
+ * Design Tokens — Sky Lavender & Amatista (light) / Deep Plum & Amethyst (dark)
  *
  * Single source of truth for the design system.
  * These values MUST match tailwind.config.ts and styles.scss.
@@ -88,26 +88,26 @@ export interface DesignTokens {
 }
 
 /**
- * Dark theme tokens (default)
+ * Dark theme tokens — "Deep Plum & Amethyst" (default)
  */
 export const darkTokens: DesignTokens = {
   colors: {
     backgrounds: {
-      primary: '#0A0E17',
-      secondary: '#0F1623',
-      tertiary: '#151D2E',
-      elevated: '#1A2337',
+      primary: '#120B1A',
+      secondary: '#1D1426',
+      tertiary: '#2A1E35',
+      elevated: '#362845',
     },
     glass: {
-      bg: 'rgba(15, 22, 35, 0.72)',
-      border: 'rgba(255, 255, 255, 0.06)',
-      borderHover: 'rgba(255, 255, 255, 0.12)',
+      bg: 'rgba(29, 20, 38, 0.72)',
+      border: 'rgba(255, 255, 255, 0.08)',
+      borderHover: 'rgba(255, 255, 255, 0.16)',
     },
     accent: {
-      start: '#06D6A0',
-      mid: '#118DFF',
-      end: '#6C63FF',
-      glow: 'rgba(6, 214, 160, 0.15)',
+      start: '#D946EF',
+      mid: '#A855F7',
+      end: '#7C3AED',
+      glow: 'rgba(217, 70, 239, 0.18)',
     },
     semantic: {
       success: '#06D6A0',
@@ -116,14 +116,14 @@ export const darkTokens: DesignTokens = {
       dangerBg: 'rgba(255, 107, 107, 0.1)',
       warning: '#FFD93D',
       warningBg: 'rgba(255, 217, 61, 0.1)',
-      info: '#118DFF',
-      infoBg: 'rgba(17, 141, 255, 0.1)',
+      info: '#A78BFA',
+      infoBg: 'rgba(167, 139, 250, 0.15)',
     },
     text: {
-      primary: '#F1F5F9',
-      secondary: '#94A3B8',
-      tertiary: '#64748B',
-      inverse: '#0A0E17',
+      primary: '#F3E8FF',
+      secondary: 'rgba(243, 232, 255, 0.75)',
+      tertiary: 'rgba(243, 232, 255, 0.45)',
+      inverse: '#120B1A',
     },
     borders: {
       subtle: 'rgba(255, 255, 255, 0.06)',
@@ -165,26 +165,26 @@ export const darkTokens: DesignTokens = {
 };
 
 /**
- * Light theme tokens (future — not active yet)
+ * Light theme tokens — "Sky Lavender & Amatista"
  */
 export const lightTokens: DesignTokens = {
   colors: {
     backgrounds: {
-      primary: '#F8FAFC',
+      primary: '#F4F6FB',
       secondary: '#FFFFFF',
-      tertiary: '#F1F5F9',
-      elevated: '#E2E8F0',
+      tertiary: '#E8ECF4',
+      elevated: '#DCE2EE',
     },
     glass: {
-      bg: 'rgba(255, 255, 255, 0.72)',
+      bg: 'rgba(255, 255, 255, 0.75)',
       border: 'rgba(0, 0, 0, 0.06)',
       borderHover: 'rgba(0, 0, 0, 0.12)',
     },
     accent: {
-      start: '#059669',
-      mid: '#2563EB',
-      end: '#7C3AED',
-      glow: 'rgba(5, 150, 105, 0.15)',
+      start: '#7DD3FC',
+      mid: '#A78BFA',
+      end: '#8B5CF6',
+      glow: 'rgba(167, 139, 250, 0.22)',
     },
     semantic: {
       success: '#059669',
@@ -193,19 +193,19 @@ export const lightTokens: DesignTokens = {
       dangerBg: 'rgba(220, 38, 38, 0.1)',
       warning: '#D97706',
       warningBg: 'rgba(217, 119, 6, 0.1)',
-      info: '#2563EB',
-      infoBg: 'rgba(37, 99, 235, 0.1)',
+      info: '#6366F1',
+      infoBg: 'rgba(99, 102, 241, 0.08)',
     },
     text: {
-      primary: '#0F172A',
-      secondary: '#475569',
-      tertiary: '#94A3B8',
+      primary: '#1E293B',
+      secondary: 'rgba(30, 41, 59, 0.72)',
+      tertiary: 'rgba(30, 41, 59, 0.45)',
       inverse: '#FFFFFF',
     },
     borders: {
-      subtle: 'rgba(0, 0, 0, 0.06)',
-      default: 'rgba(0, 0, 0, 0.1)',
-      strong: 'rgba(0, 0, 0, 0.16)',
+      subtle: 'rgba(0, 0, 0, 0.05)',
+      default: 'rgba(0, 0, 0, 0.08)',
+      strong: 'rgba(0, 0, 0, 0.14)',
     },
   },
   spacing: darkTokens.spacing,

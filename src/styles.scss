@@ -32,11 +32,11 @@
   --glass-border-hover: rgba(255, 255, 255, 0.16);
   --glass-blur: 16px;
 
-  /* Accent gradient */
-  --accent-start: #9D50BB;
-  --accent-mid: #7B42F6;
-  --accent-end: #6E48AA;
-  --accent-glow: rgba(157, 80, 187, 0.25);
+  /* Accent gradient — Amethyst Boost (vibrant, high contrast) */
+  --accent-start: #D946EF;
+  --accent-mid: #A855F7;
+  --accent-end: #7C3AED;
+  --accent-glow: rgba(217, 70, 239, 0.18);
 
   /* Semantic */
   --success: #06D6A0;
@@ -46,12 +46,12 @@
   --warning: #FFD93D;
   --warning-bg: rgba(255, 217, 61, 0.1);
   --info: #A78BFA;
-  --info-bg: rgba(167, 139, 250, 0.1);
+  --info-bg: rgba(167, 139, 250, 0.15);
 
   /* Text */
   --text-primary: #F3E8FF;
-  --text-secondary: rgba(243, 232, 255, 0.7);
-  --text-tertiary: rgba(243, 232, 255, 0.4);
+  --text-secondary: rgba(243, 232, 255, 0.75);
+  --text-tertiary: rgba(243, 232, 255, 0.45);
   --text-inverse: #120B1A;
 
   /* Borders */
@@ -66,7 +66,7 @@
   --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.7);
 
   /* Glow */
-  --glow-accent: 0 0 30px rgba(157, 80, 187, 0.3);
+  --glow-accent: 0 0 30px rgba(217, 70, 239, 0.25);
   --glow-success: 0 0 20px rgba(6, 214, 160, 0.2);
   --glow-danger: 0 0 20px rgba(255, 107, 107, 0.2);
 
@@ -103,60 +103,60 @@
   --content-max-width-wide: 1320px;
 }
 
-/* LIGHT THEME — "Sky Lavender" */
+/* LIGHT THEME — "Sky Lavender & Amatista" */
 .theme-light {
-  /* Backgrounds */
-  --bg-primary: #F0F4FA;
+  /* Backgrounds — clean, cool-tinted whites */
+  --bg-primary: #F4F6FB;
   --bg-secondary: #FFFFFF;
-  --bg-tertiary: #E2E8F0;
-  --bg-elevated: #F8FAFC;
+  --bg-tertiary: #E8ECF4;
+  --bg-elevated: #DCE2EE;
 
-  /* Glass */
-  --glass-bg: rgba(255, 255, 255, 0.8);
-  --glass-border: rgba(0, 0, 0, 0.08);
-  --glass-border-hover: rgba(0, 0, 0, 0.16);
+  /* Glass — airy, subtle */
+  --glass-bg: rgba(255, 255, 255, 0.75);
+  --glass-border: rgba(0, 0, 0, 0.06);
+  --glass-border-hover: rgba(0, 0, 0, 0.12);
   --glass-blur: 16px;
 
-  /* Accent gradient */
-  --accent-start: #A78BFA;
-  --accent-mid: #8B5CF6;
-  --accent-end: #7C3AED;
-  --accent-glow: rgba(167, 139, 250, 0.25);
+  /* Accent gradient — Sky → Lavender → Amethyst */
+  --accent-start: #7DD3FC;
+  --accent-mid: #A78BFA;
+  --accent-end: #8B5CF6;
+  --accent-glow: rgba(167, 139, 250, 0.22);
 
-  /* Semantic */
-  --success: #10B981;
-  --success-bg: rgba(16, 185, 129, 0.1);
-  --danger: #EF4444;
-  --danger-bg: rgba(239, 68, 68, 0.1);
-  --warning: #F59E0B;
-  --warning-bg: rgba(245, 158, 11, 0.1);
+  /* Semantic — accessible on light */
+  --success: #059669;
+  --success-bg: rgba(5, 150, 105, 0.1);
+  --danger: #DC2626;
+  --danger-bg: rgba(220, 38, 38, 0.1);
+  --warning: #D97706;
+  --warning-bg: rgba(217, 119, 6, 0.1);
   --info: #6366F1;
-  --info-bg: rgba(99, 102, 241, 0.1);
+  --info-bg: rgba(99, 102, 241, 0.08);
 
-  /* Text */
-  --text-primary: #1F2937;
-  --text-secondary: rgba(31, 41, 55, 0.7);
-  --text-tertiary: rgba(31, 41, 55, 0.4);
+  /* Text — high contrast, dark */
+  --text-primary: #1E293B;
+  --text-secondary: rgba(30, 41, 59, 0.72);
+  --text-tertiary: rgba(30, 41, 59, 0.45);
   --text-inverse: #FFFFFF;
 
   /* Borders */
-  --border-subtle: rgba(0, 0, 0, 0.06);
-  --border-default: rgba(0, 0, 0, 0.1);
-  --border-strong: rgba(0, 0, 0, 0.16);
+  --border-subtle: rgba(0, 0, 0, 0.05);
+  --border-default: rgba(0, 0, 0, 0.08);
+  --border-strong: rgba(0, 0, 0, 0.14);
 
-  /* Shadows (light-adapted) */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
-  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
-  --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.16);
+  /* Shadows — subtle for light bg */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.08);
+  --shadow-xl: 0 16px 44px rgba(0, 0, 0, 0.12);
 
   /* Glow */
-  --glow-accent: 0 0 30px rgba(167, 139, 250, 0.3);
-  --glow-success: 0 0 20px rgba(16, 185, 129, 0.2);
-  --glow-danger: 0 0 20px rgba(239, 68, 68, 0.2);
+  --glow-accent: 0 0 30px rgba(167, 139, 250, 0.25);
+  --glow-success: 0 0 20px rgba(5, 150, 105, 0.15);
+  --glow-danger: 0 0 20px rgba(220, 38, 38, 0.15);
 
   /* Chart-specific (light theme) */
-  --chart-grid: rgba(0, 0, 0, 0.08);
+  --chart-grid: rgba(0, 0, 0, 0.07);
 }
 
 /* ─── Base Reset ─────────────────────────────────────────────────── */
@@ -204,19 +204,19 @@ input, select, textarea { font-family: var(--font-body); }
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(157, 80, 187, 0.3);
+  background: rgba(217, 70, 239, 0.3);
   border-radius: 99px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(157, 80, 187, 0.5);
+  background: rgba(217, 70, 239, 0.5);
 }
 
 /* Light theme scrollbar */
 .theme-light ::-webkit-scrollbar-thumb {
-  background: rgba(139, 92, 246, 0.3);
+  background: rgba(99, 102, 241, 0.25);
 }
 .theme-light ::-webkit-scrollbar-thumb:hover {
-  background: rgba(139, 92, 246, 0.5);
+  background: rgba(99, 102, 241, 0.45);
 }
 
 /* ─── Selection ──────────────────────────────────────────────────── */
@@ -226,7 +226,7 @@ input, select, textarea { font-family: var(--font-body); }
 }
 
 .theme-light ::selection {
-  background: rgba(167, 139, 250, 0.3);
+  background: rgba(167, 139, 250, 0.25);
 }
 
 /* ─── Focus Ring (accessible) ────────────────────────────────────── */
@@ -478,4 +478,20 @@ input, select, textarea { font-family: var(--font-body); }
   pointer-events: none;
   transition: transform 0.1s linear;
   will-change: transform;
+}
+
+/* ─── i18n innerHTML classes (used by telegram-section translate) ── */
+/* These are global so Angular's [innerHTML] rendering picks them up */
+.telegram-section__accent {
+  background: linear-gradient(135deg, var(--accent-start), var(--accent-mid));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.chat-preview__meta {
+  font-size: 11px;
+  color: var(--text-tertiary);
+  margin-top: 4px;
+  display: block;
 }

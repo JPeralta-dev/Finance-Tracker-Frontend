@@ -77,6 +77,18 @@
       "title": "Intégration Telegram",
       "open_bot": "Ouvrir le Bot"
     },
+    "telegram_section": {
+      "badge": "Intégration Telegram",
+      "title": "Suivez vos dépenses directement<br />depuis <span class=\"telegram-section__accent\">Telegram</span>",
+      "description": "Enregistrez vos transactions en déplacement avec notre bot Telegram. Envoyez simplement un message comme \"Café 5€\" et c'est suivi automatiquement. Sans ouvrir l'app.",
+      "open_bot": "Ouvrir le Bot Telegram",
+      "chat_name": "Hormiga Tracker",
+      "chat_status": "En ligne",
+      "demo_user_1": "Café 5,50€",
+      "demo_bot_1": "✅ Enregistré : <strong>5,50€</strong> dans <strong>Alimentation</strong><br /><span class=\"chat-preview__meta\">Aujourd'hui, 10h42</span>",
+      "demo_user_2": "Uber 12,00€",
+      "demo_bot_2": "✅ Enregistré : <strong>12,00€</strong> dans <strong>Transport</strong><br /><span class=\"chat-preview__meta\">Aujourd'hui, 11h15</span>"
+    },
     "cta": {
       "title": "Prêt à prendre le contrôle ?",
       "subtitle": "Rejoignez des milliers d'utilisateurs qui suivent leurs finances avec Flowr. C'est gratuit et cela prend moins d'une minute.",
