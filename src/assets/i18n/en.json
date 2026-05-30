@@ -222,6 +222,11 @@
     "signOut": "Sign Out",
     "back_to_dashboard": "Back to dashboard",
     "coming_soon": "Coming Soon...",
+    "session": {
+      "title": "Session",
+      "logged_as": "Logged in as",
+      "sign_out": "Sign out"
+    },
     "integrations": {
       "title": "Integrations",
       "desc": "Connect external tools to enhance your experience."
@@ -269,5 +274,8 @@
     "email": "Email",
     "save": "Save Changes",
     "cancel": "Cancel"
+  },
+  "theme": {
+    "toggle": "Toggle theme"
   }
 }

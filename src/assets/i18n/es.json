@@ -222,6 +222,11 @@
     "signOut": "Cerrar Sesión",
     "back_to_dashboard": "Volver al dashboard",
     "coming_soon": "Próximamente...",
+    "session": {
+      "title": "Sesión",
+      "logged_as": "Conectado como",
+      "sign_out": "Cerrar sesión"
+    },
     "integrations": {
       "title": "Integraciones",
       "desc": "Conectá herramientas externas para potenciar tu experiencia."
@@ -269,5 +274,8 @@
     "email": "Correo electrónico",
     "save": "Guardar cambios",
     "cancel": "Cancelar"
+  },
+  "theme": {
+    "toggle": "Cambiar tema"
   }
 }
