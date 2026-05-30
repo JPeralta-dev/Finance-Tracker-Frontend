@@ -165,15 +165,18 @@ export const darkTokens: DesignTokens = {
 };
 
 /**
- * Light theme tokens — "Sky Lavender & Amatista"
+ * Light theme tokens — "Purple/Lila" (SDD: frontend-ux-responsive-overhaul)
+ * Proposal spec: Primary #8B5CF6, Teal #2DD4BF, Medium purple #A855F7
+ * Soft lilac #EBD5F2, Pale lilac #F3E8FF, Background #FAF8FD
+ * Title #2E1065, Secondary text #4B5563, Pill text #5C009C
  */
 export const lightTokens: DesignTokens = {
   colors: {
     backgrounds: {
-      primary: '#F4F6FB',
+      primary: '#FAF8FD',
       secondary: '#FFFFFF',
-      tertiary: '#E8ECF4',
-      elevated: '#DCE2EE',
+      tertiary: '#EBD5F2',
+      elevated: '#F3E8FF',
     },
     glass: {
       bg: 'rgba(255, 255, 255, 0.75)',
@@ -182,30 +185,30 @@ export const lightTokens: DesignTokens = {
     },
     accent: {
       start: '#7DD3FC',
-      mid: '#A78BFA',
+      mid: '#A855F7',
       end: '#8B5CF6',
       glow: 'rgba(167, 139, 250, 0.22)',
     },
     semantic: {
-      success: '#059669',
-      successBg: 'rgba(5, 150, 105, 0.1)',
+      success: '#2DD4BF',
+      successBg: 'rgba(45, 212, 191, 0.1)',
       danger: '#DC2626',
       dangerBg: 'rgba(220, 38, 38, 0.1)',
       warning: '#D97706',
       warningBg: 'rgba(217, 119, 6, 0.1)',
-      info: '#6366F1',
-      infoBg: 'rgba(99, 102, 241, 0.08)',
+      info: '#8B5CF6',
+      infoBg: 'rgba(139, 92, 246, 0.08)',
     },
     text: {
-      primary: '#1E293B',
-      secondary: 'rgba(30, 41, 59, 0.72)',
-      tertiary: 'rgba(30, 41, 59, 0.45)',
+      primary: '#2E1065',
+      secondary: '#4B5563',
+      tertiary: 'rgba(46, 16, 101, 0.45)',
       inverse: '#FFFFFF',
     },
     borders: {
-      subtle: 'rgba(0, 0, 0, 0.05)',
-      default: 'rgba(0, 0, 0, 0.08)',
-      strong: 'rgba(0, 0, 0, 0.14)',
+      subtle: 'rgba(139, 92, 246, 0.08)',
+      default: 'rgba(139, 92, 246, 0.12)',
+      strong: 'rgba(139, 92, 246, 0.2)',
     },
   },
   spacing: darkTokens.spacing,

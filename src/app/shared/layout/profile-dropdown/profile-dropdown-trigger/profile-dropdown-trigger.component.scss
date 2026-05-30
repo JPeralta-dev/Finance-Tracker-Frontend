@@ -1,0 +1,31 @@
+@import '../../../../styles/responsive';
+
+.profile-dropdown__trigger {
+  display: flex; align-items: center; gap: 10px;
+  padding: 4px 8px 4px 4px; border: none; background: transparent;
+  border-radius: var(--radius-full); cursor: pointer;
+  transition: background var(--duration-fast) var(--ease-out);
+  @include below-md { @include touch-target; }
+  &:hover { background: rgba(255, 255, 255, 0.05); }
+  &[aria-expanded="true"] { background: rgba(255, 255, 255, 0.08); }
+}
+
+.profile-dropdown__avatar {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent-start), var(--accent-mid));
+  color: var(--text-inverse); font-size: 12px; font-weight: 600;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  @include below-md { width: 48px; height: 48px; font-size: 16px; }
+  @include at-md { width: 48px; height: 48px; font-size: 16px; }
+}
+
+.profile-dropdown__name {
+  font-size: 14px; font-weight: 500; color: var(--text-primary);
+  max-width: 120px; @include truncate;
+  @include below-md { display: none; }
+}
+
+.profile-dropdown__chevron {
+  color: var(--text-secondary); transition: transform var(--duration-fast) var(--ease-out);
+  &--open { transform: rotate(180deg); }
+}

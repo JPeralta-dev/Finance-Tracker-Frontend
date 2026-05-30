@@ -1,0 +1,19 @@
+<button
+  class="profile-dropdown__trigger"
+  (click)="onToggle()"
+  [attr.aria-expanded]="isOpen()"
+  aria-label="Open user menu"
+>
+  <div class="profile-dropdown__avatar">
+    {{ initials() }}
+  </div>
+  <span class="profile-dropdown__name">
+    {{ displayName() }}
+  </span>
+  <ng-icon
+    class="profile-dropdown__chevron"
+    [class.profile-dropdown__chevron--open]="isOpen()"
+    name="chevronDown"
+    size="1rem"
+  />
+</button>

@@ -1,18 +1,17 @@
 import { Component, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterLink, NavigationEnd } from '@angular/router';
-import { NgIcon, provideIcons } from '@ng-icons/core';
+import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { AuthService } from '../../../core/services/auth.service';
-import { ICONS } from '../../../shared/icons/icon-registry';
 import { ClickOutsideDirective } from '../../directives/click-outside.directive';
+import { ProfileDropdownTriggerComponent } from './profile-dropdown-trigger/profile-dropdown-trigger.component';
+import { ProfileDropdownMenuComponent } from './profile-dropdown-menu/profile-dropdown-menu.component';
 
 @Component({
   selector: 'ft-profile-dropdown',
   standalone: true,
-  imports: [CommonModule, RouterLink, NgIcon, ClickOutsideDirective],
-  providers: [provideIcons(ICONS)],
+  imports: [CommonModule, ClickOutsideDirective, ProfileDropdownTriggerComponent, ProfileDropdownMenuComponent],
   templateUrl: './profile-dropdown.component.html',
   styleUrl: './profile-dropdown.component.scss',
 })
@@ -20,31 +19,25 @@ export class ProfileDropdownComponent {
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
 
-  // Track current URL to avoid re-navigating to /login
   private readonly currentUrl = toSignal(
     this.router.events.pipe(filter((e): e is NavigationEnd => e instanceof NavigationEnd))
   );
 
-  // Estado del dropdown
   readonly isOpen = signal<boolean>(false);
   readonly isLoggingOut = signal<boolean>(false);
 
-  // Usuario actual desde el AuthService
   readonly user = this.authService.currentUser;
 
-  // displayName: usa displayName o la primera parte del email
   readonly displayName = computed(() => {
     const currentUser = this.user();
     if (!currentUser) return '';
     if (currentUser.displayName) return currentUser.displayName;
-    // Fallback: primera parte del email (antes del @)
     return currentUser.email.split('@')[0];
   });
 
-  // initials: primeras 2 letras del displayName (uppercase)
   readonly initials = computed(() => {
     const name = this.displayName();
-    if (!name) return 'U'; // Fallback por defecto
+    if (!name) return 'U';
     return name
       .split(' ')
       .map((part) => part[0])
@@ -84,9 +77,5 @@ export class ProfileDropdownComponent {
         }
       },
     });
-  }
-
-  onMenuClick(event: Event): void {
-    event.stopPropagation();
   }
 }

@@ -1,0 +1,58 @@
+@import '../../../../styles/responsive';
+
+.profile-dropdown__menu {
+  position: absolute; top: calc(100% + 8px); right: 0; width: 280px;
+  background: var(--bg-secondary); border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md); box-shadow: var(--shadow-lg);
+  padding: 8px; z-index: 1000;
+  animation: dropdownSlideIn var(--duration-fast) var(--ease-out);
+  @include below-md { right: -8px; }
+}
+
+.profile-dropdown__user-info {
+  display: flex; align-items: center; gap: 12px; padding: 12px; margin-bottom: 4px;
+}
+
+.profile-dropdown__user-avatar {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent-start), var(--accent-mid));
+  color: var(--text-inverse); font-size: 14px; font-weight: 600;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  @include below-md { width: 48px; height: 48px; font-size: 16px; }
+}
+
+.profile-dropdown__user-details { flex: 1; min-width: 0; }
+
+.profile-dropdown__user-name {
+  font-size: 14px; font-weight: 600; color: var(--text-primary);
+  @include truncate;
+}
+
+.profile-dropdown__user-email {
+  font-size: 12px; color: var(--text-secondary);
+  @include truncate; margin-top: 2px;
+}
+
+.profile-dropdown__divider { height: 1px; background: var(--glass-border); margin: 8px 0; }
+
+.profile-dropdown__item {
+  display: flex; align-items: center; gap: 12px; width: 100%;
+  padding: 10px 12px; border: none; background: transparent;
+  border-radius: var(--radius-sm); cursor: pointer; text-decoration: none;
+  color: var(--text-primary); font-size: 14px; font-weight: 400;
+  transition: background var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out);
+  &:hover { background: rgba(255, 255, 255, 0.05); }
+  ng-icon { color: var(--text-secondary); flex-shrink: 0; }
+  span { flex: 1; text-align: left; }
+  &--danger {
+    color: var(--error);
+    &:hover { background: rgba(239, 68, 68, 0.1); }
+    ng-icon { color: var(--error); }
+  }
+  &:disabled { opacity: 0.5; cursor: not-allowed; }
+}
+
+@keyframes dropdownSlideIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}

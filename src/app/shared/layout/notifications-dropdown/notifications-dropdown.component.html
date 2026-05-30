@@ -3,21 +3,48 @@
     class="notifications-dropdown__trigger"
     (click)="toggleDropdown()"
     [attr.aria-expanded]="isOpen()"
-    aria-label="Notifications"
+    aria-label="{{ 'notifications.bellLabel' | translate }}"
   >
     <ng-icon name="bell" size="1.1rem" />
+    @if (unreadCount() > 0) {
+      <span class="notifications-dropdown__badge">{{ unreadCount() }}</span>
+    }
   </button>
 
   @if (isOpen()) {
     <div class="notifications-dropdown__panel" (click)="onMenuClick($event)">
       <div class="notifications-dropdown__header">
-        <h3 class="notifications-dropdown__title">Notifications</h3>
+        <h3 class="notifications-dropdown__title">{{ 'notifications.title' | translate }}</h3>
       </div>
       <div class="notifications-dropdown__body">
-        <div class="notifications-dropdown__empty">
-          <ng-icon name="bell" size="2rem" />
-          <p>No notifications yet</p>
-        </div>
+        @if (notifications().length === 0) {
+          <div class="notifications-dropdown__empty">
+            <ng-icon name="bell" size="2rem" />
+            <p>{{ 'notifications.empty' | translate }}</p>
+          </div>
+        } @else {
+          <ul class="notifications-dropdown__list">
+            @for (notif of notifications(); track notif.id) {
+              <li
+                class="notification-item {{ typeClass(notif.type) }}"
+                [class.notification-item--unread]="!notif.read"
+                (click)="markAsRead(notif)"
+              >
+                <div class="notification-item__content">
+                  <span class="notification-item__title">{{ notif.title | translate }}</span>
+                  <span class="notification-item__message">{{ notif.message | translate }}</span>
+                </div>
+                <button
+                  class="notification-item__dismiss"
+                  (click)="dismiss(notif.id, $event)"
+                  [attr.aria-label]="'notifications.dismiss' | translate"
+                >
+                  <ng-icon name="xMark" size="0.9rem" />
+                </button>
+              </li>
+            }
+          </ul>
+        }
       </div>
     </div>
   }

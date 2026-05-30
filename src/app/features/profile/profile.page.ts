@@ -2,25 +2,24 @@ import { Component, signal, inject, OnInit, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormControl, FormGroup } from '@angular/forms';
 import { catchError, forkJoin, of } from 'rxjs';
-
 import { AuthService } from '../../core/services/auth.service';
 import { FinanceService } from '../../core/services/finance.service';
 import { CurrencyService } from '../../core/services/currency.service';
 import { ToastService } from '../../core/services/toast.service';
 import { TranslatePipe } from '../../core/pipes/translate.pipe';
-import { InsightsPanelComponent } from '../../shared/components/insights-panel/insights-panel.component';
+import { ProfileAvatarCardComponent } from './profile-avatar-card/profile-avatar-card.component';
+import { ProfilePersonalInfoComponent } from './profile-personal-info/profile-personal-info.component';
+import { ProfileInsightsCardComponent } from './profile-insights-card/profile-insights-card.component';
+import { FtSubtleRevealDirective } from '../../shared/directives/ft-subtle-reveal.directive';
 import { User } from '../../core/models/user.model';
 import type { Insight } from '../../core/models/insight.model';
 
 type ProfileState = 'loading' | 'ready' | 'error';
 
-// ── Pure function (exported for testing) ──────────────────────────────
-
 export function calculateAccountAge(createdAt: string): string {
   const created = new Date(createdAt);
   const now = new Date();
   const months = (now.getFullYear() - created.getFullYear()) * 12 + (now.getMonth() - created.getMonth());
-  
   if (months < 1) return 'Less than a month';
   if (months < 12) return `${months} months`;
   return `${Math.floor(months / 12)} years`;
@@ -29,7 +28,8 @@ export function calculateAccountAge(createdAt: string): string {
 @Component({
   selector: 'ft-profile-page',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, InsightsPanelComponent, TranslatePipe],
+  imports: [CommonModule, ReactiveFormsModule, TranslatePipe, FtSubtleRevealDirective,
+    ProfileAvatarCardComponent, ProfilePersonalInfoComponent, ProfileInsightsCardComponent],
   templateUrl: './profile.page.html',
   styleUrl: './profile.page.scss',
 })
@@ -43,69 +43,44 @@ export class ProfilePage implements OnInit {
   readonly state = signal<ProfileState>('loading');
   readonly insights = signal<Insight[]>([]);
   readonly userStats = signal<{ totalTransactions: number; accountAge: string } | null>(null);
-
   readonly profileForm = new FormGroup({
     displayName: new FormControl(''),
     email: new FormControl({ value: '', disabled: true }),
   });
+  readonly initials = computed(() => {
+    const u = this.user();
+    if (!u) return 'U';
+    const name = u.displayName || u.email.split('@')[0];
+    return name.split(' ').map(p => p[0]).join('').slice(0, 2).toUpperCase();
+  });
 
-  ngOnInit(): void {
-    this.loadUserProfile();
-  }
+  ngOnInit(): void { this.loadUserProfile(); }
 
   loadUserProfile(): void {
     this.state.set('loading');
-
     forkJoin({
       user: this.authService.getProfile().pipe(catchError(() => of(null))),
       insights: this.financeService.getInsights().pipe(catchError(() => of([]))),
     }).subscribe({
       next: ({ user, insights }) => {
-        if (!user) {
-          this.state.set('error');
-          this.toast.error('Failed to load profile data.');
-          return;
-        }
-
+        if (!user) { this.state.set('error'); this.toast.error('Failed to load profile data.'); return; }
         this.user.set(user);
-        this.profileForm.patchValue({
-          displayName: user.displayName ?? '',
-          email: user.email,
-        });
-
-        // Calculate account age
-        const accountAge = calculateAccountAge(user.createdAt);
-        this.userStats.set({
-          totalTransactions: 0, // Could be fetched from a separate endpoint
-          accountAge,
-        });
-
+        this.profileForm.patchValue({ displayName: user.displayName ?? '', email: user.email });
+        this.userStats.set({ totalTransactions: 0, accountAge: calculateAccountAge(user.createdAt) });
         this.insights.set(insights as Insight[]);
         this.state.set('ready');
       },
-      error: () => {
-        this.state.set('error');
-        this.toast.error('Failed to load profile data.');
-      },
+      error: () => { this.state.set('error'); this.toast.error('Failed to load profile data.'); },
     });
   }
 
   onSubmit(): void {
-    if (this.profileForm.invalid) {
-      this.profileForm.markAllAsTouched();
-      return;
-    }
-
+    if (this.profileForm.invalid) { this.profileForm.markAllAsTouched(); return; }
     const displayName = this.profileForm.get('displayName')?.value;
     if (!displayName) return;
-
     this.authService.updateProfile(displayName).subscribe({
-      next: () => {
-        this.toast.success('Profile updated successfully!');
-      },
-      error: () => {
-        this.toast.error('Failed to save profile. Please try again.');
-      },
+      next: () => this.toast.success('Profile updated successfully!'),
+      error: () => this.toast.error('Failed to save profile. Please try again.'),
     });
   }
 }

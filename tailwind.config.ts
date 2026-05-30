@@ -4,6 +4,16 @@ module.exports = {
   darkMode: 'class',
   theme: {
     extend: {
+      // ─── Screens — Responsive Breakpoints (SDD: frontend-ux-responsive-overhaul)
+      screens: {
+        xs: '375px',
+        sm: '640px',    // Tailwind default preserved (not 320px — breaking change guard)
+        md: '768px',
+        lg: '1024px',
+        xl: '1280px',
+        '2xl': '1440px',
+      },
+
       // ─── Color System — Deep Plum & Amethyst (dark default) ──────
       colors: {
         // Backgrounds
@@ -54,6 +64,52 @@ module.exports = {
           subtle: 'rgba(255, 255, 255, 0.06)',
           DEFAULT: 'rgba(255, 255, 255, 0.1)',
           strong: 'rgba(255, 255, 255, 0.16)',
+        },
+
+        // ─── Light Theme — Purple/Lila (SDD: frontend-ux-responsive-overhaul)
+        // Proposal spec palette — MUST match styles/_tokens.scss and design-tokens.ts
+        light: {
+          bg: {
+            primary: '#FAF8FD',
+            secondary: '#FFFFFF',
+            tertiary: '#EBD5F2',
+            elevated: '#F3E8FF',
+          },
+          accent: {
+            start: '#7DD3FC',
+            mid: '#A855F7',
+            end: '#8B5CF6',
+          },
+          success: {
+            DEFAULT: '#2DD4BF',
+            bg: 'rgba(45, 212, 191, 0.1)',
+          },
+          danger: {
+            DEFAULT: '#DC2626',
+            bg: 'rgba(220, 38, 38, 0.1)',
+          },
+          warning: {
+            DEFAULT: '#D97706',
+            bg: 'rgba(217, 119, 6, 0.1)',
+          },
+          info: {
+            DEFAULT: '#8B5CF6',
+            bg: 'rgba(139, 92, 246, 0.08)',
+          },
+          text: {
+            primary: '#2E1065',
+            secondary: '#4B5563',
+            tertiary: 'rgba(46, 16, 101, 0.45)',
+            inverse: '#FFFFFF',
+          },
+          border: {
+            subtle: 'rgba(139, 92, 246, 0.08)',
+            DEFAULT: 'rgba(139, 92, 246, 0.12)',
+            strong: 'rgba(139, 92, 246, 0.2)',
+          },
+          pill: {
+            text: '#5C009C',
+          },
         },
       },
 
