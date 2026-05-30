@@ -1,0 +1,42 @@
+@if (loading()) {
+  <div class="comparison-skeleton">
+    @for (_ of [1, 2, 3]; track _) {
+      <div class="comparison-skeleton__card"></div>
+    }
+  </div>
+} @else {
+  <div class="analytics-comparison">
+    @for (comp of comparisons(); track comp.labelKey) {
+      <div class="comparison-card" ftSubtleReveal="fade-up" [delay]="$index * 80">
+        <div class="comparison-card__label">{{ comp.labelKey | translate }}</div>
+        <div class="comparison-card__bars">
+          <div class="comparison-card__bar comparison-card__bar--current">
+            <span class="comparison-card__bar-label">{{ 'analytics.comparison.current' | translate }}</span>
+            <div class="comparison-card__bar-track">
+              <div
+                class="comparison-card__bar-fill"
+                [style.width.%]="maxWidth(comp.current, comp.previous)"
+              ></div>
+            </div>
+            <span class="comparison-card__bar-value">{{ formatCurrency(comp.current) }}</span>
+          </div>
+          <div class="comparison-card__bar comparison-card__bar--previous">
+            <span class="comparison-card__bar-label">{{ 'analytics.comparison.previous' | translate }}</span>
+            <div class="comparison-card__bar-track">
+              <div
+                class="comparison-card__bar-fill"
+                [style.width.%]="maxWidth(comp.previous, comp.current)"
+                [style.background]="'var(--text-tertiary)'"
+              ></div>
+            </div>
+            <span class="comparison-card__bar-value">{{ formatCurrency(comp.previous) }}</span>
+          </div>
+        </div>
+        <div class="comparison-card__delta" [class.negative]="comp.trend === 'up'">
+          <ng-icon [name]="comp.trend === 'up' ? 'trendUp' : 'trendDown'" size="0.9rem" />
+          <span>{{ comp.percentChange > 0 ? '+' : '' }}{{ comp.percentChange.toFixed(1) }}%</span>
+        </div>
+      </div>
+    }
+  </div>
+}

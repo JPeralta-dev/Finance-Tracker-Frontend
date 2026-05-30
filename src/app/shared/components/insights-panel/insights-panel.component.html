@@ -1,0 +1,18 @@
+@if (insights.length === 0) {
+  <div class="insights-empty">
+    <span class="empty-icon">💡</span>
+    <p>{{ 'insights.empty' | translate }}</p>
+  </div>
+} @else {
+  <div class="insights-list">
+    @for (insight of insights; track insight.id) {
+      <div class="insight-card" [class]="severityClass(insight.severity)">
+        <div class="insight-header">
+          <span class="insight-icon">{{ typeIcon(insight.type) }}</span>
+          <h4 class="insight-title">{{ insight.titleKey | translate:insight.data }}</h4>
+        </div>
+        <p class="insight-message">{{ insight.messageKey | translate:insight.data }}</p>
+      </div>
+    }
+  </div>
+}

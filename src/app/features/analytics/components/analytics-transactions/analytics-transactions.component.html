@@ -1,0 +1,34 @@
+@if (loading()) {
+  <div class="tx-skeleton">
+    @for (_ of [1, 2, 3, 4]; track _) {
+      <div class="tx-skeleton__row"></div>
+    }
+  </div>
+} @else {
+  <div class="analytics-transactions">
+    @for (tx of transactions(); track tx.id) {
+      <div class="tx-row" [routerLink]="['/transactions', tx.id]" ftSubtleReveal="fade-up" [delay]="$index * 50">
+        <span class="tx-row__icon" [class.tx-row__icon--expense]="tx.type === 'expense'" [class.tx-row__icon--income]="tx.type === 'income'">
+          <ng-icon [name]="tx.icon" size="1rem" />
+        </span>
+        <div class="tx-row__info">
+          <span class="tx-row__description">{{ tx.description }}</span>
+          <span class="tx-row__category">{{ tx.category }}</span>
+        </div>
+        <div class="tx-row__right">
+          <span class="tx-row__date">{{ formatDate(tx.date) }}</span>
+          <span
+            class="tx-row__amount"
+            [class.text-income]="tx.type === 'income'"
+            [class.text-expense]="tx.type === 'expense'"
+          >
+            {{ tx.type === 'income' ? '+' : '-' }}{{ formatCurrency(tx.amount) }}
+          </span>
+        </div>
+        @if (tx.note) {
+          <span class="tx-row__note">{{ tx.note }}</span>
+        }
+      </div>
+    }
+  </div>
+}

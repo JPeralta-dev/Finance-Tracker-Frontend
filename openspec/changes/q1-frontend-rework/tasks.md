@@ -29,8 +29,8 @@ Chain strategy: feature-branch-chain (target: develop)
 
 - [x] 1.1 Create `core/services/currency.service.ts` — `CurrencyConfig` interface, signal, `format()` method
 - [x] 1.2 Create `core/pipes/ft-currency.pipe.ts` wrapping `CurrencyService`
-- [ ] 1.3 Move `InsightsPanelComponent` from `dashboard/components/` to `shared/components/insights-panel/`
-- [ ] 1.4 Delete old `features/dashboard/components/insights-panel/`
+- [x] 1.3 Move `InsightsPanelComponent` from `dashboard/components/` to `shared/components/insights-panel/`
+- [x] 1.4 Delete old `features/dashboard/components/insights-panel/`
 
 ## Phase 2: Auth + Navigation Fixes
 
@@ -57,13 +57,13 @@ Chain strategy: feature-branch-chain (target: develop)
 
 ## Phase 5: Analytics Page
 
-- [ ] 5.1 `app.routes.ts` — add lazy `/analytics` route; remove redirect
-- [ ] 5.2 Create `analytics/pages/analytics.page.*` — AreaChart + DonutChart + summary
+- [x] 5.1 `app.routes.ts` — add lazy `/analytics` route; remove redirect
+- [x] 5.2 Create `analytics/pages/analytics.page.*` — AreaChart + DonutChart + summary
 
 ## Phase 6: Profile Insights
 
-- [ ] 6.1 `profile.page.ts` — inject `FinanceService`, fetch user insights + stats
-- [ ] 6.2 `profile.page.html` — add `<ft-insights-panel>` with account stats
+- [x] 6.1 `profile.page.ts` — inject `FinanceService`, fetch user insights + stats
+- [x] 6.2 `profile.page.html` — add `<ft-insights-panel>` with account stats
 
 ## Phase 7: Tests
 

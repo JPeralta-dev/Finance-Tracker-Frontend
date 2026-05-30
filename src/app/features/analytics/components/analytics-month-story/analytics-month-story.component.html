@@ -1,0 +1,21 @@
+@if (loading()) {
+  <div class="story-skeleton">
+    @for (_ of [1, 2, 3]; track _) {
+      <div class="story-skeleton__card"></div>
+    }
+  </div>
+} @else {
+  <div class="month-story">
+    @for (story of stories(); track story.messageKey) {
+      <div class="month-story__card" [class]="'month-story__card--' + story.type">
+        <span class="month-story__icon">
+          <ng-icon [name]="story.icon" size="1.2rem" />
+        </span>
+        <div class="month-story__body">
+          <p class="month-story__message">{{ story.messageKey | translate: story.params }}</p>
+        </div>
+        <span class="month-story__dot"></span>
+      </div>
+    }
+  </div>
+}

@@ -16,6 +16,12 @@
       "sourceType": "autoskills-registry",
       "computedHash": "fc045be84cd51d105e4523a555510e3fd465a3e931f9b0049b0dfbdf68775eac"
     },
+    "animate-text": {
+      "source": "pixel-point/animate-text",
+      "sourceType": "github",
+      "skillPath": "skills/animate-text/SKILL.md",
+      "computedHash": "81b7719e45013fcf651f1f4c9a1ca2af9618e99667ff5cd3e5d102369235ec5e"
+    },
     "deploy-to-vercel": {
       "source": "vercel-labs/agent-skills",
       "sourceType": "autoskills-registry",

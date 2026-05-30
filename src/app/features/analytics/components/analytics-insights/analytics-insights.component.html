@@ -1,0 +1,29 @@
+@if (loading()) {
+  <div class="insights-skeleton">
+    @for (_ of [1, 2]; track _) {
+      <div class="insights-skeleton__card"></div>
+    }
+  </div>
+} @else {
+  <div class="analytics-insights">
+    @for (insight of insights(); track insight.titleKey) {
+      <div
+        class="insight-card"
+        [class]="'insight-card--' + insight.type"
+        ftSubtleReveal="fade-up"
+        [delay]="$index * 80"
+      >
+        <span class="insight-card__icon">
+          <ng-icon [name]="insight.icon" size="1.4rem" />
+        </span>
+        <div class="insight-card__content">
+          <h4 class="insight-card__title">{{ insight.titleKey | translate }}</h4>
+          <p class="insight-card__message">{{ insight.messageKey | translate: insight.params }}</p>
+        </div>
+        <span class="insight-card__badge" [class]="'badge--' + insight.severity">
+          {{ ('analytics.insight.' + insight.severity) | translate }}
+        </span>
+      </div>
+    }
+  </div>
+}

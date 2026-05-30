@@ -1,7 +1,9 @@
 import { Component, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterLink } from '@angular/router';
+import { Router, RouterLink, NavigationEnd } from '@angular/router';
 import { NgIcon, provideIcons } from '@ng-icons/core';
+import { filter } from 'rxjs/operators';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { AuthService } from '../../../core/services/auth.service';
 import { ICONS } from '../../../shared/icons/icon-registry';
 import { ClickOutsideDirective } from '../../directives/click-outside.directive';
@@ -17,6 +19,11 @@ import { ClickOutsideDirective } from '../../directives/click-outside.directive'
 export class ProfileDropdownComponent {
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
+
+  // Track current URL to avoid re-navigating to /login
+  private readonly currentUrl = toSignal(
+    this.router.events.pipe(filter((e): e is NavigationEnd => e instanceof NavigationEnd))
+  );
 
   // Estado del dropdown
   readonly isOpen = signal<boolean>(false);
@@ -60,15 +67,21 @@ export class ProfileDropdownComponent {
     this.isLoggingOut.set(true);
     this.closeDropdown();
 
+    const shouldNavigate = this.currentUrl()?.urlAfterRedirects !== '/login';
+
     this.authService.logout().subscribe({
       next: () => {
         this.isLoggingOut.set(false);
-        // La navegación ya la maneja clearTokens() en el AuthService
+        if (shouldNavigate) {
+          this.router.navigate(['/login']);
+        }
       },
       error: () => {
         this.isLoggingOut.set(false);
-        // En caso de error, igual limpiamos y redirigimos
         this.authService.clearTokens();
+        if (shouldNavigate) {
+          this.router.navigate(['/login']);
+        }
       },
     });
   }

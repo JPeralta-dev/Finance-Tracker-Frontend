@@ -70,6 +70,11 @@ export const routes: Routes = [
       import('./features/auth/forgot-password.component').then(m => m.ForgotPasswordComponent),
     canActivate: [redirectIfAuthGuard],
   },
-  { path: 'analytics', redirectTo: 'dashboard', pathMatch: 'full' },
+  {
+    path: 'analytics',
+    loadComponent: () =>
+      import('./features/analytics/pages/analytics.page').then(m => m.AnalyticsPage),
+    canActivate: [authGuard],
+  },
   { path: '**', redirectTo: '' }
 ];

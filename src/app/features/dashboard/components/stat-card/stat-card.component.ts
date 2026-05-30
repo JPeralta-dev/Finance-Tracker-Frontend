@@ -1,7 +1,7 @@
 import { Component, input, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgIcon, provideIcons } from '@ng-icons/core';
-import { CountUpDirective } from '../../../../shared/directives/count-up.directive';
+import { FtSubtleRevealDirective } from '../../../../shared/directives/ft-subtle-reveal.directive';
 import { StatCardData } from './stat-card.types';
 import { ICONS } from '../../../../shared/icons/icon-registry';
 import { TranslatePipe } from '../../../../core/pipes/translate.pipe';
@@ -10,7 +10,7 @@ import { CurrencyService } from '../../../../core/services/currency.service';
 @Component({
   selector: 'ft-stat-card',
   standalone: true,
-  imports: [CommonModule, NgIcon, CountUpDirective, TranslatePipe],
+  imports: [CommonModule, NgIcon, FtSubtleRevealDirective, TranslatePipe],
   providers: [provideIcons(ICONS)],
   templateUrl: './stat-card.component.html',
   styleUrl: './stat-card.component.scss',

@@ -1,0 +1,67 @@
+<div class="analytics-filters" [class.analytics-filters--open]="open()">
+  <div class="analytics-filters__bar">
+    <div class="analytics-filters__pills">
+      <button
+        class="filter-pill"
+        [class.active]="selectedType() === 'all'"
+        (click)="selectType('all')"
+      >
+        {{ 'analytics.filter.all' | translate }}
+      </button>
+      <button
+        class="filter-pill filter-pill--income"
+        [class.active]="selectedType() === 'income'"
+        (click)="selectType('income')"
+      >
+        <ng-icon name="trendUp" size="0.85rem" />
+        {{ 'analytics.filter.income' | translate }}
+      </button>
+      <button
+        class="filter-pill filter-pill--expense"
+        [class.active]="selectedType() === 'expense'"
+        (click)="selectType('expense')"
+      >
+        <ng-icon name="trendDown" size="0.85rem" />
+        {{ 'analytics.filter.expense' | translate }}
+      </button>
+    </div>
+
+    <button class="analytics-filters__toggle" (click)="toggle()">
+      <ng-icon name="filter" size="1rem" />
+      <span>{{ 'analytics.filter.more' | translate }}</span>
+      <ng-icon [name]="open() ? 'chevronUp' : 'chevronDown'" size="0.85rem" />
+    </button>
+  </div>
+
+  @if (open()) {
+    <div class="analytics-filters__extended">
+      @if (categories().length > 0) {
+        <div class="analytics-filters__group">
+          <span class="analytics-filters__group-label">{{ 'analytics.filter.category' | translate }}</span>
+          <div class="analytics-filters__chips">
+            <button
+              class="filter-chip"
+              [class.active]="selectedCategory() === null"
+              (click)="selectCategory(null)"
+            >
+              {{ 'analytics.filter.allCats' | translate }}
+            </button>
+            @for (cat of categories(); track cat) {
+              <button
+                class="filter-chip"
+                [class.active]="selectedCategory() === cat"
+                (click)="selectCategory(cat)"
+              >
+                {{ cat }}
+              </button>
+            }
+          </div>
+        </div>
+      }
+      <button class="analytics-filters__reset" (click)="onReset()">
+        <ng-icon name="close" size="0.85rem" />
+        {{ 'analytics.filter.reset' | translate }}
+      </button>
+    </div>
+  }
+</div>

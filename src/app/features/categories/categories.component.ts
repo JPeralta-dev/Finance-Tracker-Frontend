@@ -9,7 +9,7 @@ import { Category } from '../../core/models/category.model';
 import { SkeletonComponent } from '../../shared/components/skeleton.component';
 import { EmptyStateComponent } from '../../shared/components/empty-state.component';
 import { TranslatePipe } from '../../core/pipes/translate.pipe';
-import { ScrollAnimateDirective } from '../../shared/directives/scroll-animate/scroll-animate.directive';
+import { FtSubtleRevealDirective } from '../../shared/directives/ft-subtle-reveal.directive';
 import { ToastService } from '../../core/services/toast.service';
 import { FtCurrencyPipe } from '../../core/pipes/ft-currency.pipe';
 
@@ -25,7 +25,7 @@ import { FtCurrencyPipe } from '../../core/pipes/ft-currency.pipe';
     EmptyStateComponent,
     NgIcon,
     TranslatePipe,
-    ScrollAnimateDirective,
+    FtSubtleRevealDirective,
   ],
   providers: [provideIcons(ICONS)],
   templateUrl: './categories.component.html',
