@@ -70,6 +70,10 @@ Chain strategy: pending
 
 Phase 1 first (cleanup, no deps) → Phase 2 (core logic, needs careful RED/GREEN) → Phase 3 (CSS, isolated) → Phase 4 (theme, isolated) → Phase 5 (final gate). Phases 3 and 4 can run in parallel with Phase 2 if preferred.
 
-## Next Step
+## Verification Results (2026-05-29)
 
-Review the workload forecast and task breakdown. Since risk is Low (<400 lines), this fits a single PR. Decision is needed before apply per delivery strategy (ask-on-risk).
+- [x] **T-18** ✅ PASS — 176/179 tests passed. 3 failures are pre-existing (1 auth.service.spec.ts overrideProvider bug, 2 analytics.page.spec.ts state transitions)
+- [x] **T-19** ✅ PASS — Production build succeeded in 19.7s (691 kB initial, ⚠️ 191 kB over budget — pre-existing)
+- [x] **T-20** ✅ PASS — No `core/i18n/*.json` files exist; only `translation.initializer.ts` remains
+
+**Verdict**: PASS WITH WARNINGS — All spec requirements met. See `verify-report.md` for details.
