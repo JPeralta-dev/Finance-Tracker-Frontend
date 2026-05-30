@@ -4,11 +4,12 @@
     <p class="page-subtitle">{{ 'settings.subtitle' | translate }}</p>
   </div>
 
-  <app-profile-section [delay]="50" />
+  <!-- Order: Telegram → Security → Preferences → Notifications → Profile -->
+  <app-linked-accounts-section [delay]="50" />
   <app-security-section [delay]="100" />
-  <app-notifications-section [delay]="150" />
-  <app-preferences-section [delay]="200" />
-  <app-linked-accounts-section [delay]="250" />
+  <app-preferences-section [delay]="150" />
+  <app-notifications-section [delay]="200" />
+  <app-profile-section [delay]="250" />
 
   <!-- Session / Account section -->
   <div class="settings-section settings-section--danger" ftSubtleReveal="fade-up" [delay]="300">
