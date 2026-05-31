@@ -94,6 +94,28 @@ describe('ProfilePage', () => {
     });
   });
 
+  describe('Computed initials', () => {
+    it('should compute initials from displayName', () => {
+      component.user.set({ ...mockUser, displayName: 'John Doe' });
+      expect(component.initials()).toBe('JD');
+    });
+
+    it('should fallback to email prefix when no displayName', () => {
+      component.user.set({ ...mockUser, displayName: null as unknown as string });
+      expect(component.initials()).toBe('T');
+    });
+
+    it('should return U when no user', () => {
+      component.user.set(null);
+      expect(component.initials()).toBe('U');
+    });
+
+    it('should slice to max 2 characters', () => {
+      component.user.set({ ...mockUser, displayName: 'Juan Pablo Perez' });
+      expect(component.initials()).toBe('JP');
+    });
+  });
+
   describe('Data loading', () => {
     it('should start in loading state', () => {
       expect(component.state()).toBe('loading');

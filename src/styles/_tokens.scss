@@ -1,0 +1,73 @@
+/**
+ * Design Tokens — SCSS Partial
+ *
+ * CSS custom property overrides for light theme purple/lila palette.
+ * This partial is imported by styles.scss and MUST stay in sync with:
+ * - tailwind.config.ts (theme.extend.colors)
+ * - design-tokens.ts (lightTokens)
+ *
+ * Proposal spec palette:
+ *   Primary: #8B5CF6 | Teal: #2DD4BF | Medium purple: #A855F7
+ *   Soft lilac: #EBD5F2 | Pale lilac: #F3E8FF | Background: #FAF8FD
+ *   Cards: #FFFFFF | Title: #2E1065 | Secondary text: #4B5563
+ *   Pill text: #5C009C
+ */
+
+/* ─── Light Theme — Purple/Lila Palette ──────────────────────────── */
+.theme-light {
+  /* Backgrounds — proposal spec */
+  --bg-primary: #FAF8FD;
+  --bg-secondary: #FFFFFF;
+  --bg-tertiary: #EBD5F2;
+  --bg-elevated: #F3E8FF;
+
+  /* Accent gradient — Sky → Medium Purple → Primary Purple */
+  --accent-start: #7DD3FC;
+  --accent-mid: #A855F7;
+  --accent-end: #8B5CF6;
+  --accent-glow: rgba(167, 139, 250, 0.22);
+
+  /* Semantic — proposal spec */
+  --success: #2DD4BF;
+  --success-bg: rgba(45, 212, 191, 0.1);
+  --danger: #DC2626;
+  --danger-bg: rgba(220, 38, 38, 0.1);
+  --warning: #D97706;
+  --warning-bg: rgba(217, 119, 6, 0.1);
+  --info: #8B5CF6;
+  --info-bg: rgba(139, 92, 246, 0.08);
+
+  /* Text — proposal spec */
+  --text-primary: #2E1065;
+  --text-secondary: #4B5563;
+  --text-tertiary: rgba(46, 16, 101, 0.45);
+  --text-inverse: #FFFFFF;
+
+  /* Glass — airy, subtle (unchanged from original) */
+  --glass-bg: rgba(255, 255, 255, 0.75);
+  --glass-border: rgba(0, 0, 0, 0.06);
+  --glass-border-hover: rgba(0, 0, 0, 0.12);
+  --glass-blur: 16px;
+
+  /* Pill text */
+  --pill-text: #5C009C;
+
+  /* Borders — adjusted for purple palette */
+  --border-subtle: rgba(139, 92, 246, 0.08);
+  --border-default: rgba(139, 92, 246, 0.12);
+  --border-strong: rgba(139, 92, 246, 0.2);
+
+  /* Shadows — subtle for light bg (unchanged) */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.08);
+  --shadow-xl: 0 16px 44px rgba(0, 0, 0, 0.12);
+
+  /* Glow */
+  --glow-accent: 0 0 30px rgba(167, 139, 250, 0.25);
+  --glow-success: 0 0 20px rgba(45, 212, 191, 0.15);
+  --glow-danger: 0 0 20px rgba(220, 38, 38, 0.15);
+
+  /* Chart-specific (light theme) */
+  --chart-grid: rgba(46, 16, 101, 0.07);
+}

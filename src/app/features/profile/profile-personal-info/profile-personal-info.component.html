@@ -1,0 +1,36 @@
+<div class="profile-card" ftSubtleReveal="fade-up" [delay]="delay()">
+  <div class="card-header">
+    <div class="card-icon">
+      <ng-icon name="user" size="1.5rem" />
+    </div>
+    <h2 class="card-title">{{ 'profile.personalInfo' | translate }}</h2>
+  </div>
+
+  <form [formGroup]="profileForm()" class="info-form">
+    <div class="form-group">
+      <label for="displayName" class="form-label">{{ 'profile.displayName' | translate }}</label>
+      <input
+        id="displayName"
+        type="text"
+        formControlName="displayName"
+        class="form-control"
+        [placeholder]="'profile.displayNamePlaceholder' | translate"
+      />
+      @if (profileForm().get('displayName')?.invalid && profileForm().get('displayName')?.touched) {
+        <small class="form-error">{{ 'profile.displayNameRequired' | translate }}</small>
+      }
+    </div>
+
+    <div class="form-group">
+      <label for="email" class="form-label">{{ 'profile.email' | translate }}</label>
+      <input
+        id="email"
+        type="email"
+        formControlName="email"
+        class="form-control form-control--readonly"
+        readonly
+      />
+      <small class="form-hint">{{ 'profile.emailReadonly' | translate }}</small>
+    </div>
+  </form>
+</div>

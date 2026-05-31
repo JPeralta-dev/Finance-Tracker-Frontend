@@ -1,6 +1,9 @@
+@import 'responsive';
+
 /* ─── Stat Card ────────────────────────────────────────────────────
    KPI card with glass surface, trend indicator, optional insight.
-   ─────────────────────────────────────────────────────────────────── */
+   Responsive: compact on mobile, full on tablet+.
+   ────────────────────────────────────────────────────────────────── */
 
 .stat-card {
   position: relative;
@@ -9,12 +12,13 @@
   -webkit-backdrop-filter: blur(var(--glass-blur));
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-md);
-  padding: 20px;
+  padding: 16px;
   overflow: hidden;
   transition:
     border-color var(--duration-normal) var(--ease-smooth),
     box-shadow var(--duration-normal) var(--ease-smooth),
     transform var(--duration-normal) var(--ease-out);
+  @include at-md { padding: 20px; }
 
   /* Top highlight gradient */
   &__glow {
@@ -26,7 +30,7 @@
     background: linear-gradient(
       90deg,
       transparent,
-      rgba(157, 80, 187, 0.4),
+      rgba(217, 70, 239, 0.35),
       transparent
     );
     opacity: 0.6;
@@ -39,10 +43,12 @@
   }
 
   &--compact {
-    padding: 16px;
+    padding: 12px;
+    @include at-md { padding: 16px; }
 
     .stat-card__value {
-      font-size: 22px;
+      font-size: 20px;
+      @include at-md { font-size: 22px; }
     }
   }
 
@@ -51,7 +57,8 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
+    @include at-md { margin-bottom: 12px; }
   }
 
   &__icon {
@@ -67,21 +74,23 @@
   }
 
   &__label {
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 500;
     color: var(--text-secondary);
     letter-spacing: 0.01em;
+    @include at-md { font-size: 13px; }
   }
 
   /* ── Value ── */
   &__value {
     font-family: var(--font-body);
-    font-size: 28px;
+    font-size: 24px;
     font-weight: 600;
     color: var(--text-primary);
     letter-spacing: -0.02em;
     font-variant-numeric: tabular-nums;
     line-height: 1.2;
+    @include at-md { font-size: 28px; }
   }
 
   /* ── Footer ── */
@@ -90,19 +99,24 @@
     align-items: center;
     justify-content: space-between;
     gap: 8px;
-    margin-top: 12px;
-    padding-top: 12px;
+    margin-top: 10px;
+    padding-top: 10px;
     border-top: 1px solid var(--border-subtle);
+    @include at-md {
+      margin-top: 12px;
+      padding-top: 12px;
+    }
   }
 
   &__trend {
     display: inline-flex;
     align-items: center;
     gap: 3px;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 600;
     padding: 3px 8px;
     border-radius: var(--radius-xs);
+    @include at-md { font-size: 12px; }
 
     &.trend--up {
       color: var(--success);
@@ -124,8 +138,9 @@
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    font-size: 11px;
+    font-size: 10px;
     color: var(--text-tertiary);
+    @include at-md { font-size: 11px; }
   }
 }
 

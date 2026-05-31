@@ -1,0 +1,67 @@
+<div class="settings-section" ftSubtleReveal="fade-up" [delay]="delay()">
+  <div class="section-header">
+    <div class="section-icon">
+      <ng-icon name="telegram" size="1.5rem" />
+    </div>
+    <div class="section-info">
+      <h2 class="section-title">{{ 'settings.telegram.title' | translate }}</h2>
+      <p class="section-desc">{{ 'settings.telegram.desc' | translate }}</p>
+    </div>
+  </div>
+
+  @if (svc.state() === 'loading') {
+    <div class="link-loading">
+      <span class="spinner-sm"></span>
+      <span>{{ 'settings.telegram.loading' | translate }}</span>
+    </div>
+  } @else if (svc.state() === 'linked') {
+    <div class="linked-state" [class.just-linked]="svc.justLinked()">
+      @if (svc.justLinked()) {
+        <div class="linked-flash">
+          <ng-icon name="check" size="2rem" />
+          <span>{{ 'settings.telegram.linked_success' | translate }}</span>
+        </div>
+      }
+      <div class="linked-badge">
+        <ng-icon name="check" size="1.25rem" />
+        <span>{{ 'settings.telegram.already_linked' | translate }}</span>
+      </div>
+      <p class="linked-desc">{{ 'settings.telegram.linked_desc' | translate }}</p>
+      <button class="btn-telegram" (click)="svc.openTelegram()" disabled>
+        <ng-icon name="telegram" size="1rem" />
+        {{ 'settings.telegram.link_telegram' | translate }}
+      </button>
+    </div>
+  } @else {
+    <div class="link-action">
+      @if (svc.linkCode(); as code) {
+        <div class="code-display">
+          <span class="code-label">{{ 'settings.telegram.code_label' | translate }}</span>
+          <div class="code-value">{{ code }}</div>
+          <div class="code-timer">
+            <ng-icon name="clock" size="0.875rem" />
+            {{ 'settings.telegram.code_expires' | translate }}:
+            {{ countdownMinutes }}:{{ countdownSeconds.toString().padStart(2, '0') }}
+          </div>
+          <p class="code-instructions">{{ 'settings.telegram.code_instructions' | translate }}</p>
+          <button class="btn-telegram-auto" (click)="svc.openTelegramWithCode(code)">
+            <ng-icon name="telegram" size="1rem" />
+            {{ 'settings.telegram.open_with_code' | translate }}
+          </button>
+        </div>
+      } @else {
+        <button class="btn-generate" (click)="svc.generateCode()" [disabled]="svc.state() === 'generating'">
+          @if (svc.state() === 'generating') {
+            <span class="spinner-sm"></span>
+            {{ 'settings.telegram.generating' | translate }}
+          } @else {
+            {{ 'settings.telegram.generate_code' | translate }}
+          }
+        </button>
+      }
+      @if (svc.error(); as err) {
+        <p class="link-error">{{ err | translate }}</p>
+      }
+    </div>
+  }
+</div>

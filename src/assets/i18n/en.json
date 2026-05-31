@@ -52,7 +52,8 @@
     "categories": "Categories",
     "analytics": "Analytics",
     "settings": "Settings",
-    "newTransaction": "New Transaction"
+    "newTransaction": "New Transaction",
+    "profile": "Profile"
   },
   "landing": {
     "heroBadge": "AI-Powered Finance",
@@ -76,6 +77,18 @@
     "telegram": {
       "title": "Telegram Integration",
       "open_bot": "Open Bot"
+    },
+    "telegram_section": {
+      "badge": "Telegram Integration",
+      "title": "Track expenses directly<br />from <span class=\"telegram-section__accent\">Telegram</span>",
+      "description": "Log transactions on the go with our Telegram bot. Just send a message like \"Coffee $5\" and it's tracked automatically. No app opening required.",
+      "open_bot": "Open Telegram Bot",
+      "chat_name": "Hormiga Tracker",
+      "chat_status": "Online",
+      "demo_user_1": "Coffee $5.50",
+      "demo_bot_1": "✅ Logged: <strong>$5.50</strong> in <strong>Food & Dining</strong><br /><span class=\"chat-preview__meta\">Today, 10:42 AM</span>",
+      "demo_user_2": "Uber $12.00",
+      "demo_bot_2": "✅ Logged: <strong>$12.00</strong> in <strong>Transport</strong><br /><span class=\"chat-preview__meta\">Today, 11:15 AM</span>"
     },
     "cta": {
       "title": "Ready to take control?",
@@ -235,15 +248,43 @@
       "title": "Link Telegram",
       "desc": "Connect your Telegram account to log expenses from the bot.",
       "generate_code": "Generate code",
+      "generating": "Generating code...",
       "code_label": "Your linking code",
       "code_expires": "Expires in",
       "code_instructions": "Send this code to the Telegram bot with /link",
-      "linked": "✅ Linked",
+      "linked": "Linked",
       "linked_desc": "Your Telegram account is linked. You can log expenses from the bot.",
       "link_telegram": "Open Telegram",
       "open_with_code": "Open Telegram with code",
       "error_generate": "Error generating code",
-      "error_link": "Error checking link status"
+      "error_link": "Error checking link status",
+      "linked_success": "Account linked successfully!",
+      "already_linked": "Account linked",
+      "loading": "Checking link status...",
+      "open_app": "Open Telegram App"
+    },
+    "profile": {
+      "title": "Profile",
+      "display_name": "Display Name",
+      "email": "Email"
+    },
+    "security": {
+      "title": "Security",
+      "desc": "Manage your password and two-factor authentication.",
+      "coming_soon": "Password and 2FA settings coming soon."
+    },
+    "preferences": {
+      "title": "Preferences",
+      "desc": "Customize your experience.",
+      "theme": "Theme",
+      "language": "Language",
+      "currency": "Currency",
+      "coming_soon": "Preferences settings coming soon."
+    },
+    "settings_notifications": {
+      "title": "Notifications",
+      "desc": "Configure how you receive notifications.",
+      "coming_soon": "Notification preferences coming soon."
     }
   },
   "analytics": {
@@ -274,9 +315,42 @@
     "displayName": "Display Name",
     "email": "Email",
     "save": "Save Changes",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "signingOut": "Signing out...",
+    "signOut": "Sign out",
+    "insights": "Insights",
+    "accountAge": "Account age",
+    "totalTransactions": "Total transactions",
+    "loading": "Loading profile...",
+    "errorTitle": "Error loading profile",
+    "errorDesc": "Unable to fetch your profile data. Please try again.",
+    "retry": "Retry",
+    "manageAccount": "Manage your account information",
+    "displayNamePlaceholder": "Your display name",
+    "displayNameRequired": "Display name is required",
+    "emailReadonly": "Email cannot be changed",
+    "personalInfo": "Personal Information",
+    "backToDashboard": "Back to dashboard"
   },
   "theme": {
     "toggle": "Toggle theme"
+  },
+  "notifications": {
+    "bellLabel": "Notifications",
+    "title": "Notifications",
+    "empty": "No notifications yet",
+    "dismiss": "Dismiss notification",
+    "welcome": {
+      "title": "Welcome!",
+      "message": "Your account is ready. Start tracking your finances."
+    },
+    "feature": {
+      "title": "New feature available",
+      "message": "Check out the new dashboard with AI insights."
+    },
+    "budget": {
+      "title": "Budget alert",
+      "message": "Your monthly budget is almost exceeded. Review your spending."
+    }
   }
 }

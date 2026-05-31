@@ -1,0 +1,28 @@
+<div class="settings-section" ftSubtleReveal="fade-up" [delay]="delay()">
+  <div class="section-header">
+    <div class="section-icon">
+      <ng-icon name="palette" size="1.5rem" />
+    </div>
+    <div class="section-info">
+      <h2 class="section-title">{{ 'settings.preferences.title' | translate }}</h2>
+      <p class="section-desc">{{ 'settings.preferences.desc' | translate }}</p>
+    </div>
+  </div>
+  <div class="prefs-grid">
+    <div class="pref-item">
+      <ng-icon name="sun" size="1.25rem" />
+      <span>{{ 'settings.preferences.theme' | translate }}</span>
+    </div>
+    <div class="pref-item">
+      <ng-icon name="language" size="1.25rem" />
+      <span>{{ 'settings.preferences.language' | translate }}</span>
+    </div>
+    <div class="pref-item">
+      <ng-icon name="dollar" size="1.25rem" />
+      <span>{{ 'settings.preferences.currency' | translate }}</span>
+    </div>
+  </div>
+  <div class="coming-soon">
+    <p>{{ 'settings.preferences.coming_soon' | translate }}</p>
+  </div>
+</div>

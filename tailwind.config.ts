@@ -4,26 +4,36 @@ module.exports = {
   darkMode: 'class',
   theme: {
     extend: {
-      // ─── Color System ───────────────────────────────────────────
+      // ─── Screens — Responsive Breakpoints (SDD: frontend-ux-responsive-overhaul)
+      screens: {
+        xs: '375px',
+        sm: '640px',    // Tailwind default preserved (not 320px — breaking change guard)
+        md: '768px',
+        lg: '1024px',
+        xl: '1280px',
+        '2xl': '1440px',
+      },
+
+      // ─── Color System — Deep Plum & Amethyst (dark default) ──────
       colors: {
-        // Backgrounds — obsidian palette
+        // Backgrounds
         bg: {
-          primary: '#0A0E17',
-          secondary: '#0F1623',
-          tertiary: '#151D2E',
-          elevated: '#1A2337',
+          primary: '#120B1A',
+          secondary: '#1D1426',
+          tertiary: '#2A1E35',
+          elevated: '#362845',
         },
         // Glass surfaces
         glass: {
-          DEFAULT: 'rgba(15, 22, 35, 0.72)',
-          border: 'rgba(255, 255, 255, 0.06)',
-          'border-hover': 'rgba(255, 255, 255, 0.12)',
+          DEFAULT: 'rgba(29, 20, 38, 0.72)',
+          border: 'rgba(255, 255, 255, 0.08)',
+          'border-hover': 'rgba(255, 255, 255, 0.16)',
         },
-        // Accent gradient
+        // Accent — Fuchsia → Purple → Violet
         accent: {
-          start: '#06D6A0',
-          mid: '#118DFF',
-          end: '#6C63FF',
+          start: '#D946EF',
+          mid: '#A855F7',
+          end: '#7C3AED',
         },
         // Semantic
         success: {
@@ -39,21 +49,67 @@ module.exports = {
           bg: 'rgba(255, 217, 61, 0.1)',
         },
         info: {
-          DEFAULT: '#118DFF',
-          bg: 'rgba(17, 141, 255, 0.1)',
+          DEFAULT: '#A78BFA',
+          bg: 'rgba(167, 139, 250, 0.15)',
         },
         // Text
         text: {
-          primary: '#F1F5F9',
-          secondary: '#94A3B8',
-          tertiary: '#64748B',
-          inverse: '#0A0E17',
+          primary: '#F3E8FF',
+          secondary: 'rgba(243, 232, 255, 0.75)',
+          tertiary: 'rgba(243, 232, 255, 0.45)',
+          inverse: '#120B1A',
         },
         // Borders
         border: {
           subtle: 'rgba(255, 255, 255, 0.06)',
           DEFAULT: 'rgba(255, 255, 255, 0.1)',
           strong: 'rgba(255, 255, 255, 0.16)',
+        },
+
+        // ─── Light Theme — Purple/Lila (SDD: frontend-ux-responsive-overhaul)
+        // Proposal spec palette — MUST match styles/_tokens.scss and design-tokens.ts
+        light: {
+          bg: {
+            primary: '#FAF8FD',
+            secondary: '#FFFFFF',
+            tertiary: '#EBD5F2',
+            elevated: '#F3E8FF',
+          },
+          accent: {
+            start: '#7DD3FC',
+            mid: '#A855F7',
+            end: '#8B5CF6',
+          },
+          success: {
+            DEFAULT: '#2DD4BF',
+            bg: 'rgba(45, 212, 191, 0.1)',
+          },
+          danger: {
+            DEFAULT: '#DC2626',
+            bg: 'rgba(220, 38, 38, 0.1)',
+          },
+          warning: {
+            DEFAULT: '#D97706',
+            bg: 'rgba(217, 119, 6, 0.1)',
+          },
+          info: {
+            DEFAULT: '#8B5CF6',
+            bg: 'rgba(139, 92, 246, 0.08)',
+          },
+          text: {
+            primary: '#2E1065',
+            secondary: '#4B5563',
+            tertiary: 'rgba(46, 16, 101, 0.45)',
+            inverse: '#FFFFFF',
+          },
+          border: {
+            subtle: 'rgba(139, 92, 246, 0.08)',
+            DEFAULT: 'rgba(139, 92, 246, 0.12)',
+            strong: 'rgba(139, 92, 246, 0.2)',
+          },
+          pill: {
+            text: '#5C009C',
+          },
         },
       },
 
@@ -93,11 +149,11 @@ module.exports = {
 
       // ─── Shadows (dark-adapted) ─────────────────────────────────
       boxShadow: {
-        sm: '0 1px 2px rgba(0, 0, 0, 0.3)',
-        md: '0 4px 12px rgba(0, 0, 0, 0.35)',
-        lg: '0 8px 32px rgba(0, 0, 0, 0.4)',
-        xl: '0 16px 48px rgba(0, 0, 0, 0.45)',
-        'glow-accent': '0 0 24px rgba(6, 214, 160, 0.15)',
+        sm: '0 1px 2px rgba(0, 0, 0, 0.4)',
+        md: '0 4px 12px rgba(0, 0, 0, 0.5)',
+        lg: '0 8px 32px rgba(0, 0, 0, 0.6)',
+        xl: '0 16px 48px rgba(0, 0, 0, 0.7)',
+        'glow-accent': '0 0 30px rgba(217, 70, 239, 0.25)',
         'glow-success': '0 0 20px rgba(6, 214, 160, 0.2)',
         'glow-danger': '0 0 20px rgba(255, 107, 107, 0.2)',
       },

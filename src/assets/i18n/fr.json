@@ -52,7 +52,8 @@
     "categories": "Catégories",
     "analytics": "Analytique",
     "settings": "Paramètres",
-    "newTransaction": "Nouvelle Transaction"
+    "newTransaction": "Nouvelle Transaction",
+    "profile": "Profil"
   },
   "landing": {
     "heroBadge": "Finance IA",
@@ -76,6 +77,18 @@
     "telegram": {
       "title": "Intégration Telegram",
       "open_bot": "Ouvrir le Bot"
+    },
+    "telegram_section": {
+      "badge": "Intégration Telegram",
+      "title": "Suivez vos dépenses directement<br />depuis <span class=\"telegram-section__accent\">Telegram</span>",
+      "description": "Enregistrez vos transactions en déplacement avec notre bot Telegram. Envoyez simplement un message comme \"Café 5€\" et c'est suivi automatiquement. Sans ouvrir l'app.",
+      "open_bot": "Ouvrir le Bot Telegram",
+      "chat_name": "Hormiga Tracker",
+      "chat_status": "En ligne",
+      "demo_user_1": "Café 5,50€",
+      "demo_bot_1": "✅ Enregistré : <strong>5,50€</strong> dans <strong>Alimentation</strong><br /><span class=\"chat-preview__meta\">Aujourd'hui, 10h42</span>",
+      "demo_user_2": "Uber 12,00€",
+      "demo_bot_2": "✅ Enregistré : <strong>12,00€</strong> dans <strong>Transport</strong><br /><span class=\"chat-preview__meta\">Aujourd'hui, 11h15</span>"
     },
     "cta": {
       "title": "Prêt à prendre le contrôle ?",
@@ -235,16 +248,66 @@
       "title": "Lier Telegram",
       "desc": "Connectez votre compte Telegram pour enregistrer des dépenses depuis le bot.",
       "generate_code": "Générer un code",
+      "generating": "Génération du code...",
       "code_label": "Votre code de liaison",
       "code_expires": "Expire dans",
       "code_instructions": "Envoyez ce code au bot Telegram avec /link",
-      "linked": "✅ Lié",
+      "linked": "Lié",
       "linked_desc": "Votre compte Telegram est lié. Vous pouvez enregistrer des dépenses depuis le bot.",
       "link_telegram": "Ouvrir Telegram",
       "open_with_code": "Ouvrir Telegram avec le code",
       "error_generate": "Erreur lors de la génération du code",
-      "error_link": "Erreur lors de la vérification du statut de liaison"
+      "error_link": "Erreur lors de la vérification du statut de liaison",
+      "linked_success": "Compte lié avec succès !",
+      "already_linked": "Compte lié",
+      "loading": "Vérification du statut de liaison...",
+      "open_app": "Ouvrir Telegram"
+    },
+    "profile": {
+      "title": "Profil",
+      "display_name": "Nom d'affichage",
+      "email": "E-mail"
+    },
+    "security": {
+      "title": "Sécurité",
+      "desc": "Gérez votre mot de passe et l'authentification à deux facteurs.",
+      "coming_soon": "Paramètres de mot de passe et 2FA bientôt disponibles."
+    },
+    "preferences": {
+      "title": "Préférences",
+      "desc": "Personnalisez votre expérience.",
+      "theme": "Thème",
+      "language": "Langue",
+      "currency": "Devise",
+      "coming_soon": "Paramètres de préférences bientôt disponibles."
+    },
+    "settings_notifications": {
+      "title": "Notifications",
+      "desc": "Configurez comment vous recevez les notifications.",
+      "coming_soon": "Préférences de notifications bientôt disponibles."
     }
+  },
+  "analytics": {
+    "title": "Analytique",
+    "subtitle": "Visualisez vos tendances financières et desgloses.",
+    "monthlyTrends": "Tendances Mensuelles",
+    "last6Months": "6 derniers mois",
+    "byCategory": "Par Catégorie",
+    "expenseBreakdown": "Répartition des Dépenses",
+    "summary": "Résumé",
+    "totalIncome": "Revenu Total",
+    "totalExpenses": "Dépenses Totales",
+    "netSavings": "Épargne Nette",
+    "emptyTitle": "Pas de données",
+    "emptyDesc": "Commencez à enregistrer des transactions pour voir vos analyses financières.",
+    "loading": "Chargement des analyses...",
+    "fetchingData": "Récupération des données financières",
+    "errorTitle": "Erreur lors du chargement",
+    "errorDesc": "Nous n'avons pas pu charger les données d'analyse. Veuillez réessayer.",
+    "retry": "Réessayer",
+    "addTransaction": "Ajouter une transaction",
+    "noCategoryData": "Pas de données de catégories",
+    "noChartData": "Pas de données mensuelles"
   },
   "profile": {
     "title": "Profil",
@@ -252,9 +315,42 @@
     "displayName": "Nom d'affichage",
     "email": "E-mail",
     "save": "Sauvegarder les modifications",
-    "cancel": "Annuler"
+    "cancel": "Annuler",
+    "signingOut": "Déconnexion en cours...",
+    "signOut": "Se déconnecter",
+    "insights": "Insights",
+    "accountAge": "Ancienneté du compte",
+    "totalTransactions": "Total des transactions",
+    "loading": "Chargement du profil...",
+    "errorTitle": "Erreur lors du chargement du profil",
+    "errorDesc": "Impossible de récupérer les données de votre profil. Veuillez réessayer.",
+    "retry": "Réessayer",
+    "manageAccount": "Gérez les informations de votre compte",
+    "displayNamePlaceholder": "Votre nom d'affichage",
+    "displayNameRequired": "Le nom d'affichage est obligatoire",
+    "emailReadonly": "L'e-mail ne peut pas être modifié",
+    "personalInfo": "Informations Personnelles",
+    "backToDashboard": "Retour au tableau de bord"
   },
   "theme": {
     "toggle": "Changer de thème"
+  },
+  "notifications": {
+    "bellLabel": "Notifications",
+    "title": "Notifications",
+    "empty": "Pas encore de notifications",
+    "dismiss": "Ignorer la notification",
+    "welcome": {
+      "title": "Bienvenue !",
+      "message": "Votre compte est prêt. Commencez à suivre vos finances."
+    },
+    "feature": {
+      "title": "Nouvelle fonctionnalité disponible",
+      "message": "Découvrez le nouveau tableau de bord avec les insights IA."
+    },
+    "budget": {
+      "title": "Alerte budget",
+      "message": "Votre budget mensuel est presque atteint. Révisez vos dépenses."
+    }
   }
 }

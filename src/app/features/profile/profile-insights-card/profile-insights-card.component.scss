@@ -1,0 +1,28 @@
+@import '../../../../styles/responsive';
+
+.card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+
+.card-icon {
+  display: flex; align-items: center; justify-content: center;
+  width: 40px; height: 40px; background: var(--accent-glow);
+  border: 1px solid rgba(157, 80, 187, 0.2); border-radius: var(--radius-sm);
+  color: var(--accent-start); flex-shrink: 0;
+}
+
+.card-title {
+  font-family: var(--font-display); font-size: 16px;
+  font-weight: 600; color: var(--text-primary); margin: 0;
+}
+
+.stats-grid {
+  display: grid; grid-template-columns: 1fr; gap: 12px; margin-bottom: 16px;
+  @include at-xs { grid-template-columns: repeat(2, 1fr); }
+}
+
+.stat-item {
+  background: var(--bg-tertiary); border-radius: var(--radius-md);
+  padding: 14px 16px; display: flex; flex-direction: column; gap: 4px;
+}
+
+.stat-label { font-size: 0.8rem; color: var(--text-secondary); font-weight: 500; }
+.stat-value { font-size: 1.125rem; font-weight: 700; color: var(--text-primary); }

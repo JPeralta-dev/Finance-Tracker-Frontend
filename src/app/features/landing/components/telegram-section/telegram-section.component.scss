@@ -1,5 +1,5 @@
 .telegram-section {
-  padding: 60px 0;
+  padding: 24px 0;
   position: relative;
 }
 
@@ -72,7 +72,7 @@
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 0 40px rgba(157, 80, 187, 0.4);
+    box-shadow: 0 0 40px rgba(217, 70, 239, 0.35);
   }
 }
 
@@ -174,7 +174,7 @@
 
 @media (max-width: 640px) {
   .telegram-section {
-    padding: 40px 16px;
+    padding: 16px 0;
   }
 
   .telegram-section__inner {

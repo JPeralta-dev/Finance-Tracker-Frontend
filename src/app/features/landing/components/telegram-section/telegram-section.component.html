@@ -3,19 +3,15 @@
     <div class="telegram-section__content" ftSubtleReveal="fade-up" [delay]="100">
       <div class="telegram-section__badge">
         <ng-icon name="heroPaperPlane" size="1rem" />
-        Telegram Integration
+        {{ 'landing.telegram_section.badge' | translate }}
       </div>
-      <h2 class="telegram-section__title">
-        Track expenses directly <br />
-        from <span class="telegram-section__accent">Telegram</span>
-      </h2>
+      <h2 class="telegram-section__title" [innerHTML]="'landing.telegram_section.title' | translate"></h2>
       <p class="telegram-section__description">
-        Log transactions on the go with our Telegram bot. Just send a message like
-        "Coffee $5" and it's tracked automatically. No app opening required.
+        {{ 'landing.telegram_section.description' | translate }}
       </p>
       <a [href]="telegramBotUrl" target="_blank" class="telegram-section__btn">
         <ng-icon name="heroPaperPlane" size="1rem" />
-        Open Telegram Bot
+        {{ 'landing.telegram_section.open_bot' | translate }}
       </a>
     </div>
     <div class="telegram-section__visual" ftSubtleReveal="fade-up" [delay]="200">
@@ -23,27 +19,19 @@
         <div class="chat-preview__header">
           <div class="chat-preview__avatar">🤖</div>
           <div class="chat-preview__info">
-            <span class="chat-preview__name">Hormiga Tracker</span>
-            <span class="chat-preview__status">Online</span>
+            <span class="chat-preview__name">{{ 'landing.telegram_section.chat_name' | translate }}</span>
+            <span class="chat-preview__status">{{ 'landing.telegram_section.chat_status' | translate }}</span>
           </div>
         </div>
         <div class="chat-preview__messages">
           <div class="chat-preview__message chat-preview__message--user">
-            Coffee $5.50
+            {{ 'landing.telegram_section.demo_user_1' | translate }}
           </div>
-          <div class="chat-preview__message chat-preview__message--bot">
-            ✅ Logged: <strong>$5.50</strong> in <strong>Food & Dining</strong>
-            <br />
-            <span class="chat-preview__meta">Today, 10:42 AM</span>
-          </div>
+          <div class="chat-preview__message chat-preview__message--bot" [innerHTML]="'landing.telegram_section.demo_bot_1' | translate"></div>
           <div class="chat-preview__message chat-preview__message--user">
-            Uber $12.00
+            {{ 'landing.telegram_section.demo_user_2' | translate }}
           </div>
-          <div class="chat-preview__message chat-preview__message--bot">
-            ✅ Logged: <strong>$12.00</strong> in <strong>Transport</strong>
-            <br />
-            <span class="chat-preview__meta">Today, 11:15 AM</span>
-          </div>
+          <div class="chat-preview__message chat-preview__message--bot" [innerHTML]="'landing.telegram_section.demo_bot_2' | translate"></div>
         </div>
       </div>
     </div>

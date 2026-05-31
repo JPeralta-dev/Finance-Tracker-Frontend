@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { provideRouter, Router, NavigationEnd, RouterEvent } from '@angular/router';
-import { of, throwError, Subject } from 'rxjs';
+import { provideRouter, Router, NavigationEnd } from '@angular/router';
+import { of, throwError } from 'rxjs';
 
 import { ProfileDropdownComponent } from './profile-dropdown.component';
 import { AuthService } from '../../../core/services/auth.service';
@@ -49,46 +49,31 @@ describe('ProfileDropdownComponent', () => {
   });
 
   it('should calculate initials from displayName', () => {
-    const displayName1 = 'John Doe';
-    const initials1 = displayName1
-      .split(' ')
-      .map((part) => part[0])
-      .join('')
-      .slice(0, 2)
-      .toUpperCase();
-    expect(initials1).toBe('JD');
-
-    const displayName2 = 'Maria';
-    const initials2 = displayName2
-      .split(' ')
-      .map((part) => part[0])
-      .join('')
-      .slice(0, 2)
-      .toUpperCase();
-    expect(initials2).toBe('M');
-
-    const displayName3 = 'Juan Pablo Perez';
-    const initials3 = displayName3
-      .split(' ')
-      .map((part) => part[0])
-      .join('')
-      .slice(0, 2)
-      .toUpperCase();
-    expect(initials3).toBe('JP');
+    expect(component.initials()).toBe('JD');
   });
 
   it('should fallback to email when no displayName', () => {
-    const email = 'test@example.com';
-    const fallbackDisplayName = email.split('@')[0];
-    expect(fallbackDisplayName).toBe('test');
+    const userWithoutName = {
+      id: '2',
+      email: 'test@example.com',
+    };
+    (mockAuthService.currentUser as jasmine.Spy).and.returnValue(userWithoutName);
+    fixture.detectChanges();
+    expect(component.initials()).toBe('T');
+  });
 
-    const initials = fallbackDisplayName
-      .split(' ')
-      .map((part) => part[0])
-      .join('')
-      .slice(0, 2)
-      .toUpperCase();
-    expect(initials).toBe('T');
+  it('should toggle dropdown open state', () => {
+    expect(component.isOpen()).toBeFalse();
+    component.toggleDropdown();
+    expect(component.isOpen()).toBeTrue();
+    component.toggleDropdown();
+    expect(component.isOpen()).toBeFalse();
+  });
+
+  it('should close dropdown', () => {
+    component.isOpen.set(true);
+    component.closeDropdown();
+    expect(component.isOpen()).toBeFalse();
   });
 
   describe('logout navigation', () => {
@@ -103,7 +88,6 @@ describe('ProfileDropdownComponent', () => {
 
     it('should NOT navigate to /login when already on /login page', fakeAsync(() => {
       mockAuthService.logout.and.returnValue(of(null));
-      // Spy on currentUrl signal to return /login
       spyOn(component as any, 'currentUrl').and.returnValue({ urlAfterRedirects: '/login' } as any);
 
       component.onLogout();
@@ -120,6 +104,16 @@ describe('ProfileDropdownComponent', () => {
 
       expect(router.navigate).toHaveBeenCalledWith(['/login']);
       expect(mockAuthService.clearTokens).toHaveBeenCalled();
+    }));
+
+    it('should prevent double logout via isLoggingOut guard', fakeAsync(() => {
+      mockAuthService.logout.and.returnValue(of(null));
+
+      component.onLogout();
+      component.onLogout(); // second call should be ignored
+      tick();
+
+      expect(mockAuthService.logout).toHaveBeenCalledTimes(1);
     }));
   });
 });

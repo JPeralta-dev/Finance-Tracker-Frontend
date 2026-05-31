@@ -1,78 +1,30 @@
 <div class="profile-page">
   @if (state() === 'loading') {
-    <div class="profile-loading">
-      <h1>Loading profile...</h1>
-    </div>
+    <div class="profile-loading"><h1>{{ 'profile.loading' | translate }}</h1></div>
   } @else if (state() === 'error') {
     <div class="profile-error">
-      <h1>Error loading profile</h1>
-      <p>Unable to fetch your profile data. Please try again.</p>
-      <button class="btn btn--primary" (click)="loadUserProfile()">Retry</button>
+      <h1>{{ 'profile.errorTitle' | translate }}</h1>
+      <p>{{ 'profile.errorDesc' | translate }}</p>
+      <button class="btn btn--primary" (click)="loadUserProfile()">{{ 'profile.retry' | translate }}</button>
     </div>
   } @else {
-    <div class="profile-container">
-      <h1 class="profile-title">Profile Settings</h1>
-      <p class="profile-subtitle">Manage your account information</p>
-
-      <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="profile-form">
-        <div class="form-group">
-          <label for="displayName" class="form-label">Display Name</label>
-          <input
-            id="displayName"
-            type="text"
-            formControlName="displayName"
-            class="form-control"
-            placeholder="Your display name"
-          />
-          @if (profileForm.get('displayName')?.invalid && profileForm.get('displayName')?.touched) {
-            <small class="form-error">Display name is required</small>
-          }
-        </div>
-
-        <div class="form-group">
-          <label for="email" class="form-label">Email Address</label>
-          <input
-            id="email"
-            type="email"
-            formControlName="email"
-            class="form-control form-control--readonly"
-            readonly
-          />
-          <small class="form-hint">Email cannot be changed</small>
-        </div>
-
+    <div class="profile-container" ftSubtleReveal="fade-up">
+      <app-profile-avatar-card [user]="user()" [initials]="initials()" />
+      <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+        <app-profile-personal-info [profileForm]="profileForm" [delay]="100" />
         <div class="form-actions">
-          <button
-            type="submit"
-            class="btn btn--primary"
-            [disabled]="profileForm.invalid"
-          >
-            Save Changes
+          <button type="submit" class="btn btn--primary" [disabled]="profileForm.invalid">
+            {{ 'profile.save' | translate }}
           </button>
         </div>
       </form>
-
-      <!-- Insights Section -->
-      @if (insights().length > 0 || userStats()) {
-        <div class="profile-insights">
-          <h2 class="profile-section-title">{{ 'profile.insights' | translate }}</h2>
-
-          @if (userStats(); as stats) {
-            <div class="profile-stats">
-              <div class="profile-stat">
-                <span class="profile-stat__label">{{ 'profile.accountAge' | translate }}</span>
-                <span class="profile-stat__value">{{ stats.accountAge }}</span>
-              </div>
-              <div class="profile-stat">
-                <span class="profile-stat__label">{{ 'profile.totalTransactions' | translate }}</span>
-                <span class="profile-stat__value">{{ stats.totalTransactions }}</span>
-              </div>
-            </div>
-          }
-
-          <ft-insights-panel [insights]="insights()" />
-        </div>
-      }
+      <app-profile-insights-card [userStats]="userStats()" [insights]="insights()" [delay]="200" />
+      <div class="back-link-wrap">
+        <a routerLink="/dashboard" class="back-link">
+          <ng-icon name="chevronLeft" size="1rem" />
+          {{ 'profile.backToDashboard' | translate }}
+        </a>
+      </div>
     </div>
   }
 </div>

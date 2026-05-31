@@ -1,0 +1,22 @@
+@import '../../../../styles/responsive';
+
+.profile-avatar-card { display: flex; align-items: center; gap: 16px; padding: 20px; }
+.avatar-wrapper { flex-shrink: 0; }
+
+.avatar-circle {
+  width: 48px; height: 48px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent-start), var(--accent-mid));
+  color: var(--text-inverse); font-size: 16px; font-weight: 600;
+  display: flex; align-items: center; justify-content: center;
+  @include at-md { width: 64px; height: 64px; font-size: 22px; }
+}
+
+.avatar-info { flex: 1; min-width: 0; }
+
+.avatar-name {
+  font-family: var(--font-display); font-size: 18px; font-weight: 600;
+  color: var(--text-primary); margin: 0 0 4px; @include truncate;
+  @include at-md { font-size: 22px; }
+}
+
+.avatar-email { font-size: 13px; color: var(--text-secondary); margin: 0; @include truncate; }

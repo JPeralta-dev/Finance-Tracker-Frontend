@@ -52,7 +52,8 @@
     "categories": "Categorías",
     "analytics": "Análisis",
     "settings": "Configuración",
-    "newTransaction": "Nueva Transacción"
+    "newTransaction": "Nueva Transacción",
+    "profile": "Perfil"
   },
   "landing": {
     "heroBadge": "Finanzas con IA",
@@ -76,6 +77,18 @@
     "telegram": {
       "title": "Integración con Telegram",
       "open_bot": "Abrir Bot"
+    },
+    "telegram_section": {
+      "badge": "Integración con Telegram",
+      "title": "Registrá gastos directamente<br />desde <span class=\"telegram-section__accent\">Telegram</span>",
+      "description": "Registrá transacciones al instante con nuestro bot de Telegram. Solo enviá un mensaje como \"Café $5\" y se registra automáticamente. Sin abrir la app.",
+      "open_bot": "Abrir Bot de Telegram",
+      "chat_name": "Hormiga Tracker",
+      "chat_status": "En línea",
+      "demo_user_1": "Café $5.50",
+      "demo_bot_1": "✅ Registrado: <strong>$5.50</strong> en <strong>Comida</strong><br /><span class=\"chat-preview__meta\">Hoy, 10:42 AM</span>",
+      "demo_user_2": "Uber $12.00",
+      "demo_bot_2": "✅ Registrado: <strong>$12.00</strong> en <strong>Transporte</strong><br /><span class=\"chat-preview__meta\">Hoy, 11:15 AM</span>"
     },
     "cta": {
       "title": "¿Listo para tomar el control?",
@@ -235,15 +248,43 @@
       "title": "Vincular Telegram",
       "desc": "Conectá tu cuenta de Telegram para registrar gastos desde el bot.",
       "generate_code": "Generar código",
+      "generating": "Generando código...",
       "code_label": "Tu código de vinculación",
       "code_expires": "Expira en",
       "code_instructions": "Enviá este código al bot de Telegram con /link",
-      "linked": "✅ Vinculado",
+      "linked": "Vinculado",
       "linked_desc": "Tu cuenta de Telegram está vinculada. Podés registrar gastos desde el bot.",
       "link_telegram": "Abrir Telegram",
       "open_with_code": "Abrir Telegram con código",
       "error_generate": "Error al generar el código",
-      "error_link": "Error al verificar el estado de vinculación"
+      "error_link": "Error al verificar el estado de vinculación",
+      "linked_success": "¡Cuenta vinculada correctamente!",
+      "already_linked": "Cuenta vinculada",
+      "loading": "Verificando estado de vinculación...",
+      "open_app": "Abrir Telegram"
+    },
+    "profile": {
+      "title": "Perfil",
+      "display_name": "Nombre para mostrar",
+      "email": "Correo electrónico"
+    },
+    "security": {
+      "title": "Seguridad",
+      "desc": "Gestioná tu contraseña y autenticación de dos factores.",
+      "coming_soon": "Configuración de contraseña y 2FA próximamente."
+    },
+    "preferences": {
+      "title": "Preferencias",
+      "desc": "Personalizá tu experiencia.",
+      "theme": "Tema",
+      "language": "Idioma",
+      "currency": "Moneda",
+      "coming_soon": "Configuración de preferencias próximamente."
+    },
+    "settings_notifications": {
+      "title": "Notificaciones",
+      "desc": "Configurá cómo recibís notificaciones.",
+      "coming_soon": "Preferencias de notificaciones próximamente."
     }
   },
   "analytics": {
@@ -274,9 +315,42 @@
     "displayName": "Nombre para mostrar",
     "email": "Correo electrónico",
     "save": "Guardar cambios",
-    "cancel": "Cancelar"
+    "cancel": "Cancelar",
+    "signingOut": "Cerrando sesión...",
+    "signOut": "Cerrar sesión",
+    "insights": "Insights",
+    "accountAge": "Antigüedad de la cuenta",
+    "totalTransactions": "Total de transacciones",
+    "loading": "Cargando perfil...",
+    "errorTitle": "Error al cargar el perfil",
+    "errorDesc": "No se pudieron obtener los datos de tu perfil. Intenta de nuevo.",
+    "retry": "Reintentar",
+    "manageAccount": "Gestiona la información de tu cuenta",
+    "displayNamePlaceholder": "Tu nombre para mostrar",
+    "displayNameRequired": "El nombre para mostrar es obligatorio",
+    "emailReadonly": "El correo electrónico no se puede cambiar",
+    "personalInfo": "Información Personal",
+    "backToDashboard": "Volver al panel"
   },
   "theme": {
     "toggle": "Cambiar tema"
+  },
+  "notifications": {
+    "bellLabel": "Notificaciones",
+    "title": "Notificaciones",
+    "empty": "Aún no hay notificaciones",
+    "dismiss": "Descartar notificación",
+    "welcome": {
+      "title": "¡Bienvenido!",
+      "message": "Tu cuenta está lista. Comienza a rastrear tus finanzas."
+    },
+    "feature": {
+      "title": "Nueva función disponible",
+      "message": "Descubre el nuevo panel con insights de IA."
+    },
+    "budget": {
+      "title": "Alerta de presupuesto",
+      "message": "Tu presupuesto mensual está casi agotado. Revisa tus gastos."
+    }
   }
 }
