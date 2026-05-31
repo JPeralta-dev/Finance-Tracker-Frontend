@@ -15,21 +15,29 @@
   color: var(--text-secondary);
   border-radius: var(--radius-sm);
   cursor: pointer;
-  transition:
-    background var(--duration-fast) var(--ease-out),
-    color var(--duration-fast) var(--ease-out);
+  transition: background var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out);
 
-  &:hover {
-    background: rgba(255, 255, 255, 0.05);
-    color: var(--text-primary);
-  }
+  &:hover { background: rgba(255, 255, 255, 0.05); color: var(--text-primary); }
+}
+
+.notifications-dropdown__badge {
+  position: absolute;
+  top: 2px; right: 2px;
+  min-width: 16px; height: 16px;
+  padding: 0 4px;
+  font-size: 10px; font-weight: 600;
+  line-height: 16px; text-align: center;
+  color: #fff; background: #8B5CF6;
+  border-radius: 8px;
 }
 
 .notifications-dropdown__panel {
   position: absolute;
   top: calc(100% + 8px);
-  right: 0;
+  left: 50%;
+  transform: translateX(-50%);
   width: 320px;
+  max-width: calc(100vw - 24px);
   background: var(--glass-bg);
   backdrop-filter: blur(var(--glass-blur));
   -webkit-backdrop-filter: blur(var(--glass-blur));
@@ -38,38 +46,53 @@
   box-shadow: var(--shadow-lg);
   overflow: hidden;
   z-index: 200;
+  animation: dropdownFade 0.15s ease-out;
 }
 
-.notifications-dropdown__header {
-  padding: 12px 16px;
-  border-bottom: 1px solid var(--glass-border);
+@keyframes dropdownFade {
+  from { opacity: 0; transform: translateX(-50%) translateY(-4px); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
 }
-
-.notifications-dropdown__title {
-  margin: 0;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text-primary);
-}
-
-.notifications-dropdown__body {
-  padding: 24px 16px;
-  min-height: 120px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+.notifications-dropdown__header { padding: 12px 16px; border-bottom: 1px solid var(--glass-border); }
+.notifications-dropdown__title { margin: 0; font-size: 14px; font-weight: 600; color: var(--text-primary); }
+.notifications-dropdown__body { max-height: 320px; overflow-y: auto; }
 
 .notifications-dropdown__empty {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  color: var(--text-secondary);
-  font-size: 13px;
-  text-align: center;
+  padding: 24px 16px;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  color: var(--text-secondary); font-size: 13px; text-align: center;
+  ng-icon { opacity: 0.4; }
+}
 
-  ng-icon {
-    opacity: 0.4;
-  }
+.notifications-dropdown__list { list-style: none; margin: 0; padding: 0; }
+
+.notification-item {
+  display: flex; align-items: flex-start; gap: 8px;
+  padding: 10px 16px;
+  border-left: 3px solid transparent;
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--ease-out);
+
+  &:hover { background: rgba(255, 255, 255, 0.03); }
+  &--info { border-left-color: var(--info); }
+  &--success { border-left-color: #2DD4BF; }
+  &--warning { border-left-color: var(--warning); }
+  &--error { border-left-color: var(--danger); }
+  &--unread { background: rgba(139, 92, 246, 0.05); }
+}
+
+.notification-item__content { flex: 1; min-width: 0; }
+.notification-item__title { display: block; font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 2px; }
+.notification-item__message { display: block; font-size: 12px; color: var(--text-secondary); word-wrap: break-word; overflow-wrap: break-word; }
+
+.notification-item__dismiss {
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  width: 24px; height: 24px;
+  border: none; background: transparent;
+  color: var(--text-secondary); border-radius: var(--radius-sm);
+  cursor: pointer; opacity: 0;
+  transition: opacity var(--duration-fast) var(--ease-out);
+  .notification-item:hover & { opacity: 1; }
+  &:hover { background: rgba(255, 255, 255, 0.1); color: var(--text-primary); }
 }

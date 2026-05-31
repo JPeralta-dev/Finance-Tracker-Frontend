@@ -104,3 +104,61 @@ The Finance Tracker frontend has 12 critical UX problems: broken Telegram linkin
 - [ ] Profile avatar is responsive (max 48px mobile, 64px desktop)
 - [ ] Notifications dropdown centered, no off-screen content
 - [ ] Design palette matches spec: primary #8B5CF6, teal #2DD4BF, no green
+
+# FINAL QA CHECKLIST
+
+## Responsive QA
+
+* No horizontal scroll
+* No cut text
+* No overlapping elements
+* No giant icons
+* No broken grids
+* No off-screen modals
+* No clipped notifications
+* No navbar overflow
+
+## Mobile QA
+
+Test:
+
+* 320px
+* 375px
+* 390px
+* 430px
+* tablet
+* desktop
+
+## UX QA
+
+* Clear visual hierarchy
+* Consistent spacing
+* Consistent card padding
+* Consistent typography
+* Buttons aligned
+* Inputs aligned
+* Proper loading states
+* Proper empty states
+
+## i18n QA
+
+* No raw translation keys
+* No hardcoded English
+* All locales synchronized
+
+## Telegram QA
+
+* Correct bot URL
+* Deep linking works
+* Already linked state works
+* Prevent duplicate linking
+* Mobile Telegram opens correctly
+
+## Visual QA
+
+* Purple/lila palette preserved
+* No random green redesign
+* Premium SaaS feel maintained
+* Consistent shadows
+* Consistent border radius
+* Consistent hover states

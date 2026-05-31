@@ -1,181 +1,38 @@
-.profile-page {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 2rem;
+@import 'responsive';
+
+.profile-page { max-width: 600px; margin: 0 auto; @include safe-padding($vertical: 24px); }
+
+.profile-loading, .profile-error {
+  text-align: center; padding: 4rem 1rem;
+  h1 { margin-bottom: 1rem; color: var(--text-primary); }
+  p { color: var(--text-secondary); margin-bottom: 1.5rem; }
 }
 
-.profile-loading,
-.profile-error {
-  text-align: center;
-  padding: 4rem 2rem;
+.profile-container { display: flex; flex-direction: column; gap: 20px; }
 
-  h1 {
-    margin-bottom: 1rem;
-    color: var(--text-primary);
-  }
-
-  p {
-    color: var(--text-secondary);
-    margin-bottom: 1.5rem;
-  }
+.profile-card {
+  background: var(--glass-bg); backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border); border-radius: var(--radius-lg); padding: 20px;
+  @include at-md { padding: 24px; }
 }
 
-.profile-container {
-  animation: fadeIn 0.3s ease-in;
-}
-
-.profile-title {
-  font-size: 2rem;
-  font-weight: 700;
-  color: var(--text-primary);
-  margin-bottom: 0.5rem;
-}
-
-.profile-subtitle {
-  color: var(--text-secondary);
-  margin-bottom: 2rem;
-}
-
-.profile-form {
-  background: var(--surface-1);
-  border-radius: 12px;
-  padding: 2rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-}
-
-.form-group {
-  margin-bottom: 1.5rem;
-
-  &:last-of-type {
-    margin-bottom: 2rem;
-  }
-}
-
-.form-label {
-  display: block;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: 0.5rem;
-  font-size: 0.95rem;
-}
-
-.form-control {
-  width: 100%;
-  padding: 0.75rem 1rem;
-  border: 2px solid var(--border-color);
-  border-radius: 8px;
-  font-size: 1rem;
-  color: var(--text-primary);
-  background: var(--surface-0);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-
-  &:focus {
-    outline: none;
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
-  }
-
-  &--readonly {
-    background: var(--surface-0);
-    color: var(--text-secondary);
-    cursor: not-allowed;
-  }
-}
-
-.form-hint {
-  display: block;
-  margin-top: 0.5rem;
-  font-size: 0.85rem;
-  color: var(--text-secondary);
-}
-
-.form-error {
-  display: block;
-  margin-top: 0.5rem;
-  font-size: 0.85rem;
-  color: var(--danger);
-}
-
-.form-actions {
-  display: flex;
-  justify-content: flex-end;
-}
+form .form-actions { display: flex; justify-content: flex-end; padding-top: 16px; }
 
 .btn {
-  padding: 0.75rem 1.5rem;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  border: none;
-
+  padding: 10px 24px; border-radius: var(--radius-md); font-weight: 600;
+  font-size: 0.95rem; cursor: pointer; transition: all 0.2s ease; border: none;
   &--primary {
-    background: var(--primary);
-    color: white;
-
-    &:hover:not(:disabled) {
-      background: var(--primary-dark);
-      transform: translateY(-1px);
-    }
-
-    &:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
+    background: var(--accent-end); color: white;
+    &:hover:not(:disabled) { background: var(--accent-mid); transform: translateY(-1px); }
+    &:disabled { opacity: 0.6; cursor: not-allowed; }
   }
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* ─── Insights Section ──────────────────────────────────────────── */
-
-.profile-insights {
-  margin-top: 2rem;
-  animation: fadeIn 0.3s ease-in;
-}
-
-.profile-section-title {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--text-primary);
-  margin-bottom: 1.5rem;
-}
-
-.profile-stats {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-}
-
-.profile-stat {
-  background: var(--surface-1);
-  border-radius: 12px;
-  padding: 1.25rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-
-  &__label {
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-    font-weight: 500;
-  }
-
-  &__value {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: var(--text-primary);
-  }
+.back-link-wrap { margin-top: 8px; }
+.back-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  color: var(--text-secondary); text-decoration: none;
+  font-size: 14px; font-weight: 500;
+  transition: color var(--duration-fast) var(--ease-out);
+  &:hover { color: var(--accent-start); }
 }

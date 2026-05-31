@@ -1,0 +1,54 @@
+<div class="profile-dropdown__menu" (click)="onMenuClick($event)">
+  <div class="profile-dropdown__user-info">
+    <div class="profile-dropdown__user-avatar">
+      {{ initials() }}
+    </div>
+    <div class="profile-dropdown__user-details">
+      <div class="profile-dropdown__user-name">
+        {{ displayName() }}
+      </div>
+      @if (user()) {
+        <div class="profile-dropdown__user-email">
+          {{ user()!.email }}
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="profile-dropdown__divider"></div>
+
+  <a
+    routerLink="/profile"
+    class="profile-dropdown__item"
+    (click)="onClose()"
+  >
+    <ng-icon name="user" size="1rem" />
+    <span>{{ 'nav.profile' | translate }}</span>
+  </a>
+
+  <a
+    routerLink="/settings"
+    class="profile-dropdown__item"
+    (click)="onClose()"
+  >
+    <ng-icon name="settings" size="1rem" />
+    <span>{{ 'nav.settings' | translate }}</span>
+  </a>
+
+  <div class="profile-dropdown__divider"></div>
+
+  <button
+    class="profile-dropdown__item profile-dropdown__item--danger"
+    (click)="onLogout()"
+    [disabled]="isLoggingOut()"
+  >
+    <ng-icon name="logout" size="1rem" />
+    <span>
+      @if (isLoggingOut()) {
+        {{ 'profile.signingOut' | translate }}
+      } @else {
+        {{ 'profile.signOut' | translate }}
+      }
+    </span>
+  </button>
+</div>

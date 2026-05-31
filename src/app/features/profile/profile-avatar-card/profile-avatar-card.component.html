@@ -1,0 +1,17 @@
+<div class="profile-card profile-avatar-card" ftSubtleReveal="fade-up">
+  <div class="avatar-wrapper">
+    <div class="avatar-circle">
+      {{ initials() }}
+    </div>
+  </div>
+  <div class="avatar-info">
+    <h2 class="avatar-name">
+      @if (user(); as u) {
+        {{ u.displayName || u.email.split('@')[0] }}
+      }
+    </h2>
+    @if (user()) {
+      <p class="avatar-email">{{ user()!.email }}</p>
+    }
+  </div>
+</div>

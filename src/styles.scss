@@ -8,13 +8,17 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ─── Font Imports ───────────────────────────────────────────────── */
+/* ─── Font Imports ──────────────────────────────────────────────── */
 @import '@fontsource/inter/400.css';
 @import '@fontsource/inter/500.css';
 @import '@fontsource/inter/600.css';
 @import '@fontsource/space-grotesk/500.css';
 @import '@fontsource/space-grotesk/600.css';
 @import '@fontsource/space-grotesk/700.css';
+
+/* ─── Design Tokens & Responsive Utilities (SDD: frontend-ux-responsive-overhaul) */
+@import 'styles/tokens';
+@import 'styles/responsive';
 
 /* ─── CSS Custom Properties (Design Tokens) ──────────────────────── */
 
@@ -103,61 +107,7 @@
   --content-max-width-wide: 1320px;
 }
 
-/* LIGHT THEME — "Sky Lavender & Amatista" */
-.theme-light {
-  /* Backgrounds — clean, cool-tinted whites */
-  --bg-primary: #F4F6FB;
-  --bg-secondary: #FFFFFF;
-  --bg-tertiary: #E8ECF4;
-  --bg-elevated: #DCE2EE;
-
-  /* Glass — airy, subtle */
-  --glass-bg: rgba(255, 255, 255, 0.75);
-  --glass-border: rgba(0, 0, 0, 0.06);
-  --glass-border-hover: rgba(0, 0, 0, 0.12);
-  --glass-blur: 16px;
-
-  /* Accent gradient — Sky → Lavender → Amethyst */
-  --accent-start: #7DD3FC;
-  --accent-mid: #A78BFA;
-  --accent-end: #8B5CF6;
-  --accent-glow: rgba(167, 139, 250, 0.22);
-
-  /* Semantic — accessible on light */
-  --success: #059669;
-  --success-bg: rgba(5, 150, 105, 0.1);
-  --danger: #DC2626;
-  --danger-bg: rgba(220, 38, 38, 0.1);
-  --warning: #D97706;
-  --warning-bg: rgba(217, 119, 6, 0.1);
-  --info: #6366F1;
-  --info-bg: rgba(99, 102, 241, 0.08);
-
-  /* Text — high contrast, dark */
-  --text-primary: #1E293B;
-  --text-secondary: rgba(30, 41, 59, 0.72);
-  --text-tertiary: rgba(30, 41, 59, 0.45);
-  --text-inverse: #FFFFFF;
-
-  /* Borders */
-  --border-subtle: rgba(0, 0, 0, 0.05);
-  --border-default: rgba(0, 0, 0, 0.08);
-  --border-strong: rgba(0, 0, 0, 0.14);
-
-  /* Shadows — subtle for light bg */
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
-  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.08);
-  --shadow-xl: 0 16px 44px rgba(0, 0, 0, 0.12);
-
-  /* Glow */
-  --glow-accent: 0 0 30px rgba(167, 139, 250, 0.25);
-  --glow-success: 0 0 20px rgba(5, 150, 105, 0.15);
-  --glow-danger: 0 0 20px rgba(220, 38, 38, 0.15);
-
-  /* Chart-specific (light theme) */
-  --chart-grid: rgba(0, 0, 0, 0.07);
-}
+/* LIGHT THEME — now defined in styles/_tokens.scss (SDD: frontend-ux-responsive-overhaul) */
 
 /* ─── Base Reset ─────────────────────────────────────────────────── */
 *,
@@ -213,10 +163,10 @@ input, select, textarea { font-family: var(--font-body); }
 
 /* Light theme scrollbar */
 .theme-light ::-webkit-scrollbar-thumb {
-  background: rgba(99, 102, 241, 0.25);
+  background: rgba(139, 92, 246, 0.25);
 }
 .theme-light ::-webkit-scrollbar-thumb:hover {
-  background: rgba(99, 102, 241, 0.45);
+  background: rgba(139, 92, 246, 0.45);
 }
 
 /* ─── Selection ──────────────────────────────────────────────────── */

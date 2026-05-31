@@ -52,7 +52,8 @@
     "categories": "Categorías",
     "analytics": "Análisis",
     "settings": "Configuración",
-    "newTransaction": "Nueva Transacción"
+    "newTransaction": "Nueva Transacción",
+    "profile": "Perfil"
   },
   "landing": {
     "heroBadge": "Finanzas con IA",
@@ -247,15 +248,43 @@
       "title": "Vincular Telegram",
       "desc": "Conectá tu cuenta de Telegram para registrar gastos desde el bot.",
       "generate_code": "Generar código",
+      "generating": "Generando código...",
       "code_label": "Tu código de vinculación",
       "code_expires": "Expira en",
       "code_instructions": "Enviá este código al bot de Telegram con /link",
-      "linked": "✅ Vinculado",
+      "linked": "Vinculado",
       "linked_desc": "Tu cuenta de Telegram está vinculada. Podés registrar gastos desde el bot.",
       "link_telegram": "Abrir Telegram",
       "open_with_code": "Abrir Telegram con código",
       "error_generate": "Error al generar el código",
-      "error_link": "Error al verificar el estado de vinculación"
+      "error_link": "Error al verificar el estado de vinculación",
+      "linked_success": "¡Cuenta vinculada correctamente!",
+      "already_linked": "Cuenta vinculada",
+      "loading": "Verificando estado de vinculación...",
+      "open_app": "Abrir Telegram"
+    },
+    "profile": {
+      "title": "Perfil",
+      "display_name": "Nombre para mostrar",
+      "email": "Correo electrónico"
+    },
+    "security": {
+      "title": "Seguridad",
+      "desc": "Gestioná tu contraseña y autenticación de dos factores.",
+      "coming_soon": "Configuración de contraseña y 2FA próximamente."
+    },
+    "preferences": {
+      "title": "Preferencias",
+      "desc": "Personalizá tu experiencia.",
+      "theme": "Tema",
+      "language": "Idioma",
+      "currency": "Moneda",
+      "coming_soon": "Configuración de preferencias próximamente."
+    },
+    "settings_notifications": {
+      "title": "Notificaciones",
+      "desc": "Configurá cómo recibís notificaciones.",
+      "coming_soon": "Preferencias de notificaciones próximamente."
     }
   },
   "analytics": {
@@ -286,9 +315,42 @@
     "displayName": "Nombre para mostrar",
     "email": "Correo electrónico",
     "save": "Guardar cambios",
-    "cancel": "Cancelar"
+    "cancel": "Cancelar",
+    "signingOut": "Cerrando sesión...",
+    "signOut": "Cerrar sesión",
+    "insights": "Insights",
+    "accountAge": "Antigüedad de la cuenta",
+    "totalTransactions": "Total de transacciones",
+    "loading": "Cargando perfil...",
+    "errorTitle": "Error al cargar el perfil",
+    "errorDesc": "No se pudieron obtener los datos de tu perfil. Intenta de nuevo.",
+    "retry": "Reintentar",
+    "manageAccount": "Gestiona la información de tu cuenta",
+    "displayNamePlaceholder": "Tu nombre para mostrar",
+    "displayNameRequired": "El nombre para mostrar es obligatorio",
+    "emailReadonly": "El correo electrónico no se puede cambiar",
+    "personalInfo": "Información Personal",
+    "backToDashboard": "Volver al panel"
   },
   "theme": {
     "toggle": "Cambiar tema"
+  },
+  "notifications": {
+    "bellLabel": "Notificaciones",
+    "title": "Notificaciones",
+    "empty": "Aún no hay notificaciones",
+    "dismiss": "Descartar notificación",
+    "welcome": {
+      "title": "¡Bienvenido!",
+      "message": "Tu cuenta está lista. Comienza a rastrear tus finanzas."
+    },
+    "feature": {
+      "title": "Nueva función disponible",
+      "message": "Descubre el nuevo panel con insights de IA."
+    },
+    "budget": {
+      "title": "Alerta de presupuesto",
+      "message": "Tu presupuesto mensual está casi agotado. Revisa tus gastos."
+    }
   }
 }

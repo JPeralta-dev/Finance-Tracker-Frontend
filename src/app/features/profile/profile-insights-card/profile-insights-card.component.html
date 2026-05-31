@@ -1,0 +1,27 @@
+@if (insights().length > 0 || userStats()) {
+  <div class="profile-card" ftSubtleReveal="fade-up" [delay]="delay()">
+    <div class="card-header">
+      <div class="card-icon">
+        <ng-icon name="barChart" size="1.5rem" />
+      </div>
+      <h2 class="card-title">{{ 'profile.insights' | translate }}</h2>
+    </div>
+
+    @if (userStats(); as stats) {
+      <div class="stats-grid">
+        <div class="stat-item">
+          <span class="stat-label">{{ 'profile.accountAge' | translate }}</span>
+          <span class="stat-value">{{ stats.accountAge }}</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">{{ 'profile.totalTransactions' | translate }}</span>
+          <span class="stat-value">{{ stats.totalTransactions }}</span>
+        </div>
+      </div>
+    }
+
+    @if (insights().length > 0) {
+      <ft-insights-panel [insights]="insights()" />
+    }
+  </div>
+}

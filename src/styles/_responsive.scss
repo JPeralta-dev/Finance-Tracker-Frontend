@@ -1,0 +1,134 @@
+/**
+ * Responsive Utilities — SCSS Partial
+ *
+ * Breakpoint mixins, safe padding, and touch targets.
+ * Imported by styles.scss and component SCSS files.
+ *
+ * Breakpoints (mobile-first):
+ *   xs: 375px  | md: 768px  | lg: 1024px
+ * Safe padding: 12px (mobile) → 16px (tablet) → 24px (desktop)
+ * Touch targets: 44x44px minimum below 768px
+ */
+
+/* ─── Breakpoint Variables ───────────────────────────────────────── */
+$breakpoint-xs: 375px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 1024px;
+
+/* ─── Safe Padding ───────────────────────────────────────────────── */
+$safe-padding-xs: 12px;
+$safe-padding-md: 16px;
+$safe-padding-lg: 24px;
+
+/* ─── Breakpoint Mixins (mobile-first) ───────────────────────────── */
+
+/**
+ * Apply styles at xs breakpoint (375px+)
+ * Usage: @include at-xs { ... }
+ */
+@mixin at-xs {
+  @media (min-width: $breakpoint-xs) {
+    @content;
+  }
+}
+
+/**
+ * Apply styles at md breakpoint (768px+)
+ * Usage: @include at-md { ... }
+ */
+@mixin at-md {
+  @media (min-width: $breakpoint-md) {
+    @content;
+  }
+}
+
+/**
+ * Apply styles at lg breakpoint (1024px+)
+ * Usage: @include at-lg { ... }
+ */
+@mixin at-lg {
+  @media (min-width: $breakpoint-lg) {
+    @content;
+  }
+}
+
+/**
+ * Apply styles below md breakpoint (<768px)
+ * Usage: @include below-md { ... }
+ */
+@mixin below-md {
+  @media (max-width: ($breakpoint-md - 1)) {
+    @content;
+  }
+}
+
+/**
+ * Apply styles below lg breakpoint (<1024px)
+ * Usage: @include below-lg { ... }
+ */
+@mixin below-lg {
+  @media (max-width: ($breakpoint-lg - 1)) {
+    @content;
+  }
+}
+
+/* ─── Touch Target Mixin ─────────────────────────────────────────── */
+
+/**
+ * Ensures minimum 44x44px clickable area for mobile.
+ * Usage: @include touch-target;
+ */
+@mixin touch-target {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* ─── Safe Padding Mixin ─────────────────────────────────────────── */
+
+/**
+ * Applies responsive horizontal padding.
+ * Usage: @include safe-padding; or @include safe-padding(vertical: 16px);
+ */
+@mixin safe-padding($vertical: null) {
+  padding-left: $safe-padding-xs;
+  padding-right: $safe-padding-xs;
+  @if $vertical {
+    padding-top: $vertical;
+    padding-bottom: $vertical;
+  }
+
+  @include at-md {
+    padding-left: $safe-padding-md;
+    padding-right: $safe-padding-md;
+  }
+
+  @include at-lg {
+    padding-left: $safe-padding-lg;
+    padding-right: $safe-padding-lg;
+  }
+}
+
+/* ─── Text Truncation ────────────────────────────────────────────── */
+
+/**
+ * Truncates text with ellipsis.
+ * Usage: @include truncate;
+ */
+@mixin truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ─── Responsive Container ───────────────────────────────────────── */
+
+/**
+ * Page container with safe padding and overflow prevention.
+ * Usage: @include responsive-container;
+ */
+@mixin responsive-container {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  @include safe-padding;
+}
