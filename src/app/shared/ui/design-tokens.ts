@@ -184,7 +184,7 @@ export const lightTokens: DesignTokens = {
       borderHover: 'rgba(0, 0, 0, 0.12)',
     },
     accent: {
-      start: '#7DD3FC',
+      start: '#A78BFA',
       mid: '#A855F7',
       end: '#8B5CF6',
       glow: 'rgba(167, 139, 250, 0.22)',

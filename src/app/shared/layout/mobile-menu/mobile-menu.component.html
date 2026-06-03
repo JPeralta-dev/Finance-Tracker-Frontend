@@ -27,14 +27,14 @@
             {{ getInitials(currentUser.displayName || currentUser.email) }}
           </div>
           <div class="mobile-menu-user-details">
-            <span class="mobile-menu-user-name">{{ currentUser.displayName || 'User' }}</span>
+            <span class="mobile-menu-user-name">{{ currentUser.displayName || ('nav.profile' | translate) }}</span>
             <span class="mobile-menu-user-email">{{ currentUser.email }}</span>
           </div>
         </div>
       }
-      <button class="mobile-menu-logout" (click)="onLogout()" aria-label="Logout">
+      <button class="mobile-menu-logout" (click)="onLogout()" [attr.aria-label]="'auth.logout' | translate">
         <ng-icon name="logout" size="1rem" />
-        <span>Logout</span>
+        <span>{{ 'auth.logout' | translate }}</span>
       </button>
     </div>
   </div>

@@ -114,8 +114,3 @@
     animation: shimmer 1.5s ease-in-out infinite alternate;
   }
 }
-
-@keyframes shimmer {
-  from { opacity: 0.3; }
-  to { opacity: 0.6; }
-}

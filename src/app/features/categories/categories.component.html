@@ -5,9 +5,11 @@
       <h1 class="page-title">{{ 'categories.title' | translate }}</h1>
       <p class="page-subtitle">{{ 'categories.subtitle' | translate }}</p>
     </div>
-    <button class="btn-new" (click)="openCreateForm()">
-      <ng-icon name="plus" size="1rem" />
-      {{ 'categories.new' | translate }}
+    <button class="btn-new" (click)="openCreateForm()" data-blendy-from="category-modal">
+      <span>
+        <ng-icon name="plus" size="1rem" />
+        {{ 'categories.new' | translate }}
+      </span>
     </button>
   </div>
 
@@ -19,10 +21,10 @@
         <span class="stat-value">{{ categories().length }}</span>
       </div>
       <div class="stat-divider"></div>
-      <div class="stat-item">
-        <span class="stat-label">{{ 'categories.stats.highest' | translate }}</span>
-        <span class="stat-value">{{ topCategory().name }}</span>
-      </div>
+          <div class="stat-item">
+            <span class="stat-label">{{ 'categories.stats.highest' | translate }}</span>
+            <span class="stat-value">{{ topCategory().name | categoryTranslate }}</span>
+          </div>
       <div class="stat-divider"></div>
       <div class="stat-item">
         <span class="stat-label">{{ 'categories.stats.total_expenses' | translate }}</span>
@@ -62,8 +64,10 @@
             </div>
             <div class="cat-actions">
               @if (!cat.isDefault) {
-                <button class="cat-action" (click)="openEditForm(cat)" [attr.aria-label]="'Edit'">
-                  <ng-icon name="edit" size="0.875rem" />
+                <button class="cat-action" (click)="openEditForm(cat)" [attr.aria-label]="'Edit'" data-blendy-from="category-modal">
+                  <span>
+                    <ng-icon name="edit" size="0.875rem" />
+                  </span>
                 </button>
                 <button class="cat-action cat-action--danger" (click)="deleteCategory(cat)" [attr.aria-label]="'Delete'">
                   <ng-icon name="close" size="0.875rem" />
@@ -75,7 +79,7 @@
           </div>
 
           <!-- Card Body -->
-          <span class="cat-name">{{ cat.name }}</span>
+          <span class="cat-name">{{ cat.name | categoryTranslate }}</span>
           <span class="cat-total">{{ cat.total | ftCurrency:'short' }}</span>
 
           <!-- Progress Bar -->
@@ -98,71 +102,5 @@
       }
     }
   </div>
-
-  <!-- Modal Form -->
-  @if (showForm()) {
-    <div class="modal-overlay" (click)="closeForm()">
-      <div class="modal" (click)="$event.stopPropagation()">
-        <div class="modal-header">
-          <h2>{{ (editingCategory() ? 'categories.edit_title' : 'categories.new_title') | translate }}</h2>
-          <button class="modal-close" (click)="closeForm()">
-            <ng-icon name="close" size="1.25rem" />
-          </button>
-        </div>
-
-        <form (ngSubmit)="submitForm()" class="modal-form">
-          <!-- Name -->
-          <div class="form-group">
-            <label>{{ 'categories.form.name' | translate }}</label>
-            <input
-              type="text"
-              [(ngModel)]="formName"
-              name="name"
-              required
-              maxlength="50"
-              [placeholder]="'categories.form.name_placeholder' | translate"
-            />
-          </div>
-
-          <!-- Kind -->
-          <div class="form-group">
-            <label>{{ 'categories.form.kind' | translate }}</label>
-            <div class="kind-toggle">
-              <button type="button" class="kind-btn" [class.active]="formKind() === 'expense'" (click)="formKind.set('expense')">
-                {{ 'categories.form.expense' | translate }}
-              </button>
-              <button type="button" class="kind-btn" [class.active]="formKind() === 'income'" (click)="formKind.set('income')">
-                {{ 'categories.form.income' | translate }}
-              </button>
-              <button type="button" class="kind-btn" [class.active]="formKind() === 'mixed'" (click)="formKind.set('mixed')">
-                {{ 'categories.form.mixed' | translate }}
-              </button>
-            </div>
-          </div>
-
-          <!-- Color -->
-          <div class="form-group">
-            <label>{{ 'categories.form.color' | translate }}</label>
-            <div class="color-picker">
-              <input type="color" [(ngModel)]="formColor" name="color" />
-              <span>{{ formColor() }}</span>
-            </div>
-          </div>
-
-          <!-- Actions -->
-          <div class="modal-actions">
-            <button type="button" class="btn-cancel" (click)="closeForm()">
-              {{ 'common.cancel' | translate }}
-            </button>
-            <button type="submit" class="btn-submit" [disabled]="submitting()">
-              @if (submitting()) {
-                <span class="spinner"></span>
-              }
-              {{ (editingCategory() ? 'common.save' : 'common.save') | translate }}
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-  }
 </div>
+

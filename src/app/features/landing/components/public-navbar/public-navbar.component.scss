@@ -94,6 +94,27 @@
   }
 }
 
+/* Mobile Sign In icon (hidden on desktop) */
+.public-navbar__mobile-signin {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  color: var(--text-secondary);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  transition: all var(--duration-fast) var(--ease-out);
+
+  &:hover {
+    color: var(--accent-start);
+    border-color: var(--glass-border-hover);
+    background: var(--accent-glow);
+  }
+}
+
 /* Mobile Toggle */
 .public-navbar__mobile-toggle {
   display: none;
@@ -134,7 +155,8 @@
   align-items: center;
   gap: 10px;
   width: 100%;
-  padding: 10px 12px;
+  padding: 12px 12px;
+  min-height: 44px;
   font-size: 14px;
   font-weight: 500;
   color: var(--text-secondary);
@@ -175,11 +197,21 @@
     display: none;
   }
 
+  .public-navbar__mobile-signin {
+    display: flex;
+  }
+
   .public-navbar__mobile-toggle {
     display: flex;
   }
 
   .public-navbar__logo-text {
     font-size: 16px;
+  }
+
+  /* Ensure CTA buttons meet 44x44 touch target */
+  .public-navbar__mobile-cta {
+    min-height: 44px;
+    justify-content: center;
   }
 }

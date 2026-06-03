@@ -1,17 +1,21 @@
-import { Component, OnInit, signal, inject, computed } from '@angular/core';
+import { Component, OnInit, signal, inject, computed, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { NgIcon, provideIcons } from '@ng-icons/core';
+import { Subscription } from 'rxjs';
 import { ICONS } from '../../shared/icons/icon-registry';
 import { FinanceService } from '../../core/services/finance.service';
 import { Category } from '../../core/models/category.model';
 import { SkeletonComponent } from '../../shared/components/skeleton.component';
 import { EmptyStateComponent } from '../../shared/components/empty-state.component';
 import { TranslatePipe } from '../../core/pipes/translate.pipe';
+import { CategoryTranslatePipe } from '../../core/pipes/category-translate.pipe';
 import { FtSubtleRevealDirective } from '../../shared/directives/ft-subtle-reveal.directive';
 import { ToastService } from '../../core/services/toast.service';
+import { TranslationService } from '../../core/services/translation.service';
 import { FtCurrencyPipe } from '../../core/pipes/ft-currency.pipe';
+import { ModalService } from '../../core/services/modal.service';
 
 @Component({
   selector: 'app-categories',
@@ -25,27 +29,23 @@ import { FtCurrencyPipe } from '../../core/pipes/ft-currency.pipe';
     EmptyStateComponent,
     NgIcon,
     TranslatePipe,
+    CategoryTranslatePipe,
     FtSubtleRevealDirective,
   ],
   providers: [provideIcons(ICONS)],
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.scss',
 })
-export class CategoriesComponent implements OnInit {
+export class CategoriesComponent implements OnInit, OnDestroy {
   private financeService = inject(FinanceService);
   private toast = inject(ToastService);
+  private i18n = inject(TranslationService);
+  private modalService = inject(ModalService);
 
   categories = signal<Category[]>([]);
   loading = signal(true);
-  submitting = signal(false);
 
-  // Form state
-  showForm = signal(false);
-  editingCategory = signal<Category | null>(null);
-  formName = signal('');
-  formIcon = signal('');
-  formColor = signal('#9D50BB');
-  formKind = signal<'income' | 'expense' | 'mixed'>('expense');
+  private categorySavedSub?: Subscription;
 
   // Computed
   topCategory = computed(() => {
@@ -59,6 +59,13 @@ export class CategoriesComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadCategories();
+    this.categorySavedSub = this.modalService.categorySaved$.subscribe(() => {
+      this.loadCategories();
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.categorySavedSub?.unsubscribe();
   }
 
   private loadCategories(): void {
@@ -70,7 +77,7 @@ export class CategoriesComponent implements OnInit {
       },
       error: () => {
         this.loading.set(false);
-        this.toast.error('Failed to load categories.');
+        this.toast.error(this.i18n.translate('common.toasts.categories_load_failed'));
       },
     });
   }
@@ -92,75 +99,44 @@ export class CategoriesComponent implements OnInit {
 
   // CRUD Actions
   openCreateForm(): void {
-    this.editingCategory.set(null);
-    this.formName.set('');
-    this.formIcon.set('');
-    this.formColor.set('#9D50BB');
-    this.formKind.set('expense');
-    this.showForm.set(true);
+    this.modalService.openCategoryModal({
+      name: '',
+      icon: '',
+      color: '#9D50BB',
+      kind: 'expense',
+    });
   }
 
   openEditForm(cat: Category): void {
-    this.editingCategory.set(cat);
-    this.formName.set(cat.name);
-    this.formIcon.set(cat.icon);
-    this.formColor.set(cat.color);
-    this.formKind.set(cat.kind);
-    this.showForm.set(true);
-  }
-
-  closeForm(): void {
-    this.showForm.set(false);
-    this.editingCategory.set(null);
-  }
-
-  submitForm(): void {
-    if (!this.formName() || !this.formColor()) return;
-
-    this.submitting.set(true);
-    const payload = {
-      name: this.formName(),
-      icon: this.formIcon() || this.categoryMark(this.formName()),
-      color: this.formColor(),
-      kind: this.formKind(),
-    };
-
-    const request = this.editingCategory()
-      ? this.financeService.updateCategory(this.editingCategory()!.id, payload)
-      : this.financeService.createCategory(payload);
-
-    request.subscribe({
-      next: () => {
-        this.submitting.set(false);
-        this.closeForm();
-        this.loadCategories();
-        this.toast.success(
-          this.editingCategory() ? 'Category updated' : 'Category created'
-        );
+    this.modalService.openCategoryModal(
+      {
+        name: cat.name,
+        icon: cat.icon,
+        color: cat.color,
+        kind: cat.kind,
       },
-      error: (err) => {
-        this.submitting.set(false);
-        this.toast.error(err.error?.message || 'Failed to save category.');
-      },
-    });
+      cat.id
+    );
   }
 
   deleteCategory(cat: Category): void {
     if (cat.isDefault) {
-      this.toast.error('Cannot delete default categories.');
+      this.toast.error(this.i18n.translate('common.toasts.category_cannot_delete'));
       return;
     }
 
-    if (confirm(`Delete "${cat.name}"? Transactions will be moved to "Other".`)) {
+    const catName = this.i18n.translate(cat.name);
+    if (confirm(`Delete "${catName}"? Transactions will be moved to "Other".`)) {
       this.financeService.deleteCategory(cat.id).subscribe({
         next: () => {
           this.loadCategories();
-          this.toast.success('Category deleted.');
+          this.toast.success(this.i18n.translate('common.toasts.category_deleted'));
         },
         error: (err) => {
-          this.toast.error(err.error?.message || 'Failed to delete category.');
+          this.toast.error(err.error?.message || this.i18n.translate('common.toasts.category_delete_failed'));
         },
       });
     }
   }
 }
+

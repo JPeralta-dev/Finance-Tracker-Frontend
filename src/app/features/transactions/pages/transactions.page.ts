@@ -8,19 +8,22 @@ import { TransactionRowData } from '../transaction.types';
 import { FinanceService } from '../../../core/services/finance.service';
 import { ToastService } from '../../../core/services/toast.service';
 import { EmptyStateComponent } from '../../../shared/components/empty-state.component';
+import { TranslatePipe } from '../../../core/pipes/translate.pipe';
+import { TranslationService } from '../../../core/services/translation.service';
 
 type TransactionsState = 'loading' | 'ready' | 'empty' | 'error';
 
 @Component({
   selector: 'ft-transactions-page',
   standalone: true,
-  imports: [CommonModule, RouterLink, TransactionTableComponent, EmptyStateComponent],
+  imports: [CommonModule, RouterLink, TransactionTableComponent, EmptyStateComponent, TranslatePipe],
   templateUrl: './transactions.page.html',
   styleUrl: './transactions.page.scss',
 })
 export class TransactionsPage implements OnInit {
   private readonly financeService = inject(FinanceService);
   private readonly toast = inject(ToastService);
+  private readonly i18n = inject(TranslationService);
 
   readonly transactions = signal<TransactionRowData[]>([]);
   readonly state = signal<TransactionsState>('loading');
@@ -35,7 +38,7 @@ export class TransactionsPage implements OnInit {
     this.financeService.getTransactions({ sortBy: 'date', sortDir: 'desc' })
       .pipe(catchError(() => {
         this.state.set('error');
-        this.toast.error('Failed to load transactions. Please try again.');
+        this.toast.error(this.i18n.translate('common.toasts.transactions_load_failed'));
         return of([]);
       }))
       .subscribe({

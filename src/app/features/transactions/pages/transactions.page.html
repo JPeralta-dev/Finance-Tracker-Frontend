@@ -3,61 +3,65 @@
     <!-- Loading state -->
     <div class="transactions-page__header">
       <div>
-        <h1 class="transactions-page__title">Loading...</h1>
-        <p class="transactions-page__subtitle">Fetching your transactions.</p>
+        <h1 class="transactions-page__title">{{ 'transactions.loading' | translate }}</h1>
+        <p class="transactions-page__subtitle">{{ 'transactions.loadingDesc' | translate }}</p>
       </div>
     </div>
-    <ft-transaction-table [items]="[]" [loading]="true" [pageSize]="10" />
+    <div class="tx-scroll-wrapper">
+      <ft-transaction-table [items]="[]" [loading]="true" [pageSize]="10" />
+    </div>
   } @else if (state() === 'error') {
     <!-- Error state -->
     <ft-empty-state
       icon="warning"
-      title="Something went wrong"
-      description="We couldn't load your transactions. Please try again."
-      actionLabel="Retry"
+      [title]="'transactions.errorTitle' | translate"
+      [description]="'transactions.errorDesc' | translate"
+      [actionLabel]="'transactions.retry' | translate"
       (action)="retry()"
     />
   } @else if (state() === 'empty') {
     <!-- Empty state -->
     <div class="transactions-page__header">
       <div>
-        <h1 class="transactions-page__title">Transactions</h1>
+        <h1 class="transactions-page__title">{{ 'transactions.title' | translate }}</h1>
         <p class="transactions-page__subtitle">
-          Start tracking your finances by adding your first transaction.
+          {{ 'transactions.startTracking' | translate }}
         </p>
       </div>
       <a routerLink="/transactions/new" class="transactions-page__cta">
-        + New Transaction
+        {{ 'transactions.newTransaction' | translate }}
       </a>
     </div>
     <ft-empty-state
       icon="list"
-      title="No transactions yet"
-      description="Your transaction history will appear here once you start logging expenses and income."
+      [title]="'transactions.emptyTitle' | translate"
+      [description]="'transactions.emptyDesc' | translate"
       actionRoute="/transactions/new"
-      actionLabel="Add Transaction"
+      [actionLabel]="'transactions.addFirstTransaction' | translate"
     />
   } @else {
     <!-- Ready state -->
     <!-- Header -->
     <div class="transactions-page__header">
       <div>
-        <h1 class="transactions-page__title">Transactions</h1>
+        <h1 class="transactions-page__title">{{ 'transactions.title' | translate }}</h1>
         <p class="transactions-page__subtitle">
-          Manage and track all your financial activity.
+          {{ 'transactions.subtitle' | translate }}
         </p>
       </div>
       <a routerLink="/transactions/new" class="transactions-page__cta">
-        + New Transaction
+        {{ 'transactions.newTransaction' | translate }}
       </a>
     </div>
 
     <!-- Transaction table -->
-    <ft-transaction-table
-      [items]="transactions()"
-      [loading]="false"
-      [pageSize]="10"
-      (ftSelect)="onSelect($event)"
-    />
+    <div class="tx-scroll-wrapper">
+      <ft-transaction-table
+        [items]="transactions()"
+        [loading]="false"
+        [pageSize]="10"
+        (ftSelect)="onSelect($event)"
+      />
+    </div>
   }
 </div>

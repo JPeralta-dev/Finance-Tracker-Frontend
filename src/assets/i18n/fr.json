@@ -9,7 +9,19 @@
     "success": "Succès",
     "search": "Rechercher",
     "filter": "Filtrer",
-    "viewAll": "Voir tout"
+    "viewAll": "Voir tout",
+    "toasts": {
+      "categories_load_failed": "Échec du chargement des catégories.",
+      "category_created": "Catégorie créée",
+      "category_updated": "Catégorie modifiée",
+      "category_save_failed": "Échec de l'enregistrement de la catégorie.",
+      "category_delete_failed": "Échec de la suppression de la catégorie.",
+      "category_cannot_delete": "Impossible de supprimer les catégories par défaut.",
+      "category_deleted": "Catégorie supprimée.",
+      "transactions_load_failed": "Échec du chargement des transactions. Veuillez réessayer.",
+      "dashboard_load_failed": "Échec du chargement des données du tableau de bord. Veuillez réessayer.",
+      "dashboard_load_failed_short": "Échec du chargement des données du tableau de bord."
+    }
   },
   "auth": {
     "login": "Connexion",
@@ -164,6 +176,16 @@
     "new": "Nouvelle Transaction",
     "noTransactions": "Pas encore de transactions",
     "addFirst": "Ajoutez votre première transaction",
+    "loading": "Chargement...",
+    "loadingDesc": "Récupération de vos transactions.",
+    "errorTitle": "Quelque chose s'est mal passé",
+    "errorDesc": "Nous n'avons pas pu charger vos transactions. Veuillez réessayer.",
+    "retry": "Réessayer",
+    "emptyTitle": "Pas encore de transactions",
+    "emptyDesc": "Votre historique de transactions apparaîtra ici une fois que vous commencerez à enregistrer des dépenses et des revenus.",
+    "startTracking": "Commencez à suivre vos finances en ajoutant votre première transaction.",
+    "addFirstTransaction": "Ajouter Transaction",
+    "newTransaction": "+ Nouvelle Transaction",
     "form": {
       "back": "← Retour aux transactions",
       "new_title": "Nouvelle Transaction",
@@ -195,6 +217,15 @@
         "not_found": "Transaction non trouvée",
         "server_error": "Erreur serveur. Veuillez réessayer"
       }
+    },
+    "filters": {
+      "search": "Rechercher des transactions...",
+      "all": "Toutes",
+      "income": "Revenus",
+      "expenses": "Dépenses",
+      "date": "Date",
+      "amount": "Montant",
+      "category": "Catégorie"
     }
   },
   "categories": {
@@ -237,54 +268,44 @@
     "coming_soon": "Bientôt : Telegram, IA et plus d'intégrations.",
     "session": {
       "title": "Session",
-      "logged_as": "Connecté comme",
-      "sign_out": "Se déconnecter"
+      "sign_out": "Déconnexion",
+      "confirm_message": "Êtes-vous sûr de vouloir vous déconnecter ?",
+      "confirm_sign_out": "Oui, déconnexion"
     },
-    "integrations": {
-      "title": "Intégrations",
-      "desc": "Connectez des outils externes pour améliorer votre expérience."
+    "accounts": {
+      "title": "Comptes liés",
+      "desc": "Connectez vos comptes de messagerie."
     },
     "telegram": {
       "title": "Lier Telegram",
-      "desc": "Connectez votre compte Telegram pour enregistrer des dépenses depuis le bot.",
-      "generate_code": "Générer un code",
-      "generating": "Génération du code...",
-      "code_label": "Votre code de liaison",
-      "code_expires": "Expire dans",
-      "code_instructions": "Envoyez ce code au bot Telegram avec /link",
-      "linked": "Lié",
-      "linked_desc": "Votre compte Telegram est lié. Vous pouvez enregistrer des dépenses depuis le bot.",
-      "link_telegram": "Ouvrir Telegram",
-      "open_with_code": "Ouvrir Telegram avec le code",
-      "error_generate": "Erreur lors de la génération du code",
-      "error_link": "Erreur lors de la vérification du statut de liaison",
+      "desc": "Connectez votre compte Telegram pour enregistrer des transactions depuis le bot.",
+      "loading": "Vérification du statut de liaison...",
       "linked_success": "Compte lié avec succès !",
       "already_linked": "Compte lié",
-      "loading": "Vérification du statut de liaison...",
-      "open_app": "Ouvrir Telegram"
+      "linked_desc": "Votre compte Telegram est lié. Vous pouvez enregistrer des transactions depuis le bot.",
+      "link_telegram": "Ouvrir Telegram",
+      "code_label": "Votre code de liaison",
+      "code_expires": "Expire",
+      "code_instructions": "Envoyez ce code au bot Telegram pour lier votre compte.",
+      "open_with_code": "Ouvrir Telegram avec le code",
+      "generating": "Génération du code...",
+      "generate_code": "Générer le code de liaison"
     },
-    "profile": {
-      "title": "Profil",
-      "display_name": "Nom d'affichage",
-      "email": "E-mail"
-    },
-    "security": {
-      "title": "Sécurité",
-      "desc": "Gérez votre mot de passe et l'authentification à deux facteurs.",
-      "coming_soon": "Paramètres de mot de passe et 2FA bientôt disponibles."
+    "whatsapp": {
+      "title": "WhatsApp",
+      "desc": "Liez votre compte WhatsApp.",
+      "coming_soon": "Bientôt disponible",
+      "link_whatsapp": "Lier WhatsApp"
     },
     "preferences": {
       "title": "Préférences",
       "desc": "Personnalisez votre expérience.",
       "theme": "Thème",
+      "toggle_theme": "Changer de thème",
+      "dark": "Sombre",
+      "light": "Clair",
       "language": "Langue",
-      "currency": "Devise",
-      "coming_soon": "Paramètres de préférences bientôt disponibles."
-    },
-    "settings_notifications": {
-      "title": "Notifications",
-      "desc": "Configurez comment vous recevez les notifications.",
-      "coming_soon": "Préférences de notifications bientôt disponibles."
+      "currency": "Devise"
     }
   },
   "analytics": {
@@ -330,7 +351,17 @@
     "displayNameRequired": "Le nom d'affichage est obligatoire",
     "emailReadonly": "L'e-mail ne peut pas être modifié",
     "personalInfo": "Informations Personnelles",
-    "backToDashboard": "Retour au tableau de bord"
+    "backToDashboard": "Retour au tableau de bord",
+    "account_age": {
+      "less_than_month": "Moins d'un mois",
+      "months": "{{count}} mois",
+      "years": "{{count}} ans"
+    },
+    "toasts": {
+      "profile_updated": "Profil mis à jour avec succès !",
+      "profile_update_failed": "Échec de l'enregistrement du profil. Veuillez réessayer.",
+      "load_failed": "Échec du chargement des données du profil."
+    }
   },
   "theme": {
     "toggle": "Changer de thème"

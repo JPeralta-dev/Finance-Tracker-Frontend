@@ -43,11 +43,18 @@ export class TelegramLinkService implements OnDestroy {
     this.http.get<LinkStatusResponse>(`${this.api}/auth/link-status`).subscribe({
       next: (res) => {
         this.telegramId.set(res.telegramId);
-        this.state.set(res.linked ? 'linked' : 'idle');
+        if (res.linked) {
+          this.justLinked.set(true);
+          this.state.set('linked');
+          // Clear the flash after 3s
+          setTimeout(() => this.justLinked.set(false), 3000);
+        } else {
+          this.state.set('idle');
+        }
       },
       error: () => {
         this.error.set('settings.telegram.error_link');
-        this.state.set('error');
+        this.state.set('idle');
       },
     });
   }

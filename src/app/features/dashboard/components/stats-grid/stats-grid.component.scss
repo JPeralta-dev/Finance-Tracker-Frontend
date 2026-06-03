@@ -1,23 +1,21 @@
+@import 'responsive';
+
 /* ─── Stats Grid ───────────────────────────────────────────────────
    Responsive grid for stat cards.
-   Auto-fills based on available space.
+   Mobile-first: 1 col → 2 col (md) → 4 col (lg).
    ─────────────────────────────────────────────────────────────────── */
 
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 16px;
+  grid-template-columns: 1fr;
+  gap: 12px;
 
-  @media (max-width: 640px) {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-
-  @media (min-width: 641px) and (max-width: 1024px) {
+  @include at-md {
     grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
   }
 
-  @media (min-width: 1025px) {
+  @include at-lg {
     grid-template-columns: repeat(4, 1fr);
   }
 }
