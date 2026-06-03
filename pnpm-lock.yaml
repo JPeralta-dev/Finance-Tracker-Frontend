@@ -50,9 +50,6 @@ importers:
       '@ng-icons/heroicons':
         specifier: ^26.5.0
         version: 26.5.0
-      blendy:
-        specifier: ^0.0.1
-        version: 0.0.1
       chart.js:
         specifier: ^4.4.0
         version: 4.5.1
@@ -1878,9 +1875,6 @@ packages:
 
   bl@4.1.0:
     resolution: {integrity: sha512-1W07cM9gS6DcLperZfFSj+bWLtaPGSOHWhPiGzXmvVJbRLdG82sH/Kn8EtW1VqWVA54AKf2h5k5BbnIbwF3h6w==}
-
-  blendy@0.0.1:
-    resolution: {integrity: sha512-6zw2to19jBTF8HchX/gLgVav9gLcV+oTxGJLCCNVMFHuUtF1FdUOP+AiL1lcVIJi8gRiY1NHhiVzgu8D2+qbig==}
 
   body-parser@1.20.5:
     resolution: {integrity: sha512-3grm+/2tUOvu2cjJkvsIxrv/wVpfXQW4PsQHYm7yk4vfpu7Ekl6nEsYBoJUL6qDwZUx8wUhQ8tR2qz+ad9c9OA==}
@@ -6322,8 +6316,6 @@ snapshots:
       buffer: 5.7.1
       inherits: 2.0.4
       readable-stream: 3.6.2
-
-  blendy@0.0.1: {}
 
   body-parser@1.20.5:
     dependencies:
