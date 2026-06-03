@@ -237,66 +237,9 @@
     "coming_soon": "Coming Soon...",
     "session": {
       "title": "Session",
-      "logged_as": "Logged in as",
-      "sign_out": "Sign out"
-    },
-    "integrations": {
-      "title": "Integrations",
-      "desc": "Connect external tools to enhance your experience."
-    },
-    "telegram": {
-      "title": "Link Telegram",
-      "desc": "Connect your Telegram account to log expenses from the bot.",
-      "generate_code": "Generate code",
-      "generating": "Generating code...",
-      "code_label": "Your linking code",
-      "code_expires": "Expires in",
-      "code_instructions": "Send this code to the Telegram bot with /link",
-      "linked": "Linked",
-      "linked_desc": "Your Telegram account is linked. You can log expenses from the bot.",
-      "link_telegram": "Open Telegram",
-      "open_with_code": "Open Telegram with code",
-      "error_generate": "Error generating code",
-      "error_link": "Error checking link status",
-      "linked_success": "Account linked successfully!",
-      "already_linked": "Account linked",
-      "loading": "Checking link status...",
-      "open_app": "Open Telegram App"
-    },
-    "accounts": {
-      "title": "Linked Accounts",
-      "desc": "Connect your messaging accounts"
-    },
-    "whatsapp": {
-      "title": "WhatsApp",
-      "desc": "Link your WhatsApp account",
-      "coming_soon": "Coming soon",
-      "link_whatsapp": "Link WhatsApp"
-    },
-    "profile": {
-      "title": "Profile",
-      "display_name": "Display Name",
-      "email": "Email"
-    },
-    "security": {
-      "title": "Security",
-      "desc": "Manage your password and two-factor authentication.",
-      "coming_soon": "Password and 2FA settings coming soon."
-    },
-    "preferences": {
-      "title": "Preferences",
-      "desc": "Customize your experience.",
-      "theme": "Theme",
-      "language": "Language",
-      "currency": "Currency",
-      "toggle_theme": "Toggle theme",
-      "dark": "Dark",
-      "light": "Light"
-    },
-    "settings_notifications": {
-      "title": "Notifications",
-      "desc": "Configure how you receive notifications.",
-      "coming_soon": "Notification preferences coming soon."
+      "sign_out": "Sign out",
+      "confirm_message": "Are you sure you want to sign out?",
+      "confirm_sign_out": "Yes, sign out"
     }
   },
   "analytics": {

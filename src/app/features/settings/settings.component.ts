@@ -35,12 +35,14 @@ export class SettingsComponent {
   private readonly router = inject(Router);
 
   logoutLoading = signal(false);
+  confirmLogout = signal(false);
 
   onSignOut(): void {
     this.logoutLoading.set(true);
     this.authService.logout().pipe(
       finalize(() => {
         this.logoutLoading.set(false);
+        this.confirmLogout.set(false);
       }),
     ).subscribe({
       next: () => {

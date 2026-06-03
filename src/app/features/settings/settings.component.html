@@ -21,12 +21,26 @@
       </div>
     </div>
     <div class="session-actions">
-      <button class="btn-sign-out" (click)="onSignOut()" [disabled]="logoutLoading()">
-        @if (logoutLoading()) {
-          <span class="spinner-sm"></span>
-        }
-        {{ 'settings.session.sign_out' | translate }}
-      </button>
+      @if (!confirmLogout()) {
+        <button class="btn-sign-out" (click)="confirmLogout.set(true)">
+          {{ 'settings.session.sign_out' | translate }}
+        </button>
+      } @else {
+        <div class="logout-confirm">
+          <p>{{ 'settings.session.confirm_message' | translate }}</p>
+          <div class="logout-confirm__actions">
+            <button class="btn-cancel" (click)="confirmLogout.set(false)">
+              {{ 'common.cancel' | translate }}
+            </button>
+            <button class="btn-confirm" (click)="onSignOut()" [disabled]="logoutLoading()">
+              @if (logoutLoading()) {
+                <span class="spinner-sm"></span>
+              }
+              {{ 'settings.session.confirm_sign_out' | translate }}
+            </button>
+          </div>
+        </div>
+      }
     </div>
   </div>
 

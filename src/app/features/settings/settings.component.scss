@@ -64,7 +64,7 @@
   color: var(--danger);
 }
 
-.session-actions { display: flex; justify-content: flex-end; padding-top: 8px; }
+.session-actions { padding-top: 8px; }
 
 .btn-sign-out {
   display: inline-flex; align-items: center; gap: 8px; padding: 10px 24px;
@@ -73,6 +73,39 @@
   font-size: 14px; font-weight: 600; font-family: var(--font-body);
   cursor: pointer; transition: all 0.15s ease;
   &:hover:not(:disabled) { background: var(--danger); color: #fff; }
+  &:disabled { opacity: 0.5; cursor: not-allowed; }
+}
+
+.logout-confirm {
+  display: flex; flex-direction: column; gap: 12px;
+  padding: 16px;
+  background: var(--danger-bg);
+  border: 1px solid rgba(255, 107, 107, 0.3);
+  border-radius: var(--radius-md);
+
+  p { font-size: 14px; color: var(--text-primary); margin: 0; }
+}
+
+.logout-confirm__actions {
+  display: flex; gap: 8px; justify-content: flex-end;
+}
+
+.btn-cancel {
+  padding: 8px 20px; border: 1px solid var(--glass-border);
+  background: var(--glass-bg); border-radius: var(--radius-md);
+  color: var(--text-secondary); font-size: 13px; font-weight: 600;
+  font-family: var(--font-body); cursor: pointer;
+  transition: all 0.15s ease;
+  &:hover { background: var(--accent-glow); color: var(--text-primary); }
+}
+
+.btn-confirm {
+  padding: 8px 20px; border: none;
+  background: var(--danger); border-radius: var(--radius-md);
+  color: #fff; font-size: 13px; font-weight: 600;
+  font-family: var(--font-body); cursor: pointer;
+  transition: all 0.15s ease;
+  &:hover:not(:disabled) { opacity: 0.85; }
   &:disabled { opacity: 0.5; cursor: not-allowed; }
 }
 

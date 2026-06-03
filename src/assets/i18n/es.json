@@ -237,66 +237,9 @@
     "coming_soon": "Próximamente...",
     "session": {
       "title": "Sesión",
-      "logged_as": "Conectado como",
-      "sign_out": "Cerrar sesión"
-    },
-    "integrations": {
-      "title": "Integraciones",
-      "desc": "Conectá herramientas externas para potenciar tu experiencia."
-    },
-    "telegram": {
-      "title": "Vincular Telegram",
-      "desc": "Conectá tu cuenta de Telegram para registrar gastos desde el bot.",
-      "generate_code": "Generar código",
-      "generating": "Generando código...",
-      "code_label": "Tu código de vinculación",
-      "code_expires": "Expira en",
-      "code_instructions": "Enviá este código al bot de Telegram con /link",
-      "linked": "Vinculado",
-      "linked_desc": "Tu cuenta de Telegram está vinculada. Podés registrar gastos desde el bot.",
-      "link_telegram": "Abrir Telegram",
-      "open_with_code": "Abrir Telegram con código",
-      "error_generate": "Error al generar el código",
-      "error_link": "Error al verificar el estado de vinculación",
-      "linked_success": "¡Cuenta vinculada correctamente!",
-      "already_linked": "Cuenta vinculada",
-      "loading": "Verificando estado de vinculación...",
-      "open_app": "Abrir Telegram"
-    },
-    "accounts": {
-      "title": "Cuentas Vinculadas",
-      "desc": "Conectá tus cuentas de mensajería"
-    },
-    "whatsapp": {
-      "title": "WhatsApp",
-      "desc": "Vinculá tu cuenta de WhatsApp",
-      "coming_soon": "Próximamente",
-      "link_whatsapp": "Vincular WhatsApp"
-    },
-    "profile": {
-      "title": "Perfil",
-      "display_name": "Nombre para mostrar",
-      "email": "Correo electrónico"
-    },
-    "security": {
-      "title": "Seguridad",
-      "desc": "Gestioná tu contraseña y autenticación de dos factores.",
-      "coming_soon": "Configuración de contraseña y 2FA próximamente."
-    },
-    "preferences": {
-      "title": "Preferencias",
-      "desc": "Personalizá tu experiencia.",
-      "theme": "Tema",
-      "language": "Idioma",
-      "currency": "Moneda",
-      "toggle_theme": "Cambiar tema",
-      "dark": "Oscuro",
-      "light": "Claro"
-    },
-    "settings_notifications": {
-      "title": "Notificaciones",
-      "desc": "Configurá cómo recibís notificaciones.",
-      "coming_soon": "Preferencias de notificaciones próximamente."
+      "sign_out": "Cerrar sesión",
+      "confirm_message": "¿Estás seguro de que querés cerrar sesión?",
+      "confirm_sign_out": "Sí, cerrar sesión"
     }
   },
   "analytics": {
