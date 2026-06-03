@@ -37,13 +37,21 @@
     background: var(--bg-elevated);
     border-radius: 4px;
     animation: shimmer 1.5s ease-in-out infinite alternate;
+    @media (min-width: 768px) {
+      height: 14px;
+      width: 90px;
+    }
   }
 
   .stat-card__value--skeleton {
-    height: 28px;
-    width: 140px;
+    height: 24px;
+    width: 120px;
     background: var(--bg-elevated);
     border-radius: 6px;
     animation: shimmer 1.5s ease-in-out infinite alternate;
+    @media (min-width: 768px) {
+      height: 28px;
+      width: 160px;
+    }
   }
 }

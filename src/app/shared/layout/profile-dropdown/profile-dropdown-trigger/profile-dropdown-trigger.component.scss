@@ -17,10 +17,20 @@
 
 .profile-dropdown__name {
   display: none;
+  @include at-md {
+    display: inline;
+    font-size: 13px; font-weight: 500; color: var(--text-primary);
+    max-width: 90px; @include truncate;
+  }
 }
 
 .profile-dropdown__chevron {
   display: none;
+  @include at-md {
+    display: inline;
+    color: var(--text-secondary); transition: transform var(--duration-fast) var(--ease-out);
+    &--open { transform: rotate(180deg); }
+  }
 }
 
 .profile-dropdown__avatar {
