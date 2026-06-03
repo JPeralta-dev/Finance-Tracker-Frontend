@@ -55,3 +55,13 @@
     }
   }
 }
+
+/* Scrollable wrapper for transaction table on mobile (<768px) */
+.tx-scroll-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+
+  @media (min-width: 768px) {
+    overflow-x: visible;
+  }
+}

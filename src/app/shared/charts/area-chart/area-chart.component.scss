@@ -36,6 +36,11 @@
 .chart-area {
   position: relative;
   width: 100%;
+  min-height: 200px;
+
+  @media (min-width: 768px) {
+    min-height: 250px;
+  }
 
   canvas {
     width: 100% !important;
@@ -58,9 +63,4 @@
     border-radius: 4px 4px 0 0;
     animation: shimmer 1.5s ease-in-out infinite alternate;
   }
-}
-
-@keyframes shimmer {
-  from { opacity: 0.3; }
-  to { opacity: 0.6; }
 }

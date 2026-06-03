@@ -7,7 +7,6 @@ import { TranslatePipe } from '../../core/pipes/translate.pipe';
 import { FtSubtleRevealDirective } from '../../shared/directives/ft-subtle-reveal.directive';
 import { AuthService } from '../../core/services/auth.service';
 import { finalize } from 'rxjs';
-import { ProfileSectionComponent } from './profile-section/profile-section.component';
 import { SecuritySectionComponent } from './security-section/security-section.component';
 import { NotificationsSectionComponent } from './notifications-section/notifications-section.component';
 import { PreferencesSectionComponent } from './preferences-section/preferences-section.component';
@@ -22,7 +21,6 @@ import { LinkedAccountsSectionComponent } from './linked-accounts-section/linked
     NgIcon,
     TranslatePipe,
     FtSubtleRevealDirective,
-    ProfileSectionComponent,
     SecuritySectionComponent,
     NotificationsSectionComponent,
     PreferencesSectionComponent,
@@ -37,12 +35,14 @@ export class SettingsComponent {
   private readonly router = inject(Router);
 
   logoutLoading = signal(false);
+  confirmLogout = signal(false);
 
   onSignOut(): void {
     this.logoutLoading.set(true);
     this.authService.logout().pipe(
       finalize(() => {
         this.logoutLoading.set(false);
+        this.confirmLogout.set(false);
       }),
     ).subscribe({
       next: () => {

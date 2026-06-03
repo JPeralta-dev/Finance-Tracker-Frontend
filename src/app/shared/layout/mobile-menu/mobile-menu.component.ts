@@ -8,11 +8,12 @@ import { MobileMenuItem } from './mobile-menu.types';
 import { ICONS } from '../../../shared/icons/icon-registry';
 import { AuthService } from '../../../core/services/auth.service';
 import { User } from '../../../core/models/user.model';
+import { TranslatePipe } from '../../../core/pipes/translate.pipe';
 
 @Component({
   selector: 'ft-mobile-menu',
   standalone: true,
-  imports: [CommonModule, RouterLink, NavItemComponent, NgIcon],
+  imports: [CommonModule, RouterLink, NavItemComponent, NgIcon, TranslatePipe],
   providers: [provideIcons(ICONS)],
   templateUrl: './mobile-menu.component.html',
   styleUrl: './mobile-menu.component.scss',

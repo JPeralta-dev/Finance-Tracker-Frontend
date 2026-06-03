@@ -13,8 +13,8 @@
       @if (showHomeButton()) {
         <button
           class="topbar__home-btn"
-          [routerLink]="['/']"
-          aria-label="Go to home"
+          [routerLink]="['/dashboard']"
+          aria-label="Go to dashboard"
         >
           <ng-icon name="home" size="1rem" />
         </button>
@@ -38,8 +38,6 @@
 
     <!-- Right: Actions + Profile -->
     <div class="topbar__right">
-      <ft-language-dropdown />
-
       <ft-notifications-dropdown />
 
       <ft-profile-dropdown />

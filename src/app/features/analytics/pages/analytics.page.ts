@@ -8,6 +8,7 @@ import { DonutChartComponent, DonutData } from '../../../shared/charts';
 import { FtSubtleRevealDirective } from '../../../shared/directives/ft-subtle-reveal.directive';
 import { EmptyStateComponent } from '../../../shared/components/empty-state.component';
 import { TranslatePipe } from '../../../core/pipes/translate.pipe';
+import { TranslationService } from '../../../core/services/translation.service';
 import { FinanceService } from '../../../core/services/finance.service';
 import { CurrencyService } from '../../../core/services/currency.service';
 import { ToastService } from '../../../core/services/toast.service';
@@ -67,13 +68,13 @@ export function calculateNetSavings(income: number, expense: number): number {
   return income - expense;
 }
 
-export function mapCategoryToDonut(categories: Category[], colors: string[]): DonutData {
+export function mapCategoryToDonut(categories: Category[], colors: string[], i18n?: TranslationService): DonutData {
   const expenseCats = categories
     .filter(c => c.kind === 'expense' || c.kind === 'mixed')
     .filter(c => c.total > 0);
 
   return {
-    labels: expenseCats.map(c => c.name),
+    labels: expenseCats.map(c => i18n ? i18n.translate(c.name) : c.name),
     data: expenseCats.map(c => c.total),
     colors: expenseCats.map((_, i) => colors[i % colors.length]),
   };
@@ -82,12 +83,13 @@ export function mapCategoryToDonut(categories: Category[], colors: string[]): Do
 export function mapMonthlyChartData(
   chartData: ChartData[],
   colors: ChartColors,
+  i18n?: TranslationService,
 ): { labels: string[]; datasets: AreaDataset[] } {
   return {
     labels: chartData.map(d => d.month),
     datasets: [
-      { label: 'Income', data: chartData.map(d => d.income), color: colors.income },
-      { label: 'Expenses', data: chartData.map(d => d.expenses), color: colors.expense },
+      { label: i18n ? i18n.translate('transactions.form.income') : 'Income', data: chartData.map(d => d.income), color: colors.income },
+      { label: i18n ? i18n.translate('transactions.form.expense') : 'Expenses', data: chartData.map(d => d.expenses), color: colors.expense },
     ],
   };
 }
@@ -112,6 +114,7 @@ export class AnalyticsPage implements OnInit {
   private readonly financeService = inject(FinanceService);
   private readonly currencyService = inject(CurrencyService);
   private readonly toast = inject(ToastService);
+  private readonly i18n = inject(TranslationService);
 
   readonly state = signal<AnalyticsState>('loading');
 
@@ -150,22 +153,22 @@ export class AnalyticsPage implements OnInit {
 
         // Monthly chart data — use mock if API returns empty
         if (chart && chart.length > 0) {
-          const mapped = mapMonthlyChartData(chart, colors);
+          const mapped = mapMonthlyChartData(chart, colors, this.i18n);
           this.monthlyLabels.set(mapped.labels);
           this.monthlyDatasets.set(mapped.datasets);
         } else {
           // Fallback to mock data
-          const mapped = mapMonthlyChartData(MOCK_MONTHLY_DATA, colors);
+          const mapped = mapMonthlyChartData(MOCK_MONTHLY_DATA, colors, this.i18n);
           this.monthlyLabels.set(mapped.labels);
           this.monthlyDatasets.set(mapped.datasets);
         }
 
         // Category donut data — use mock if API returns empty
         if (categories && categories.length > 0) {
-          this.donutData.set(mapCategoryToDonut(categories, colors.categories));
+          this.donutData.set(mapCategoryToDonut(categories, colors.categories, this.i18n));
         } else {
           // Fallback to mock data
-          this.donutData.set(mapCategoryToDonut(MOCK_CATEGORIES as Category[], colors.categories));
+          this.donutData.set(mapCategoryToDonut(MOCK_CATEGORIES as Category[], colors.categories, this.i18n));
         }
 
         // Summary
@@ -186,10 +189,10 @@ export class AnalyticsPage implements OnInit {
       error: () => {
         // Even on error, show mock data
         const colors = getChartColors();
-        const mapped = mapMonthlyChartData(MOCK_MONTHLY_DATA, colors);
+        const mapped = mapMonthlyChartData(MOCK_MONTHLY_DATA, colors, this.i18n);
         this.monthlyLabels.set(mapped.labels);
         this.monthlyDatasets.set(mapped.datasets);
-        this.donutData.set(mapCategoryToDonut(MOCK_CATEGORIES as Category[], colors.categories));
+        this.donutData.set(mapCategoryToDonut(MOCK_CATEGORIES as Category[], colors.categories, this.i18n));
         
         const totalIncome = MOCK_MONTHLY_DATA.reduce((sum, m) => sum + m.income, 0);
         const totalExpense = MOCK_MONTHLY_DATA.reduce((sum, m) => sum + m.expenses, 0);

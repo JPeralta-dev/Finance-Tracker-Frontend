@@ -17,7 +17,7 @@
   <div class="tx-row__info">
     <span class="tx-row__desc">{{ data().description }}</span>
     <span class="tx-row__meta">
-      {{ data().category }} · {{ formatDate(data().date) }}
+      {{ data().category | categoryTranslate }} · {{ formatDate(data().date) }}
     </span>
   </div>
 

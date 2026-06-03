@@ -19,6 +19,7 @@
 /* ─── Design Tokens & Responsive Utilities (SDD: frontend-ux-responsive-overhaul) */
 @import 'styles/tokens';
 @import 'styles/responsive';
+@import 'styles/skeleton';
 
 /* ─── CSS Custom Properties (Design Tokens) ──────────────────────── */
 
@@ -119,6 +120,7 @@
 html {
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
+  width: 100%;
 }
 
 body {
@@ -130,6 +132,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 /* ─── Typography ─────────────────────────────────────────────────── */
@@ -237,6 +241,8 @@ input, select, textarea { font-family: var(--font-body); }
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 .app-main {
@@ -420,7 +426,8 @@ input, select, textarea { font-family: var(--font-body); }
 /* Parallax glow effect */
 .parallax-glow {
   position: absolute;
-  width: 600px;
+  width: 100%;
+  max-width: 600px;
   height: 600px;
   border-radius: 50%;
   filter: blur(150px);

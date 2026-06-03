@@ -107,7 +107,7 @@
               <option value="" disabled>{{ 'transactions.form.category_placeholder' | translate }}</option>
               @for (cat of filteredCategories(); track cat.id) {
                 <option [value]="cat.name">
-                  {{ cat.name }}
+                  {{ cat.name | categoryTranslate }}
                 </option>
               }
             </select>

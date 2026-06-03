@@ -1,11 +1,12 @@
 import { Component, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TranslatePipe } from '../../../../core/pipes/translate.pipe';
 import { TransactionFilter, SortField, SortDirection } from '../../transaction.types';
 
 @Component({
   selector: 'ft-transaction-filters',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslatePipe],
   templateUrl: './transaction-filters.component.html',
   styleUrl: './transaction-filters.component.scss',
 })

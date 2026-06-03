@@ -4,7 +4,7 @@
     <span class="tx-filters__search-icon">🔍</span>
     <input
       type="text"
-      placeholder="Search transactions..."
+      [placeholder]="'transactions.filters.search' | translate"
       class="tx-filters__input"
       (input)="onSearch($event)"
     />
@@ -17,21 +17,21 @@
       [class.tx-filters__pill--active]="activeFilter() === 'all'"
       (click)="onFilterChange('all')"
     >
-      All
+      {{ 'transactions.filters.all' | translate }}
     </button>
     <button
       class="tx-filters__pill"
       [class.tx-filters__pill--active]="activeFilter() === 'income'"
       (click)="onFilterChange('income')"
     >
-      Income
+      {{ 'transactions.filters.income' | translate }}
     </button>
     <button
       class="tx-filters__pill"
       [class.tx-filters__pill--active]="activeFilter() === 'expense'"
       (click)="onFilterChange('expense')"
     >
-      Expenses
+      {{ 'transactions.filters.expenses' | translate }}
     </button>
   </div>
 
@@ -42,7 +42,7 @@
       [class.tx-filters__sort-btn--active]="activeSort() === 'date'"
       (click)="onSortChange('date')"
     >
-      Date
+      {{ 'transactions.filters.date' | translate }}
       <span class="tx-filters__sort-icon">{{ getSortIcon('date') }}</span>
     </button>
     <button
@@ -50,7 +50,7 @@
       [class.tx-filters__sort-btn--active]="activeSort() === 'amount'"
       (click)="onSortChange('amount')"
     >
-      Amount
+      {{ 'transactions.filters.amount' | translate }}
       <span class="tx-filters__sort-icon">{{ getSortIcon('amount') }}</span>
     </button>
     <button
@@ -58,7 +58,7 @@
       [class.tx-filters__sort-btn--active]="activeSort() === 'category'"
       (click)="onSortChange('category')"
     >
-      Category
+      {{ 'transactions.filters.category' | translate }}
       <span class="tx-filters__sort-icon">{{ getSortIcon('category') }}</span>
     </button>
   </div>

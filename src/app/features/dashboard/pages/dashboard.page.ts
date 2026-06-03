@@ -15,6 +15,8 @@ import { FinanceService } from '../../../core/services/finance.service';
 import { ToastService } from '../../../core/services/toast.service';
 import { EmptyStateComponent } from '../../../shared/components/empty-state.component';
 import { TranslatePipe } from '../../../core/pipes/translate.pipe';
+import { CategoryTranslatePipe } from '../../../core/pipes/category-translate.pipe';
+import { TranslationService } from '../../../core/services/translation.service';
 import { Category } from '../../../core/models/category.model';
 import { Insight } from '../../../core/models/insight.model';
 
@@ -74,6 +76,7 @@ function getChartColors(): ChartColors {
     HoverDepthDirective,
     EmptyStateComponent,
     TranslatePipe,
+    CategoryTranslatePipe,
   ],
   templateUrl: './dashboard.page.html',
   styleUrl: './dashboard.page.scss',
@@ -81,6 +84,7 @@ function getChartColors(): ChartColors {
 export class DashboardPage implements OnInit {
   private readonly financeService = inject(FinanceService);
   private readonly toast = inject(ToastService);
+  private readonly i18n = inject(TranslationService);
 
   readonly stats = signal<StatCardData[]>([]);
   readonly activity = signal<ActivityItem[]>([]);
@@ -120,7 +124,7 @@ export class DashboardPage implements OnInit {
       next: ({ summary, chart, transactions, categories, insights }) => {
         if (!summary && !chart && !transactions) {
           this.state.set('error');
-          this.toast.error('Failed to load dashboard data. Please try again.');
+          this.toast.error(this.i18n.translate('common.toasts.dashboard_load_failed'));
           return;
         }
 
@@ -132,16 +136,16 @@ export class DashboardPage implements OnInit {
           const colors = getChartColors();
           this.chartLabels.set(chart.map(d => d.month));
           this.chartDatasets.set([
-            { label: 'Income', data: chart.map(d => d.income), color: colors.income },
-            { label: 'Expenses', data: chart.map(d => d.expenses), color: colors.expense },
+            { label: this.i18n.translate('transactions.form.income'), data: chart.map(d => d.income), color: colors.income },
+            { label: this.i18n.translate('transactions.form.expense'), data: chart.map(d => d.expenses), color: colors.expense },
           ]);
         } else {
           // Fallback to mock data
           const colors = getChartColors();
           this.chartLabels.set(MOCK_CHART_DATA.map(d => d.month));
           this.chartDatasets.set([
-            { label: 'Income', data: MOCK_CHART_DATA.map(d => d.income), color: colors.income },
-            { label: 'Expenses', data: MOCK_CHART_DATA.map(d => d.expenses), color: colors.expense },
+            { label: this.i18n.translate('transactions.form.income'), data: MOCK_CHART_DATA.map(d => d.income), color: colors.income },
+            { label: this.i18n.translate('transactions.form.expense'), data: MOCK_CHART_DATA.map(d => d.expenses), color: colors.expense },
           ]);
         }
 
@@ -162,7 +166,7 @@ export class DashboardPage implements OnInit {
           const expenseCats = categories.filter(c => c.kind === 'expense' || c.kind === 'mixed').filter(c => c.total > 0);
           const colors = getChartColors();
           this.donutData.set({
-            labels: expenseCats.map(c => c.name),
+            labels: expenseCats.map(c => this.i18n.translate(c.name)),
             data: expenseCats.map(c => c.total),
             colors: expenseCats.map((_, i) => colors.categories[i % colors.categories.length]),
           });
@@ -176,7 +180,7 @@ export class DashboardPage implements OnInit {
           ];
           const expenseCats = mockCats.filter(c => c.total > 0);
           this.donutData.set({
-            labels: expenseCats.map(c => c.name),
+            labels: expenseCats.map(c => this.i18n.translate(c.name)),
             data: expenseCats.map(c => c.total),
             colors: expenseCats.map((_, i) => colors.categories[i % colors.categories.length]),
           });
@@ -193,7 +197,7 @@ export class DashboardPage implements OnInit {
       },
       error: () => {
         this.state.set('error');
-        this.toast.error('Failed to load dashboard data.');
+        this.toast.error(this.i18n.translate('common.toasts.dashboard_load_failed_short'));
       },
     });
   }

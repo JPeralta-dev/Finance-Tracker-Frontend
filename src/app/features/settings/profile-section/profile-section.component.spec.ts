@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { of } from 'rxjs';
 import { ProfileSectionComponent } from './profile-section.component';
 import { AuthService } from '../../../core/services/auth.service';
 
@@ -11,11 +12,9 @@ describe('ProfileSectionComponent', () => {
   beforeEach(async () => {
     authServiceSpy = jasmine.createSpyObj('AuthService', ['isAuthenticated', 'getProfile', 'clearTokens']);
     authServiceSpy.isAuthenticated.and.returnValue(true);
-    authServiceSpy.getProfile.and.returnValue({
-      subscribe: (callbacks: any) => {
-        callbacks.next({ email: 'test@example.com', displayName: 'Test User' });
-      },
-    });
+    authServiceSpy.getProfile.and.returnValue(
+      of({ id: '1', email: 'test@example.com', displayName: 'Test User', createdAt: '2024-01-01T00:00:00Z' })
+    );
 
     await TestBed.configureTestingModule({
       imports: [ProfileSectionComponent, HttpClientTestingModule],

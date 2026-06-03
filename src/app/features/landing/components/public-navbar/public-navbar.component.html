@@ -26,6 +26,11 @@
         <a routerLink="/register" class="public-navbar__btn">{{ 'auth.createAccount' | translate }}</a>
       </div>
 
+      <!-- Mobile: Sign In icon (replaces text) -->
+      <a routerLink="/login" class="public-navbar__mobile-signin" aria-label="Sign in">
+        <ng-icon name="user" size="1.2rem" />
+      </a>
+
       <!-- Mobile Toggle -->
       <button
         class="public-navbar__mobile-toggle"
@@ -59,7 +64,8 @@
         <span>{{ 'auth.signIn' | translate }}</span>
       </a>
       <a routerLink="/register" class="public-navbar__mobile-item public-navbar__mobile-cta">
-        {{ 'auth.createAccount' | translate }}
+        <ng-icon name="user" size="1rem" />
+        <span>{{ 'auth.createAccount' | translate }}</span>
       </a>
     </div>
   }
