@@ -11,16 +11,15 @@
   width: 32px;
   height: 32px;
   color: var(--text-secondary);
-  background: var(--bg-tertiary);
-  border: 1px solid var(--glass-border);
+  background: transparent;
+  border: none;
   border-radius: var(--radius-sm);
   cursor: pointer;
   transition: all var(--duration-fast) var(--ease-out);
 
   &:hover {
     color: var(--accent-start);
-    border-color: var(--glass-border-hover);
-    background: var(--accent-glow);
+    background: rgba(255, 255, 255, 0.05);
   }
 }
 
