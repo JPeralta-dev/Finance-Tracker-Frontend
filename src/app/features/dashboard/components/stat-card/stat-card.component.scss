@@ -1,4 +1,5 @@
 @import 'responsive';
+@import 'skeleton';
 
 /* ─── Stat Card ────────────────────────────────────────────────────
    KPI card with glass surface, trend indicator, optional insight.
@@ -150,35 +151,4 @@
   border-radius: 50%;
   background: var(--accent-end);
   animation: pulse-slow 3s ease-in-out infinite;
-}
-
-/* Skeleton states */
-.stat-card--skeleton {
-  pointer-events: none;
-
-  .stat-card__icon--skeleton {
-    background: var(--bg-elevated);
-    animation: shimmer 1.5s ease-in-out infinite alternate;
-  }
-
-  .stat-card__label--skeleton {
-    height: 13px;
-    width: 80px;
-    background: var(--bg-elevated);
-    border-radius: 4px;
-    animation: shimmer 1.5s ease-in-out infinite alternate;
-  }
-
-  .stat-card__value--skeleton {
-    height: 28px;
-    width: 140px;
-    background: var(--bg-elevated);
-    border-radius: 6px;
-    animation: shimmer 1.5s ease-in-out infinite alternate;
-  }
-}
-
-@keyframes shimmer {
-  from { opacity: 0.3; }
-  to { opacity: 0.6; }
 }

@@ -1,0 +1,49 @@
+/**
+ * Skeleton / Shimmer Shared Styles
+ *
+ * Reusable skeleton loading animation and base styles.
+ * Imported by components that display loading placeholders.
+ */
+
+@keyframes shimmer {
+  from { opacity: 0.3; }
+  to { opacity: 0.6; }
+}
+
+@keyframes pulse-slow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* Generic skeleton block */
+.skeleton-block {
+  background: var(--bg-elevated);
+  border-radius: 4px;
+  animation: shimmer 1.5s ease-in-out infinite alternate;
+}
+
+/* Stat card skeleton states (extracted from stat-card.component.scss) */
+.stat-card--skeleton {
+  pointer-events: none;
+
+  .stat-card__icon--skeleton {
+    background: var(--bg-elevated);
+    animation: shimmer 1.5s ease-in-out infinite alternate;
+  }
+
+  .stat-card__label--skeleton {
+    height: 13px;
+    width: 80px;
+    background: var(--bg-elevated);
+    border-radius: 4px;
+    animation: shimmer 1.5s ease-in-out infinite alternate;
+  }
+
+  .stat-card__value--skeleton {
+    height: 28px;
+    width: 140px;
+    background: var(--bg-elevated);
+    border-radius: 6px;
+    animation: shimmer 1.5s ease-in-out infinite alternate;
+  }
+}
