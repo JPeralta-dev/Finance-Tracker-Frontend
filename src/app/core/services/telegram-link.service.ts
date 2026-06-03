@@ -47,7 +47,7 @@ export class TelegramLinkService implements OnDestroy {
       },
       error: () => {
         this.error.set('settings.telegram.error_link');
-        this.state.set('error');
+        this.state.set('idle');
       },
     });
   }

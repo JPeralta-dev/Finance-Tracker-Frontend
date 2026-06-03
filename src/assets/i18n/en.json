@@ -289,7 +289,9 @@
       "theme": "Theme",
       "language": "Language",
       "currency": "Currency",
-      "coming_soon": "Preferences settings coming soon."
+      "toggle_theme": "Toggle theme",
+      "dark": "Dark",
+      "light": "Light"
     },
     "settings_notifications": {
       "title": "Notifications",

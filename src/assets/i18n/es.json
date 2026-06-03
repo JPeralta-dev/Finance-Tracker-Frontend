@@ -289,7 +289,9 @@
       "theme": "Tema",
       "language": "Idioma",
       "currency": "Moneda",
-      "coming_soon": "Configuración de preferencias próximamente."
+      "toggle_theme": "Cambiar tema",
+      "dark": "Oscuro",
+      "light": "Claro"
     },
     "settings_notifications": {
       "title": "Notificaciones",

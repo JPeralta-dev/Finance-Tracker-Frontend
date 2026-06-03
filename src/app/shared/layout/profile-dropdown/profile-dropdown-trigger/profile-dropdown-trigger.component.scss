@@ -1,7 +1,7 @@
 @import 'responsive';
 
 .profile-dropdown__trigger {
-  display: flex; align-items: center; gap: 6px;
+  display: flex; align-items: center; gap: 0;
   padding: 0; border: none; background: transparent;
   border-radius: 0; cursor: pointer;
   &:hover { background: transparent; }
@@ -16,15 +16,11 @@
 }
 
 .profile-dropdown__name {
-  font-size: 13px; font-weight: 500; color: var(--text-primary);
-  max-width: 90px; @include truncate;
-  @include below-md { display: none; }
+  display: none;
 }
 
 .profile-dropdown__chevron {
-  color: var(--text-secondary); transition: transform var(--duration-fast) var(--ease-out);
-  &--open { transform: rotate(180deg); }
-  @include below-md { display: none; }
+  display: none;
 }
 
 .profile-dropdown__avatar {

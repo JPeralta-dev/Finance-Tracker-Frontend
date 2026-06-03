@@ -289,7 +289,9 @@
       "theme": "Thème",
       "language": "Langue",
       "currency": "Devise",
-      "coming_soon": "Paramètres de préférences bientôt disponibles."
+      "toggle_theme": "Changer le thème",
+      "dark": "Sombre",
+      "light": "Clair"
     },
     "settings_notifications": {
       "title": "Notifications",
