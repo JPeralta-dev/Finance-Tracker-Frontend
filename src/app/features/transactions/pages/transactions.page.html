@@ -7,7 +7,9 @@
         <p class="transactions-page__subtitle">Fetching your transactions.</p>
       </div>
     </div>
-    <ft-transaction-table [items]="[]" [loading]="true" [pageSize]="10" />
+    <div class="tx-scroll-wrapper">
+      <ft-transaction-table [items]="[]" [loading]="true" [pageSize]="10" />
+    </div>
   } @else if (state() === 'error') {
     <!-- Error state -->
     <ft-empty-state
@@ -53,11 +55,13 @@
     </div>
 
     <!-- Transaction table -->
-    <ft-transaction-table
-      [items]="transactions()"
-      [loading]="false"
-      [pageSize]="10"
-      (ftSelect)="onSelect($event)"
-    />
+    <div class="tx-scroll-wrapper">
+      <ft-transaction-table
+        [items]="transactions()"
+        [loading]="false"
+        [pageSize]="10"
+        (ftSelect)="onSelect($event)"
+      />
+    </div>
   }
 </div>

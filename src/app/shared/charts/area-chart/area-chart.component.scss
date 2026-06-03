@@ -36,6 +36,11 @@
 .chart-area {
   position: relative;
   width: 100%;
+  min-height: 200px;
+
+  @media (min-width: 768px) {
+    min-height: 250px;
+  }
 
   canvas {
     width: 100% !important;
