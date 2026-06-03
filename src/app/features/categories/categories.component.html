@@ -19,10 +19,10 @@
         <span class="stat-value">{{ categories().length }}</span>
       </div>
       <div class="stat-divider"></div>
-      <div class="stat-item">
-        <span class="stat-label">{{ 'categories.stats.highest' | translate }}</span>
-        <span class="stat-value">{{ topCategory().name }}</span>
-      </div>
+          <div class="stat-item">
+            <span class="stat-label">{{ 'categories.stats.highest' | translate }}</span>
+            <span class="stat-value">{{ topCategory().name | categoryTranslate }}</span>
+          </div>
       <div class="stat-divider"></div>
       <div class="stat-item">
         <span class="stat-label">{{ 'categories.stats.total_expenses' | translate }}</span>
@@ -75,7 +75,7 @@
           </div>
 
           <!-- Card Body -->
-          <span class="cat-name">{{ cat.name }}</span>
+          <span class="cat-name">{{ cat.name | categoryTranslate }}</span>
           <span class="cat-total">{{ cat.total | ftCurrency:'short' }}</span>
 
           <!-- Progress Bar -->

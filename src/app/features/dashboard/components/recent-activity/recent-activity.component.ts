@@ -6,6 +6,7 @@ import { UiBadgeComponent } from '../../../../shared/ui/ui-badge/ui-badge.compon
 import { getCategoryIcon } from '../../../../shared/icons/icon-registry';
 import { ICONS } from '../../../../shared/icons/icon-registry';
 import { TranslatePipe } from '../../../../core/pipes/translate.pipe';
+import { CategoryTranslatePipe } from '../../../../core/pipes/category-translate.pipe';
 import { CurrencyService } from '../../../../core/services/currency.service';
 
 export interface ActivityItem {
@@ -20,7 +21,7 @@ export interface ActivityItem {
 @Component({
   selector: 'ft-recent-activity',
   standalone: true,
-  imports: [CommonModule, DatePipe, RouterLink, UiBadgeComponent, NgIcon, TranslatePipe],
+  imports: [CommonModule, DatePipe, RouterLink, UiBadgeComponent, NgIcon, TranslatePipe, CategoryTranslatePipe],
   providers: [provideIcons(ICONS)],
   templateUrl: './recent-activity.component.html',
   styleUrl: './recent-activity.component.scss',

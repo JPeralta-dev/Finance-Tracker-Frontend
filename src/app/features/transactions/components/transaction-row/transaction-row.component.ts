@@ -6,11 +6,12 @@ import { TransactionRowData } from '../../transaction.types';
 import { getCategoryMeta, getCategoryIcon } from '../../components/transaction.utils';
 import { ICONS } from '../../../../shared/icons/icon-registry';
 import { CurrencyService } from '../../../../core/services/currency.service';
+import { CategoryTranslatePipe } from '../../../../core/pipes/category-translate.pipe';
 
 @Component({
   selector: 'ft-transaction-row',
   standalone: true,
-  imports: [CommonModule, UiBadgeComponent, NgIcon],
+  imports: [CommonModule, UiBadgeComponent, NgIcon, CategoryTranslatePipe],
   providers: [provideIcons(ICONS)],
   templateUrl: './transaction-row.component.html',
   styleUrl: './transaction-row.component.scss',

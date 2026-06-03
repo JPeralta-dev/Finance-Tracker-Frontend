@@ -9,7 +9,19 @@
     "success": "Success",
     "search": "Search",
     "filter": "Filter",
-    "viewAll": "View all"
+    "viewAll": "View all",
+    "toasts": {
+      "categories_load_failed": "Failed to load categories.",
+      "category_created": "Category created",
+      "category_updated": "Category updated",
+      "category_save_failed": "Failed to save category.",
+      "category_delete_failed": "Failed to delete category.",
+      "category_cannot_delete": "Cannot delete default categories.",
+      "category_deleted": "Category deleted.",
+      "transactions_load_failed": "Failed to load transactions. Please try again.",
+      "dashboard_load_failed": "Failed to load dashboard data. Please try again.",
+      "dashboard_load_failed_short": "Failed to load dashboard data."
+    }
   },
   "auth": {
     "login": "Sign In",
@@ -164,6 +176,16 @@
     "new": "New Transaction",
     "noTransactions": "No transactions yet",
     "addFirst": "Add your first transaction",
+    "loading": "Loading...",
+    "loadingDesc": "Fetching your transactions.",
+    "errorTitle": "Something went wrong",
+    "errorDesc": "We couldn't load your transactions. Please try again.",
+    "retry": "Retry",
+    "emptyTitle": "No transactions yet",
+    "emptyDesc": "Your transaction history will appear here once you start logging expenses and income.",
+    "startTracking": "Start tracking your finances by adding your first transaction.",
+    "addFirstTransaction": "Add Transaction",
+    "newTransaction": "+ New Transaction",
     "form": {
       "back": "← Back to transactions",
       "new_title": "New Transaction",
@@ -195,6 +217,15 @@
         "not_found": "Transaction not found",
         "server_error": "Server error. Please try again"
       }
+    },
+    "filters": {
+      "search": "Search transactions...",
+      "all": "All",
+      "income": "Income",
+      "expenses": "Expenses",
+      "date": "Date",
+      "amount": "Amount",
+      "category": "Category"
     }
   },
   "categories": {
@@ -240,6 +271,41 @@
       "sign_out": "Sign out",
       "confirm_message": "Are you sure you want to sign out?",
       "confirm_sign_out": "Yes, sign out"
+    },
+    "accounts": {
+      "title": "Linked accounts",
+      "desc": "Connect your messaging accounts."
+    },
+    "telegram": {
+      "title": "Link Telegram",
+      "desc": "Connect your Telegram account to log transactions from the bot.",
+      "loading": "Checking link status...",
+      "linked_success": "Account linked successfully!",
+      "already_linked": "Account linked",
+      "linked_desc": "Your Telegram account is linked. You can log transactions from the bot.",
+      "link_telegram": "Open Telegram",
+      "code_label": "Your linking code",
+      "code_expires": "Expires",
+      "code_instructions": "Send this code to the Telegram bot to link your account.",
+      "open_with_code": "Open Telegram with code",
+      "generating": "Generating code...",
+      "generate_code": "Generate linking code"
+    },
+    "whatsapp": {
+      "title": "WhatsApp",
+      "desc": "Link your WhatsApp account.",
+      "coming_soon": "Coming soon",
+      "link_whatsapp": "Link WhatsApp"
+    },
+    "preferences": {
+      "title": "Preferences",
+      "desc": "Customize your experience.",
+      "theme": "Theme",
+      "toggle_theme": "Toggle theme",
+      "dark": "Dark",
+      "light": "Light",
+      "language": "Language",
+      "currency": "Currency"
     }
   },
   "analytics": {
@@ -285,7 +351,17 @@
     "displayNameRequired": "Display name is required",
     "emailReadonly": "Email cannot be changed",
     "personalInfo": "Personal Information",
-    "backToDashboard": "Back to dashboard"
+    "backToDashboard": "Back to dashboard",
+    "account_age": {
+      "less_than_month": "Less than a month",
+      "months": "{{count}} months",
+      "years": "{{count}} years"
+    },
+    "toasts": {
+      "profile_updated": "Profile updated successfully!",
+      "profile_update_failed": "Failed to save profile. Please try again.",
+      "load_failed": "Failed to load profile data."
+    }
   },
   "theme": {
     "toggle": "Toggle theme"

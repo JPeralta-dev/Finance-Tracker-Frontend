@@ -51,7 +51,7 @@
           <div class="activity-row__info">
             <span class="activity-row__desc">{{ item.description }}</span>
             <span class="activity-row__meta">
-              {{ item.category }}
+              {{ item.category | categoryTranslate }}
               @if (item.date) {
                 · {{ item.date | date: 'MMM d' }}
               }

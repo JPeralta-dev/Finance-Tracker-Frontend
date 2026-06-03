@@ -9,6 +9,7 @@ import { FinanceService } from '../../core/services/finance.service';
 import { CurrencyService } from '../../core/services/currency.service';
 import { ToastService } from '../../core/services/toast.service';
 import { TranslatePipe } from '../../core/pipes/translate.pipe';
+import { TranslationService } from '../../core/services/translation.service';
 import { ProfileAvatarCardComponent } from './profile-avatar-card/profile-avatar-card.component';
 import { ProfilePersonalInfoComponent } from './profile-personal-info/profile-personal-info.component';
 import { ProfileInsightsCardComponent } from './profile-insights-card/profile-insights-card.component';
@@ -18,13 +19,13 @@ import type { Insight } from '../../core/models/insight.model';
 
 type ProfileState = 'loading' | 'ready' | 'error';
 
-export function calculateAccountAge(createdAt: string): string {
+export function calculateAccountAge(createdAt: string, i18n?: TranslationService): string {
   const created = new Date(createdAt);
   const now = new Date();
   const months = (now.getFullYear() - created.getFullYear()) * 12 + (now.getMonth() - created.getMonth());
-  if (months < 1) return 'Less than a month';
-  if (months < 12) return `${months} months`;
-  return `${Math.floor(months / 12)} years`;
+  if (months < 1) return i18n ? i18n.translate('profile.account_age.less_than_month') : 'Less than a month';
+  if (months < 12) return i18n ? i18n.translate('profile.account_age.months', { count: String(months) }) : `${months} months`;
+  return i18n ? i18n.translate('profile.account_age.years', { count: String(Math.floor(months / 12)) }) : `${Math.floor(months / 12)} years`;
 }
 
 @Component({
@@ -41,6 +42,7 @@ export class ProfilePage implements OnInit {
   private readonly financeService = inject(FinanceService);
   private readonly currencyService = inject(CurrencyService);
   private readonly toast = inject(ToastService);
+  private readonly i18n = inject(TranslationService);
 
   readonly user = signal<User | null>(null);
   readonly state = signal<ProfileState>('loading');
@@ -66,14 +68,14 @@ export class ProfilePage implements OnInit {
       insights: this.financeService.getInsights().pipe(catchError(() => of([]))),
     }).subscribe({
       next: ({ user, insights }) => {
-        if (!user) { this.state.set('error'); this.toast.error('Failed to load profile data.'); return; }
+        if (!user) { this.state.set('error'); this.toast.error(this.i18n.translate('profile.toasts.load_failed')); return; }
         this.user.set(user);
         this.profileForm.patchValue({ displayName: user.displayName ?? '', email: user.email });
-        this.userStats.set({ totalTransactions: 0, accountAge: calculateAccountAge(user.createdAt) });
+        this.userStats.set({ totalTransactions: 0, accountAge: calculateAccountAge(user.createdAt, this.i18n) });
         this.insights.set(insights as Insight[]);
         this.state.set('ready');
       },
-      error: () => { this.state.set('error'); this.toast.error('Failed to load profile data.'); },
+      error: () => { this.state.set('error'); this.toast.error(this.i18n.translate('profile.toasts.load_failed')); },
     });
   }
 
@@ -82,8 +84,8 @@ export class ProfilePage implements OnInit {
     const displayName = this.profileForm.get('displayName')?.value;
     if (!displayName) return;
     this.authService.updateProfile(displayName).subscribe({
-      next: () => this.toast.success('Profile updated successfully!'),
-      error: () => this.toast.error('Failed to save profile. Please try again.'),
+      next: () => this.toast.success(this.i18n.translate('profile.toasts.profile_updated')),
+      error: () => this.toast.error(this.i18n.translate('profile.toasts.profile_update_failed')),
     });
   }
 }

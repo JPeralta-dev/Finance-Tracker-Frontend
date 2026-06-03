@@ -9,7 +9,19 @@
     "success": "Éxito",
     "search": "Buscar",
     "filter": "Filtrar",
-    "viewAll": "Ver todo"
+    "viewAll": "Ver todo",
+    "toasts": {
+      "categories_load_failed": "Error al cargar las categorías.",
+      "category_created": "Categoría creada",
+      "category_updated": "Categoría actualizada",
+      "category_save_failed": "Error al guardar la categoría.",
+      "category_delete_failed": "Error al eliminar la categoría.",
+      "category_cannot_delete": "No se pueden eliminar las categorías por defecto.",
+      "category_deleted": "Categoría eliminada.",
+      "transactions_load_failed": "Error al cargar las transacciones. Intentá de nuevo.",
+      "dashboard_load_failed": "Error al cargar los datos del dashboard. Intentá de nuevo.",
+      "dashboard_load_failed_short": "Error al cargar los datos del dashboard."
+    }
   },
   "auth": {
     "login": "Iniciar Sesión",
@@ -164,6 +176,16 @@
     "new": "Nueva Transacción",
     "noTransactions": "No hay transacciones todavía",
     "addFirst": "Agrega tu primera transacción",
+    "loading": "Cargando...",
+    "loadingDesc": "Obteniendo tus transacciones.",
+    "errorTitle": "Algo salió mal",
+    "errorDesc": "No pudimos cargar tus transacciones. Intentá de nuevo.",
+    "retry": "Reintentar",
+    "emptyTitle": "Sin transacciones aún",
+    "emptyDesc": "Tu historial de transacciones aparecerá aquí una vez que comiences a registrar gastos e ingresos.",
+    "startTracking": "Comenzá a rastrear tus finanzas agregando tu primera transacción.",
+    "addFirstTransaction": "Agregar Transacción",
+    "newTransaction": "+ Nueva Transacción",
     "form": {
       "back": "← Volver a transacciones",
       "new_title": "Nueva Transacción",
@@ -195,6 +217,15 @@
         "not_found": "Transacción no encontrada",
         "server_error": "Error del servidor. Intenta nuevamente"
       }
+    },
+    "filters": {
+      "search": "Buscar transacciones...",
+      "all": "Todas",
+      "income": "Ingresos",
+      "expenses": "Gastos",
+      "date": "Fecha",
+      "amount": "Monto",
+      "category": "Categoría"
     }
   },
   "categories": {
@@ -240,6 +271,41 @@
       "sign_out": "Cerrar sesión",
       "confirm_message": "¿Estás seguro de que querés cerrar sesión?",
       "confirm_sign_out": "Sí, cerrar sesión"
+    },
+    "accounts": {
+      "title": "Cuentas vinculadas",
+      "desc": "Conectá tus cuentas de mensajería."
+    },
+    "telegram": {
+      "title": "Vinculá Telegram",
+      "desc": "Conectá tu cuenta de Telegram para registrar transacciones desde el bot.",
+      "loading": "Verificando estado de vinculación...",
+      "linked_success": "¡Cuenta vinculada exitosamente!",
+      "already_linked": "Cuenta vinculada",
+      "linked_desc": "Tu cuenta de Telegram está vinculada. Podés registrar transacciones desde el bot.",
+      "link_telegram": "Abrir Telegram",
+      "code_label": "Tu código de vinculación",
+      "code_expires": "Expira",
+      "code_instructions": "Enviá este código al bot de Telegram para vincular tu cuenta.",
+      "open_with_code": "Abrir Telegram con código",
+      "generating": "Generando código...",
+      "generate_code": "Generar código de vinculación"
+    },
+    "whatsapp": {
+      "title": "WhatsApp",
+      "desc": "Vinculá tu cuenta de WhatsApp.",
+      "coming_soon": "Próximamente",
+      "link_whatsapp": "Vincular WhatsApp"
+    },
+    "preferences": {
+      "title": "Preferencias",
+      "desc": "Personalizá tu experiencia.",
+      "theme": "Tema",
+      "toggle_theme": "Cambiar tema",
+      "dark": "Oscuro",
+      "light": "Claro",
+      "language": "Idioma",
+      "currency": "Moneda"
     }
   },
   "analytics": {
@@ -285,7 +351,17 @@
     "displayNameRequired": "El nombre para mostrar es obligatorio",
     "emailReadonly": "El correo electrónico no se puede cambiar",
     "personalInfo": "Información Personal",
-    "backToDashboard": "Volver al panel"
+    "backToDashboard": "Volver al panel",
+    "account_age": {
+      "less_than_month": "Menos de un mes",
+      "months": "{{count}} meses",
+      "years": "{{count}} años"
+    },
+    "toasts": {
+      "profile_updated": "¡Perfil actualizado exitosamente!",
+      "profile_update_failed": "Error al guardar el perfil. Intentá de nuevo.",
+      "load_failed": "Error al cargar los datos del perfil."
+    }
   },
   "theme": {
     "toggle": "Cambiar tema"

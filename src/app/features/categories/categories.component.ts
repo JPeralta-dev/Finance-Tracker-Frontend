@@ -9,8 +9,10 @@ import { Category } from '../../core/models/category.model';
 import { SkeletonComponent } from '../../shared/components/skeleton.component';
 import { EmptyStateComponent } from '../../shared/components/empty-state.component';
 import { TranslatePipe } from '../../core/pipes/translate.pipe';
+import { CategoryTranslatePipe } from '../../core/pipes/category-translate.pipe';
 import { FtSubtleRevealDirective } from '../../shared/directives/ft-subtle-reveal.directive';
 import { ToastService } from '../../core/services/toast.service';
+import { TranslationService } from '../../core/services/translation.service';
 import { FtCurrencyPipe } from '../../core/pipes/ft-currency.pipe';
 
 @Component({
@@ -25,6 +27,7 @@ import { FtCurrencyPipe } from '../../core/pipes/ft-currency.pipe';
     EmptyStateComponent,
     NgIcon,
     TranslatePipe,
+    CategoryTranslatePipe,
     FtSubtleRevealDirective,
   ],
   providers: [provideIcons(ICONS)],
@@ -34,6 +37,7 @@ import { FtCurrencyPipe } from '../../core/pipes/ft-currency.pipe';
 export class CategoriesComponent implements OnInit {
   private financeService = inject(FinanceService);
   private toast = inject(ToastService);
+  private i18n = inject(TranslationService);
 
   categories = signal<Category[]>([]);
   loading = signal(true);
@@ -70,7 +74,7 @@ export class CategoriesComponent implements OnInit {
       },
       error: () => {
         this.loading.set(false);
-        this.toast.error('Failed to load categories.');
+        this.toast.error(this.i18n.translate('common.toasts.categories_load_failed'));
       },
     });
   }
@@ -135,30 +139,31 @@ export class CategoriesComponent implements OnInit {
         this.closeForm();
         this.loadCategories();
         this.toast.success(
-          this.editingCategory() ? 'Category updated' : 'Category created'
+          this.editingCategory() ? this.i18n.translate('common.toasts.category_updated') : this.i18n.translate('common.toasts.category_created')
         );
       },
       error: (err) => {
         this.submitting.set(false);
-        this.toast.error(err.error?.message || 'Failed to save category.');
+        this.toast.error(err.error?.message || this.i18n.translate('common.toasts.category_save_failed'));
       },
     });
   }
 
   deleteCategory(cat: Category): void {
     if (cat.isDefault) {
-      this.toast.error('Cannot delete default categories.');
+      this.toast.error(this.i18n.translate('common.toasts.category_cannot_delete'));
       return;
     }
 
-    if (confirm(`Delete "${cat.name}"? Transactions will be moved to "Other".`)) {
+    const catName = this.i18n.translate(cat.name);
+    if (confirm(`Delete "${catName}"? Transactions will be moved to "Other".`)) {
       this.financeService.deleteCategory(cat.id).subscribe({
         next: () => {
           this.loadCategories();
-          this.toast.success('Category deleted.');
+          this.toast.success(this.i18n.translate('common.toasts.category_deleted'));
         },
         error: (err) => {
-          this.toast.error(err.error?.message || 'Failed to delete category.');
+          this.toast.error(err.error?.message || this.i18n.translate('common.toasts.category_delete_failed'));
         },
       });
     }
