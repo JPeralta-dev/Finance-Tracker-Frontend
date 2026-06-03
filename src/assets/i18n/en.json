@@ -263,6 +263,16 @@
       "loading": "Checking link status...",
       "open_app": "Open Telegram App"
     },
+    "accounts": {
+      "title": "Linked Accounts",
+      "desc": "Connect your messaging accounts"
+    },
+    "whatsapp": {
+      "title": "WhatsApp",
+      "desc": "Link your WhatsApp account",
+      "coming_soon": "Coming soon",
+      "link_whatsapp": "Link WhatsApp"
+    },
     "profile": {
       "title": "Profile",
       "display_name": "Display Name",

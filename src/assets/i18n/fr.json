@@ -263,6 +263,16 @@
       "loading": "Vérification du statut de liaison...",
       "open_app": "Ouvrir Telegram"
     },
+    "accounts": {
+      "title": "Comptes Liés",
+      "desc": "Connectez vos comptes de messagerie"
+    },
+    "whatsapp": {
+      "title": "WhatsApp",
+      "desc": "Liez votre compte WhatsApp",
+      "coming_soon": "Bientôt disponible",
+      "link_whatsapp": "Lier WhatsApp"
+    },
     "profile": {
       "title": "Profil",
       "display_name": "Nom d'affichage",

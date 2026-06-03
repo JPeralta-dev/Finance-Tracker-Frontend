@@ -48,6 +48,9 @@ import {
   heroPencilSquare,
   heroGlobeAlt,
   heroClock,
+  heroLockClosed,
+  heroChatBubbleLeftRight,
+  heroUserGroup,
 } from '@ng-icons/heroicons/outline';
 
 // ─── Icon Map ────────────────────────────────────────────────────────────────
@@ -116,6 +119,9 @@ export const ICONS = {
 
   // Misc
   clock: heroClock,
+  lockClosed: heroLockClosed,
+  chatBubble: heroChatBubbleLeftRight,
+  userGroup: heroUserGroup,
 };
 
 // ─── Category Icon Mapping ───────────────────────────────────────────────────

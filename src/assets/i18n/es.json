@@ -263,6 +263,16 @@
       "loading": "Verificando estado de vinculación...",
       "open_app": "Abrir Telegram"
     },
+    "accounts": {
+      "title": "Cuentas Vinculadas",
+      "desc": "Conectá tus cuentas de mensajería"
+    },
+    "whatsapp": {
+      "title": "WhatsApp",
+      "desc": "Vinculá tu cuenta de WhatsApp",
+      "coming_soon": "Próximamente",
+      "link_whatsapp": "Vincular WhatsApp"
+    },
     "profile": {
       "title": "Perfil",
       "display_name": "Nombre para mostrar",
