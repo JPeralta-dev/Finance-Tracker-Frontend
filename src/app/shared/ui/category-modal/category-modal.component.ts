@@ -18,9 +18,8 @@ import { modalAnimation } from '../../shared/animations';
   providers: [provideIcons(ICONS)],
   template: `
     @if (modal().isOpen) {
-      <div class="modal-overlay" [@modalAnimation]>
-        <div class="modal-backdrop" (click)="close()"></div>
-        <div class="modal-content">
+      <div class="modal-overlay" [@modalAnimation] (click)="close()">
+        <div class="modal-content" (click)="$event.stopPropagation()">
           <div class="modal-header">
             <h2>{{ (modal().isEditing ? 'categories.edit_title' : 'categories.new_title') | translate }}</h2>
             <button class="modal-close" (click)="close()">
