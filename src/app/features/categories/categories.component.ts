@@ -1,7 +1,9 @@
 import { Component, OnInit, signal, inject, computed } from '@angular/core';
+import { AnimationEvent } from '@angular/animations';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { ICONS } from '../../shared/icons/icon-registry';
 import { FinanceService } from '../../core/services/finance.service';
@@ -14,6 +16,7 @@ import { FtSubtleRevealDirective } from '../../shared/directives/ft-subtle-revea
 import { ToastService } from '../../core/services/toast.service';
 import { TranslationService } from '../../core/services/translation.service';
 import { FtCurrencyPipe } from '../../core/pipes/ft-currency.pipe';
+import { modalAnimation } from '../../shared/animations';
 
 @Component({
   selector: 'app-categories',
@@ -22,6 +25,7 @@ import { FtCurrencyPipe } from '../../core/pipes/ft-currency.pipe';
     CommonModule,
     FormsModule,
     RouterLink,
+    BrowserAnimationsModule,
     FtCurrencyPipe,
     SkeletonComponent,
     EmptyStateComponent,
@@ -33,6 +37,7 @@ import { FtCurrencyPipe } from '../../core/pipes/ft-currency.pipe';
   providers: [provideIcons(ICONS)],
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.scss',
+  animations: [modalAnimation],
 })
 export class CategoriesComponent implements OnInit {
   private financeService = inject(FinanceService);
@@ -116,6 +121,12 @@ export class CategoriesComponent implements OnInit {
   closeForm(): void {
     this.showForm.set(false);
     this.editingCategory.set(null);
+  }
+
+  onAnimationDone(event: AnimationEvent): void {
+    if (event.toState === 'void') {
+      this.editingCategory.set(null);
+    }
   }
 
   submitForm(): void {

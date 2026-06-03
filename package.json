@@ -27,7 +27,6 @@
     "@fontsource/space-grotesk": "^5.2.10",
     "@ng-icons/core": "^26.5.0",
     "@ng-icons/heroicons": "^26.5.0",
-    "blendy": "^0.0.1",
     "chart.js": "^4.4.0",
     "esbuild": "^0.28.0",
     "rxjs": "~7.8.0",

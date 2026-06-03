@@ -5,9 +5,11 @@
       <h1 class="page-title">{{ 'categories.title' | translate }}</h1>
       <p class="page-subtitle">{{ 'categories.subtitle' | translate }}</p>
     </div>
-    <button class="btn-new" (click)="openCreateForm()">
-      <ng-icon name="plus" size="1rem" />
-      {{ 'categories.new' | translate }}
+    <button class="btn-new" (click)="openCreateForm()" data-blendy-from="category-modal">
+      <span>
+        <ng-icon name="plus" size="1rem" />
+        {{ 'categories.new' | translate }}
+      </span>
     </button>
   </div>
 
@@ -62,8 +64,10 @@
             </div>
             <div class="cat-actions">
               @if (!cat.isDefault) {
-                <button class="cat-action" (click)="openEditForm(cat)" [attr.aria-label]="'Edit'">
-                  <ng-icon name="edit" size="0.875rem" />
+                <button class="cat-action" (click)="openEditForm(cat)" [attr.aria-label]="'Edit'" data-blendy-from="category-modal">
+                  <span>
+                    <ng-icon name="edit" size="0.875rem" />
+                  </span>
                 </button>
                 <button class="cat-action cat-action--danger" (click)="deleteCategory(cat)" [attr.aria-label]="'Delete'">
                   <ng-icon name="close" size="0.875rem" />
@@ -101,8 +105,9 @@
 
   <!-- Modal Form -->
   @if (showForm()) {
-    <div class="modal-overlay" (click)="closeForm()">
-      <div class="modal" (click)="$event.stopPropagation()">
+    <div class="modal-overlay" [@modalAnimation] (@modalAnimation.done)="onAnimationDone($event)">
+      <div class="modal-backdrop" (click)="closeForm()"></div>
+      <div class="modal-content">
         <div class="modal-header">
           <h2>{{ (editingCategory() ? 'categories.edit_title' : 'categories.new_title') | translate }}</h2>
           <button class="modal-close" (click)="closeForm()">
