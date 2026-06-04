@@ -1,0 +1,387 @@
+{
+  "common": {
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "loading": "Cargando...",
+    "error": "Error",
+    "success": "Éxito",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "viewAll": "Ver todo",
+    "toasts": {
+      "categories_load_failed": "Error al cargar las categorías.",
+      "category_created": "Categoría creada",
+      "category_updated": "Categoría actualizada",
+      "category_save_failed": "Error al guardar la categoría.",
+      "category_delete_failed": "Error al eliminar la categoría.",
+      "category_cannot_delete": "No se pueden eliminar las categorías por defecto.",
+      "category_deleted": "Categoría eliminada.",
+      "transactions_load_failed": "Error al cargar las transacciones. Intentá de nuevo.",
+      "dashboard_load_failed": "Error al cargar los datos del dashboard. Intentá de nuevo.",
+      "dashboard_load_failed_short": "Error al cargar los datos del dashboard."
+    }
+  },
+  "auth": {
+    "login": "Iniciar Sesión",
+    "login_subtitle": "Inicia sesión para gestionar tus finanzas",
+    "register": "Crear Cuenta",
+    "register_subtitle": "Comienza a rastrear tus finanzas hoy",
+    "logout": "Cerrar Sesión",
+    "email": "Correo Electrónico",
+    "email_placeholder": "tu@ejemplo.com",
+    "password": "Contraseña",
+    "password_placeholder": "Tu contraseña",
+    "password_min": "Al menos 8 caracteres",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "forgotPasswordTitle": "Restablecer tu contraseña",
+    "forgotPasswordSubtitle": "Ingresa tu correo electrónico y te enviaremos un enlace para restablecer tu contraseña.",
+    "forgotPasswordSuccess": "Si existe una cuenta con este correo, recibirás un enlace de restablecimiento.",
+    "sendResetLink": "Enviar enlace de restablecimiento",
+    "sending": "Enviando...",
+    "backToLogin": "Volver al inicio de sesión",
+    "noAccount": "¿No tienes cuenta?",
+    "hasAccount": "¿Ya tienes cuenta?",
+    "createAccount": "Crear cuenta",
+    "signIn": "Iniciar sesión",
+    "displayName": "Nombre para mostrar (opcional)",
+    "displayNamePlaceholder": "¿Cómo deberíamos llamarte?",
+    "signing_in": "Iniciando sesión...",
+    "creating_account": "Creando cuenta...",
+    "errors": {
+      "invalid_credentials": "Correo o contraseña inválidos",
+      "email_exists": "Este correo ya está registrado",
+      "email_required": "Se requiere un correo válido",
+      "password_required": "Se requiere contraseña",
+      "password_min": "La contraseña debe tener al menos 8 caracteres",
+      "generic": "Algo salió mal. Intenta nuevamente."
+    }
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "transactions": "Transacciones",
+    "categories": "Categorías",
+    "analytics": "Análisis",
+    "settings": "Configuración",
+    "newTransaction": "Nueva Transacción",
+    "profile": "Perfil"
+  },
+  "landing": {
+    "heroBadge": "Finanzas con IA",
+    "heroTitle": "Seguimiento Financiero <br />Inteligente",
+    "heroSubtitle": "Rastrea, analiza y optimiza tus gastos con información en tiempo real. Conecta tus cuentas o usa nuestro bot de Telegram para registrar al instante.",
+    "getStarted": "Comenzar",
+    "telegramBot": "Bot de Telegram",
+    "trustFree": "Gratis para siempre",
+    "trustNoCard": "Sin tarjeta de crédito",
+    "trustEncrypted": "Encriptado",
+    "features": {
+      "title": "Todo lo que necesitas",
+      "view_all": "Ver todas las funciones",
+      "dashboard": { "title": "Dashboard Overview", "description": "Ve tu balance, ingresos y gastos de un vistazo con resúmenes en tiempo real." },
+      "transactions": { "title": "Seguimiento de Transacciones", "description": "Registra y categoriza cada transacción. Filtra por fecha, tipo o categoría." },
+      "analytics": { "title": "Gráficos Mensuales", "description": "Visualiza tus tendencias financieras de los últimos 6 meses con gráficos interactivos." },
+      "ai_insights": { "title": "Insights de IA", "description": "Obtén recomendaciones personalizadas para optimizar tus gastos y ahorros." },
+      "categories": { "title": "Categorías Inteligentes", "description": "Categoriza transacciones automáticamente y crea categorías personalizadas." },
+      "telegram": { "title": "Integración con Telegram", "description": "Registra transacciones al instante vía bot de Telegram. Sin abrir la app." }
+    },
+    "telegram": {
+      "title": "Integración con Telegram",
+      "open_bot": "Abrir Bot"
+    },
+    "telegram_section": {
+      "badge": "Integración con Telegram",
+      "title": "Registrá gastos directamente<br />desde <span class=\"telegram-section__accent\">Telegram</span>",
+      "description": "Registrá transacciones al instante con nuestro bot de Telegram. Solo enviá un mensaje como \"Café $5\" y se registra automáticamente. Sin abrir la app.",
+      "open_bot": "Abrir Bot de Telegram",
+      "chat_name": "Hormiga Tracker",
+      "chat_status": "En línea",
+      "demo_user_1": "Café $5.50",
+      "demo_bot_1": "✅ Registrado: <strong>$5.50</strong> en <strong>Comida</strong><br /><span class=\"chat-preview__meta\">Hoy, 10:42 AM</span>",
+      "demo_user_2": "Uber $12.00",
+      "demo_bot_2": "✅ Registrado: <strong>$12.00</strong> en <strong>Transporte</strong><br /><span class=\"chat-preview__meta\">Hoy, 11:15 AM</span>"
+    },
+    "cta": {
+      "title": "¿Listo para tomar el control?",
+      "subtitle": "Únete a miles de usuarios que rastrean sus finanzas con Flowr. Es gratis y toma menos de un minuto configurarlo.",
+      "button": "Comenzar Gratis"
+    }
+  },
+  "dashboard": {
+    "greeting_morning": "Buenos días",
+    "greeting_afternoon": "Buenas tardes",
+    "greeting_evening": "Buenas noches",
+    "greetingSubtitle": "Aquí tienes tu resumen financiero de este mes.",
+    "newTransaction": "+ Nueva Transacción",
+    "totalBalance": "Balance Total",
+    "monthlyIncome": "Ingreso Mensual",
+    "monthlyExpenses": "Gastos Mensuales",
+    "savingsRate": "Tasa de Ahorro",
+    "positiveBalance": "Balance positivo",
+    "noBalance": "Sin balance",
+    "onTrack": "En camino",
+    "couldImprove": "Podría mejorar",
+    "monthlyOverview": "Resumen Mensual",
+    "last6Months": "Últimos 6 meses",
+    "recentActivity": "Actividad Reciente",
+    "latestTransactions": "Tus últimas transacciones",
+    "viewAll": "Ver todo →",
+    "noTransactions": "Aún no hay transacciones",
+    "noTransactionsDesc": "Comienza a rastrear tus finanzas agregando tu primera transacción.",
+    "addTransaction": "Agregar transacción",
+    "loading": "Cargando...",
+    "fetchingData": "Obteniendo tus datos financieros.",
+    "errorTitle": "Algo salió mal",
+    "errorDesc": "No pudimos cargar los datos del dashboard. Intenta nuevamente.",
+    "retry": "Reintentar",
+    "welcomeTitle": "¡Bienvenido!",
+    "welcomeSubtitle": "Comienza a rastrear tus finanzas agregando tu primera transacción.",
+    "emptyOverview": "Sin transacciones aún",
+    "emptyOverviewDesc": "Tu resumen financiero aparecerá aquí una vez que comiences a agregar transacciones.",
+    "expenseBreakdown": "Desglose de Gastos",
+    "byCategory": "Por categoría"
+  },
+  "insights": {
+    "title": "Insights IA",
+    "empty": "Aún no hay insights disponibles. Comienza a agregar transacciones para obtener recomendaciones personalizadas.",
+    "mom_increase": {
+      "title": "Gastos aumentaron",
+      "message": "Gastaste un {{percentage}}% más este mes comparado con el mes pasado."
+    },
+    "mom_decrease": {
+      "title": "Gastos disminuyeron",
+      "message": "¡Excelente! Gastaste un {{percentage}}% menos este mes comparado con el mes pasado."
+    },
+    "top_category": {
+      "title": "Categoría principal de gasto",
+      "message": "{{category}} representa el {{percentage}}% de tus gastos totales este mes."
+    },
+    "no_income": {
+      "title": "Sin ingresos registrados",
+      "message": "No registraste ingresos este mes. Agrega tus ingresos para rastrear tu tasa de ahorro."
+    },
+    "good_savings": {
+      "title": "Excelente tasa de ahorro",
+      "message": "Estás ahorrando el {{rate}}% de tus ingresos este mes. ¡Sigue así!"
+    },
+    "negative_savings": {
+      "title": "Gastando más de lo que ganas",
+      "message": "Tus gastos superan tus ingresos este mes. Revisa tus gastos para volver al camino."
+    }
+  },
+  "transactions": {
+    "title": "Transacciones",
+    "subtitle": "Gestiona y rastrea toda tu actividad financiera.",
+    "new": "Nueva Transacción",
+    "noTransactions": "No hay transacciones todavía",
+    "addFirst": "Agrega tu primera transacción",
+    "loading": "Cargando...",
+    "loadingDesc": "Obteniendo tus transacciones.",
+    "errorTitle": "Algo salió mal",
+    "errorDesc": "No pudimos cargar tus transacciones. Intentá de nuevo.",
+    "retry": "Reintentar",
+    "emptyTitle": "Sin transacciones aún",
+    "emptyDesc": "Tu historial de transacciones aparecerá aquí una vez que comiences a registrar gastos e ingresos.",
+    "startTracking": "Comenzá a rastrear tus finanzas agregando tu primera transacción.",
+    "addFirstTransaction": "Agregar Transacción",
+    "newTransaction": "+ Nueva Transacción",
+    "form": {
+      "back": "← Volver a transacciones",
+      "new_title": "Nueva Transacción",
+      "edit_title": "Editar Transacción",
+      "new_subtitle": "Completa los detalles para registrar una transacción",
+      "edit_subtitle": "Actualiza los detalles abajo",
+      "type": "Tipo",
+      "income": "Ingreso",
+      "expense": "Gasto",
+      "amount": "Monto",
+      "description": "Descripción",
+      "description_placeholder": "ej. Compras del mes",
+      "category": "Categoría",
+      "category_placeholder": "Selecciona una categoría",
+      "date": "Fecha",
+      "create": "Agregar Transacción",
+      "update": "Actualizar Transacción",
+      "saving": "Guardando…",
+      "success": {
+        "created": "✅ Transacción creada exitosamente",
+        "updated": "✅ Transacción actualizada exitosamente"
+      },
+      "errors": {
+        "required": "Este campo es obligatorio",
+        "min_value": "El monto debe ser mayor a 0",
+        "max_length": "Máximo 140 caracteres",
+        "connection_error": "No se puede conectar al servidor",
+        "invalid_data": "Datos inválidos. Revisa todos los campos",
+        "not_found": "Transacción no encontrada",
+        "server_error": "Error del servidor. Intenta nuevamente"
+      }
+    },
+    "filters": {
+      "search": "Buscar transacciones...",
+      "all": "Todas",
+      "income": "Ingresos",
+      "expenses": "Gastos",
+      "date": "Fecha",
+      "amount": "Monto",
+      "category": "Categoría"
+    }
+  },
+  "categories": {
+    "title": "Categorías",
+    "subtitle": "Desglose de gastos por categoría",
+    "new": "+ Nueva Categoría",
+    "add": "Agregar",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "default": "Por defecto",
+    "of_total": "del total",
+    "view_transactions": "Ver transacciones",
+    "edit_title": "Editar Categoría",
+    "new_title": "Nueva Categoría",
+    "stats": {
+      "total": "Total rastreadas",
+      "highest": "Mayor gasto",
+      "total_expenses": "Gastos totales"
+    },
+    "empty": {
+      "title": "No hay categorías aún",
+      "desc": "Agrega transacciones para ver las categorías aquí.",
+      "action": "+ Nueva Transacción"
+    },
+    "form": {
+      "name": "Nombre",
+      "name_placeholder": "ej. Comida",
+      "kind": "Tipo",
+      "expense": "Gasto",
+      "income": "Ingreso",
+      "mixed": "Mixto",
+      "color": "Color"
+    }
+  },
+  "settings": {
+    "title": "Configuración",
+    "subtitle": "Gestioná tu cuenta e integraciones",
+    "signOut": "Cerrar Sesión",
+    "back_to_dashboard": "Volver al dashboard",
+    "coming_soon": "Próximamente...",
+    "session": {
+      "title": "Sesión",
+      "sign_out": "Cerrar sesión",
+      "confirm_message": "¿Estás seguro de que querés cerrar sesión?",
+      "confirm_sign_out": "Sí, cerrar sesión"
+    },
+    "accounts": {
+      "title": "Cuentas vinculadas",
+      "desc": "Conectá tus cuentas de mensajería."
+    },
+    "telegram": {
+      "title": "Vinculá Telegram",
+      "desc": "Conectá tu cuenta de Telegram para registrar transacciones desde el bot.",
+      "loading": "Verificando estado de vinculación...",
+      "linked_success": "¡Cuenta vinculada exitosamente!",
+      "already_linked": "Cuenta vinculada",
+      "linked_desc": "Tu cuenta de Telegram está vinculada. Podés registrar transacciones desde el bot.",
+      "link_telegram": "Abrir Telegram",
+      "code_label": "Tu código de vinculación",
+      "code_expires": "Expira",
+      "code_instructions": "Enviá este código al bot de Telegram para vincular tu cuenta.",
+      "open_with_code": "Abrir Telegram con código",
+      "generating": "Generando código...",
+      "generate_code": "Generar código de vinculación"
+    },
+    "whatsapp": {
+      "title": "WhatsApp",
+      "desc": "Vinculá tu cuenta de WhatsApp.",
+      "coming_soon": "Próximamente",
+      "link_whatsapp": "Vincular WhatsApp"
+    },
+    "preferences": {
+      "title": "Preferencias",
+      "desc": "Personalizá tu experiencia.",
+      "theme": "Tema",
+      "toggle_theme": "Cambiar tema",
+      "dark": "Oscuro",
+      "light": "Claro",
+      "language": "Idioma",
+      "currency": "Moneda"
+    }
+  },
+  "analytics": {
+    "title": "Análisis",
+    "subtitle": "Visualizá tus tendencias financieras y desgloses.",
+    "monthlyTrends": "Tendencias Mensuales",
+    "last6Months": "Últimos 6 meses",
+    "byCategory": "Por Categoría",
+    "expenseBreakdown": "Desglose de Gastos",
+    "summary": "Resumen",
+    "totalIncome": "Ingreso Total",
+    "totalExpenses": "Gastos Totales",
+    "netSavings": "Ahorro Neto",
+    "emptyTitle": "Sin datos aún",
+    "emptyDesc": "Empezá a registrar transacciones para ver tu análisis financiero.",
+    "loading": "Cargando análisis...",
+    "fetchingData": "Obteniendo datos financieros",
+    "errorTitle": "Error al cargar",
+    "errorDesc": "No pudimos cargar los datos de análisis. Intentá de nuevo.",
+    "retry": "Reintentar",
+    "addTransaction": "Agregar transacción",
+    "noCategoryData": "Sin datos de categorías aún",
+    "noChartData": "Sin datos mensuales aún"
+  },
+  "profile": {
+    "title": "Perfil",
+    "subtitle": "Gestiona tu información personal",
+    "displayName": "Nombre para mostrar",
+    "email": "Correo electrónico",
+    "save": "Guardar cambios",
+    "cancel": "Cancelar",
+    "signingOut": "Cerrando sesión...",
+    "signOut": "Cerrar sesión",
+    "insights": "Insights",
+    "accountAge": "Antigüedad de la cuenta",
+    "totalTransactions": "Total de transacciones",
+    "loading": "Cargando perfil...",
+    "errorTitle": "Error al cargar el perfil",
+    "errorDesc": "No se pudieron obtener los datos de tu perfil. Intenta de nuevo.",
+    "retry": "Reintentar",
+    "manageAccount": "Gestiona la información de tu cuenta",
+    "displayNamePlaceholder": "Tu nombre para mostrar",
+    "displayNameRequired": "El nombre para mostrar es obligatorio",
+    "emailReadonly": "El correo electrónico no se puede cambiar",
+    "personalInfo": "Información Personal",
+    "backToDashboard": "Volver al panel",
+    "account_age": {
+      "less_than_month": "Menos de un mes",
+      "months": "{{count}} meses",
+      "years": "{{count}} años"
+    },
+    "toasts": {
+      "profile_updated": "¡Perfil actualizado exitosamente!",
+      "profile_update_failed": "Error al guardar el perfil. Intentá de nuevo.",
+      "load_failed": "Error al cargar los datos del perfil."
+    }
+  },
+  "theme": {
+    "toggle": "Cambiar tema"
+  },
+  "notifications": {
+    "bellLabel": "Notificaciones",
+    "title": "Notificaciones",
+    "empty": "Aún no hay notificaciones",
+    "dismiss": "Descartar notificación",
+    "welcome": {
+      "title": "¡Bienvenido!",
+      "message": "Tu cuenta está lista. Comienza a rastrear tus finanzas."
+    },
+    "feature": {
+      "title": "Nueva función disponible",
+      "message": "Descubre el nuevo panel con insights de IA."
+    },
+    "budget": {
+      "title": "Alerta de presupuesto",
+      "message": "Tu presupuesto mensual está casi agotado. Revisa tus gastos."
+    }
+  }
+}
