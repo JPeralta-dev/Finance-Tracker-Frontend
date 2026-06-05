@@ -98,9 +98,9 @@
       "chat_name": "Hormiga Tracker",
       "chat_status": "Online",
       "demo_user_1": "Coffee $5.50",
-      "demo_bot_1": "✅ Logged: <strong>$5.50</strong> in <strong>Food & Dining</strong><br /><span class=\"chat-preview__meta\">Today, 10:42 AM</span>",
+      "demo_bot_1": "Logged: <strong>$5.50</strong> in <strong>Food & Dining</strong><br /><span class=\"chat-preview__meta\">Today, 10:42 AM</span>",
       "demo_user_2": "Uber $12.00",
-      "demo_bot_2": "✅ Logged: <strong>$12.00</strong> in <strong>Transport</strong><br /><span class=\"chat-preview__meta\">Today, 11:15 AM</span>"
+      "demo_bot_2": "Logged: <strong>$12.00</strong> in <strong>Transport</strong><br /><span class=\"chat-preview__meta\">Today, 11:15 AM</span>"
     },
     "cta": {
       "title": "Ready to take control?",
@@ -205,8 +205,8 @@
       "update": "Update Transaction",
       "saving": "Saving…",
       "success": {
-        "created": "✅ Transaction created successfully",
-        "updated": "✅ Transaction updated successfully"
+        "created": "Transaction created successfully",
+        "updated": "Transaction updated successfully"
       },
       "errors": {
         "required": "This field is required",
@@ -266,6 +266,16 @@
     "signOut": "Sign Out",
     "back_to_dashboard": "Back to dashboard",
     "coming_soon": "Coming Soon...",
+    "security": {
+      "title": "Security",
+      "desc": "Configure your account security.",
+      "coming_soon": "Coming soon"
+    },
+    "settings_notifications": {
+      "title": "Notifications",
+      "desc": "Configure how you receive notifications.",
+      "coming_soon": "Coming soon"
+    },
     "session": {
       "title": "Session",
       "sign_out": "Sign out",

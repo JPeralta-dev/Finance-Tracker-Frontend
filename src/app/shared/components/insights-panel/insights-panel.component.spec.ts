@@ -88,23 +88,23 @@ describe('InsightsPanelComponent (shared)', () => {
 
   describe('typeIcon()', () => {
     it('should return warning icon for warning type', () => {
-      expect(component.typeIcon('warning')).toBe('⚠️');
+      expect(component.typeIcon('warning')).toBe('!');
     });
 
     it('should return success icon for success type', () => {
-      expect(component.typeIcon('success')).toBe('✅');
+      expect(component.typeIcon('success')).toBe('+');
     });
 
     it('should return info icon for info type', () => {
-      expect(component.typeIcon('info')).toBe('ℹ️');
+      expect(component.typeIcon('info')).toBe('i');
     });
 
     it('should return trend icon for trend type', () => {
-      expect(component.typeIcon('trend')).toBe('📈');
+      expect(component.typeIcon('trend')).toBe('~');
     });
 
     it('should return default bulb icon for unknown type', () => {
-      expect(component.typeIcon('unknown')).toBe('💡');
+      expect(component.typeIcon('unknown')).toBe('*');
     });
   });
 

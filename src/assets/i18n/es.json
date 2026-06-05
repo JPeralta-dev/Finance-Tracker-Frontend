@@ -98,9 +98,9 @@
       "chat_name": "Hormiga Tracker",
       "chat_status": "En línea",
       "demo_user_1": "Café $5.50",
-      "demo_bot_1": "✅ Registrado: <strong>$5.50</strong> en <strong>Comida</strong><br /><span class=\"chat-preview__meta\">Hoy, 10:42 AM</span>",
+      "demo_bot_1": "Registrado: <strong>$5.50</strong> en <strong>Comida</strong><br /><span class=\"chat-preview__meta\">Hoy, 10:42 AM</span>",
       "demo_user_2": "Uber $12.00",
-      "demo_bot_2": "✅ Registrado: <strong>$12.00</strong> en <strong>Transporte</strong><br /><span class=\"chat-preview__meta\">Hoy, 11:15 AM</span>"
+      "demo_bot_2": "Registrado: <strong>$12.00</strong> en <strong>Transporte</strong><br /><span class=\"chat-preview__meta\">Hoy, 11:15 AM</span>"
     },
     "cta": {
       "title": "¿Listo para tomar el control?",
@@ -205,8 +205,8 @@
       "update": "Actualizar Transacción",
       "saving": "Guardando…",
       "success": {
-        "created": "✅ Transacción creada exitosamente",
-        "updated": "✅ Transacción actualizada exitosamente"
+        "created": "Transacción creada exitosamente",
+        "updated": "Transacción actualizada exitosamente"
       },
       "errors": {
         "required": "Este campo es obligatorio",
@@ -266,6 +266,16 @@
     "signOut": "Cerrar Sesión",
     "back_to_dashboard": "Volver al dashboard",
     "coming_soon": "Próximamente...",
+    "security": {
+      "title": "Seguridad",
+      "desc": "Configurá la seguridad de tu cuenta.",
+      "coming_soon": "Próximamente"
+    },
+    "settings_notifications": {
+      "title": "Notificaciones",
+      "desc": "Configurá cómo recibís las notificaciones.",
+      "coming_soon": "Próximamente"
+    },
     "session": {
       "title": "Sesión",
       "sign_out": "Cerrar sesión",

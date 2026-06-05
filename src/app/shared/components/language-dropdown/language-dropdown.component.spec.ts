@@ -90,9 +90,9 @@ describe('LanguageDropdownComponent', () => {
 
     it('should display correct flags for each language', () => {
       const flags = fixture.debugElement.queryAll(By.css('.lang-dropdown__flag'));
-      expect(flags[0].nativeElement.textContent).toContain('🇪🇸');
-      expect(flags[1].nativeElement.textContent).toContain('🇬🇧');
-      expect(flags[2].nativeElement.textContent).toContain('🇫🇷');
+      expect(flags[0].nativeElement.textContent).toContain('ES');
+      expect(flags[1].nativeElement.textContent).toContain('EN');
+      expect(flags[2].nativeElement.textContent).toContain('FR');
     });
 
     it('should highlight the current language as active', () => {
