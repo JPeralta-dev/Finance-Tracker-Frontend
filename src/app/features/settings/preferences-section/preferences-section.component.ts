@@ -37,9 +37,9 @@ export class PreferencesSectionComponent {
   delay = input<number>(0);
 
   readonly languages: LanguageOption[] = [
-    { code: 'es', label: 'Español', flag: '🇪🇸' },
-    { code: 'en', label: 'English', flag: '🇸' },
-    { code: 'fr', label: 'Français', flag: '🇷' },
+    { code: 'es', label: 'Español', flag: 'ES' },
+    { code: 'en', label: 'English', flag: 'EN' },
+    { code: 'fr', label: 'Français', flag: 'FR' },
   ];
 
   readonly currencies: CurrencyOption[] = [

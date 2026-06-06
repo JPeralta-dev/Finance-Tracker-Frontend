@@ -1,5 +1,5 @@
 export const environment = {
   production: false,
-  apiUrl: "https://childhood-continental-investigators-smell.trycloudflare.com",
+  apiUrl: "http://localhost:3010",
   telegramBotUrl: "https://t.me/hormigaTrackerBot",
 };

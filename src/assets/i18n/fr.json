@@ -56,7 +56,9 @@
       "password_required": "Le mot de passe est requis",
       "password_min": "Le mot de passe doit contenir au moins 8 caractères",
       "generic": "Quelque chose s'est mal passé. Réessayez."
-    }
+    },
+    "or": "ou",
+    "signInWithGoogle": "Se connecter avec Google"
   },
   "nav": {
     "dashboard": "Tableau de bord",
@@ -98,9 +100,9 @@
       "chat_name": "Hormiga Tracker",
       "chat_status": "En ligne",
       "demo_user_1": "Café 5,50€",
-      "demo_bot_1": "✅ Enregistré : <strong>5,50€</strong> dans <strong>Alimentation</strong><br /><span class=\"chat-preview__meta\">Aujourd'hui, 10h42</span>",
+      "demo_bot_1": "Enregistré : <strong>5,50€</strong> dans <strong>Alimentation</strong><br /><span class=\"chat-preview__meta\">Aujourd'hui, 10h42</span>",
       "demo_user_2": "Uber 12,00€",
-      "demo_bot_2": "✅ Enregistré : <strong>12,00€</strong> dans <strong>Transport</strong><br /><span class=\"chat-preview__meta\">Aujourd'hui, 11h15</span>"
+      "demo_bot_2": "Enregistré : <strong>12,00€</strong> dans <strong>Transport</strong><br /><span class=\"chat-preview__meta\">Aujourd'hui, 11h15</span>"
     },
     "cta": {
       "title": "Prêt à prendre le contrôle ?",
@@ -205,8 +207,8 @@
       "update": "Modifier Transaction",
       "saving": "Enregistrement…",
       "success": {
-        "created": "✅ Transaction créée avec succès",
-        "updated": "✅ Transaction modifiée avec succès"
+        "created": "Transaction créée avec succès",
+        "updated": "Transaction modifiée avec succès"
       },
       "errors": {
         "required": "Ce champ est obligatoire",
@@ -266,6 +268,16 @@
     "signOut": "Déconnexion",
     "back_to_dashboard": "Retour au tableau de bord",
     "coming_soon": "Bientôt : Telegram, IA et plus d'intégrations.",
+    "security": {
+      "title": "Sécurité",
+      "desc": "Configurez la sécurité de votre compte.",
+      "coming_soon": "Bientôt disponible"
+    },
+    "settings_notifications": {
+      "title": "Notifications",
+      "desc": "Configurez comment vous recevez les notifications.",
+      "coming_soon": "Bientôt disponible"
+    },
     "session": {
       "title": "Session",
       "sign_out": "Déconnexion",

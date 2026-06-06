@@ -36,7 +36,7 @@ export class TransactionFiltersComponent {
   }
 
   getSortIcon(field: SortField): string {
-    if (this.activeSort() !== field) return '↕';
-    return this.activeDirection() === 'desc' ? '↓' : '↑';
+    if (this.activeSort() !== field) return '';
+    return this.activeDirection() === 'desc' ? 'v' : '^';
   }
 }
