@@ -56,7 +56,9 @@
       "password_required": "Le mot de passe est requis",
       "password_min": "Le mot de passe doit contenir au moins 8 caractères",
       "generic": "Quelque chose s'est mal passé. Réessayez."
-    }
+    },
+    "or": "ou",
+    "signInWithGoogle": "Se connecter avec Google"
   },
   "nav": {
     "dashboard": "Tableau de bord",

@@ -56,7 +56,9 @@
       "password_required": "Password is required",
       "password_min": "Password must be at least 8 characters",
       "generic": "Something went wrong. Try again."
-    }
+    },
+    "or": "or",
+    "signInWithGoogle": "Sign in with Google"
   },
   "nav": {
     "dashboard": "Dashboard",
