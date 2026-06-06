@@ -12,9 +12,9 @@ interface LanguageOption {
 }
 
 const LANGUAGES: LanguageOption[] = [
-  { code: 'es', label: 'Español', flag: '🇪🇸' },
-  { code: 'en', label: 'English', flag: '🇬🇧' },
-  { code: 'fr', label: 'Français', flag: '🇫🇷' },
+  { code: 'es', label: 'Español', flag: 'ES' },
+  { code: 'en', label: 'English', flag: 'EN' },
+  { code: 'fr', label: 'Français', flag: 'FR' },
 ];
 
 @Component({

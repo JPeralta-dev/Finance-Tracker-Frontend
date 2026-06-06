@@ -2,14 +2,14 @@ import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgIcon, provideIcons } from '@ng-icons/core';
-import { ICONS } from '../../shared/icons/icon-registry';
-import { ModalService } from '../../core/services/modal.service';
-import { FinanceService } from '../../core/services/finance.service';
-import { ToastService } from '../../core/services/toast.service';
-import { TranslationService } from '../../core/services/translation.service';
-import { TranslatePipe } from '../../core/pipes/translate.pipe';
-import { CategoryTranslatePipe } from '../../core/pipes/category-translate.pipe';
-import { modalAnimation } from '../../shared/animations';
+import { ICONS } from '../../icons/icon-registry';
+import { ModalService } from '../../../core/services/modal.service';
+import { FinanceService } from '../../../core/services/finance.service';
+import { ToastService } from '../../../core/services/toast.service';
+import { TranslationService } from '../../../core/services/translation.service';
+import { TranslatePipe } from '../../../core/pipes/translate.pipe';
+import { CategoryTranslatePipe } from '../../../core/pipes/category-translate.pipe';
+import { modalAnimation } from '../../animations';
 
 @Component({
   selector: 'ft-category-modal',
@@ -18,9 +18,8 @@ import { modalAnimation } from '../../shared/animations';
   providers: [provideIcons(ICONS)],
   template: `
     @if (modal().isOpen) {
-      <div class="modal-overlay" [@modalAnimation]>
-        <div class="modal-backdrop" (click)="close()"></div>
-        <div class="modal-content">
+      <div class="modal-overlay" [@modalAnimation] (click)="close()">
+        <div class="modal-content" (click)="$event.stopPropagation()">
           <div class="modal-header">
             <h2>{{ (modal().isEditing ? 'categories.edit_title' : 'categories.new_title') | translate }}</h2>
             <button class="modal-close" (click)="close()">
@@ -97,7 +96,7 @@ export class CategoryModalComponent {
   readonly modal = this.modalService.categoryModal;
   readonly submitting = signal(false);
 
-  updateField(field: keyof typeof this.modal().formData, value: string): void {
+  updateField(field: string, value: string): void {
     this.modalService.updateFormData({ [field]: value });
   }
 
@@ -119,7 +118,7 @@ export class CategoryModalComponent {
     };
 
     const request = this.modal().isEditing && this.modal().editingId
-      ? this.financeService.updateCategory(this.modal().editingId, payload)
+      ? this.financeService.updateCategory(this.modal().editingId!, payload)
       : this.financeService.createCategory(payload);
 
     request.subscribe({

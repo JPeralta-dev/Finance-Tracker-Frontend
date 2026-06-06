@@ -15,11 +15,11 @@ export class InsightsPanelComponent {
 
   typeIcon(type: string): string {
     switch (type) {
-      case 'warning': return '⚠️';
-      case 'success': return '✅';
-      case 'info': return 'ℹ️';
-      case 'trend': return '📈';
-      default: return '💡';
+      case 'warning': return '!';
+      case 'success': return '+';
+      case 'info': return 'i';
+      case 'trend': return '~';
+      default: return '*';
     }
   }
 

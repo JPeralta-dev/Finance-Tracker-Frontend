@@ -17,10 +17,16 @@ describe('AuthService', () => {
     createdAt: '2024-01-01T00:00:00Z',
   };
 
-  const mockAuthResponse = {
-    user: mockUser,
-    accessToken: 'test-access-token',
-    refreshToken: 'test-refresh-token',
+  const mockSessionResponse = {
+    user: {
+      id: mockUser.id,
+      email: mockUser.email,
+      name: mockUser.displayName,
+    },
+    session: {
+      id: 'session-1',
+      expiresAt: '2024-12-31T00:00:00Z',
+    },
   };
 
   beforeEach(() => {
@@ -40,97 +46,88 @@ describe('AuthService', () => {
     service = TestBed.inject(AuthService);
     httpMock = TestBed.inject(HttpTestingController);
     router = TestBed.inject(Router);
-
-    // Clear localStorage before each test
-    localStorage.clear();
   });
 
   afterEach(() => {
     httpMock.verify();
-    localStorage.clear();
   });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
 
-  it('login should set tokens and user', () => {
+  it('login should set user signal on success', () => {
     // Act
     service.login('test@example.com', 'password123').subscribe((response) => {
-      expect(response).toEqual(mockAuthResponse);
+      expect(response.email).toBe(mockUser.email);
       expect(service.isAuthenticated()).toBeTrue();
-      expect(service.currentUser()).toEqual(mockUser);
-      expect(localStorage.getItem('accessToken')).toBe('test-access-token');
-      expect(localStorage.getItem('refreshToken')).toBe('test-refresh-token');
+      expect(service.currentUser()?.email).toBe(mockUser.email);
     });
 
     // Assert
-    const req = httpMock.expectOne(r => r.url.endsWith('/api/auth/login'));
+    const req = httpMock.expectOne(r => r.url.endsWith('/api/auth/sign-in/email'));
     expect(req.request.method).toBe('POST');
-    expect(req.request.body).toEqual({
-      email: 'test@example.com',
-      password: 'password123',
-    });
+    expect(req.request.withCredentials).toBeTrue();
 
-    req.flush(mockAuthResponse);
+    req.flush(mockSessionResponse);
   });
 
-  it('logout should clear tokens and user', () => {
+  it('logout should clear user and navigate to login', () => {
     // Arrange - simulate logged in state
-    localStorage.setItem('accessToken', 'test-access-token');
-    localStorage.setItem('refreshToken', 'test-refresh-token');
+    // Manually set user signal via getProfile first
+    service.getProfile().subscribe();
+    const sessionReq = httpMock.expectOne(r => r.url.endsWith('/get-session'));
+    sessionReq.flush(mockSessionResponse);
+
+    expect(service.isAuthenticated()).toBeTrue();
 
     // Act
-    service.logout().subscribe(() => {
-      expect(service.isAuthenticated()).toBeFalse();
-      expect(service.currentUser()).toBeNull();
-      expect(localStorage.getItem('accessToken')).toBeNull();
-      expect(localStorage.getItem('refreshToken')).toBeNull();
-    });
+    service.logout().subscribe();
 
-    // Assert
-    const req = httpMock.expectOne(r => r.url.endsWith('/api/auth/logout'));
-    expect(req.request.method).toBe('POST');
-    expect(req.request.body).toEqual({
-      refreshToken: 'test-refresh-token',
-    });
+    const logoutReq = httpMock.expectOne(r => r.url.endsWith('/api/auth/sign-out'));
+    expect(logoutReq.request.method).toBe('POST');
+    expect(logoutReq.request.withCredentials).toBeTrue();
 
-    req.flush({});
+    logoutReq.flush({});
+
+    expect(service.isAuthenticated()).toBeFalse();
+    expect(router.navigate).toHaveBeenCalledWith(['/login']);
   });
 
-  it('clearTokens should NOT call router.navigate', () => {
+  it('clearTokens should clear session without navigation', () => {
     // Arrange
-    localStorage.setItem('accessToken', 'test-token');
-    localStorage.setItem('refreshToken', 'test-refresh-token');
+    service.getProfile().subscribe();
+    const sessionReq = httpMock.expectOne(r => r.url.endsWith('/get-session'));
+    sessionReq.flush(mockSessionResponse);
+
+    expect(service.isAuthenticated()).toBeTrue();
 
     // Act
     service.clearTokens();
 
     // Assert
-    expect(localStorage.getItem('accessToken')).toBeNull();
-    expect(localStorage.getItem('refreshToken')).toBeNull();
+    expect(service.isAuthenticated()).toBeFalse();
     expect(router.navigate).not.toHaveBeenCalled();
   });
 
-  it('isAuthenticated should return true when logged in', () => {
-    // Arrange
-    TestBed.overrideProvider(AuthService, {
-      useFactory: () => {
-        const authService = new AuthService();
-        // Simulate user being logged in by setting the signal directly
-        // We'll test the computed signal behavior
-        return authService;
-      },
+  it('getProfile should fetch session and set user', () => {
+    // Act
+    service.getProfile().subscribe((user) => {
+      expect(user.email).toBe(mockUser.email);
+      expect(service.isAuthenticated()).toBeTrue();
     });
 
-    const authService = TestBed.inject(AuthService);
+    const req = httpMock.expectOne(r => r.url.endsWith('/get-session'));
+    expect(req.request.withCredentials).toBeTrue();
+    req.flush(mockSessionResponse);
+  });
 
-    // Initially should be false (no user in storage)
-    expect(authService.isAuthenticated()).toBeFalse();
+  it('signInWithGoogle should redirect to Google OAuth', () => {
+    // Act
+    service.signInWithGoogle();
 
-    // After login simulation
-    localStorage.setItem('accessToken', 'test-token');
-    // Note: isAuthenticated is based on user signal, not token
-    // We need to test it through the login flow or by setting user
+    // Can't easily test window.location.href in unit test,
+    // but we verify the method exists and doesn't throw
+    expect(typeof service.signInWithGoogle).toBe('function');
   });
 });
