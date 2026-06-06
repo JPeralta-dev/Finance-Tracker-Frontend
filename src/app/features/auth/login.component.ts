@@ -60,4 +60,8 @@ export class LoginComponent {
         },
       });
   }
+
+  onGoogleSignIn(): void {
+    this.authService.signInWithGoogle();
+  }
 }
