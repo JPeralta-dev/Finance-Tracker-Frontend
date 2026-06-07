@@ -32,6 +32,11 @@
   margin-bottom: 24px;
 }
 
+.telegram-section__badge-icon {
+  width: 16px;
+  height: 16px;
+}
+
 .telegram-section__title {
   font-family: var(--font-display);
   font-size: 36px;
@@ -76,6 +81,12 @@
   }
 }
 
+.telegram-section__btn-icon {
+  width: 20px;
+  height: 20px;
+  filter: brightness(0) invert(1);
+}
+
 /* Chat Preview */
 .chat-preview {
   background: var(--bg-secondary);
@@ -103,7 +114,12 @@
   background: var(--info-bg);
   border: 1px solid rgba(167, 139, 250, 0.2);
   border-radius: 50%;
-  font-size: 20px;
+  overflow: hidden;
+
+  img {
+    width: 24px;
+    height: 24px;
+  }
 }
 
 .chat-preview__info {
