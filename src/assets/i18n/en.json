@@ -93,11 +93,11 @@
       "open_bot": "Open Bot"
     },
     "telegram_section": {
-      "badge": "Telegram Integration",
+      "badge": "Powered by FlowrBot",
       "title": "Track expenses directly<br />from <span class=\"telegram-section__accent\">Telegram</span>",
-      "description": "Log transactions on the go with our Telegram bot. Just send a message like \"Coffee $5\" and it's tracked automatically. No app opening required.",
-      "open_bot": "Open Telegram Bot",
-      "chat_name": "Hormiga Tracker",
+      "description": "Log transactions on the go with FlowrBot. Just send a message like \"Coffee $5\" and it's tracked automatically. No app opening required.",
+      "open_bot": "Open FlowrBot",
+      "chat_name": "FlowrBot",
       "chat_status": "Online",
       "demo_user_1": "Coffee $5.50",
       "demo_bot_1": "Logged: <strong>$5.50</strong> in <strong>Food & Dining</strong><br /><span class=\"chat-preview__meta\">Today, 10:42 AM</span>",

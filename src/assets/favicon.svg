@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Background circle -->
+  <circle cx="32" cy="32" r="30" fill="#6366f1"/>
+
+  <!-- Wallet body -->
+  <rect x="14" y="20" width="36" height="26" rx="4" fill="#ffffff" opacity="0.95"/>
+
+  <!-- Wallet flap -->
+  <rect x="14" y="20" width="36" height="10" rx="4" fill="#818cf8" opacity="0.9"/>
+  <rect x="14" y="26" width="36" height="4" fill="#818cf8" opacity="0.9"/>
+
+  <!-- Wallet clasp -->
+  <circle cx="42" cy="34" r="3" fill="#6366f1"/>
+
+  <!-- Letter F -->
+  <text x="26" y="42" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="700" fill="#6366f1">F</text>
+</svg>
