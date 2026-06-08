@@ -1,5 +1,5 @@
 export const environment = {
   production: false,
-  apiUrl: "http://localhost:3010",
+  apiUrl: "https://finance-tracker-backend-production-2573.up.railway.app",
   telegramBotUrl: "https://t.me/hormigaTrackerBot",
 };
