@@ -155,6 +155,7 @@ export class AuthService {
       .post<{ url: string; redirect: boolean }>(
         `${this.base}/sign-in/social`,
         { provider: 'google', callbackURL },
+        { withCredentials: true },
       )
       .subscribe({
         next: (response) => {
