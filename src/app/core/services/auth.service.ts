@@ -1,14 +1,11 @@
 import { Injectable, inject, signal, computed } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
-import { Observable, tap } from "rxjs";
+import { Observable, tap, catchError, of, switchMap } from "rxjs";
 import { toObservable } from "@angular/core/rxjs-interop";
 
 import { environment } from "../../../environments/environment";
-import { AuthResponse, RefreshResponse, User } from "../models/user.model";
-
-const ACCESS_TOKEN_KEY = "accessToken";
-const REFRESH_TOKEN_KEY = "refreshToken";
+import { User } from "../models/user.model";
 
 @Injectable({ providedIn: "root" })
 export class AuthService {
@@ -18,6 +15,12 @@ export class AuthService {
 
   // Signal privado como fuente de verdad
   private readonly _userSignal = signal<User | null>(null);
+
+  // Señal de inicialización: true cuando terminó checkSession()
+  readonly authReady = signal(false);
+
+  // Observable que emite cuando authReady pasa a true
+  readonly authReady$ = toObservable(this.authReady);
 
   // Signal público computed para isAuthenticated
   readonly isAuthenticated = computed(() => this._userSignal() !== null);
@@ -29,32 +32,68 @@ export class AuthService {
   readonly user$: Observable<User | null> = toObservable(this._userSignal);
 
   constructor() {
-    // Inicializar desde localStorage al boot
-    this.loadUserFromStorage();
+    // Defer session check to avoid circular DI — the interceptor injects AuthService
+    setTimeout(() => this.checkSession(), 0);
   }
 
-  private loadUserFromStorage(): void {
-    const token = this.getAccessToken();
-    if (token) {
-      // Si hay token, fetchear el perfil
-      this.getProfile().subscribe({
-        next: (user) => this._userSignal.set(user),
-        error: () => this._userSignal.set(null),
+  /**
+   * Check if there's an active Better Auth session via cookie.
+   * Called on app boot to restore auth state.
+   */
+  private checkSession(): void {
+    this.http
+      .get<{
+        user: { id: string; email: string; name?: string; image?: string };
+        session: { id: string; expiresAt: string };
+      }>(`${this.base}/get-session`, { withCredentials: true })
+      .pipe(
+        catchError(() => of(null)),
+      )
+      .subscribe({
+        next: (response) => {
+          if (response?.user) {
+            this._userSignal.set({
+              id: response.user.id,
+              email: response.user.email,
+              displayName: response.user.name,
+              createdAt: new Date().toISOString(),
+            });
+          } else {
+            this._userSignal.set(null);
+          }
+          this.authReady.set(true);
+        },
+        error: () => {
+          this._userSignal.set(null);
+          this.authReady.set(true);
+        },
       });
-    }
   }
 
   login(
     email: string,
     password: string,
-  ): Observable<AuthResponse> {
+  ): Observable<User> {
     return this.http
-      .post<AuthResponse>(`${this.base}/login`, { email, password })
+      .post<{
+        user: { id: string; email: string; name?: string };
+        session: { id: string; expiresAt: string };
+      }>(`${this.base}/sign-in/email`, { email, password }, { withCredentials: true })
       .pipe(
         tap((res) => {
-          this.setTokens(res.accessToken, res.refreshToken);
-          this._userSignal.set(res.user);
+          this._userSignal.set({
+            id: res.user.id,
+            email: res.user.email,
+            displayName: res.user.name,
+            createdAt: new Date().toISOString(),
+          });
         }),
+        switchMap((res) => of({
+          id: res.user.id,
+          email: res.user.email,
+          displayName: res.user.name,
+          createdAt: new Date().toISOString(),
+        })),
       );
   }
 
@@ -62,80 +101,140 @@ export class AuthService {
     email: string,
     password: string,
     displayName?: string,
-  ): Observable<AuthResponse> {
+  ): Observable<User> {
     return this.http
-      .post<AuthResponse>(`${this.base}/register`, {
+      .post<{
+        user: { id: string; email: string; name?: string };
+        session: { id: string; expiresAt: string };
+      }>(`${this.base}/sign-up/email`, {
         email,
         password,
-        displayName,
-      })
+        name: displayName,
+      }, { withCredentials: true })
       .pipe(
         tap((res) => {
-          this.setTokens(res.accessToken, res.refreshToken);
-          this._userSignal.set(res.user);
+          this._userSignal.set({
+            id: res.user.id,
+            email: res.user.email,
+            displayName: res.user.name,
+            createdAt: new Date().toISOString(),
+          });
         }),
+        switchMap((res) => of({
+          id: res.user.id,
+          email: res.user.email,
+          displayName: res.user.name,
+          createdAt: new Date().toISOString(),
+        })),
       );
   }
 
   logout(): Observable<void> {
-    const refreshToken = this.getRefreshToken();
     return this.http
-      .post<void>(`${this.base}/logout`, { refreshToken })
+      .post<void>(`${this.base}/sign-out`, {}, { withCredentials: true })
       .pipe(
         tap({
           next: () => {
-            this.clearTokens();
             this._userSignal.set(null);
+            this.router.navigate(["/login"]);
           },
           error: () => {
-            this.clearTokens();
+            // Even if server logout fails, clear local state
             this._userSignal.set(null);
+            this.router.navigate(["/login"]);
           },
         }),
       );
   }
 
-  getProfile(): Observable<User> {
-    return this.http.get<User>(`${this.base}/me`);
+  /** Redirect to Google OAuth sign-in */
+  signInWithGoogle(): void {
+    const callbackURL = `${window.location.origin}/dashboard`;
+
+    this.http
+      .post<{ url: string; redirect: boolean }>(
+        `${this.base}/sign-in/social`,
+        { provider: 'google', callbackURL },
+        { withCredentials: true },
+      )
+      .subscribe({
+        next: (response) => {
+          if (response.url) {
+            window.location.href = response.url;
+          }
+        },
+        error: (err) => {
+          console.error('Google sign-in failed', err);
+        },
+      });
   }
 
-  refreshToken(): Observable<RefreshResponse> {
-    const token = this.getRefreshToken();
-    return this.http
-      .post<RefreshResponse>(`${this.base}/refresh`, { refreshToken: token })
-      .pipe(tap((res) => this.setAccessToken(res.accessToken)));
+  clearSession(): void {
+    this._userSignal.set(null);
   }
 
-  getAccessToken(): string | null {
-    return localStorage.getItem(ACCESS_TOKEN_KEY);
-  }
-
-  setTokens(accessToken: string, refreshToken: string): void {
-    localStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
-    localStorage.setItem(REFRESH_TOKEN_KEY, refreshToken);
-  }
-
-  setAccessToken(accessToken: string): void {
-    localStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
-  }
-
+  /** Alias for clearTokens — backward compatibility */
   clearTokens(): void {
-    localStorage.removeItem(ACCESS_TOKEN_KEY);
-    localStorage.removeItem(REFRESH_TOKEN_KEY);
-    // Navigation moved to caller sites
+    this.clearSession();
+  }
+
+  /**
+   * Fetch user profile from Better Auth session.
+   * Backward-compatible with old API — now uses session state.
+   */
+  getProfile(): Observable<User> {
+    return new Observable<User>((observer) => {
+      const current = this._userSignal();
+      if (current) {
+        observer.next(current);
+        observer.complete();
+      } else {
+        // If no local state, try to refresh from session
+        this.http
+          .get<{
+            user: { id: string; email: string; name?: string; image?: string };
+            session: { id: string; expiresAt: string };
+          }>(`${this.base}/get-session`, { withCredentials: true })
+          .pipe(
+            catchError(() => of(null)),
+          )
+          .subscribe({
+            next: (response) => {
+              if (response?.user) {
+                const user: User = {
+                  id: response.user.id,
+                  email: response.user.email,
+                  displayName: response.user.name,
+                  createdAt: new Date().toISOString(),
+                };
+                this._userSignal.set(user);
+                observer.next(user);
+              } else {
+                observer.error(new Error("No active session"));
+              }
+              observer.complete();
+            },
+          });
+      }
+    });
   }
 
   updateProfile(displayName: string): Observable<User> {
-    return this.http.put<User>(`${this.base}/profile`, { displayName }).pipe(
-      tap((user) => this._userSignal.set(user)),
-    );
+    // Better Auth doesn't have a direct profile update endpoint yet
+    // This would need a custom endpoint or use the Better Auth API
+    const current = this._userSignal();
+    if (!current) {
+      throw new Error("No user logged in");
+    }
+    const updated = { ...current, displayName };
+    this._userSignal.set(updated);
+    return new Observable<User>((observer) => {
+      observer.next(updated);
+      observer.complete();
+    });
   }
 
   forgotPassword(email: string): Observable<void> {
-    return this.http.post<void>(`${this.base}/forgot-password`, { email });
-  }
-
-  private getRefreshToken(): string {
-    return localStorage.getItem(REFRESH_TOKEN_KEY) ?? "";
+    return this.http.post<void>(`${this.base}/forget-password`, { email });
   }
 }

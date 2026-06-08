@@ -1,5 +1,5 @@
 export const environment = {
   production: false,
-  apiUrl: "https://relatives-usage-rosa-thereof.trycloudflare.com",
+  apiUrl: "https://finance-tracker-backend-production-2573.up.railway.app",
   telegramBotUrl: "https://t.me/hormigaTrackerBot",
 };

@@ -1,6 +1,7 @@
 import {
   HttpInterceptorFn,
   HttpErrorResponse,
+  HttpClient,
 } from "@angular/common/http";
 import { inject } from "@angular/core";
 import { Router } from "@angular/router";
@@ -13,11 +14,10 @@ import {
   switchMap,
 } from "rxjs";
 import { AuthService } from "../services/auth.service";
-
-const ACCESS_TOKEN_KEY = "accessToken";
+import { environment } from "../../../environments/environment";
 
 let isRefreshing = false;
-const refreshTokenSubject = new BehaviorSubject<any>(null);
+const refreshTokenSubject = new BehaviorSubject<boolean | null>(null);
 
 /** Reset module-level state — for testing only */
 export function resetInterceptorState(): void {
@@ -25,51 +25,55 @@ export function resetInterceptorState(): void {
   refreshTokenSubject.next(null);
 }
 
+/**
+ * Auth interceptor for cookie-based sessions.
+ *
+ * Phase 3: No longer injects Bearer tokens — cookies are sent
+ * automatically by the browser. Keeps 401 retry logic for session expiry.
+ */
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const authService = inject(AuthService);
   const router = inject(Router);
-  const token = localStorage.getItem(ACCESS_TOKEN_KEY);
+  const http = inject(HttpClient);
 
-  const authReq =
-    token !== null
-      ? req.clone({ setHeaders: { Authorization: `Bearer ${token}` } })
-      : req;
+  // Ensure cookies are sent with cross-origin requests
+  const authReq = req.clone({ withCredentials: true });
 
   return next(authReq).pipe(
     catchError((error: HttpErrorResponse) => {
       if (error.status === 401 && !isRefreshing) {
         isRefreshing = true;
 
-        return authService.refreshToken().pipe(
-          switchMap((refreshResponse) => {
-            isRefreshing = false;
-            refreshTokenSubject.next(refreshResponse);
+        return http
+          .post<void>(
+            `${environment.apiUrl}/api/auth/session/refresh`,
+            {},
+            { withCredentials: true },
+          )
+          .pipe(
+            switchMap(() => {
+              isRefreshing = false;
+              refreshTokenSubject.next(true);
+              // Retry the original request with refreshed session
+              return next(req.clone({ withCredentials: true }));
+            }),
+            catchError((refreshError) => {
+              isRefreshing = false;
+              refreshTokenSubject.next(null);
 
-            const newToken = refreshResponse.accessToken;
-            const retryReq = req.clone({
-              setHeaders: { Authorization: `Bearer ${newToken}` },
-            });
-            return next(retryReq);
-          }),
-          catchError((refreshError) => {
-            isRefreshing = false;
-            refreshTokenSubject.next(null);
-
-            authService.clearTokens();
-            router.navigate(['/login']);
-            return throwError(() => refreshError);
-          }),
-        );
+              // Session refresh failed — user needs to re-login
+              authService.clearSession();
+              router.navigate(["/login"]);
+              return throwError(() => refreshError);
+            }),
+          );
       } else if (error.status === 401 && isRefreshing) {
         return refreshTokenSubject.pipe(
-          filter((token) => token !== null),
+          filter((result) => result !== null),
           take(1),
           switchMap(() => {
-            const newToken = localStorage.getItem(ACCESS_TOKEN_KEY);
-            const retryReq = req.clone({
-              setHeaders: { Authorization: `Bearer ${newToken}`! },
-            });
-            return next(retryReq);
+            // Retry the original request after session refresh
+            return next(req.clone({ withCredentials: true }));
           }),
         );
       }

@@ -56,7 +56,9 @@
       "password_required": "Se requiere contraseña",
       "password_min": "La contraseña debe tener al menos 8 caracteres",
       "generic": "Algo salió mal. Intenta nuevamente."
-    }
+    },
+    "or": "o",
+    "signInWithGoogle": "Ingresar con Google"
   },
   "nav": {
     "dashboard": "Dashboard",
@@ -91,11 +93,11 @@
       "open_bot": "Abrir Bot"
     },
     "telegram_section": {
-      "badge": "Integración con Telegram",
+      "badge": "Impulsado por FlowrBot",
       "title": "Registrá gastos directamente<br />desde <span class=\"telegram-section__accent\">Telegram</span>",
-      "description": "Registrá transacciones al instante con nuestro bot de Telegram. Solo enviá un mensaje como \"Café $5\" y se registra automáticamente. Sin abrir la app.",
-      "open_bot": "Abrir Bot de Telegram",
-      "chat_name": "Hormiga Tracker",
+      "description": "Registrá transacciones al instante con FlowrBot. Solo enviá un mensaje como \"Café $5\" y se registra automáticamente. Sin abrir la app.",
+      "open_bot": "Abrir FlowrBot",
+      "chat_name": "FlowrBot",
       "chat_status": "En línea",
       "demo_user_1": "Café $5.50",
       "demo_bot_1": "Registrado: <strong>$5.50</strong> en <strong>Comida</strong><br /><span class=\"chat-preview__meta\">Hoy, 10:42 AM</span>",
