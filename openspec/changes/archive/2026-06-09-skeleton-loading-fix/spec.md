@@ -1,49 +1,10 @@
-# Dashboard Specification
+# Skeleton Loading Specification
 
 ## Purpose
 
-Defines the dashboard loading experience (skeleton states, shimmer animation, loading→ready transitions) and the scroll-reveal animation behavior for stat cards using the unified `FtSubtleReveal` directive with micro-scale-fade effect.
+Define the unified skeleton loading system for the dashboard: complete skeleton coverage across all sections, consistent shimmer animation, and smooth loading→ready state transitions.
 
 ## Requirements
-
-### Requirement: Stat Card Animation Style
-
-The system SHALL use a micro-scale-fade effect (~600ms) for stat card numeric values instead of count-up from 0→N. The animation MUST preserve currency formatting (prefix/suffix) and apply a subtle scale transition from `0.97` to `1.0` with opacity `0.6` to `1.0`.
-(Previously: Count-up animation from 0 to target value over 2500ms with quadratic easeOut)
-
-#### Scenario: Dashboard stat cards animate on scroll into view
-
-- GIVEN a stat card with a formatted currency value (e.g., "$12,450")
-- WHEN the card enters the viewport via IntersectionObserver
-- THEN the value appears with micro-scale-fade (~600ms) preserving the full formatted string
-
-#### Scenario: No re-animation on re-render
-
-- GIVEN the animation has already played
-- WHEN the component re-renders without new data
-- THEN the animation does not replay
-
-### Requirement: Animation Duration
-
-The system SHALL complete the numeric-settle animation in approximately 600ms (±50ms), replacing the previous 2500ms default.
-(Previously: Default duration of 2500ms, configurable per-component)
-
-#### Scenario: Numeric settle completes within budget
-
-- GIVEN a stat card with `ftSubtleReveal="numeric-settle"`
-- WHEN the animation triggers
-- THEN it completes in approximately 600ms
-
-### Requirement: Animation Triggers on Visibility
-
-The system SHALL trigger the numeric-settle animation when the stat card becomes visible in the viewport, using `FtSubtleReveal` with `IntersectionObserver` instead of the legacy `CountUpDirective`.
-(Previously: Triggered by CountUpDirective with its own visibility detection)
-
-#### Scenario: Animation on initial load
-
-- GIVEN user loads the dashboard
-- WHEN stat cards enter the viewport
-- THEN the numeric-settle animation plays once via FtSubtleReveal
 
 ### Requirement: Stat Card Skeleton Height Match
 
@@ -156,3 +117,25 @@ The system MUST use a single shimmer animation implementation from `_skeleton.sc
 - WHEN they apply the `.skeleton-block` class or skeleton modifier classes
 - THEN the shared shimmer animation is automatically applied
 - AND no custom animation keyframes are needed
+
+## Acceptance Criteria
+
+| # | Criteria | Verification |
+|---|----------|-------------|
+| AC1 | Stat card skeleton height matches real card including footer | Visual diff test or pixel comparison |
+| AC2 | All 5 dashboard sections show skeletons during loading | Manual inspection or E2E test |
+| AC3 | Cross-fade animation is visible (≥300ms duration) | Manual inspection or performance trace |
+| AC4 | Single shimmer animation source in codebase | Grep for `@keyframes shimmer` — only 1 definition |
+| AC5 | No layout shift during loading→ready transition | CLS metric = 0 in DevTools |
+| AC6 | ftSubtleReveal animations still work after transition | Manual inspection of reveal effects |
+| AC7 | Gradient sweep removed from skeleton.component.ts | Code review of component styles |
+
+## Edge Cases
+
+| Edge Case | Expected Behavior |
+|-----------|------------------|
+| Fast network (loading < 200ms) | Cross-fade still plays; no flicker |
+| Slow network (loading > 5s) | Skeleton animation continues smoothly; no performance degradation |
+| Skeleton renders without footer data | Footer skeleton still renders (placeholder only, no real data needed) |
+| Browser without backdrop-filter support | Skeleton still renders; glass effect degrades gracefully |
+| Component used outside dashboard | Skeleton styles are self-contained; no dashboard-specific dependencies |
