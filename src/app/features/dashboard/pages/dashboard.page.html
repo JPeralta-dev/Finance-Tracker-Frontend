@@ -28,8 +28,8 @@
       [actionLabel]="'dashboard.addTransaction' | translate"
       actionRoute="/transactions/new"
     />
-  } @else {
-    <!-- Ready content (always rendered, visible when not loading) -->
+  } @else if (state() === 'ready') {
+    <!-- Ready content (only rendered when data is loaded) -->
     <div class="dashboard-content-layer dashboard-content-layer--ready">
       <!-- Greeting -->
       <div class="dashboard-greeting" ftSubtleReveal="fade-up">
