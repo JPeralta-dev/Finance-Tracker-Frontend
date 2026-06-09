@@ -45,7 +45,7 @@ export class AuthService {
       .get<{
         user: { id: string; email: string; name?: string; image?: string };
         session: { id: string; expiresAt: string };
-      }>(`${this.base}/get-session`, { withCredentials: true })
+      }>(`${this.base}/get-session?t=${Date.now()}`, { withCredentials: true })
       .pipe(
         catchError(() => of(null)),
       )
@@ -58,10 +58,39 @@ export class AuthService {
               displayName: response.user.name,
               createdAt: new Date().toISOString(),
             });
+            this.authReady.set(true);
           } else {
-            this._userSignal.set(null);
+            // Retry once after 500ms in case of race condition with cookie setup
+            setTimeout(() => {
+              this.http
+                .get<{
+                  user: { id: string; email: string; name?: string; image?: string };
+                  session: { id: string; expiresAt: string };
+                }>(`${this.base}/get-session?t=${Date.now()}`, { withCredentials: true })
+                .pipe(
+                  catchError(() => of(null)),
+                )
+                .subscribe({
+                  next: (retryResponse) => {
+                    if (retryResponse?.user) {
+                      this._userSignal.set({
+                        id: retryResponse.user.id,
+                        email: retryResponse.user.email,
+                        displayName: retryResponse.user.name,
+                        createdAt: new Date().toISOString(),
+                      });
+                    } else {
+                      this._userSignal.set(null);
+                    }
+                    this.authReady.set(true);
+                  },
+                  error: () => {
+                    this._userSignal.set(null);
+                    this.authReady.set(true);
+                  },
+                });
+            }, 500);
           }
-          this.authReady.set(true);
         },
         error: () => {
           this._userSignal.set(null);
