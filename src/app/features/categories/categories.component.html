@@ -104,3 +104,14 @@
   </div>
 </div>
 
+<!-- Confirm Delete Dialog -->
+<ft-confirm-dialog
+  [visible]="confirmVisible()"
+  title="Delete category?"
+  [message]="'Transactions in this category will be moved to \"Other\". This cannot be undone.'"
+  confirmLabel="Delete"
+  cancelLabel="Cancel"
+  (confirm)="onConfirmDelete()"
+  (cancel)="onCancelDelete()"
+/>
+
