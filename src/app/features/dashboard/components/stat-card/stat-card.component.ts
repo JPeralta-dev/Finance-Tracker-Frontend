@@ -54,13 +54,15 @@ export class StatCardComponent {
 
   formatValue(value: number): string {
     const d = this.data();
+    const absoluteValue = Math.abs(value);
+    const signPrefix = d.sign ?? '';
     if (d.prefix || d.suffix) {
       const parts: string[] = [];
       if (d.prefix) parts.push(d.prefix);
-      parts.push(value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+      parts.push(signPrefix + absoluteValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
       if (d.suffix) parts.push(d.suffix);
       return parts.join('');
     }
-    return value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    return signPrefix + absoluteValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   }
 }

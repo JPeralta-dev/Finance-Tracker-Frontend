@@ -184,12 +184,14 @@ export class DashboardPage implements OnInit {
         label: 'dashboard.monthlyIncome',
         value: summary.totalIncome,
         icon: 'income',
+        sign: '+',
       },
       {
         id: 'expenses',
         label: 'dashboard.monthlyExpenses',
         value: summary.totalExpenses,
         icon: 'expense',
+        sign: '-',
       },
       {
         id: 'savings',
