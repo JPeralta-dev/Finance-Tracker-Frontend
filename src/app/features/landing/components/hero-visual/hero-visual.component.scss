@@ -255,6 +255,16 @@
     display: none;
   }
 
+  .hero-visual__float-card--insight {
+    display: flex;
+    opacity: 0.6;
+    right: 50%;
+    transform: translateX(50%);
+    top: -20px;
+    z-index: 0;
+    animation: none;
+  }
+
   .main-card__title {
     font-size: 13px;
   }
