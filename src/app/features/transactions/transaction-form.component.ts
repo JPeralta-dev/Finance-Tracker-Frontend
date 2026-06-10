@@ -11,6 +11,7 @@ import { Category } from '../../core/models/category.model';
 import { TranslatePipe } from '../../core/pipes/translate.pipe';
 import { CategoryTranslatePipe } from '../../core/pipes/category-translate.pipe';
 import { FtSubtleRevealDirective } from '../../shared/directives/ft-subtle-reveal.directive';
+import { CurrencyService } from '../../core/services/currency.service';
 
 interface CategoryOption extends Category {
   iconKey: string;
@@ -37,6 +38,7 @@ export class TransactionFormComponent implements OnInit {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   private financeService = inject(FinanceService);
+  readonly currencySymbol = inject(CurrencyService).currencyConfig().symbol;
 
   // State
   readonly isEdit = signal(false);
