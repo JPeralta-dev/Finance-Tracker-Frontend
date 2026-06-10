@@ -2,7 +2,7 @@
   <div class="telegram-section__inner">
     <div class="telegram-section__content" ftSubtleReveal="fade-up" [delay]="100">
       <div class="telegram-section__badge">
-        <img src="/assets/favicon.svg" alt="FlowrBot" class="telegram-section__badge-icon" />
+        <img src="/assets/telegram-bot-photo.png" alt="FlowrBot" class="telegram-section__badge-icon" />
         {{ 'landing.telegram_section.badge' | translate }}
       </div>
       <h2 class="telegram-section__title" [innerHTML]="'landing.telegram_section.title' | translate"></h2>
@@ -10,7 +10,7 @@
         {{ 'landing.telegram_section.description' | translate }}
       </p>
       <a [href]="telegramBotUrl" target="_blank" class="telegram-section__btn">
-        <img src="/assets/favicon.svg" alt="FlowrBot" class="telegram-section__btn-icon" />
+        <ng-icon name="telegram" size="1.125rem" />
         {{ 'landing.telegram_section.open_bot' | translate }}
       </a>
     </div>
@@ -18,7 +18,7 @@
       <div class="chat-preview">
         <div class="chat-preview__header">
           <div class="chat-preview__avatar">
-            <img src="/assets/favicon.svg" alt="FlowrBot" />
+            <img src="/assets/telegram-bot-photo.png" alt="FlowrBot" />
           </div>
           <div class="chat-preview__info">
             <span class="chat-preview__name">{{ 'landing.telegram_section.chat_name' | translate }}</span>
@@ -34,6 +34,12 @@
             {{ 'landing.telegram_section.demo_user_2' | translate }}
           </div>
           <div class="chat-preview__message chat-preview__message--bot" [innerHTML]="'landing.telegram_section.demo_bot_2' | translate"></div>
+          <!-- Typing indicator -->
+          <div class="chat-preview__typing">
+            <span class="typing-dot"></span>
+            <span class="typing-dot"></span>
+            <span class="typing-dot"></span>
+          </div>
         </div>
       </div>
     </div>
