@@ -91,7 +91,7 @@ export class CategoriesComponent implements OnInit, OnDestroy {
   percentage(total: number): number {
     const max = this.totalExpenses();
     if (!max) return 0;
-    return (total / max) * 100;
+    return Math.min((total / max) * 100, 100);
   }
 
   categoryMark(name: string): string {
