@@ -22,9 +22,18 @@
         </a>
       </div>
       <div class="hero__trust" ftSubtleReveal="fade-up" [delay]="500">
-        <span class="hero__trust-item">{{ 'landing.trustFree' | translate }}</span>
-        <span class="hero__trust-item">{{ 'landing.trustNoCard' | translate }}</span>
-        <span class="hero__trust-item">{{ 'landing.trustEncrypted' | translate }}</span>
+        <span class="hero__trust-item">
+          <ng-icon name="check" size="0.875rem" />
+          {{ 'landing.trustFree' | translate }}
+        </span>
+        <span class="hero__trust-item">
+          <ng-icon name="lockClosed" size="0.875rem" />
+          {{ 'landing.trustNoCard' | translate }}
+        </span>
+        <span class="hero__trust-item">
+          <ng-icon name="shieldCheck" size="0.875rem" />
+          {{ 'landing.trustEncrypted' | translate }}
+        </span>
       </div>
     </div>
 

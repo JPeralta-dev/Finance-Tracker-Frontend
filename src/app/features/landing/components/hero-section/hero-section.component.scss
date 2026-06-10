@@ -116,9 +116,17 @@
 }
 
 .hero__trust-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   font-size: 13px;
   color: var(--text-tertiary);
   font-weight: 500;
+
+  ng-icon {
+    color: var(--accent-start);
+    flex-shrink: 0;
+  }
 }
 
 /* Visual */
