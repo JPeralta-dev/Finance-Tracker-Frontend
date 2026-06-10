@@ -70,23 +70,24 @@
     "profile": "Perfil"
   },
   "landing": {
-    "heroBadge": "Finanzas con IA",
-    "heroTitle": "Seguimiento Financiero <br />Inteligente",
+    "heroBadge": "Categorización Inteligente",
+    "heroTitle": "Tu dinero, <br />perfectamente organizado",
     "heroSubtitle": "Rastrea, analiza y optimiza tus gastos con información en tiempo real. Conecta tus cuentas o usa nuestro bot de Telegram para registrar al instante.",
     "getStarted": "Comenzar",
     "telegramBot": "Bot de Telegram",
+    "tryTelegramBot": "o probá nuestro bot de Telegram",
     "trustFree": "Gratis para siempre",
     "trustNoCard": "Sin tarjeta de crédito",
     "trustEncrypted": "Encriptado",
     "features": {
       "title": "Todo lo que necesitas",
       "view_all": "Ver todas las funciones",
-      "dashboard": { "title": "Dashboard Overview", "description": "Ve tu balance, ingresos y gastos de un vistazo con resúmenes en tiempo real." },
-      "transactions": { "title": "Seguimiento de Transacciones", "description": "Registra y categoriza cada transacción. Filtra por fecha, tipo o categoría." },
-      "analytics": { "title": "Gráficos Mensuales", "description": "Visualiza tus tendencias financieras de los últimos 6 meses con gráficos interactivos." },
-      "ai_insights": { "title": "Insights de IA", "description": "Obtén recomendaciones personalizadas para optimizar tus gastos y ahorros." },
-      "categories": { "title": "Categorías Inteligentes", "description": "Categoriza transacciones automáticamente y crea categorías personalizadas." },
-      "telegram": { "title": "Integración con Telegram", "description": "Registra transacciones al instante vía bot de Telegram. Sin abrir la app." }
+      "dashboard": { "title": "Conocé tu posición en 3 segundos", "description": "Ves tu balance exacto, ingresos y gastos apenas abrís la app. Sin navegar por menús." },
+      "transactions": { "title": "Cada transacción, perfectamente organizada", "description": "Registrá gastos en segundos. Filtra por fecha, tipo o categoría para encontrar justo lo que necesitás." },
+      "analytics": { "title": "Entendé a dónde va tu plata", "description": "Gráficos interactivos muestran tus patrones de gasto. Detectá tendencias antes de que sean problemas." },
+      "ai_insights": { "title": "Tomá decisiones más inteligentes", "description": "Recomendaciones personalizadas te ayudan a ahorrar más. Sin necesidad de un asesor financiero." },
+      "categories": { "title": "Organización automática", "description": "Las categorías se ordenan solas. Creá categorías personalizadas para tener control total." },
+      "telegram": { "title": "Registrá gastos sin abrir la app", "description": "Mandá un mensaje como 'Café $5' a nuestro bot. Se registra al instante. Cero fricción." }
     },
     "telegram": {
       "title": "Integración con Telegram",
@@ -105,8 +106,8 @@
       "demo_bot_2": "Registrado: <strong>$12.00</strong> en <strong>Transporte</strong><br /><span class=\"chat-preview__meta\">Hoy, 11:15 AM</span>"
     },
     "cta": {
-      "title": "¿Listo para tomar el control?",
-      "subtitle": "Únete a miles de usuarios que rastrean sus finanzas con Flowr. Es gratis y toma menos de un minuto configurarlo.",
+      "title": "Empezá a trackear tu plata en 30 segundos",
+      "subtitle": "Gratis para siempre. Sin tarjeta de crédito. Solo registrate y tomá el control.",
       "button": "Comenzar Gratis"
     }
   },

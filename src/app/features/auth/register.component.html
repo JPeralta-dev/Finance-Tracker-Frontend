@@ -59,30 +59,39 @@
 
       <div class="field">
         <label for="password">{{ 'auth.password' | translate }}</label>
-        <input
-          id="password"
-          type="password"
-          formControlName="password"
-          [placeholder]="'auth.password_min' | translate"
-          autocomplete="new-password"
-        />
+        <div class="password-wrap">
+          <input
+            id="password"
+            [type]="showPassword ? 'text' : 'password'"
+            formControlName="password"
+            [placeholder]="'auth.password_min' | translate"
+            autocomplete="new-password"
+          />
+          <button type="button" class="password-toggle" (click)="showPassword = !showPassword" [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'">
+            <ng-icon [name]="showPassword ? 'check' : 'lockClosed'" size="1rem" />
+          </button>
+        </div>
         @if (password.invalid && password.touched) {
           <span class="field-error">{{ 'auth.errors.password_min' | translate }}</span>
+        } @else if (password.value) {
+          <div class="password-strength">
+            <div class="strength-bar">
+              @for (level of strengthLevels; track level; let i = $index) {
+                <div class="strength-segment" [class.active]="i < strengthScore()"></div>
+              }
+            </div>
+            <span class="strength-label">{{ strengthLabel() }}</span>
+          </div>
         }
       </div>
 
-      <button
+      <ft-button
         type="submit"
-        class="btn-primary"
-        [class.btn-primary--disabled]="form.invalid || loading"
         [disabled]="form.invalid || loading"
+        [loading]="loading"
       >
-        @if (loading) {
-          <span class="spinner"></span> {{ 'auth.creating_account' | translate }}
-        } @else {
-          {{ 'auth.createAccount' | translate }}
-        }
-      </button>
+        {{ 'auth.createAccount' | translate }}
+      </ft-button>
     </form>
 
     <p class="auth-footer">

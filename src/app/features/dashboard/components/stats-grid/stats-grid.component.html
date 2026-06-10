@@ -7,11 +7,15 @@
           <div class="stat-card__label stat-card__label--skeleton"></div>
         </div>
         <div class="stat-card__value stat-card__value--skeleton"></div>
+        <div class="stat-card__footer--skeleton">
+          <div class="stat-card__trend--skeleton"></div>
+          <div class="stat-card__insight--skeleton"></div>
+        </div>
       </div>
     }
   } @else {
-    @for (stat of stats(); track stat.id) {
-      <ft-stat-card [data]="stat" [compact]="compact()" />
+    @for (stat of stats(); track stat.id; let first = $first) {
+      <ft-stat-card [data]="stat" [compact]="compact()" [class.stat-card--hero]="first && stat.id === 'balance'" />
     }
   }
 </div>

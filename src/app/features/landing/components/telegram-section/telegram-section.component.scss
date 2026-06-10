@@ -79,12 +79,10 @@
     transform: translateY(-2px);
     box-shadow: 0 0 40px rgba(217, 70, 239, 0.35);
   }
-}
 
-.telegram-section__btn-icon {
-  width: 20px;
-  height: 20px;
-  filter: brightness(0) invert(1);
+  ng-icon {
+    flex-shrink: 0;
+  }
 }
 
 /* Chat Preview */
@@ -173,6 +171,42 @@
   color: var(--text-tertiary);
   margin-top: 4px;
   display: block;
+}
+
+/* Typing indicator */
+.chat-preview__typing {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 14px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  border-bottom-left-radius: 4px;
+  align-self: flex-start;
+  max-width: 60px;
+  animation: typingFadeIn 0.8s ease-out 2s both;
+}
+
+.typing-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text-tertiary);
+  animation: typingBounce 1.4s ease-in-out infinite;
+
+  &:nth-child(2) { animation-delay: 0.2s; }
+  &:nth-child(3) { animation-delay: 0.4s; }
+}
+
+@keyframes typingFadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes typingBounce {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+  30% { transform: translateY(-4px); opacity: 1; }
 }
 
 /* Responsive */

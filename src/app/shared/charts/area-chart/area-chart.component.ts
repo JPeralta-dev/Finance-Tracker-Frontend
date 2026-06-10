@@ -10,9 +10,9 @@ import {
 import { CommonModule } from '@angular/common';
 import { ChartService } from '../../charts/chart.service';
 
-// Dynamic import to avoid static analysis issues with Chart.js
+// Dynamic import — guards against init-before-load race condition
 let Chart: any;
-import('chart.js').then(m => Chart = m.Chart);
+const chartReady = import('chart.js').then(m => { Chart = m.Chart; });
 
 export interface AreaDataset {
   label: string;
@@ -42,7 +42,12 @@ export class AreaChartComponent implements OnInit, OnDestroy, OnChanges {
   constructor(private chartService: ChartService) {}
 
   ngOnInit(): void {
-    if (!this.loading()) this.initChart();
+    if (this.loading()) return;
+    if (Chart) {
+      this.initChart();
+    } else {
+      chartReady.then(() => this.initChart());
+    }
   }
 
   ngOnChanges(): void {

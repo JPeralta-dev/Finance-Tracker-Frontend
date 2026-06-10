@@ -8,13 +8,14 @@ import { ICONS } from '../../shared/icons/icon-registry';
 import { AuthService } from '../../core/services/auth.service';
 import { ToastService } from '../../core/services/toast.service';
 import { TranslatePipe } from '../../core/pipes/translate.pipe';
+import { UiButtonComponent } from '../../shared/ui/ui-button/ui-button.component';
 
 type ForgotPasswordState = 'idle' | 'loading' | 'success' | 'error';
 
 @Component({
   selector: 'app-forgot-password',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink, NgIcon, TranslatePipe],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, NgIcon, TranslatePipe, UiButtonComponent],
   providers: [provideIcons(ICONS)],
   templateUrl: './forgot-password.component.html',
   styleUrl: './forgot-password.component.scss',
