@@ -22,6 +22,13 @@
     padding: 0 4px;
   }
 
+  &__chips {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+
   &__list {
     display: flex;
     flex-direction: column;
@@ -178,5 +185,37 @@
       background: var(--danger-bg);
       border-color: rgba(255, 107, 107, 0.3);
     }
+  }
+}
+
+/* Filter chips */
+.filter-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-primary);
+  background: var(--accent-glow);
+  border: 1px solid rgba(217, 70, 239, 0.2);
+  border-radius: var(--radius-full);
+}
+
+.filter-chip__dismiss {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  background: none;
+  border: none;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  padding: 0;
+  transition: color var(--duration-fast) var(--ease-out);
+
+  &:hover {
+    color: var(--text-primary);
   }
 }

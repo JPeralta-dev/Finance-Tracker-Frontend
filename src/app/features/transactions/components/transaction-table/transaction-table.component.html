@@ -11,6 +11,28 @@
     />
   </div>
 
+  <!-- Active filter chips -->
+  @if (filter() !== 'all' || search()) {
+    <div class="tx-table__chips">
+      @if (filter() !== 'all') {
+        <span class="filter-chip">
+          {{ filter() }}
+          <button class="filter-chip__dismiss" (click)="onFilterChange('all')" aria-label="Clear filter">
+            <ng-icon name="close" size="0.75rem" />
+          </button>
+        </span>
+      }
+      @if (search()) {
+        <span class="filter-chip">
+          "{{ search() }}"
+          <button class="filter-chip__dismiss" (click)="onSearchChange('')" aria-label="Clear search">
+            <ng-icon name="close" size="0.75rem" />
+          </button>
+        </span>
+      }
+    </div>
+  }
+
   <!-- Results count -->
   @if (!loading() && totalFiltered() > 0) {
     <div class="tx-table__count">
