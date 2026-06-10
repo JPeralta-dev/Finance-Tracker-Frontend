@@ -5,7 +5,7 @@
     <div class="profile-error">
       <h1>{{ 'profile.errorTitle' | translate }}</h1>
       <p>{{ 'profile.errorDesc' | translate }}</p>
-      <button class="btn btn--primary" (click)="loadUserProfile()">{{ 'profile.retry' | translate }}</button>
+      <ft-button (click)="loadUserProfile()">{{ 'profile.retry' | translate }}</ft-button>
     </div>
   } @else {
     <div class="profile-container" ftSubtleReveal="fade-up">
@@ -13,9 +13,9 @@
       <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
         <app-profile-personal-info [profileForm]="profileForm" [delay]="100" />
         <div class="form-actions">
-          <button type="submit" class="btn btn--primary" [disabled]="profileForm.invalid">
+          <ft-button type="submit" [disabled]="profileForm.invalid">
             {{ 'profile.save' | translate }}
-          </button>
+          </ft-button>
         </div>
       </form>
       <app-profile-insights-card [userStats]="userStats()" [insights]="insights()" [delay]="200" />

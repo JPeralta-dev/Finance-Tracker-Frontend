@@ -1,9 +1,6 @@
 <button
   class="btn"
-  [class]="variantClass"
-  [class]="sizeClass"
-  [class]="fullClass"
-  [class]="loadingClass"
+  [ngClass]="[variantClass, sizeClass, fullClass, loadingClass]"
   [disabled]="disabled() || loading()"
   [type]="type()"
   (click)="onClick($event)"

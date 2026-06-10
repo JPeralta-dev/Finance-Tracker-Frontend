@@ -16,6 +16,7 @@ import { ToastService } from '../../core/services/toast.service';
 import { TranslationService } from '../../core/services/translation.service';
 import { FtCurrencyPipe } from '../../core/pipes/ft-currency.pipe';
 import { ModalService } from '../../core/services/modal.service';
+import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog.component';
 
 @Component({
   selector: 'app-categories',
@@ -31,6 +32,7 @@ import { ModalService } from '../../core/services/modal.service';
     TranslatePipe,
     CategoryTranslatePipe,
     FtSubtleRevealDirective,
+    ConfirmDialogComponent,
   ],
   providers: [provideIcons(ICONS)],
   templateUrl: './categories.component.html',
@@ -44,6 +46,10 @@ export class CategoriesComponent implements OnInit, OnDestroy {
 
   categories = signal<Category[]>([]);
   loading = signal(true);
+
+  // Confirm dialog state
+  confirmVisible = signal(false);
+  private pendingDeleteCategory: Category | null = null;
 
   private categorySavedSub?: Subscription;
 
@@ -85,7 +91,7 @@ export class CategoriesComponent implements OnInit, OnDestroy {
   percentage(total: number): number {
     const max = this.totalExpenses();
     if (!max) return 0;
-    return (total / max) * 100;
+    return Math.min((total / max) * 100, 100);
   }
 
   categoryMark(name: string): string {
@@ -125,18 +131,31 @@ export class CategoriesComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const catName = this.i18n.translate(cat.name);
-    if (confirm(`Delete "${catName}"? Transactions will be moved to "Other".`)) {
-      this.financeService.deleteCategory(cat.id).subscribe({
-        next: () => {
-          this.loadCategories();
-          this.toast.success(this.i18n.translate('common.toasts.category_deleted'));
-        },
-        error: (err) => {
-          this.toast.error(err.error?.message || this.i18n.translate('common.toasts.category_delete_failed'));
-        },
-      });
-    }
+    this.pendingDeleteCategory = cat;
+    this.confirmVisible.set(true);
+  }
+
+  onConfirmDelete(): void {
+    const cat = this.pendingDeleteCategory;
+    if (!cat) return;
+
+    this.financeService.deleteCategory(cat.id).subscribe({
+      next: () => {
+        this.loadCategories();
+        this.toast.success(this.i18n.translate('common.toasts.category_deleted'));
+      },
+      error: (err) => {
+        this.toast.error(err.error?.message || this.i18n.translate('common.toasts.category_delete_failed'));
+      },
+    });
+
+    this.confirmVisible.set(false);
+    this.pendingDeleteCategory = null;
+  }
+
+  onCancelDelete(): void {
+    this.confirmVisible.set(false);
+    this.pendingDeleteCategory = null;
   }
 }
 

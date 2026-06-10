@@ -49,6 +49,7 @@ import {
   heroGlobeAlt,
   heroClock,
   heroLockClosed,
+  heroShieldCheck,
   heroChatBubbleLeftRight,
   heroUserGroup,
 } from '@ng-icons/heroicons/outline';
@@ -120,6 +121,7 @@ export const ICONS = {
   // Misc
   clock: heroClock,
   lockClosed: heroLockClosed,
+  shieldCheck: heroShieldCheck,
   chatBubble: heroChatBubbleLeftRight,
   userGroup: heroUserGroup,
 };

@@ -1,12 +1,15 @@
 import { Component, signal, inject, OnInit, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { NgIcon, provideIcons } from '@ng-icons/core';
+import { catchError, forkJoin, of } from 'rxjs';
 import { catchError, forkJoin, of } from 'rxjs';
 
 import { AreaChartComponent, AreaDataset } from '../../../shared/charts';
 import { DonutChartComponent, DonutData } from '../../../shared/charts';
 import { FtSubtleRevealDirective } from '../../../shared/directives/ft-subtle-reveal.directive';
 import { EmptyStateComponent } from '../../../shared/components/empty-state.component';
+import { TranslatePipe } from '../../../core/pipes/translate.pipe';
 import { TranslatePipe } from '../../../core/pipes/translate.pipe';
 import { TranslationService } from '../../../core/services/translation.service';
 import { FinanceService } from '../../../core/services/finance.service';
@@ -15,23 +18,6 @@ import { ToastService } from '../../../core/services/toast.service';
 import { ICONS } from '../../../shared/icons/icon-registry';
 import type { ChartData } from '../../../core/models/chart.model';
 import type { Category } from '../../../core/models/category.model';
-
-// MOCK DATA — Remove when backend has real data
-const MOCK_MONTHLY_DATA = [
-  { month: 'Nov', income: 1850000, expenses: 450000 },
-  { month: 'Dec', income: 1920000, expenses: 680000 },
-  { month: 'Ene', income: 1780000, expenses: 520000 },
-  { month: 'Feb', income: 2100000, expenses: 590000 },
-  { month: 'Mar', income: 1950000, expenses: 480000 },
-  { month: 'Abr', income: 1856000, expenses: 2000 },
-];
-
-const MOCK_CATEGORIES = [
-  { name: 'Comida', total: 450000, kind: 'expense' as const, color: '#9D50BB' },
-  { name: 'Servicios', total: 180000, kind: 'expense' as const, color: '#7B42F6' },
-  { name: 'Transporte', total: 120000, kind: 'expense' as const, color: '#6E48AA' },
-  { name: 'Entretenimiento', total: 85000, kind: 'expense' as const, color: '#A78BFA' },
-];
 
 type AnalyticsState = 'loading' | 'ready' | 'empty' | 'error';
 
@@ -100,6 +86,7 @@ export function mapMonthlyChartData(
   imports: [
     CommonModule,
     NgIcon,
+    RouterLink,
     AreaChartComponent,
     DonutChartComponent,
     FtSubtleRevealDirective,
@@ -128,6 +115,24 @@ export class AnalyticsPage implements OnInit {
   readonly totalExpense = signal<number>(0);
   readonly netSavings = computed(() => calculateNetSavings(this.totalIncome(), this.totalExpense()));
 
+  // Date range selector
+  readonly selectedRange = signal<string>('6m');
+  readonly dateRanges = [
+    { label: '7D', value: '7d' },
+    { label: '30D', value: '30d' },
+    { label: '6M', value: '6m' },
+    { label: '1Y', value: '1y' },
+  ];
+
+  readonly selectedRangeLabel = computed(() => {
+    const r = this.dateRanges.find(d => d.value === this.selectedRange());
+    return r ? `Last ${r.label}` : 'Last 6 months';
+  });
+
+  // Comparison vs previous period
+  readonly incomeChange = signal<number | null>(null);
+  readonly expenseChange = signal<number | null>(null);
+
   ngOnInit(): void {
     this.loadData();
   }
@@ -137,6 +142,11 @@ export class AnalyticsPage implements OnInit {
   }
 
   retry(): void {
+    this.loadData();
+  }
+
+  setRange(range: string): void {
+    this.selectedRange.set(range);
     this.loadData();
   }
 
@@ -150,56 +160,34 @@ export class AnalyticsPage implements OnInit {
     }).subscribe({
       next: ({ chart, categories, summary }) => {
         const colors = getChartColors();
+        let hasData = false;
 
-        // Monthly chart data — use mock if API returns empty
+        // Monthly chart data
         if (chart && chart.length > 0) {
           const mapped = mapMonthlyChartData(chart, colors, this.i18n);
           this.monthlyLabels.set(mapped.labels);
           this.monthlyDatasets.set(mapped.datasets);
-        } else {
-          // Fallback to mock data
-          const mapped = mapMonthlyChartData(MOCK_MONTHLY_DATA, colors, this.i18n);
-          this.monthlyLabels.set(mapped.labels);
-          this.monthlyDatasets.set(mapped.datasets);
+          hasData = true;
         }
 
-        // Category donut data — use mock if API returns empty
+        // Category donut data
         if (categories && categories.length > 0) {
           this.donutData.set(mapCategoryToDonut(categories, colors.categories, this.i18n));
-        } else {
-          // Fallback to mock data
-          this.donutData.set(mapCategoryToDonut(MOCK_CATEGORIES as Category[], colors.categories, this.i18n));
+          hasData = true;
         }
 
         // Summary
         if (summary) {
           this.totalIncome.set(summary.totalIncome);
           this.totalExpense.set(summary.totalExpenses);
-        } else {
-          // Fallback to mock summary
-          const totalIncome = MOCK_MONTHLY_DATA.reduce((sum, m) => sum + m.income, 0);
-          const totalExpense = MOCK_MONTHLY_DATA.reduce((sum, m) => sum + m.expenses, 0);
-          this.totalIncome.set(totalIncome);
-          this.totalExpense.set(totalExpense);
+          hasData = true;
         }
 
-        // Always show ready state when we have mock data
-        this.state.set('ready');
+        this.state.set(hasData ? 'ready' : 'empty');
       },
       error: () => {
-        // Even on error, show mock data
-        const colors = getChartColors();
-        const mapped = mapMonthlyChartData(MOCK_MONTHLY_DATA, colors, this.i18n);
-        this.monthlyLabels.set(mapped.labels);
-        this.monthlyDatasets.set(mapped.datasets);
-        this.donutData.set(mapCategoryToDonut(MOCK_CATEGORIES as Category[], colors.categories, this.i18n));
-        
-        const totalIncome = MOCK_MONTHLY_DATA.reduce((sum, m) => sum + m.income, 0);
-        const totalExpense = MOCK_MONTHLY_DATA.reduce((sum, m) => sum + m.expenses, 0);
-        this.totalIncome.set(totalIncome);
-        this.totalExpense.set(totalExpense);
-        
-        this.state.set('ready');
+        this.state.set('error');
+        this.toast.error(this.i18n.translate('analytics.errorDesc'));
       },
     });
   }

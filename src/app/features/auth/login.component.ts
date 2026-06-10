@@ -7,11 +7,12 @@ import { NgIcon, provideIcons } from '@ng-icons/core';
 import { ICONS } from '../../shared/icons/icon-registry';
 import { AuthService } from '../../core/services/auth.service';
 import { TranslatePipe } from '../../core/pipes/translate.pipe';
+import { UiButtonComponent } from '../../shared/ui/ui-button/ui-button.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink, NgIcon, TranslatePipe],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, NgIcon, TranslatePipe, UiButtonComponent],
   providers: [provideIcons(ICONS)],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
@@ -23,6 +24,7 @@ export class LoginComponent {
 
   loading = false;
   error = '';
+  showPassword = false;
 
   form = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
