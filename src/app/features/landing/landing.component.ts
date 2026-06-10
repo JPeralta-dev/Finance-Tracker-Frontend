@@ -36,6 +36,7 @@ export class LandingComponent {
   private readonly translationService = inject(TranslationService);
   readonly scrollProgress = signal(0);
   readonly telegramBotUrl = environment.telegramBotUrl;
+  readonly currentYear = new Date().getFullYear();
 
   private scrollTicking = false;
 
