@@ -114,3 +114,69 @@
     animation: shimmer 1.5s ease-in-out infinite alternate;
   }
 }
+
+/* Bulk action bar */
+.tx-table__bulk-bar {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 16px;
+  padding: 12px 16px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  flex-wrap: wrap;
+}
+
+.bulk-bar__select-all {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--info);
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  &:hover { text-decoration: underline; }
+}
+
+.bulk-bar__count {
+  font-size: 13px;
+  color: var(--text-tertiary);
+  flex: 1;
+}
+
+.bulk-bar__actions {
+  display: flex;
+  gap: 8px;
+}
+
+.bulk-bar__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+
+  &:hover {
+    background: var(--bg-elevated);
+    color: var(--text-primary);
+  }
+
+  &--danger {
+    color: var(--danger);
+
+    &:hover {
+      background: var(--danger-bg);
+      border-color: rgba(255, 107, 107, 0.3);
+    }
+  }
+}

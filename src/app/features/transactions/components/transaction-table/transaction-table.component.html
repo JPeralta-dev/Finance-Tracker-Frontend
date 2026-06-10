@@ -55,9 +55,30 @@
         <ft-transaction-row
           [data]="item"
           [compact]="compact()"
+          [selectable]="selectionMode()"
+          [selected]="selectedIds().has(item.id)"
           (ftClick)="onSelect($event)"
+          (ftToggleSelect)="toggleSelection($event)"
         />
       }
+    </div>
+  }
+
+  <!-- Bulk action bar -->
+  @if (selectionMode()) {
+    <div class="tx-table__bulk-bar">
+      <button class="bulk-bar__select-all" (click)="toggleSelectAll()">
+        {{ selectedIds().size === pagedItems().length ? 'Deselect all' : 'Select all' }}
+      </button>
+      <span class="bulk-bar__count">{{ selectedIds().size }} selected</span>
+      <div class="bulk-bar__actions">
+        <button class="bulk-bar__btn" (click)="onBulkExport()">
+          <ng-icon name="chevronRight" size="0.875rem" /> Export
+        </button>
+        <button class="bulk-bar__btn bulk-bar__btn--danger" (click)="onBulkDelete()">
+          <ng-icon name="close" size="0.875rem" /> Delete
+        </button>
+      </div>
     </div>
   }
 

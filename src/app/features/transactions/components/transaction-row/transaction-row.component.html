@@ -1,10 +1,19 @@
 <div
   class="tx-row"
   [class.tx-row--compact]="compact()"
+  [class.tx-row--selectable]="selectable()"
+  [class.tx-row--selected]="selected()"
   (click)="onClick()"
   role="button"
   tabindex="0"
 >
+  <!-- Selection checkbox -->
+  @if (selectable()) {
+    <div class="tx-row__checkbox">
+      <ng-icon [name]="selected() ? 'check' : 'plus'" size="1rem" />
+    </div>
+  }
+
   <!-- Category icon -->
   <div
     class="tx-row__icon"

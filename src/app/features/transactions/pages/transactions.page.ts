@@ -1,7 +1,7 @@
 import { Component, signal, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, Router } from '@angular/router';
-import { catchError, of } from 'rxjs';
+import { catchError, forkJoin, of } from 'rxjs';
 
 import { TransactionTableComponent } from '../components/transaction-table/transaction-table.component';
 import { TransactionRowData } from '../transaction.types';
@@ -65,6 +65,14 @@ export class TransactionsPage implements OnInit {
 
   onSelect(id: string): void {
     this.router.navigate(['/transactions', id]);
+  }
+
+  onBulkDelete(ids: string[]): void {
+    forkJoin(ids.map(id => this.financeService.deleteTransaction(id).pipe(catchError(() => of(null)))))
+      .subscribe(() => {
+        this.loadData();
+        this.toast.success(`${ids.length} transaction${ids.length > 1 ? 's' : ''} deleted`);
+      });
   }
 
   retry(): void {
