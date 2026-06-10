@@ -2,6 +2,8 @@
   min-height: 100vh;
   background: var(--bg-primary);
   overflow-x: hidden;
+  position: relative;
+  z-index: 1;
 }
 
 /* Sections - content-driven height */

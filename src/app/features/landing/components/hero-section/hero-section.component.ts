@@ -4,7 +4,6 @@ import { RouterLink } from '@angular/router';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { ICONS } from '../../../../shared/icons/icon-registry';
 import { HeroVisualComponent } from '../hero-visual/hero-visual.component';
-import { HeroBackgroundArtComponent } from '../hero-background-art/hero-background-art.component';
 import { FtSubtleRevealDirective } from '../../../../shared/directives/ft-subtle-reveal.directive';
 import { TranslatePipe } from '../../../../core/pipes/translate.pipe';
 import { environment } from '../../../../../environments/environment';
@@ -12,7 +11,7 @@ import { environment } from '../../../../../environments/environment';
 @Component({
   selector: 'ft-hero-section',
   standalone: true,
-  imports: [CommonModule, RouterLink, NgIcon, HeroVisualComponent, HeroBackgroundArtComponent, FtSubtleRevealDirective, TranslatePipe],
+  imports: [CommonModule, RouterLink, NgIcon, HeroVisualComponent, FtSubtleRevealDirective, TranslatePipe],
   providers: [provideIcons(ICONS)],
   templateUrl: './hero-section.component.html',
   styleUrl: './hero-section.component.scss',
