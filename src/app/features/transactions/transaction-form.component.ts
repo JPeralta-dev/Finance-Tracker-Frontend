@@ -181,4 +181,18 @@ export class TransactionFormComponent implements OnInit {
       },
     });
   }
+
+  onDelete(): void {
+    if (!this.txId || this.submitting()) return;
+    this.submitting.set(true);
+    this.financeService.deleteTransaction(this.txId).pipe(
+      catchError(() => {
+        this.submitting.set(false);
+        this.errorMsg.set('server_error');
+        return of(null);
+      })
+    ).subscribe(() => {
+      this.router.navigate(['/transactions']);
+    });
+  }
 }

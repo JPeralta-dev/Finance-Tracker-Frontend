@@ -288,6 +288,31 @@
   }
 }
 
+.btn-delete {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--danger);
+  background: transparent;
+  border: 1px solid rgba(255, 107, 107, 0.2);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+
+  &:hover:not(:disabled) {
+    background: var(--danger-bg);
+    border-color: rgba(255, 107, 107, 0.4);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
 /* Banners */
 .success-banner {
   background: var(--success-bg);
@@ -360,7 +385,8 @@
   }
 
   .btn-cancel,
-  .btn-submit {
+  .btn-submit,
+  .btn-delete {
     width: 100%;
     text-align: center;
     justify-content: center;

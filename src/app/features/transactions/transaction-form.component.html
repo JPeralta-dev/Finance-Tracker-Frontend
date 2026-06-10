@@ -141,6 +141,12 @@
 
           <!-- Actions -->
           <div class="form-actions">
+            @if (isEdit()) {
+              <button type="button" class="btn-delete" (click)="onDelete()" [disabled]="submitting()">
+                <ng-icon name="close" size="0.875rem" />
+                {{ 'common.delete' | translate }}
+              </button>
+            }
             <a routerLink="/transactions" class="btn-cancel">
               {{ 'common.cancel' | translate }}
             </a>
