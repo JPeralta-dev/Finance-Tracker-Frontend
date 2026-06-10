@@ -1,6 +1,6 @@
 import { Component, signal, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 import { catchError, of } from 'rxjs';
 
 import { TransactionTableComponent } from '../components/transaction-table/transaction-table.component';
@@ -24,6 +24,7 @@ export class TransactionsPage implements OnInit {
   private readonly financeService = inject(FinanceService);
   private readonly toast = inject(ToastService);
   private readonly i18n = inject(TranslationService);
+  private readonly router = inject(Router);
 
   readonly transactions = signal<TransactionRowData[]>([]);
   readonly state = signal<TransactionsState>('loading');
@@ -63,8 +64,7 @@ export class TransactionsPage implements OnInit {
   }
 
   onSelect(id: string): void {
-    // Navigate to edit form — will be wired up when form component is updated
-    console.log('Edit transaction:', id);
+    this.router.navigate(['/transactions', id]);
   }
 
   retry(): void {
