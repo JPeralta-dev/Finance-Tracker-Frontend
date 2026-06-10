@@ -33,12 +33,7 @@
     <div class="dashboard-content-layer dashboard-content-layer--ready">
       <!-- Greeting -->
       <div class="dashboard-greeting" ftSubtleReveal="fade-up">
-        <div>
-          <h1 class="dashboard-greeting__title">{{ greeting() | translate }}</h1>
-          <p class="dashboard-greeting__subtitle">
-            {{ 'dashboard.greetingSubtitle' | translate }}
-          </p>
-        </div>
+        <h1 class="dashboard-greeting__title">{{ greeting() | translate }}</h1>
         <a routerLink="/transactions/new" class="dashboard-greeting__cta" [ftHoverDepth]="8">
           {{ 'dashboard.newTransaction' | translate }}
         </a>
