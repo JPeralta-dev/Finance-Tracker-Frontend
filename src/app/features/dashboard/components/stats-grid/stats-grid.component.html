@@ -14,8 +14,8 @@
       </div>
     }
   } @else {
-    @for (stat of stats(); track stat.id) {
-      <ft-stat-card [data]="stat" [compact]="compact()" />
+    @for (stat of stats(); track stat.id; let first = $first) {
+      <ft-stat-card [data]="stat" [compact]="compact()" [class.stat-card--hero]="first && stat.id === 'balance'" />
     }
   }
 </div>
