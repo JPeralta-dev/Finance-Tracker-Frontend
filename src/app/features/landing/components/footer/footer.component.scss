@@ -1,5 +1,5 @@
 .footer {
-  padding: 80px 24px 40px;
+  padding: 64px 24px 24px;
   border-top: 1px solid var(--glass-border);
   position: relative;
   overflow: hidden;
@@ -49,7 +49,7 @@
   display: grid;
   grid-template-columns: 2fr 1fr 1fr 1fr;
   gap: 48px;
-  margin-bottom: 64px;
+  margin-bottom: 48px;
 }
 
 /* Brand Column */
@@ -184,7 +184,7 @@
 
 /* Bottom Bar */
 .footer__bottom {
-  padding-top: 32px;
+  padding-top: 24px;
   border-top: 1px solid var(--border-subtle);
   display: flex;
   justify-content: space-between;
@@ -193,7 +193,7 @@
   flex-wrap: wrap;
 }
 
-.footer__copyright {
+.footer__brand-name {
   font-size: 13px;
   color: var(--text-tertiary);
   opacity: 0.6;
