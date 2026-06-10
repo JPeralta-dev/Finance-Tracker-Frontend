@@ -59,13 +59,18 @@
 
       <div class="field">
         <label for="password">{{ 'auth.password' | translate }}</label>
-        <input
-          id="password"
-          type="password"
-          formControlName="password"
-          [placeholder]="'auth.password_min' | translate"
-          autocomplete="new-password"
-        />
+        <div class="password-wrap">
+          <input
+            id="password"
+            [type]="showPassword ? 'text' : 'password'"
+            formControlName="password"
+            [placeholder]="'auth.password_min' | translate"
+            autocomplete="new-password"
+          />
+          <button type="button" class="password-toggle" (click)="showPassword = !showPassword" [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'">
+            <ng-icon [name]="showPassword ? 'check' : 'lockClosed'" size="1rem" />
+          </button>
+        </div>
         @if (password.invalid && password.touched) {
           <span class="field-error">{{ 'auth.errors.password_min' | translate }}</span>
         }
