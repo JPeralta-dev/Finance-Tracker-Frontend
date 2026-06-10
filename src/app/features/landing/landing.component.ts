@@ -37,12 +37,20 @@ export class LandingComponent {
   readonly scrollProgress = signal(0);
   readonly telegramBotUrl = environment.telegramBotUrl;
 
+  private scrollTicking = false;
+
   @HostListener('window:scroll', [])
   onScroll(): void {
-    const scrollTop = window.scrollY;
-    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-    this.scrollProgress.set(Math.min(100, Math.max(0, progress)));
+    if (!this.scrollTicking) {
+      requestAnimationFrame(() => {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+        this.scrollProgress.set(Math.min(100, Math.max(0, progress)));
+        this.scrollTicking = false;
+      });
+      this.scrollTicking = true;
+    }
   }
 
   features = [
