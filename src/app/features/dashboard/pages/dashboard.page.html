@@ -39,6 +39,19 @@
         </a>
       </div>
 
+      <!-- Date Range Selector -->
+      <div class="dashboard-daterange" ftSubtleReveal="fade-up" [delay]="50">
+        @for (range of dateRanges; track range.value) {
+          <button
+            class="daterange-btn"
+            [class.daterange-btn--active]="selectedRange() === range.value"
+            (click)="setRange(range.value)"
+          >
+            {{ range.label }}
+          </button>
+        }
+      </div>
+
       <!-- Stats Grid -->
       <div ftSubtleReveal="fade-up" [delay]="100">
         <ft-stats-grid [stats]="stats()" [loading]="false" />

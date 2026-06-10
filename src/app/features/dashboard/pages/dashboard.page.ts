@@ -82,6 +82,15 @@ export class DashboardPage implements OnInit {
   readonly state = signal<DashboardState>('loading');
   readonly categories = signal<Category[]>([]);
 
+  // Date range selector
+  readonly selectedRange = signal<string>('30d');
+  readonly dateRanges = [
+    { label: '7D', value: '7d' },
+    { label: '30D', value: '30d' },
+    { label: '6M', value: '6m' },
+    { label: '1Y', value: '1y' },
+  ];
+
   // Chart data
   readonly chartLabels = signal<string[]>([]);
   readonly chartDatasets = signal<AreaDataset[]>([]);
@@ -206,5 +215,9 @@ export class DashboardPage implements OnInit {
 
   retry(): void {
     this.loadData();
+  }
+
+  setRange(range: string): void {
+    this.selectedRange.set(range);
   }
 }

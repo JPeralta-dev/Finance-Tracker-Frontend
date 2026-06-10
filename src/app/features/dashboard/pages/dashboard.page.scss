@@ -98,6 +98,44 @@
   }
 }
 
+/* Date Range Selector */
+.dashboard-daterange {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  width: fit-content;
+}
+
+.daterange-btn {
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-tertiary);
+  background: transparent;
+  border: none;
+  border-radius: calc(var(--radius-sm) - 2px);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+
+  &:hover {
+    color: var(--text-secondary);
+    background: var(--bg-elevated);
+  }
+
+  &--active {
+    color: var(--text-inverse);
+    background: linear-gradient(135deg, var(--accent-start), var(--accent-mid));
+    box-shadow: var(--glow-accent);
+
+    &:hover {
+      color: var(--text-inverse);
+    }
+  }
+}
+
 /* Content split: chart + sidebar (activity + donut) */
 .dashboard-content {
   display: grid;
