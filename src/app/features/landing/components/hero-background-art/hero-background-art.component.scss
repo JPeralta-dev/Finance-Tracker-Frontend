@@ -1,0 +1,169 @@
+.hero-art {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+/* Left side: Financial icons */
+.hero-art__left {
+  position: absolute;
+  left: -5%;
+  top: 10%;
+  width: 30%;
+  height: 80%;
+}
+
+.hero-art__icon {
+  position: absolute;
+  color: var(--accent-start);
+  opacity: 0.06;
+  transition: transform 0.3s ease-out;
+  will-change: transform;
+
+  ng-icon {
+    display: block;
+  }
+
+  &--coin {
+    top: 15%;
+    left: 10%;
+    animation: float-slow 8s ease-in-out infinite;
+  }
+
+  &--arrows {
+    top: 50%;
+    left: 5%;
+    animation: float-slow 10s ease-in-out infinite;
+    animation-delay: -3s;
+  }
+
+  &--wallet {
+    top: 75%;
+    left: 20%;
+    animation: float-slow 9s ease-in-out infinite;
+    animation-delay: -5s;
+  }
+}
+
+.hero-art__dot {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent-start);
+  opacity: 0.1;
+  transition: transform 0.3s ease-out;
+  will-change: transform;
+
+  &--1 {
+    top: 30%;
+    left: 35%;
+    animation: float-slow 7s ease-in-out infinite;
+    animation-delay: -2s;
+  }
+
+  &--2 {
+    top: 60%;
+    left: 40%;
+    animation: float-slow 11s ease-in-out infinite;
+    animation-delay: -4s;
+  }
+}
+
+/* Right side: Decorative circles and lines */
+.hero-art__right {
+  position: absolute;
+  right: -10%;
+  top: 0;
+  width: 50%;
+  height: 100%;
+}
+
+.hero-art__circle {
+  position: absolute;
+  border: 1px solid rgba(217, 70, 239, 0.08);
+  border-radius: 50%;
+  transition: transform 0.3s ease-out;
+  will-change: transform;
+
+  &--large {
+    width: 500px;
+    height: 500px;
+    top: -10%;
+    right: -5%;
+    animation: float-slow 12s ease-in-out infinite;
+  }
+
+  &--medium {
+    width: 300px;
+    height: 300px;
+    bottom: 10%;
+    right: 10%;
+    animation: float-slow 10s ease-in-out infinite;
+    animation-delay: -4s;
+  }
+
+  &--small {
+    width: 150px;
+    height: 150px;
+    top: 40%;
+    right: 30%;
+    opacity: 0.5;
+    animation: float-slow 8s ease-in-out infinite;
+    animation-delay: -2s;
+  }
+}
+
+.hero-art__line {
+  position: absolute;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(217, 70, 239, 0.1), transparent);
+  transition: transform 0.3s ease-out;
+  will-change: transform;
+
+  &--1 {
+    width: 150%;
+    top: 25%;
+    left: -25%;
+    transform: rotate(-15deg);
+    animation: float-slow 14s ease-in-out infinite;
+  }
+
+  &--2 {
+    width: 120%;
+    bottom: 20%;
+    left: -10%;
+    transform: rotate(10deg);
+    animation: float-slow 11s ease-in-out infinite;
+    animation-delay: -6s;
+  }
+}
+
+/* Floating animation */
+@keyframes float-slow {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+/* Responsive: hide on mobile */
+@media (max-width: 1024px) {
+  .hero-art__left {
+    display: none;
+  }
+
+  .hero-art__right {
+    opacity: 0.3;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-art {
+    display: none;
+  }
+}

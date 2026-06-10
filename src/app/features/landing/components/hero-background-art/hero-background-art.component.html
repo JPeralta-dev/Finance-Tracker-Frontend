@@ -1,0 +1,69 @@
+<div class="hero-art" aria-hidden="true">
+  <!-- Left side: Financial icons floating -->
+  <div class="hero-art__left">
+    <!-- Coin icon -->
+    <div
+      class="hero-art__icon hero-art__icon--coin"
+      [style.transform]="getParallaxTransform(1, 0)"
+    >
+      <ng-icon name="currencyDollar" size="3rem" />
+    </div>
+
+    <!-- Trending up arrows -->
+    <div
+      class="hero-art__icon hero-art__icon--arrows"
+      [style.transform]="getParallaxTransform(0.7, 1)"
+    >
+      <ng-icon name="trendUp" size="2.5rem" />
+    </div>
+
+    <!-- Wallet icon -->
+    <div
+      class="hero-art__icon hero-art__icon--wallet"
+      [style.transform]="getParallaxTransform(1.2, 2)"
+    >
+      <ng-icon name="wallet" size="2.5rem" />
+    </div>
+
+    <!-- Small decorative dots -->
+    <div
+      class="hero-art__dot hero-art__dot--1"
+      [style.transform]="getParallaxTransform(0.5, 3)"
+    ></div>
+    <div
+      class="hero-art__dot hero-art__dot--2"
+      [style.transform]="getParallaxTransform(0.8, 4)"
+    ></div>
+  </div>
+
+  <!-- Right side: Decorative circles and lines -->
+  <div class="hero-art__right">
+    <!-- Large circle -->
+    <div
+      class="hero-art__circle hero-art__circle--large"
+      [style.transform]="getCircleTransform(0.6, 0)"
+    ></div>
+
+    <!-- Medium circle -->
+    <div
+      class="hero-art__circle hero-art__circle--medium"
+      [style.transform]="getCircleTransform(0.4, 1)"
+    ></div>
+
+    <!-- Small circle -->
+    <div
+      class="hero-art__circle hero-art__circle--small"
+      [style.transform]="getCircleTransform(0.8, 2)"
+    ></div>
+
+    <!-- Diagonal lines -->
+    <div
+      class="hero-art__line hero-art__line--1"
+      [style.transform]="getParallaxTransform(0.3, 0)"
+    ></div>
+    <div
+      class="hero-art__line hero-art__line--2"
+      [style.transform]="getParallaxTransform(0.5, 1)"
+    ></div>
+  </div>
+</div>

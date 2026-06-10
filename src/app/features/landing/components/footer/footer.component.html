@@ -1,0 +1,81 @@
+<footer class="footer">
+  <div class="footer__inner">
+    <!-- Decorative Background Elements -->
+    <div class="footer__art" aria-hidden="true">
+      <div class="footer__art-circle footer__art-circle--top"></div>
+      <div class="footer__art-line"></div>
+    </div>
+
+    <!-- Main Footer Grid -->
+    <div class="footer__grid">
+      <!-- Brand Column -->
+      <div class="footer__brand">
+        <div class="footer__logo">
+          <ng-icon name="wallet" size="1.5rem" />
+          <span class="footer__logo-text">Flowr</span>
+        </div>
+        <p class="footer__description">
+          The next evolution in personal finance management. Track, analyze, and grow your wealth with precision.
+        </p>
+        <div class="footer__socials">
+          <a href="#" class="footer__social-link" aria-label="Website">
+            <ng-icon name="globe" size="1rem" />
+          </a>
+          <a href="#" class="footer__social-link" aria-label="Email">
+            <ng-icon name="envelope" size="1rem" />
+          </a>
+        </div>
+      </div>
+
+      <!-- Platform Column -->
+      <div class="footer__column">
+        <h4 class="footer__column-title">Platform</h4>
+        <nav class="footer__nav">
+          <a href="#" class="footer__link">Security</a>
+          <a href="#" class="footer__link">Features</a>
+          <a href="#" class="footer__link">Telegram Bot</a>
+          <a href="#" class="footer__link">API Documentation</a>
+        </nav>
+      </div>
+
+      <!-- Legal Column -->
+      <div class="footer__column">
+        <h4 class="footer__column-title">Legal</h4>
+        <nav class="footer__nav">
+          <a href="#" class="footer__link">Terms of Service</a>
+          <a href="#" class="footer__link">Privacy Policy</a>
+          <a href="#" class="footer__link">Cookie Policy</a>
+        </nav>
+      </div>
+
+      <!-- Contact Column -->
+      <div class="footer__column">
+        <h4 class="footer__column-title">Contact</h4>
+        <div class="footer__contact">
+          <a [href]="'mailto:' + contactEmail" class="footer__contact-email">
+            {{ contactEmail }}
+          </a>
+          <div class="footer__contact-icons">
+            <a href="#" class="footer__contact-icon" aria-label="Telegram">
+              <ng-icon name="telegram" size="0.875rem" />
+            </a>
+            <a href="#" class="footer__contact-icon" aria-label="Chat">
+              <ng-icon name="chatBubble" size="0.875rem" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="footer__bottom">
+      <p class="footer__copyright">
+        &copy; {{ currentYear }} Flowr Finance. All rights reserved.
+      </p>
+      <div class="footer__status">
+        <span class="footer__status-dot"></span>
+        <span class="footer__status-text">SYSTEMS OPERATIONAL</span>
+      </div>
+    </div>
+  </div>
+</footer>
