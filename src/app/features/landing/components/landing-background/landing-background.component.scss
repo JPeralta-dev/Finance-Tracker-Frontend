@@ -48,6 +48,24 @@
     right: 8%;
     animation-delay: -3s;
   }
+
+  &--6 {
+    top: 85%;
+    left: 15%;
+    animation-delay: -1s;
+  }
+
+  &--7 {
+    top: 78%;
+    right: 20%;
+    animation-delay: -4s;
+  }
+
+  &--8 {
+    top: 90%;
+    left: 45%;
+    animation-delay: -2s;
+  }
 }
 
 /* Circles */
@@ -153,6 +171,33 @@
     top: 80%;
     right: 30%;
     animation-delay: -4s;
+  }
+}
+
+/* CTA Zone Glow */
+.landing-bg__glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  pointer-events: none;
+  animation: glow-pulse 8s ease-in-out infinite;
+
+  &--cta {
+    width: 600px;
+    height: 400px;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: radial-gradient(ellipse, rgba(217, 70, 239, 0.06) 0%, transparent 70%);
+  }
+}
+
+@keyframes glow-pulse {
+  0%, 100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
   }
 }
 
