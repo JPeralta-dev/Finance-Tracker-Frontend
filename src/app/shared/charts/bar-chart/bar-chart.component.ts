@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
 import { ChartService } from '../../charts/chart.service';
 
 let Chart: any;
-import('chart.js').then(m => Chart = m.Chart);
+const chartReady = import('chart.js').then(m => { Chart = m.Chart; });
 
 export interface BarDataset {
   label: string;
@@ -41,7 +41,12 @@ export class BarChartComponent implements OnInit, OnDestroy, OnChanges {
   constructor(private chartService: ChartService) {}
 
   ngOnInit(): void {
-    if (!this.loading()) this.initChart();
+    if (this.loading()) return;
+    if (Chart) {
+      this.initChart();
+    } else {
+      chartReady.then(() => this.initChart());
+    }
   }
 
   ngOnChanges(): void {
