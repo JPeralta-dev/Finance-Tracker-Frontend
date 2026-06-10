@@ -73,6 +73,15 @@
         </div>
         @if (password.invalid && password.touched) {
           <span class="field-error">{{ 'auth.errors.password_min' | translate }}</span>
+        } @else if (password.value) {
+          <div class="password-strength">
+            <div class="strength-bar">
+              @for (level of strengthLevels; track level; let i = $index) {
+                <div class="strength-segment" [class.active]="i < strengthScore()"></div>
+              }
+            </div>
+            <span class="strength-label">{{ strengthLabel() }}</span>
+          </div>
         }
       </div>
 
