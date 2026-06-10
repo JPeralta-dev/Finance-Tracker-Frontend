@@ -54,6 +54,10 @@ export class LandingComponent {
     }
   }
 
+  scrollToTop(): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
   features = [
     { icon: 'dashboard', title: 'landing.features.dashboard.title', description: 'landing.features.dashboard.description' },
     { icon: 'transactions', title: 'landing.features.transactions.title', description: 'landing.features.transactions.description' },

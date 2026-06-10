@@ -61,4 +61,14 @@
       </nav>
     </div>
   </footer>
+
+  <!-- Back to top -->
+  <button
+    class="back-to-top"
+    [class.back-to-top--visible]="scrollProgress() > 500"
+    (click)="scrollToTop()"
+    aria-label="Back to top"
+  >
+    <ng-icon name="chevronRight" size="1.2rem" />
+  </button>
 </div>
