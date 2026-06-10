@@ -70,23 +70,24 @@
     "profile": "Profil"
   },
   "landing": {
-    "heroBadge": "Finance IA",
-    "heroTitle": "Suivi Financier <br />Intelligent",
+    "heroBadge": "Catégorisation Intelligente",
+    "heroTitle": "Votre argent, <br />parfaitement organisé",
     "heroSubtitle": "Suivez, analysez et optimisez vos dépenses avec des informations en temps réel. Connectez vos comptes ou utilisez notre bot Telegram.",
     "getStarted": "Commencer",
     "telegramBot": "Bot Telegram",
+    "tryTelegramBot": "ou essayez notre bot Telegram",
     "trustFree": "Gratuit pour toujours",
     "trustNoCard": "Sans carte de crédit",
     "trustEncrypted": "Chiffré",
     "features": {
       "title": "Tout ce dont vous avez besoin",
       "view_all": "Voir toutes les fonctionnalités",
-      "dashboard": { "title": "Tableau de bord", "description": "Consultez votre solde, revenus et dépenses en un coup d'œil avec des résumés en temps réel." },
-      "transactions": { "title": "Suivi des Transactions", "description": "Enregistrez et catégorisez chaque transaction. Filtrez par date, type ou catégorie." },
-      "analytics": { "title": "Graphiques Mensuels", "description": "Visualisez vos tendances financières des 6 derniers mois avec des graphiques interactifs." },
-      "ai_insights": { "title": "Insights IA", "description": "Obtenez des recommandations personnalisées pour optimiser vos dépenses et économies." },
-      "categories": { "title": "Catégories Intelligentes", "description": "Catégorisez automatiquement les transactions et créez des catégories personnalisées." },
-      "telegram": { "title": "Intégration Telegram", "description": "Enregistrez des transactions instantanément via le bot Telegram. Sans ouvrir l'app." }
+      "dashboard": { "title": "Votre situation en 3 secondes", "description": "Visualisez votre solde exact, vos revenus et vos dépenses dès l'ouverture. Sans naviguer dans les menus." },
+      "transactions": { "title": "Chaque transaction, parfaitement organisée", "description": "Enregistrez vos dépenses en quelques secondes. Filtrez par date, type ou catégorie." },
+      "analytics": { "title": "Comprenez où va votre argent", "description": "Des graphiques interactifs révèlent vos habitudes de dépenses. Repérez les tendances avant qu'elles ne deviennent problématiques." },
+      "ai_insights": { "title": "Des décisions financières plus intelligentes", "description": "Des recommandations personnalisées vous aident à économiser davantage. Sans conseiller financier." },
+      "categories": { "title": "Organisation automatique", "description": "Les catégories se trient automatiquement. Créez les vôtres pour un contrôle total." },
+      "telegram": { "title": "Enregistrez sans ouvrir l'application", "description": "Envoyez 'Café 5€' à notre bot. C'est suivi instantanément. Zéro friction." }
     },
     "telegram": {
       "title": "Intégration Telegram",
@@ -105,8 +106,8 @@
       "demo_bot_2": "Enregistré : <strong>12,00€</strong> dans <strong>Transport</strong><br /><span class=\"chat-preview__meta\">Aujourd'hui, 11h15</span>"
     },
     "cta": {
-      "title": "Prêt à prendre le contrôle ?",
-      "subtitle": "Rejoignez des milliers d'utilisateurs qui suivent leurs finances avec Flowr. C'est gratuit et cela prend moins d'une minute.",
+      "title": "Commencez à suivre votre argent en 30 secondes",
+      "subtitle": "Gratuit pour toujours. Sans carte de crédit. Inscrivez-vous et reprenez le contrôle.",
       "button": "Commencer Gratuitement"
     }
   },

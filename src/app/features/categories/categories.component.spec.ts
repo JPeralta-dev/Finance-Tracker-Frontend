@@ -6,7 +6,8 @@ import { CategoriesComponent } from './categories.component';
 import { CurrencyService } from '../../core/services/currency.service';
 import { FinanceService } from '../../core/services/finance.service';
 import { ToastService } from '../../core/services/toast.service';
-import { of } from 'rxjs';
+import { ModalService } from '../../core/services/modal.service';
+import { of, Subject } from 'rxjs';
 import { Category } from '../../core/models/category.model';
 import { By } from '@angular/platform-browser';
 
@@ -99,6 +100,7 @@ describe('CategoriesComponent — Modal Animation', () => {
   let fixture: ComponentFixture<CategoriesComponent>;
   let financeService: jasmine.SpyObj<FinanceService>;
   let toastService: jasmine.SpyObj<ToastService>;
+  let modalService: jasmine.SpyObj<ModalService>;
 
   const mockCategories: Category[] = [
     {
@@ -127,12 +129,17 @@ describe('CategoriesComponent — Modal Animation', () => {
 
     toastService = jasmine.createSpyObj('ToastService', ['success', 'error']);
 
+    modalService = jasmine.createSpyObj('ModalService', ['openCategoryModal'], {
+      categorySaved$: new Subject<void>(),
+    });
+
     await TestBed.configureTestingModule({
       imports: [CategoriesComponent, HttpClientTestingModule, RouterTestingModule, BrowserAnimationsModule],
       providers: [
         CurrencyService,
         { provide: FinanceService, useValue: financeService },
         { provide: ToastService, useValue: toastService },
+        { provide: ModalService, useValue: modalService },
       ],
     }).compileComponents();
 
@@ -140,94 +147,39 @@ describe('CategoriesComponent — Modal Animation', () => {
     component = fixture.componentInstance;
   });
 
-  it('should not render modal overlay initially', fakeAsync(() => {
-    fixture.detectChanges();
-    tick();
-    fixture.detectChanges();
-
-    const overlay = fixture.debugElement.query(By.css('.modal-overlay'));
-    expect(overlay).toBeNull();
-  }));
-
-  it('should render modal overlay when showForm is true', fakeAsync(() => {
+  it('should call modalService.openCategoryModal when openCreateForm is called', fakeAsync(() => {
     fixture.detectChanges();
     tick();
 
     component.openCreateForm();
     fixture.detectChanges();
-    tick();
-    fixture.detectChanges();
 
-    const overlay = fixture.debugElement.query(By.css('.modal-overlay'));
-    expect(overlay).toBeTruthy();
+    expect(modalService.openCategoryModal).toHaveBeenCalledWith(
+      jasmine.objectContaining({ name: '', kind: 'expense' })
+    );
   }));
 
-  it('should have modal-backdrop and modal-content elements', fakeAsync(() => {
-    component.openCreateForm();
-    fixture.detectChanges();
-    tick();
-    fixture.detectChanges();
-
-    const backdrop = fixture.debugElement.query(By.css('.modal-backdrop'));
-    const content = fixture.debugElement.query(By.css('.modal-content'));
-    expect(backdrop).toBeTruthy();
-    expect(content).toBeTruthy();
-  }));
-
-  it('should close modal when backdrop is clicked', fakeAsync(() => {
-    component.openCreateForm();
-    fixture.detectChanges();
-    tick();
-    fixture.detectChanges();
-
-    const backdrop = fixture.debugElement.query(By.css('.modal-backdrop'));
-    backdrop.triggerEventHandler('click', {});
-    fixture.detectChanges();
-
-    expect(component.showForm()).toBe(false);
-  }));
-
-  it('should close modal when close button is clicked', fakeAsync(() => {
-    component.openCreateForm();
-    fixture.detectChanges();
-    tick();
-    fixture.detectChanges();
-
-    const closeBtn = fixture.debugElement.query(By.css('.modal-close'));
-    closeBtn.triggerEventHandler('click', {});
-    fixture.detectChanges();
-
-    expect(component.showForm()).toBe(false);
-  }));
-
-  it('should close form after successful submit', fakeAsync(() => {
-    financeService.createCategory.and.returnValue(of({ id: '3', name: 'Test', icon: 'T', color: '#fff', kind: 'expense', total: 0, isDefault: false }));
-
-    component.openCreateForm();
-    component.formName.set('Test');
-    fixture.detectChanges();
-
-    component.submitForm();
-    tick();
-    fixture.detectChanges();
-
-    expect(component.showForm()).toBe(false);
-    expect(toastService.success).toHaveBeenCalled();
-  }));
-
-  it('should open edit form with correct data', fakeAsync(() => {
+  it('should call modalService.openCategoryModal with category data when openEditForm is called', fakeAsync(() => {
     fixture.detectChanges();
     tick();
 
     const cat = mockCategories[0];
     component.openEditForm(cat);
     fixture.detectChanges();
-    tick();
-    fixture.detectChanges();
 
-    expect(component.showForm()).toBe(true);
-    expect(component.editingCategory()).toEqual(cat);
-    expect(component.formName()).toBe(cat.name);
-    expect(component.formColor()).toBe(cat.color);
+    expect(modalService.openCategoryModal).toHaveBeenCalledWith(
+      jasmine.objectContaining({ name: cat.name, icon: cat.icon, color: cat.color, kind: cat.kind }),
+      cat.id
+    );
+  }));
+
+  it('should reload categories when modal emits categorySaved', fakeAsync(() => {
+    fixture.detectChanges();
+    tick();
+
+    const savedSpy = spyOn(component as any, 'loadCategories').and.callThrough();
+    (modalService.categorySaved$ as Subject<void>).next();
+
+    expect(savedSpy).toHaveBeenCalled();
   }));
 });

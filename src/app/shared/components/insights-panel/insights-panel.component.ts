@@ -12,6 +12,7 @@ import type { Insight } from '../../../core/models/insight.model';
 })
 export class InsightsPanelComponent {
   @Input() insights: Insight[] = [];
+  @Input() loading = false;
 
   typeIcon(type: string): string {
     switch (type) {

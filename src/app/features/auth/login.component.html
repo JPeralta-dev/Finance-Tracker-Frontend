@@ -52,30 +52,30 @@
           <label for="password">{{ 'auth.password' | translate }}</label>
           <a routerLink="/forgot-password" class="forgot-link">{{ 'auth.forgotPassword' | translate }}</a>
         </div>
-        <input
-          id="password"
-          type="password"
-          formControlName="password"
-          [placeholder]="'auth.password_placeholder' | translate"
-          autocomplete="current-password"
-        />
+        <div class="password-wrap">
+          <input
+            id="password"
+            [type]="showPassword ? 'text' : 'password'"
+            formControlName="password"
+            [placeholder]="'auth.password_placeholder' | translate"
+            autocomplete="current-password"
+          />
+          <button type="button" class="password-toggle" (click)="showPassword = !showPassword" [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'">
+            <ng-icon [name]="showPassword ? 'check' : 'lockClosed'" size="1rem" />
+          </button>
+        </div>
         @if (password.invalid && password.touched) {
           <span class="field-error">{{ 'auth.errors.password_required' | translate }}</span>
         }
       </div>
 
-      <button
+      <ft-button
         type="submit"
-        class="btn-primary"
-        [class.btn-primary--disabled]="form.invalid || loading"
         [disabled]="form.invalid || loading"
+        [loading]="loading"
       >
-        @if (loading) {
-          <span class="spinner"></span> {{ 'auth.signing_in' | translate }}
-        } @else {
-          {{ 'auth.signIn' | translate }}
-        }
-      </button>
+        {{ 'auth.signIn' | translate }}
+      </ft-button>
     </form>
 
     <p class="auth-footer">

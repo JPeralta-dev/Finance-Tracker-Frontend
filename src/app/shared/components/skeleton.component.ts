@@ -13,22 +13,16 @@ import { CommonModule } from '@angular/common';
   styles: [`
     .skeleton-wrap {
       overflow: hidden;
-      background: #e8e8e4;
+      background: var(--bg-elevated);
     }
     .shimmer {
       display: block;
-      background: linear-gradient(
-        90deg,
-        #e8e8e4 25%,
-        #f0f0ec 50%,
-        #e8e8e4 75%
-      );
-      background-size: 200% 100%;
-      animation: shimmer 1.4s ease-in-out infinite;
+      background: var(--bg-elevated);
+      animation: shimmer 1.5s ease-in-out infinite alternate;
     }
     @keyframes shimmer {
-      0%   { background-position: 200% 0; }
-      100% { background-position: -200% 0; }
+      from { opacity: 0.3; }
+      to { opacity: 0.6; }
     }
   `]
 })

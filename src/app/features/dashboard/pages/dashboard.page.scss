@@ -7,6 +7,46 @@
   display: flex;
   flex-direction: column;
   gap: 32px;
+  position: relative;
+}
+
+/* Cross-fade content layers */
+.dashboard-content-layer {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.dashboard-content-layer--ready {
+  opacity: 0;
+  animation: content-fade-in var(--duration-slow, 400ms) var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1)) forwards;
+}
+
+.dashboard-content-layer--loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  animation: skeleton-fade-out var(--duration-slow, 400ms) var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1)) forwards;
+}
+
+@keyframes skeleton-fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes content-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .dashboard-content-layer--loading,
+  .dashboard-content-layer--ready {
+    animation-duration: 0.01ms;
+  }
 }
 
 /* Greeting */
@@ -54,6 +94,44 @@
 
     &:active {
       transform: scale(0.97);
+    }
+  }
+}
+
+/* Date Range Selector */
+.dashboard-daterange {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  width: fit-content;
+}
+
+.daterange-btn {
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-tertiary);
+  background: transparent;
+  border: none;
+  border-radius: calc(var(--radius-sm) - 2px);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+
+  &:hover {
+    color: var(--text-secondary);
+    background: var(--bg-elevated);
+  }
+
+  &--active {
+    color: var(--text-inverse);
+    background: linear-gradient(135deg, var(--accent-start), var(--accent-mid));
+    box-shadow: var(--glow-accent);
+
+    &:hover {
+      color: var(--text-inverse);
     }
   }
 }

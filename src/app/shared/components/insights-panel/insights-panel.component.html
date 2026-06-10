@@ -1,4 +1,16 @@
-@if (insights.length === 0) {
+@if (loading) {
+  <div class="insights-skeleton">
+    @for (i of [1, 2, 3]; track i) {
+      <div class="insight-card insight-card--skeleton">
+        <div class="insight-header">
+          <span class="insight-icon insight-icon--skeleton"></span>
+          <div class="insight-title insight-title--skeleton"></div>
+        </div>
+        <div class="insight-message insight-message--skeleton"></div>
+      </div>
+    }
+  </div>
+} @else if (insights.length === 0) {
   <div class="insights-empty">
     <span class="empty-icon"></span>
     <p>{{ 'insights.empty' | translate }}</p>

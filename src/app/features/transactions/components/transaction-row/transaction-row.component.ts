@@ -21,11 +21,18 @@ export class TransactionRowComponent {
 
   data = input.required<TransactionRowData>();
   compact = input<boolean>(false);
+  selectable = input<boolean>(false);
+  selected = input<boolean>(false);
 
   ftClick = output<string>();
+  ftToggleSelect = output<string>();
 
   onClick(): void {
-    this.ftClick.emit(this.data().id);
+    if (this.selectable()) {
+      this.ftToggleSelect.emit(this.data().id);
+    } else {
+      this.ftClick.emit(this.data().id);
+    }
   }
 
   readonly categoryMeta = computed(() => getCategoryMeta(this.data().category));
