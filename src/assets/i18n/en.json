@@ -82,12 +82,12 @@
     "features": {
       "title": "Everything you need",
       "view_all": "View all features",
-      "dashboard": { "title": "Dashboard Overview", "description": "See your balance, income, and expenses at a glance with real-time summaries." },
-      "transactions": { "title": "Transaction Tracking", "description": "Log and categorize every transaction. Filter by date, type, or category." },
-      "analytics": { "title": "Monthly Charts", "description": "Visualize your financial trends over the last 6 months with interactive charts." },
-      "ai_insights": { "title": "AI Insights", "description": "Get personalized recommendations to optimize your spending and savings." },
-      "categories": { "title": "Smart Categories", "description": "Auto-categorize transactions and create custom categories for better tracking." },
-      "telegram": { "title": "Telegram Integration", "description": "Log transactions instantly via Telegram bot. No app opening required." }
+      "dashboard": { "title": "Know your position in 3 seconds", "description": "See your exact balance, income, and expenses the moment you open the app. No digging through menus." },
+      "transactions": { "title": "Every transaction, perfectly organized", "description": "Log expenses in seconds. Filter by date, type, or category to find exactly what you need." },
+      "analytics": { "title": "Understand where your money goes", "description": "Interactive charts show your spending patterns over time. Spot trends before they become problems." },
+      "ai_insights": { "title": "Get smarter about your money", "description": "Personalized recommendations help you save more and spend smarter. No financial advisor needed." },
+      "categories": { "title": "Automatic organization", "description": "Categories sort themselves. Create custom ones for complete control over how you track." },
+      "telegram": { "title": "Log expenses without opening the app", "description": "Send a message like 'Coffee $5' to our bot. It's tracked instantly. Zero friction." }
     },
     "telegram": {
       "title": "Telegram Integration",
