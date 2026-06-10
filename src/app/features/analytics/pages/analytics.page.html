@@ -36,6 +36,19 @@
       <p class="page-header__subtitle">{{ 'analytics.subtitle' | translate }}</p>
     </div>
 
+    <!-- Date Range Selector -->
+    <div class="analytics-daterange" ftSubtleReveal="fade-up" [delay]="50">
+      @for (range of dateRanges; track range.value) {
+        <button
+          class="daterange-btn"
+          [class.daterange-btn--active]="selectedRange() === range.value"
+          (click)="setRange(range.value)"
+        >
+          {{ range.label }}
+        </button>
+      }
+    </div>
+
     <div class="analytics-grid">
       <!-- Monthly Trends Chart -->
       <div class="analytics-card analytics-card--full" ftSubtleReveal="fade-up" [delay]="100">
@@ -44,7 +57,7 @@
             [labels]="monthlyLabels()"
             [datasets]="monthlyDatasets()"
             [title]="'analytics.monthlyTrends' | translate"
-            [subtitle]="'analytics.last6Months' | translate"
+            [subtitle]="selectedRangeLabel()"
           />
         } @else {
           <div class="analytics-card__empty">
@@ -62,6 +75,9 @@
             [title]="'analytics.byCategory' | translate"
             [subtitle]="'analytics.expenseBreakdown' | translate"
           />
+          <a routerLink="/transactions" class="analytics-card__drilldown">
+            View transactions by category →
+          </a>
         } @else {
           <div class="analytics-card__empty">
             <ng-icon name="chart" size="2rem" />
@@ -77,12 +93,26 @@
 
           <div class="summary-row">
             <span class="summary-row__label">{{ 'analytics.totalIncome' | translate }}</span>
-            <span class="summary-row__value text-income">{{ formatAmount(totalIncome()) }}</span>
+            <span class="summary-row__value text-income">
+              {{ formatAmount(totalIncome()) }}
+              @if (incomeChange() !== null) {
+                <span class="change-badge" [class.change-badge--up]="incomeChange()! >= 0" [class.change-badge--down]="incomeChange()! < 0">
+                  {{ incomeChange()! >= 0 ? '↑' : '↓' }} {{ incomeChange()! | number:'1.0-0' }}%
+                </span>
+              }
+            </span>
           </div>
 
           <div class="summary-row">
             <span class="summary-row__label">{{ 'analytics.totalExpenses' | translate }}</span>
-            <span class="summary-row__value text-expense">{{ formatAmount(totalExpense()) }}</span>
+            <span class="summary-row__value text-expense">
+              {{ formatAmount(totalExpense()) }}
+              @if (expenseChange() !== null) {
+                <span class="change-badge" [class.change-badge--up]="expenseChange()! <= 0" [class.change-badge--down]="expenseChange()! > 0">
+                  {{ expenseChange()! <= 0 ? '↓' : '↑' }} {{ expenseChange()! | number:'1.0-0' }}%
+                </span>
+              }
+            </span>
           </div>
 
           <div class="summary-row summary-row--total">

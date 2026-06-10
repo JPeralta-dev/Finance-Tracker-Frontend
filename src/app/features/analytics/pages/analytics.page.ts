@@ -1,12 +1,15 @@
 import { Component, signal, inject, OnInit, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { NgIcon, provideIcons } from '@ng-icons/core';
+import { catchError, forkJoin, of } from 'rxjs';
 import { catchError, forkJoin, of } from 'rxjs';
 
 import { AreaChartComponent, AreaDataset } from '../../../shared/charts';
 import { DonutChartComponent, DonutData } from '../../../shared/charts';
 import { FtSubtleRevealDirective } from '../../../shared/directives/ft-subtle-reveal.directive';
 import { EmptyStateComponent } from '../../../shared/components/empty-state.component';
+import { TranslatePipe } from '../../../core/pipes/translate.pipe';
 import { TranslatePipe } from '../../../core/pipes/translate.pipe';
 import { TranslationService } from '../../../core/services/translation.service';
 import { FinanceService } from '../../../core/services/finance.service';
@@ -83,6 +86,7 @@ export function mapMonthlyChartData(
   imports: [
     CommonModule,
     NgIcon,
+    RouterLink,
     AreaChartComponent,
     DonutChartComponent,
     FtSubtleRevealDirective,
@@ -111,6 +115,24 @@ export class AnalyticsPage implements OnInit {
   readonly totalExpense = signal<number>(0);
   readonly netSavings = computed(() => calculateNetSavings(this.totalIncome(), this.totalExpense()));
 
+  // Date range selector
+  readonly selectedRange = signal<string>('6m');
+  readonly dateRanges = [
+    { label: '7D', value: '7d' },
+    { label: '30D', value: '30d' },
+    { label: '6M', value: '6m' },
+    { label: '1Y', value: '1y' },
+  ];
+
+  readonly selectedRangeLabel = computed(() => {
+    const r = this.dateRanges.find(d => d.value === this.selectedRange());
+    return r ? `Last ${r.label}` : 'Last 6 months';
+  });
+
+  // Comparison vs previous period
+  readonly incomeChange = signal<number | null>(null);
+  readonly expenseChange = signal<number | null>(null);
+
   ngOnInit(): void {
     this.loadData();
   }
@@ -120,6 +142,11 @@ export class AnalyticsPage implements OnInit {
   }
 
   retry(): void {
+    this.loadData();
+  }
+
+  setRange(range: string): void {
+    this.selectedRange.set(range);
     this.loadData();
   }
 
