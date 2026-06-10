@@ -97,17 +97,6 @@
     }
   }
 
-  &--secondary {
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    color: var(--text-primary);
-    backdrop-filter: blur(var(--glass-blur));
-
-    &:hover {
-      background: var(--bg-elevated);
-      border-color: var(--glass-border-hover);
-    }
-  }
 }
 
 .hero__trust {
@@ -192,7 +181,30 @@
     justify-content: center;
   }
 
-  .hero__trust {
+.hero__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-tertiary);
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-out);
+
+  &:hover {
+    color: var(--text-secondary);
+  }
+
+  ng-icon {
+    transition: transform var(--duration-fast) var(--ease-out);
+  }
+
+  &:hover ng-icon {
+    transform: translateX(2px);
+  }
+}
+
+.hero__trust {
     justify-content: center;
   }
 }
