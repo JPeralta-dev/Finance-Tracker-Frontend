@@ -64,18 +64,13 @@
         }
       </div>
 
-      <button
+      <ft-button
         type="submit"
-        class="btn-primary"
-        [class.btn-primary--disabled]="form.invalid || loading"
         [disabled]="form.invalid || loading"
+        [loading]="loading"
       >
-        @if (loading) {
-          <span class="spinner"></span> {{ 'auth.signing_in' | translate }}
-        } @else {
-          {{ 'auth.signIn' | translate }}
-        }
-      </button>
+        {{ 'auth.signIn' | translate }}
+      </ft-button>
     </form>
 
     <p class="auth-footer">

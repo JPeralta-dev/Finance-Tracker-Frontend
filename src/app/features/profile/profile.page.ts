@@ -14,6 +14,7 @@ import { ProfileAvatarCardComponent } from './profile-avatar-card/profile-avatar
 import { ProfilePersonalInfoComponent } from './profile-personal-info/profile-personal-info.component';
 import { ProfileInsightsCardComponent } from './profile-insights-card/profile-insights-card.component';
 import { FtSubtleRevealDirective } from '../../shared/directives/ft-subtle-reveal.directive';
+import { UiButtonComponent } from '../../shared/ui/ui-button/ui-button.component';
 import { User } from '../../core/models/user.model';
 import type { Insight } from '../../core/models/insight.model';
 
@@ -32,7 +33,7 @@ export function calculateAccountAge(createdAt: string, i18n?: TranslationService
   selector: 'ft-profile-page',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, TranslatePipe, FtSubtleRevealDirective, NgIcon,
-    ProfileAvatarCardComponent, ProfilePersonalInfoComponent, ProfileInsightsCardComponent],
+    ProfileAvatarCardComponent, ProfilePersonalInfoComponent, ProfileInsightsCardComponent, UiButtonComponent],
   providers: [provideIcons(ICONS)],
   templateUrl: './profile.page.html',
   styleUrl: './profile.page.scss',
