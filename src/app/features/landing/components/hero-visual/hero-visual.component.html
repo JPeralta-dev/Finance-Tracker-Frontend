@@ -52,17 +52,17 @@
     <div class="main-card__stats">
       <div class="stat-item">
         <span class="stat-item__label">Income</span>
-        <span class="stat-item__value stat-item__value--income">$4,280</span>
+        <span class="stat-item__value stat-item__value--income">${{ animated() ? incomeDisplay().toLocaleString() : '0' }}</span>
       </div>
       <div class="stat-divider"></div>
       <div class="stat-item">
         <span class="stat-item__label">Expenses</span>
-        <span class="stat-item__value stat-item__value--expense">$2,840</span>
+        <span class="stat-item__value stat-item__value--expense">${{ animated() ? expensesDisplay().toLocaleString() : '0' }}</span>
       </div>
       <div class="stat-divider"></div>
       <div class="stat-item">
         <span class="stat-item__label">Savings</span>
-        <span class="stat-item__value stat-item__value--savings">33.6%</span>
+        <span class="stat-item__value stat-item__value--savings">{{ animated() ? savingsDisplay() + '%' : '0%' }}</span>
       </div>
     </div>
   </div>

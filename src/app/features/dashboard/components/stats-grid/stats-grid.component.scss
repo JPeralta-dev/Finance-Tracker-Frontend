@@ -18,4 +18,11 @@
   @include at-lg {
     grid-template-columns: repeat(4, 1fr);
   }
+
+  /* Bento hero card: balance spans 2 columns on desktop */
+  .stat-card--hero {
+    @include at-lg {
+      grid-column: span 2;
+    }
+  }
 }

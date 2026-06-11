@@ -22,6 +22,12 @@ export class TransactionTableComponent {
   compact = input<boolean>(false);
 
   ftSelect = output<string>();
+  ftBulkDelete = output<string[]>();
+  ftBulkExport = output<string[]>();
+
+  // Selection state
+  readonly selectedIds = signal<Set<string>>(new Set());
+  readonly selectionMode = computed(() => this.selectedIds().size > 0);
 
   // Internal state
   private readonly _filter = signal<TransactionFilter>('all');
@@ -103,6 +109,41 @@ export class TransactionTableComponent {
   }
 
   onSelect(id: string): void {
-    this.ftSelect.emit(id);
+    if (this.selectionMode()) {
+      this.toggleSelection(id);
+    } else {
+      this.ftSelect.emit(id);
+    }
+  }
+
+  toggleSelection(id: string): void {
+    const set = new Set(this.selectedIds());
+    if (set.has(id)) {
+      set.delete(id);
+    } else {
+      set.add(id);
+    }
+    this.selectedIds.set(set);
+  }
+
+  toggleSelectAll(): void {
+    if (this.selectedIds().size === this.pagedItems().length) {
+      this.selectedIds.set(new Set());
+    } else {
+      this.selectedIds.set(new Set(this.pagedItems().map(i => i.id)));
+    }
+  }
+
+  clearSelection(): void {
+    this.selectedIds.set(new Set());
+  }
+
+  onBulkDelete(): void {
+    this.ftBulkDelete.emit([...this.selectedIds()]);
+    this.clearSelection();
+  }
+
+  onBulkExport(): void {
+    this.ftBulkExport.emit([...this.selectedIds()]);
   }
 }

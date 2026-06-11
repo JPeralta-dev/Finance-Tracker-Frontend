@@ -70,3 +70,39 @@
     font-size: 0.9rem;
   }
 }
+
+/* Skeleton loading state */
+.insights-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.insight-card--skeleton {
+  pointer-events: none;
+  border-left-color: var(--glass-border) !important;
+
+  .insight-icon--skeleton {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--bg-elevated);
+    animation: shimmer 1.5s ease-in-out infinite alternate;
+  }
+
+  .insight-title--skeleton {
+    height: 15px;
+    width: 60%;
+    background: var(--bg-elevated);
+    border-radius: 4px;
+    animation: shimmer 1.5s ease-in-out infinite alternate;
+  }
+
+  .insight-message--skeleton {
+    height: 12px;
+    width: 85%;
+    background: var(--bg-elevated);
+    border-radius: 4px;
+    animation: shimmer 1.5s ease-in-out infinite alternate;
+  }
+}

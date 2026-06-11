@@ -54,4 +54,43 @@
       width: 160px;
     }
   }
+
+  /* Footer skeleton: trend + insight placeholders (~30px total) */
+  .stat-card__footer--skeleton {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border-subtle);
+    @media (min-width: 768px) {
+      margin-top: 12px;
+      padding-top: 12px;
+    }
+
+    .stat-card__trend--skeleton {
+      height: 20px;
+      width: 60px;
+      background: var(--bg-elevated);
+      border-radius: var(--radius-xs);
+      animation: shimmer 1.5s ease-in-out infinite alternate;
+      @media (min-width: 768px) {
+        height: 22px;
+        width: 70px;
+      }
+    }
+
+    .stat-card__insight--skeleton {
+      height: 14px;
+      width: 80px;
+      background: var(--bg-elevated);
+      border-radius: 4px;
+      animation: shimmer 1.5s ease-in-out infinite alternate;
+      @media (min-width: 768px) {
+        height: 15px;
+        width: 90px;
+      }
+    }
+  }
 }

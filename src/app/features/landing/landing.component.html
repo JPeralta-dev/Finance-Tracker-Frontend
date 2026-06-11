@@ -1,4 +1,7 @@
 <div class="landing">
+  <!-- Global Background Art -->
+  <ft-landing-background />
+
   <!-- Scroll Progress Indicator -->
   <div class="scroll-progress" [style.transform]="'scaleX(' + scrollProgress() / 100 + ')'"></div>
 
@@ -9,11 +12,11 @@
   <ft-hero-section />
 
   <!-- Features Section -->
-  <section class="features section-full" ftSubtleReveal="fade-up">
+  <section id="features" class="features section-full" ftSubtleReveal="fade-up">
     <div class="features__inner">
       <div class="features__header">
         <h2 class="features__title">{{ 'landing.features.title' | translate }}</h2>
-        <a routerLink="/dashboard" class="features__view-all">
+        <a href="#features" class="features__view-all">
           {{ 'landing.features.view_all' | translate }}
           <ng-icon name="chevronRight" size="0.875rem" />
         </a>
@@ -38,7 +41,7 @@
         <h2 class="telegram-wrapper__title">{{ 'landing.telegram.title' | translate }}</h2>
         <a [href]="telegramBotUrl" target="_blank" class="telegram-wrapper__view-all">
           {{ 'landing.telegram.open_bot' | translate }}
-          <ng-icon name="heroPaperPlane" size="0.875rem" />
+          <ng-icon name="telegram" size="0.875rem" />
         </a>
       </div>
       <ft-telegram-section />
@@ -49,4 +52,17 @@
   <section class="final-cta-wrapper section-full" ftSubtleReveal="fade-up">
     <ft-final-cta />
   </section>
+
+  <!-- Footer -->
+  <ft-footer />
+
+  <!-- Back to top -->
+  <button
+    class="back-to-top"
+    [class.back-to-top--visible]="scrollProgress() > 500"
+    (click)="scrollToTop()"
+    aria-label="Back to top"
+  >
+    <ng-icon name="chevronRight" size="1.2rem" />
+  </button>
 </div>

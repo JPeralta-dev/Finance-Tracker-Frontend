@@ -19,24 +19,15 @@
   &--compact {
     padding: 10px 12px;
     gap: 10px;
+  }
 
-    .tx-row__icon {
-      width: 32px;
-      height: 32px;
-      font-size: 14px;
-    }
+  &--selectable {
+    padding-left: 8px;
+  }
 
-    .tx-row__desc {
-      font-size: 13px;
-    }
-
-    .tx-row__meta {
-      font-size: 11px;
-    }
-
-    .tx-row__amount {
-      font-size: 13px;
-    }
+  &--selected {
+    background: var(--accent-glow);
+    border: 1px solid rgba(217, 70, 239, 0.2);
   }
 
   &__icon {
@@ -86,5 +77,25 @@
     &--expense {
       color: var(--danger);
     }
+  }
+}
+
+.tx-row__checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--glass-border);
+  color: var(--text-tertiary);
+  background: var(--bg-tertiary);
+  flex-shrink: 0;
+  transition: all var(--duration-fast) var(--ease-out);
+
+  .tx-row--selected & {
+    background: var(--accent-start);
+    border-color: var(--accent-start);
+    color: var(--text-inverse);
   }
 }

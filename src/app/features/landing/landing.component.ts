@@ -8,6 +8,8 @@ import { HeroSectionComponent } from './components/hero-section/hero-section.com
 import { FeatureCardComponent } from './components/feature-card/feature-card.component';
 import { TelegramSectionComponent } from './components/telegram-section/telegram-section.component';
 import { FinalCtaComponent } from './components/final-cta/final-cta.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { LandingBackgroundComponent } from './components/landing-background/landing-background.component';
 import { FtSubtleRevealDirective } from '../../shared/directives/ft-subtle-reveal.directive';
 import { TranslatePipe } from '../../core/pipes/translate.pipe';
 import { TranslationService } from '../../core/services/translation.service';
@@ -25,6 +27,8 @@ import { environment } from '../../../environments/environment';
     FeatureCardComponent,
     TelegramSectionComponent,
     FinalCtaComponent,
+    FooterComponent,
+    LandingBackgroundComponent,
     FtSubtleRevealDirective,
     TranslatePipe,
   ],
@@ -37,12 +41,24 @@ export class LandingComponent {
   readonly scrollProgress = signal(0);
   readonly telegramBotUrl = environment.telegramBotUrl;
 
+  private scrollTicking = false;
+
   @HostListener('window:scroll', [])
   onScroll(): void {
-    const scrollTop = window.scrollY;
-    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-    this.scrollProgress.set(Math.min(100, Math.max(0, progress)));
+    if (!this.scrollTicking) {
+      requestAnimationFrame(() => {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+        this.scrollProgress.set(Math.min(100, Math.max(0, progress)));
+        this.scrollTicking = false;
+      });
+      this.scrollTicking = true;
+    }
+  }
+
+  scrollToTop(): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   features = [

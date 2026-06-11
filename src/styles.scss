@@ -249,18 +249,18 @@ input, select, textarea { font-family: var(--font-body); }
   max-width: 1440px;
   width: 100%;
   margin: 0 auto;
-  padding: 32px 24px 96px;
+  padding: 32px 24px 32px;
 }
 
 @media (max-width: 768px) {
   .app-main {
-    padding: 20px 16px 80px;
+    padding: 20px 16px 20px;
   }
 }
 
 @media (min-width: 1024px) {
   .app-main {
-    padding: 40px 32px 96px;
+    padding: 40px 32px 40px;
   }
 }
 
@@ -450,4 +450,16 @@ input, select, textarea { font-family: var(--font-body); }
   color: var(--text-tertiary);
   margin-top: 4px;
   display: block;
+}
+
+/* ─── Reduced Motion (Accessibility) ───────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

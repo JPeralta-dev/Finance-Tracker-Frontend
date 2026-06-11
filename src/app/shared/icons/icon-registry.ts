@@ -49,8 +49,14 @@ import {
   heroGlobeAlt,
   heroClock,
   heroLockClosed,
+  heroShieldCheck,
   heroChatBubbleLeftRight,
   heroUserGroup,
+  heroCurrencyDollar,
+  heroEnvelope,
+  heroDocumentText,
+  heroCodeBracket,
+  heroBuildingOffice,
 } from '@ng-icons/heroicons/outline';
 
 // ─── Icon Map ────────────────────────────────────────────────────────────────
@@ -120,8 +126,18 @@ export const ICONS = {
   // Misc
   clock: heroClock,
   lockClosed: heroLockClosed,
+  shieldCheck: heroShieldCheck,
   chatBubble: heroChatBubbleLeftRight,
   userGroup: heroUserGroup,
+
+  // Hero background art
+  currencyDollar: heroCurrencyDollar,
+
+  // Footer
+  envelope: heroEnvelope,
+  documentText: heroDocumentText,
+  codeBracket: heroCodeBracket,
+  buildingOffice: heroBuildingOffice,
 };
 
 // ─── Category Icon Mapping ───────────────────────────────────────────────────

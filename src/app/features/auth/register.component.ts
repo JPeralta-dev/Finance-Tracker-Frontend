@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -7,11 +7,12 @@ import { NgIcon, provideIcons } from '@ng-icons/core';
 import { ICONS } from '../../shared/icons/icon-registry';
 import { AuthService } from '../../core/services/auth.service';
 import { TranslatePipe } from '../../core/pipes/translate.pipe';
+import { UiButtonComponent } from '../../shared/ui/ui-button/ui-button.component';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink, NgIcon, TranslatePipe],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, NgIcon, TranslatePipe, UiButtonComponent],
   providers: [provideIcons(ICONS)],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
@@ -23,6 +24,23 @@ export class RegisterComponent {
 
   loading = false;
   error = '';
+  showPassword = false;
+  readonly strengthLevels = [0, 1, 2, 3];
+
+  readonly strengthScore = computed(() => {
+    const pwd = this.password.value || '';
+    let score = 0;
+    if (pwd.length >= 8) score++;
+    if (/[A-Z]/.test(pwd)) score++;
+    if (/[0-9]/.test(pwd)) score++;
+    if (/[^A-Za-z0-9]/.test(pwd)) score++;
+    return score;
+  });
+
+  readonly strengthLabel = computed(() => {
+    const labels = ['Weak', 'Fair', 'Good', 'Strong'];
+    return labels[Math.max(0, this.strengthScore() - 1)] ?? '';
+  });
 
   form = this.fb.group({
     email: ['', [Validators.required, Validators.email]],

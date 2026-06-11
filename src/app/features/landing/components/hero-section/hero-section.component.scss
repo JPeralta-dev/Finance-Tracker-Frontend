@@ -97,17 +97,6 @@
     }
   }
 
-  &--secondary {
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    color: var(--text-primary);
-    backdrop-filter: blur(var(--glass-blur));
-
-    &:hover {
-      background: var(--bg-elevated);
-      border-color: var(--glass-border-hover);
-    }
-  }
 }
 
 .hero__trust {
@@ -116,14 +105,23 @@
 }
 
 .hero__trust-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   font-size: 13px;
   color: var(--text-tertiary);
   font-weight: 500;
+
+  ng-icon {
+    color: var(--accent-start);
+    flex-shrink: 0;
+  }
 }
 
 /* Visual */
 .hero__visual {
   position: relative;
+  z-index: 1;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -184,7 +182,30 @@
     justify-content: center;
   }
 
-  .hero__trust {
+.hero__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-tertiary);
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-out);
+
+  &:hover {
+    color: var(--text-secondary);
+  }
+
+  ng-icon {
+    transition: transform var(--duration-fast) var(--ease-out);
+  }
+
+  &:hover ng-icon {
+    transform: translateX(2px);
+  }
+}
+
+.hero__trust {
     justify-content: center;
   }
 }

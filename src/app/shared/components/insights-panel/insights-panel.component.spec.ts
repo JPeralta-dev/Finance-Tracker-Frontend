@@ -14,6 +14,24 @@ describe('InsightsPanelComponent (shared)', () => {
     },
   };
 
+  const mockInsights: Insight[] = [
+    {
+      id: '1',
+      type: 'warning',
+      titleKey: 'insights.highSpending',
+      messageKey: 'insights.highSpendingMsg',
+      severity: 'high',
+      data: { category: 'Food' },
+    },
+    {
+      id: '2',
+      type: 'success',
+      titleKey: 'insights.savingsGoal',
+      messageKey: 'insights.savingsGoalMsg',
+      severity: 'low',
+    },
+  ];
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [InsightsPanelComponent],
@@ -29,6 +47,7 @@ describe('InsightsPanelComponent (shared)', () => {
   describe('Empty state', () => {
     it('should show empty message when insights array is empty', () => {
       component.insights = [];
+      component.loading = false;
       fixture.detectChanges();
 
       const el: HTMLElement = fixture.nativeElement;
@@ -38,26 +57,58 @@ describe('InsightsPanelComponent (shared)', () => {
     });
   });
 
-  describe('With insights data', () => {
-    const mockInsights: Insight[] = [
-      {
-        id: '1',
-        type: 'warning',
-        titleKey: 'insights.highSpending',
-        messageKey: 'insights.highSpendingMsg',
-        severity: 'high',
-        data: { category: 'Food' },
-      },
-      {
-        id: '2',
-        type: 'success',
-        titleKey: 'insights.savingsGoal',
-        messageKey: 'insights.savingsGoalMsg',
-        severity: 'low',
-      },
-    ];
+  describe('Loading state', () => {
+    it('should render 3 skeleton cards when loading=true', () => {
+      component.loading = true;
+      component.insights = [];
+      fixture.detectChanges();
 
+      const el: HTMLElement = fixture.nativeElement;
+      const skeletons = el.querySelectorAll('.insight-card--skeleton');
+      expect(skeletons.length).toBe(3);
+    });
+
+    it('should show skeleton icon, title, and message placeholders', () => {
+      component.loading = true;
+      fixture.detectChanges();
+
+      const el: HTMLElement = fixture.nativeElement;
+      const icon = el.querySelector('.insight-icon--skeleton');
+      const title = el.querySelector('.insight-title--skeleton');
+      const message = el.querySelector('.insight-message--skeleton');
+      expect(icon).toBeTruthy();
+      expect(title).toBeTruthy();
+      expect(message).toBeTruthy();
+    });
+
+    it('should hide real insights when loading=true even if insights exist', () => {
+      component.loading = true;
+      component.insights = mockInsights;
+      fixture.detectChanges();
+
+      const el: HTMLElement = fixture.nativeElement;
+      const skeletons = el.querySelectorAll('.insight-card--skeleton');
+      const realCards = el.querySelectorAll('.insight-card:not(.insight-card--skeleton)');
+      expect(skeletons.length).toBe(3);
+      expect(realCards.length).toBe(0);
+    });
+
+    it('should show real insights when loading=false', () => {
+      component.loading = false;
+      component.insights = mockInsights;
+      fixture.detectChanges();
+
+      const el: HTMLElement = fixture.nativeElement;
+      const skeletons = el.querySelectorAll('.insight-card--skeleton');
+      const realCards = el.querySelectorAll('.insight-card:not(.insight-card--skeleton)');
+      expect(skeletons.length).toBe(0);
+      expect(realCards.length).toBe(2);
+    });
+  });
+
+  describe('With insights data', () => {
     it('should render insight cards when insights are provided', () => {
+      component.loading = false;
       component.insights = mockInsights;
       fixture.detectChanges();
 
@@ -67,6 +118,7 @@ describe('InsightsPanelComponent (shared)', () => {
     });
 
     it('should display translated title with data params', () => {
+      component.loading = false;
       component.insights = mockInsights;
       fixture.detectChanges();
 
@@ -76,6 +128,7 @@ describe('InsightsPanelComponent (shared)', () => {
     });
 
     it('should apply severity class based on insight severity', () => {
+      component.loading = false;
       component.insights = mockInsights;
       fixture.detectChanges();
 
