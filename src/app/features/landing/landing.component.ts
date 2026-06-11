@@ -8,6 +8,8 @@ import { HeroSectionComponent } from './components/hero-section/hero-section.com
 import { FeatureCardComponent } from './components/feature-card/feature-card.component';
 import { TelegramSectionComponent } from './components/telegram-section/telegram-section.component';
 import { FinalCtaComponent } from './components/final-cta/final-cta.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { LandingBackgroundComponent } from './components/landing-background/landing-background.component';
 import { FtSubtleRevealDirective } from '../../shared/directives/ft-subtle-reveal.directive';
 import { TranslatePipe } from '../../core/pipes/translate.pipe';
 import { TranslationService } from '../../core/services/translation.service';
@@ -25,6 +27,8 @@ import { environment } from '../../../environments/environment';
     FeatureCardComponent,
     TelegramSectionComponent,
     FinalCtaComponent,
+    FooterComponent,
+    LandingBackgroundComponent,
     FtSubtleRevealDirective,
     TranslatePipe,
   ],
@@ -36,7 +40,6 @@ export class LandingComponent {
   private readonly translationService = inject(TranslationService);
   readonly scrollProgress = signal(0);
   readonly telegramBotUrl = environment.telegramBotUrl;
-  readonly currentYear = new Date().getFullYear();
 
   private scrollTicking = false;
 

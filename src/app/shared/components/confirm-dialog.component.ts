@@ -83,26 +83,26 @@ import { animate, style, transition, trigger } from '@angular/animations';
       cursor: pointer;
       border: none;
       transition: all var(--duration-fast) var(--ease-out);
+    }
 
-      &--cancel {
-        background: var(--bg-tertiary);
-        color: var(--text-secondary);
-        border: 1px solid var(--glass-border);
+    .confirm-dialog__btn--cancel {
+      background: var(--bg-tertiary);
+      color: var(--text-secondary);
+      border: 1px solid var(--glass-border);
 
-        &:hover {
-          background: var(--bg-elevated);
-          color: var(--text-primary);
-        }
+      &:hover {
+        background: var(--bg-elevated);
+        color: var(--text-primary);
       }
+    }
 
-      &--danger {
-        background: linear-gradient(135deg, #ef4444, #dc2626);
-        color: white;
+    .confirm-dialog__btn--danger {
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+      color: white;
 
-        &:hover {
-          box-shadow: 0 0 20px rgba(239, 68, 68, 0.35);
-          transform: translateY(-1px);
-        }
+      &:hover {
+        box-shadow: 0 0 20px rgba(239, 68, 68, 0.35);
+        transform: translateY(-1px);
       }
     }
   `],

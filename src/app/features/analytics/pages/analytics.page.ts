@@ -3,13 +3,11 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { catchError, forkJoin, of } from 'rxjs';
-import { catchError, forkJoin, of } from 'rxjs';
 
 import { AreaChartComponent, AreaDataset } from '../../../shared/charts';
 import { DonutChartComponent, DonutData } from '../../../shared/charts';
 import { FtSubtleRevealDirective } from '../../../shared/directives/ft-subtle-reveal.directive';
 import { EmptyStateComponent } from '../../../shared/components/empty-state.component';
-import { TranslatePipe } from '../../../core/pipes/translate.pipe';
 import { TranslatePipe } from '../../../core/pipes/translate.pipe';
 import { TranslationService } from '../../../core/services/translation.service';
 import { FinanceService } from '../../../core/services/finance.service';

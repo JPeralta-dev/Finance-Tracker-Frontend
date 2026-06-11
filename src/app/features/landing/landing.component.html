@@ -1,4 +1,7 @@
 <div class="landing">
+  <!-- Global Background Art -->
+  <ft-landing-background />
+
   <!-- Scroll Progress Indicator -->
   <div class="scroll-progress" [style.transform]="'scaleX(' + scrollProgress() / 100 + ')'"></div>
 
@@ -51,16 +54,7 @@
   </section>
 
   <!-- Footer -->
-  <footer class="footer">
-    <div class="footer__inner">
-      <span class="footer__copyright">&copy; {{ currentYear }} Flowr</span>
-      <nav class="footer__links">
-        <a href="#" class="footer__link">Privacy</a>
-        <a href="#" class="footer__link">Terms</a>
-        <a href="#" class="footer__link">Contact</a>
-      </nav>
-    </div>
-  </footer>
+  <ft-footer />
 
   <!-- Back to top -->
   <button
