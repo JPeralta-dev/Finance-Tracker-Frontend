@@ -10,8 +10,8 @@
   ],
   "rewrites": [
     {
-      "source": "/api/auth/:path*",
-      "destination": "https://finance-tracker-backend-production-2573.up.railway.app/api/auth/:path*"
+      "source": "/api/:path*",
+      "destination": "https://finance-tracker-backend-production-2573.up.railway.app/api/:path*"
     },
     {
       "source": "/(.*)",
