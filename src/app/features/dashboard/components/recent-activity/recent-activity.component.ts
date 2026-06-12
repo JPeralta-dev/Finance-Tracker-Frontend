@@ -1,7 +1,7 @@
 import { Component, input, computed, inject } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { NgIcon, provideIcons } from '@ng-icons/core';
+import { NgIcon } from '@ng-icons/core';
 import { UiBadgeComponent } from '../../../../shared/ui/ui-badge/ui-badge.component';
 import { getCategoryIcon } from '../../../../shared/icons/icon-registry';
 import { ICONS } from '../../../../shared/icons/icon-registry';
@@ -22,7 +22,6 @@ export interface ActivityItem {
   selector: 'ft-recent-activity',
   standalone: true,
   imports: [CommonModule, DatePipe, RouterLink, UiBadgeComponent, NgIcon, TranslatePipe, CategoryTranslatePipe],
-  providers: [provideIcons(ICONS)],
   templateUrl: './recent-activity.component.html',
   styleUrl: './recent-activity.component.scss',
 })

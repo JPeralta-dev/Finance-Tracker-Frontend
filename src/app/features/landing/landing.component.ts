@@ -1,7 +1,7 @@
 import { Component, HostListener, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { NgIcon, provideIcons } from '@ng-icons/core';
+import { NgIcon } from '@ng-icons/core';
 import { ICONS } from '../../shared/icons/icon-registry';
 import { PublicNavbarComponent } from './components/public-navbar/public-navbar.component';
 import { HeroSectionComponent } from './components/hero-section/hero-section.component';
@@ -32,7 +32,6 @@ import { environment } from '../../../environments/environment';
     FtSubtleRevealDirective,
     TranslatePipe,
   ],
-  providers: [provideIcons(ICONS)],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.scss',
 })

@@ -1,7 +1,7 @@
 import { Component, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
-import { NgIcon, provideIcons } from '@ng-icons/core';
+import { NgIcon } from '@ng-icons/core';
 import { ICONS } from '../../shared/icons/icon-registry';
 import { TranslatePipe } from '../../core/pipes/translate.pipe';
 import { FtSubtleRevealDirective } from '../../shared/directives/ft-subtle-reveal.directive';
@@ -26,7 +26,6 @@ import { LinkedAccountsSectionComponent } from './linked-accounts-section/linked
     PreferencesSectionComponent,
     LinkedAccountsSectionComponent,
   ],
-  providers: [provideIcons(ICONS)],
   templateUrl: './settings.component.html',
   styleUrl: './settings.component.scss',
 })

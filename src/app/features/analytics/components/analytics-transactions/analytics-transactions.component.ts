@@ -1,6 +1,6 @@
 import { Component, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgIcon, provideIcons } from '@ng-icons/core';
+import { NgIcon } from '@ng-icons/core';
 import { RouterLink } from '@angular/router';
 import { TranslatePipe } from '../../../../core/pipes/translate.pipe';
 import { FtSubtleRevealDirective } from '../../../../shared/directives/ft-subtle-reveal.directive';
@@ -12,7 +12,6 @@ import type { RelevantTransaction } from '../../analytics.types';
   selector: 'ft-analytics-transactions',
   standalone: true,
   imports: [CommonModule, NgIcon, RouterLink, TranslatePipe, FtSubtleRevealDirective],
-  providers: [provideIcons(ICONS)],
   templateUrl: './analytics-transactions.component.html',
   styleUrl: './analytics-transactions.component.scss',
 })

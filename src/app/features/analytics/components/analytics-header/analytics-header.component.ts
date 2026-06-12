@@ -1,6 +1,6 @@
 import { Component, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgIcon, provideIcons } from '@ng-icons/core';
+import { NgIcon } from '@ng-icons/core';
 import { TranslatePipe } from '../../../../core/pipes/translate.pipe';
 import { FtSubtleRevealDirective } from '../../../../shared/directives/ft-subtle-reveal.directive';
 import { ICONS } from '../../../../shared/icons/icon-registry';
@@ -11,7 +11,6 @@ export type PeriodOption = '1m' | '3m' | '6m' | '1y';
   selector: 'ft-analytics-header',
   standalone: true,
   imports: [CommonModule, NgIcon, TranslatePipe, FtSubtleRevealDirective],
-  providers: [provideIcons(ICONS)],
   templateUrl: './analytics-header.component.html',
   styleUrl: './analytics-header.component.scss',
 })

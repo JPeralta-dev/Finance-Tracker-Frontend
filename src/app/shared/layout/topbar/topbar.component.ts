@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, NavigationEnd } from '@angular/router';
-import { NgIcon, provideIcons } from '@ng-icons/core';
+import { NgIcon } from '@ng-icons/core';
 import { LayoutService, NavItem } from '../../../core/services/layout.service';
 import { NavItemComponent } from '../../layout/nav-item/nav-item.component';
 import { MobileMenuComponent } from '../../layout/mobile-menu/mobile-menu.component';
@@ -37,7 +37,6 @@ const PRIVATE_PATHS = Object.keys(ROUTE_TITLES);
   selector: 'ft-topbar',
   standalone: true,
   imports: [CommonModule, RouterLink, NgIcon, NavItemComponent, MobileMenuComponent, ProfileDropdownComponent, NotificationsDropdownComponent],
-  providers: [provideIcons(ICONS)],
   templateUrl: './topbar.component.html',
   styleUrl: './topbar.component.scss',
 })

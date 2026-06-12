@@ -4,7 +4,7 @@ import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { catchError, of } from 'rxjs';
-import { NgIcon, provideIcons } from '@ng-icons/core';
+import { NgIcon } from '@ng-icons/core';
 import { ICONS, getCategoryIcon } from '../../shared/icons/icon-registry';
 import { FinanceService } from '../../core/services/finance.service';
 import { Category } from '../../core/models/category.model';
@@ -29,7 +29,6 @@ interface CategoryOption extends Category {
     CategoryTranslatePipe,
     FtSubtleRevealDirective,
   ],
-  providers: [provideIcons(ICONS)],
   templateUrl: './transaction-form.component.html',
   styleUrl: './transaction-form.component.scss',
 })

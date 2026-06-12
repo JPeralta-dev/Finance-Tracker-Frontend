@@ -1,6 +1,6 @@
 import { Component, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgIcon, provideIcons } from '@ng-icons/core';
+import { NgIcon } from '@ng-icons/core';
 import { TranslatePipe } from '../../../../core/pipes/translate.pipe';
 import { FtSubtleRevealDirective } from '../../../../shared/directives/ft-subtle-reveal.directive';
 import { ICONS } from '../../../../shared/icons/icon-registry';
@@ -10,7 +10,6 @@ import type { InsightData } from '../../analytics.types';
   selector: 'ft-analytics-insights',
   standalone: true,
   imports: [CommonModule, NgIcon, TranslatePipe, FtSubtleRevealDirective],
-  providers: [provideIcons(ICONS)],
   templateUrl: './analytics-insights.component.html',
   styleUrl: './analytics-insights.component.scss',
 })

@@ -1,7 +1,7 @@
 import { Component, input, output, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, Router } from '@angular/router';
-import { NgIcon, provideIcons } from '@ng-icons/core';
+import { NgIcon } from '@ng-icons/core';
 import { tap } from 'rxjs/operators';
 import { NavItemComponent } from '../nav-item/nav-item.component';
 import { MobileMenuItem } from './mobile-menu.types';
@@ -14,7 +14,6 @@ import { TranslatePipe } from '../../../core/pipes/translate.pipe';
   selector: 'ft-mobile-menu',
   standalone: true,
   imports: [CommonModule, RouterLink, NavItemComponent, NgIcon, TranslatePipe],
-  providers: [provideIcons(ICONS)],
   templateUrl: './mobile-menu.component.html',
   styleUrl: './mobile-menu.component.scss',
 })

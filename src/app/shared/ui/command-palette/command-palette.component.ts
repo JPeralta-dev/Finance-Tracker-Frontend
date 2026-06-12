@@ -1,6 +1,6 @@
 import { Component, inject, signal, computed, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgIcon, provideIcons } from '@ng-icons/core';
+import { NgIcon } from '@ng-icons/core';
 import { FormsModule } from '@angular/forms';
 import { CommandService, CommandItem } from '../../../core/services/command.service';
 import { ICONS } from '../../../shared/icons/icon-registry';
@@ -9,7 +9,6 @@ import { ICONS } from '../../../shared/icons/icon-registry';
   selector: 'ft-command-palette',
   standalone: true,
   imports: [CommonModule, FormsModule, NgIcon],
-  providers: [provideIcons(ICONS)],
   templateUrl: './command-palette.component.html',
   styleUrl: './command-palette.component.scss',
 })
