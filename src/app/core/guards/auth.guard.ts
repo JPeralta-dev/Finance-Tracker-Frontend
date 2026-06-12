@@ -7,6 +7,9 @@ export const authGuard: CanActivateFn = (_route, _state) => {
   const router = inject(Router);
   const authService = inject(AuthService);
 
+  // Trigger session check for protected routes (idempotent)
+  authService.initAuthCheck();
+
   // Wait for session check to complete before deciding
   return authService.authReady$.pipe(
     filter((ready) => ready),
