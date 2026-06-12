@@ -1,6 +1,6 @@
 import { Component, input, output, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgIcon, provideIcons } from '@ng-icons/core';
+import { NgIcon } from '@ng-icons/core';
 import { UiBadgeComponent } from '../../../../shared/ui/ui-badge/ui-badge.component';
 import { TransactionRowData } from '../../transaction.types';
 import { getCategoryMeta, getCategoryIcon } from '../../components/transaction.utils';
@@ -12,7 +12,6 @@ import { CategoryTranslatePipe } from '../../../../core/pipes/category-translate
   selector: 'ft-transaction-row',
   standalone: true,
   imports: [CommonModule, UiBadgeComponent, NgIcon, CategoryTranslatePipe],
-  providers: [provideIcons(ICONS)],
   templateUrl: './transaction-row.component.html',
   styleUrl: './transaction-row.component.scss',
 })

@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgIcon, provideIcons } from '@ng-icons/core';
+import { NgIcon } from '@ng-icons/core';
 import { ToastService } from '../../../core/services/toast.service';
 import { ICONS } from '../../../shared/icons/icon-registry';
 
@@ -8,7 +8,6 @@ import { ICONS } from '../../../shared/icons/icon-registry';
   selector: 'ft-toast-container',
   standalone: true,
   imports: [CommonModule, NgIcon],
-  providers: [provideIcons(ICONS)],
   template: `
     <div class="toast-container">
       @for (toast of toasts(); track toast.id) {

@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { NgIcon, provideIcons } from '@ng-icons/core';
+import { NgIcon } from '@ng-icons/core';
 import { ICONS } from '../../icons/icon-registry';
 import { ModalService } from '../../../core/services/modal.service';
 import { FinanceService } from '../../../core/services/finance.service';
@@ -15,7 +15,6 @@ import { modalAnimation } from '../../animations';
   selector: 'ft-category-modal',
   standalone: true,
   imports: [CommonModule, FormsModule, NgIcon, TranslatePipe, CategoryTranslatePipe],
-  providers: [provideIcons(ICONS)],
   template: `
     @if (modal().isOpen) {
       <div class="modal-overlay" [@modalAnimation] (click)="close()">

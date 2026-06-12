@@ -1,6 +1,6 @@
 import { Component, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgIcon, provideIcons } from '@ng-icons/core';
+import { NgIcon } from '@ng-icons/core';
 import { ICONS } from '../../../shared/icons/icon-registry';
 import type { User } from '../../../core/models/user.model';
 
@@ -8,7 +8,6 @@ import type { User } from '../../../core/models/user.model';
   selector: 'app-profile-avatar-card',
   standalone: true,
   imports: [CommonModule, NgIcon],
-  providers: [provideIcons(ICONS)],
   templateUrl: './profile-avatar-card.component.html',
   styleUrl: './profile-avatar-card.component.scss',
 })

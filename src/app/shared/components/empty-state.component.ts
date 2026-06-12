@@ -1,13 +1,12 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { NgIcon, provideIcons } from '@ng-icons/core';
+import { NgIcon } from '@ng-icons/core';
 import { ICONS } from '../icons/icon-registry';
 
 @Component({
   selector: 'ft-empty-state',
   standalone: true,
   imports: [RouterLink, NgIcon],
-  providers: [provideIcons(ICONS)],
   template: `
     <div class="empty-state">
       <div class="empty-state__icon">

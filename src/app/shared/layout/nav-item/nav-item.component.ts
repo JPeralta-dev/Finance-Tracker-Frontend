@@ -1,14 +1,13 @@
 import { Component, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { NgIcon, provideIcons } from '@ng-icons/core';
+import { NgIcon } from '@ng-icons/core';
 import { ICONS } from '../../../shared/icons/icon-registry';
 
 @Component({
   selector: 'ft-nav-item',
   standalone: true,
   imports: [CommonModule, RouterLink, RouterLinkActive, NgIcon],
-  providers: [provideIcons(ICONS)],
   templateUrl: './nav-item.component.html',
   styleUrl: './nav-item.component.scss',
 })
