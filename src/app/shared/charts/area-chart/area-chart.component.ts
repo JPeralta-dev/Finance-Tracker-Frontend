@@ -6,13 +6,11 @@ import {
   OnInit,
   OnDestroy,
   OnChanges,
+  inject,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChartService } from '../../charts/chart.service';
-
-// Dynamic import — guards against init-before-load race condition
-let Chart: any;
-const chartReady = import('chart.js').then(m => { Chart = m.Chart; });
+import { ChartProviderService } from '../../../core/services/chart-provider.service';
 
 export interface AreaDataset {
   label: string;
@@ -37,17 +35,15 @@ export class AreaChartComponent implements OnInit, OnDestroy, OnChanges {
 
   @ViewChild('chartCanvas') private canvas!: ElementRef<HTMLCanvasElement>;
 
+  private chartService = inject(ChartService);
+  private chartProvider = inject(ChartProviderService);
+
   private chart: any = null;
 
-  constructor(private chartService: ChartService) {}
-
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     if (this.loading()) return;
-    if (Chart) {
-      this.initChart();
-    } else {
-      chartReady.then(() => this.initChart());
-    }
+    const { Chart } = await this.chartProvider.ensureChart();
+    this.initChart(Chart);
   }
 
   ngOnChanges(): void {
@@ -58,8 +54,8 @@ export class AreaChartComponent implements OnInit, OnDestroy, OnChanges {
     this.chart?.destroy();
   }
 
-  private initChart(): void {
-    if (!this.canvas || !Chart) return;
+  private initChart(Chart: any): void {
+    if (!this.canvas) return;
 
     const config = this.chartService.createAreaConfig(
       this.labels(),
