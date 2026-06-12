@@ -1,12 +1,11 @@
 import { Component, HostListener } from '@angular/core';
-import { NgIcon, provideIcons } from '@ng-icons/core';
+import { NgIcon } from '@ng-icons/core';
 import { ICONS } from '../../../../shared/icons/icon-registry';
 
 @Component({
   selector: 'ft-landing-background',
   standalone: true,
   imports: [NgIcon],
-  providers: [provideIcons(ICONS)],
   templateUrl: './landing-background.component.html',
   styleUrl: './landing-background.component.scss',
 })

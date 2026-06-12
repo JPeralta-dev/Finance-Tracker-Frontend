@@ -1,6 +1,6 @@
 import { Component, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgIcon, provideIcons } from '@ng-icons/core';
+import { NgIcon } from '@ng-icons/core';
 import { TranslatePipe } from '../../../../core/pipes/translate.pipe';
 import { FtSubtleRevealDirective } from '../../../../shared/directives/ft-subtle-reveal.directive';
 import { CurrencyService } from '../../../../core/services/currency.service';
@@ -11,7 +11,6 @@ import type { ComparisonData } from '../../analytics.types';
   selector: 'ft-analytics-comparison',
   standalone: true,
   imports: [CommonModule, NgIcon, TranslatePipe, FtSubtleRevealDirective],
-  providers: [provideIcons(ICONS)],
   templateUrl: './analytics-comparison.component.html',
   styleUrl: './analytics-comparison.component.scss',
 })

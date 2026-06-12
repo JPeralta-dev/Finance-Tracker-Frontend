@@ -5,6 +5,7 @@
  */
 
 export { ChartService } from './chart.service';
+export { ChartProviderService } from '../../core/services/chart-provider.service';
 export { AreaChartComponent } from './area-chart/area-chart.component';
 export { BarChartComponent } from './bar-chart/bar-chart.component';
 export { DonutChartComponent } from './donut-chart/donut-chart.component';

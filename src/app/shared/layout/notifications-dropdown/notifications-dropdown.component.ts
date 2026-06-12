@@ -1,6 +1,6 @@
 import { Component, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgIcon, provideIcons } from '@ng-icons/core';
+import { NgIcon } from '@ng-icons/core';
 import { ICONS } from '../../../shared/icons/icon-registry';
 import { ClickOutsideDirective } from '../../directives/click-outside.directive';
 import { NotificationService } from '../../../core/services/notification.service';
@@ -11,7 +11,6 @@ import { TranslatePipe } from '../../../core/pipes/translate.pipe';
   selector: 'ft-notifications-dropdown',
   standalone: true,
   imports: [CommonModule, NgIcon, ClickOutsideDirective, TranslatePipe],
-  providers: [provideIcons(ICONS)],
   templateUrl: './notifications-dropdown.component.html',
   styleUrl: './notifications-dropdown.component.scss',
 })

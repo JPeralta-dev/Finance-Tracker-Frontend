@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { finalize } from 'rxjs';
-import { NgIcon, provideIcons } from '@ng-icons/core';
+import { NgIcon } from '@ng-icons/core';
 import { ICONS } from '../../shared/icons/icon-registry';
 import { AuthService } from '../../core/services/auth.service';
 import { TranslatePipe } from '../../core/pipes/translate.pipe';
@@ -13,7 +13,6 @@ import { UiButtonComponent } from '../../shared/ui/ui-button/ui-button.component
   selector: 'app-register',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterLink, NgIcon, TranslatePipe, UiButtonComponent],
-  providers: [provideIcons(ICONS)],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
 })

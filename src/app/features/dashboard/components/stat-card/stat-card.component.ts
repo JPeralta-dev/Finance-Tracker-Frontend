@@ -1,6 +1,6 @@
 import { Component, input, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgIcon, provideIcons } from '@ng-icons/core';
+import { NgIcon } from '@ng-icons/core';
 import { FtSubtleRevealDirective } from '../../../../shared/directives/ft-subtle-reveal.directive';
 import { StatCardData } from './stat-card.types';
 import { ICONS } from '../../../../shared/icons/icon-registry';
@@ -11,7 +11,6 @@ import { CurrencyService } from '../../../../core/services/currency.service';
   selector: 'ft-stat-card',
   standalone: true,
   imports: [CommonModule, NgIcon, FtSubtleRevealDirective, TranslatePipe],
-  providers: [provideIcons(ICONS)],
   templateUrl: './stat-card.component.html',
   styleUrl: './stat-card.component.scss',
 })

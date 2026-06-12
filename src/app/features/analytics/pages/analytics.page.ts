@@ -1,7 +1,7 @@
 import { Component, signal, inject, OnInit, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { NgIcon, provideIcons } from '@ng-icons/core';
+import { NgIcon } from '@ng-icons/core';
 import { catchError, forkJoin, of } from 'rxjs';
 
 import { AreaChartComponent, AreaDataset } from '../../../shared/charts';
@@ -91,7 +91,6 @@ export function mapMonthlyChartData(
     EmptyStateComponent,
     TranslatePipe,
   ],
-  providers: [provideIcons(ICONS)],
   templateUrl: './analytics.page.html',
   styleUrl: './analytics.page.scss',
 })

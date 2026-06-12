@@ -16,8 +16,10 @@ export class AuthService {
   // Signal privado como fuente de verdad
   private readonly _userSignal = signal<User | null>(null);
 
-  // Señal de inicialización: true cuando terminó checkSession()
+  // Señal de inicialización: true cuando terminó checkSession() o se marcó como lista
   readonly authReady = signal(false);
+
+  private _initStarted = false;
 
   // Observable que emite cuando authReady pasa a true
   readonly authReady$ = toObservable(this.authReady);
@@ -32,13 +34,32 @@ export class AuthService {
   readonly user$: Observable<User | null> = toObservable(this._userSignal);
 
   constructor() {
-    // Defer session check to avoid circular DI — the interceptor injects AuthService
-    setTimeout(() => this.checkSession(), 0);
+    // No automatic session check — triggered by route guards on demand
+  }
+
+  /**
+   * Trigger session check for protected routes.
+   * Idempotent: only runs once per app lifecycle.
+   * Sets authReady = false before checking, then true when complete.
+   */
+  initAuthCheck(): void {
+    if (this._initStarted) return;
+    this._initStarted = true;
+    this.authReady.set(false);
+    this.checkSession();
+  }
+
+  /**
+   * Mark auth as ready immediately without HTTP call.
+   * Used by public route guards so they don't block navigation.
+   */
+  markAuthReady(): void {
+    this.authReady.set(true);
   }
 
   /**
    * Check if there's an active Better Auth session via cookie.
-   * Called on app boot to restore auth state.
+   * Called by initAuthCheck() when navigating to protected routes.
    */
   private checkSession(): void {
     this.http

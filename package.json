@@ -22,8 +22,6 @@
     "@angular/platform-browser-dynamic": "^17.3.0",
     "@angular/router": "^17.3.0",
     "@fontsource/inter": "^5.2.8",
-    "@fontsource/poppins": "^5.2.7",
-    "@fontsource/roboto": "^5.2.10",
     "@fontsource/space-grotesk": "^5.2.10",
     "@ng-icons/core": "^26.5.0",
     "@ng-icons/heroicons": "^26.5.0",
