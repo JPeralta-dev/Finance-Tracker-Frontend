@@ -14,6 +14,10 @@
       "destination": "https://finance-tracker-backend-production-2573.up.railway.app/api/:path*"
     },
     {
+      "source": "/robots.txt",
+      "destination": "/assets/robots.txt"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
