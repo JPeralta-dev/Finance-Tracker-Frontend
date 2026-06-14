@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgIcon } from '@ng-icons/core';
 import { RouterLink } from '@angular/router';
@@ -14,6 +14,7 @@ import type { RelevantTransaction } from '../../analytics.types';
   imports: [CommonModule, NgIcon, RouterLink, TranslatePipe, FtSubtleRevealDirective],
   templateUrl: './analytics-transactions.component.html',
   styleUrl: './analytics-transactions.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AnalyticsTransactionsComponent {
   transactions = input.required<RelevantTransaction[]>();

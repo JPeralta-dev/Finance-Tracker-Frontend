@@ -4,8 +4,8 @@ import { RouterLink } from '@angular/router';
 import { catchError, forkJoin, of } from 'rxjs';
 
 import { StatsGridComponent } from '../components/stats-grid/stats-grid.component';
-import { AreaChartComponent, AreaDataset } from '../../../shared/charts';
-import { DonutChartComponent, DonutData } from '../../../shared/charts';
+// TODO: Phase 3 — Replace with FtEChartComponent imports
+// import { FtEChartComponent } from '../../../shared/charts';
 import { RecentActivityComponent, ActivityItem } from '../components/recent-activity/recent-activity.component';
 import { InsightsPanelComponent } from '../../../shared/components/insights-panel/insights-panel.component';
 import { StatCardData } from '../components/stat-card/stat-card.types';
@@ -21,6 +21,20 @@ import { Category } from '../../../core/models/category.model';
 import { Insight } from '../../../core/models/insight.model';
 
 type DashboardState = 'loading' | 'ready' | 'empty' | 'error';
+
+// ─── Temporary types (Phase 3 will replace with ECharts types) ────────────
+
+interface AreaDataset {
+  label: string;
+  data: number[];
+  color: string;
+}
+
+interface DonutData {
+  labels: string[];
+  data: number[];
+  colors: string[];
+}
 
 // Theme-aware chart colors (reads from CSS custom properties)
 // Module-level cache to avoid repeated getComputedStyle calls
@@ -58,8 +72,9 @@ function getChartColors(): ChartColors {
     CommonModule,
     RouterLink,
     StatsGridComponent,
-    AreaChartComponent,
-    DonutChartComponent,
+    // TODO: Phase 3 — Replace with FtEChartComponent
+    // AreaChartComponent,
+    // DonutChartComponent,
     RecentActivityComponent,
     InsightsPanelComponent,
     FtSubtleRevealDirective,

@@ -1,6 +1,7 @@
 /* ─── Analytics Page ───────────────────────────────────────────────
-   Financial analytics: monthly trends, category breakdown, summary.
-   Responsive: stacks on mobile, 2-col on tablet+.
+   Financial analytics dashboard with ECharts visualization.
+   Mobile-first: 1-col (320px) → 2-col (768px) → 3-col (1024px+).
+   OnPush change detection, trackBy in @for loops.
    ─────────────────────────────────────────────────────────────────── */
 
 @import 'responsive';
@@ -8,12 +9,13 @@
 .analytics-page {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 20px;
   @include safe-padding;
-  @include at-md { gap: 32px; }
+  @include at-md { gap: 28px; }
+  @include at-xl { gap: 32px; }
 }
 
-/* Loading */
+/* ═══ Loading ═══ */
 .analytics-loading {
   &__title {
     font-family: var(--font-display);
@@ -60,26 +62,7 @@
   50% { opacity: 0.3; }
 }
 
-/* Page header */
-.page-header {
-  &__title {
-    font-family: var(--font-display);
-    font-size: 24px;
-    font-weight: 700;
-    color: var(--text-primary);
-    margin: 0;
-    letter-spacing: -0.02em;
-    @include at-md { font-size: 28px; }
-  }
-
-  &__subtitle {
-    font-size: 14px;
-    color: var(--text-tertiary);
-    margin: 6px 0 0;
-  }
-}
-
-/* Grid layout */
+/* ═══ Grid Layout (mobile-first) ═══ */
 .analytics-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -87,99 +70,81 @@
 
   @include at-md {
     grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  @include at-xl {
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 24px;
   }
 }
 
-.analytics-card {
-  background: var(--bg-secondary);
-  border-radius: var(--radius-md);
-  border: 1px solid var(--border-default);
-  padding: 16px;
-  box-shadow: var(--shadow-sm);
-  transition: box-shadow 0.3s ease, transform 0.3s ease;
-  @include at-md { padding: 24px; }
+/* ═══ Chart Card Slots ═══ */
+.chart-skeleton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  min-height: 200px;
+  animation: pulse 1.5s ease-in-out infinite;
 
-  &:hover {
-    box-shadow: var(--shadow-md);
-    transform: translateY(-1px);
-  }
-
-  &--full {
-    grid-column: 1 / -1;
-  }
-
-  &__empty {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    min-height: 200px;
-    color: var(--text-tertiary);
-    font-size: 14px;
-    text-align: center;
-
-    ng-icon {
-      opacity: 0.5;
-    }
+  &::after {
+    content: '';
+    width: 60%;
+    height: 8px;
+    border-radius: 4px;
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.04) 25%,
+      rgba(255, 255, 255, 0.08) 50%,
+      rgba(255, 255, 255, 0.04) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s ease-in-out infinite;
   }
 }
-.summary-section {
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.chart-empty,
+.chart-error {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-
-  &__title {
-    font-family: var(--font-display);
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--text-primary);
-    margin: 0;
-    letter-spacing: -0.01em;
-    @include at-md { font-size: 18px; }
-  }
-}
-
-.summary-row {
-  display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 10px 0;
-  border-bottom: 1px solid var(--border-subtle);
+  justify-content: center;
+  height: 100%;
+  min-height: 200px;
+  gap: 8px;
+  color: var(--text-tertiary, rgba(243, 232, 255, 0.4));
+  font-size: 14px;
+  text-align: center;
+}
 
-  &__label {
-    font-size: 13px;
-    color: var(--text-secondary);
-    @include at-md { font-size: 14px; }
-  }
+.chart-error {
+  color: var(--danger, #FF6B6B);
+}
 
-  &__value {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--text-primary);
-    @include at-md { font-size: 16px; }
-  }
+.chart-retry-btn {
+  margin-top: 8px;
+  padding: 6px 16px;
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.08));
+  border-radius: 8px;
+  background: var(--bg-tertiary, #2A1E35);
+  color: var(--text-primary, #F3E8FF);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 200ms cubic-bezier(0.32, 0.72, 0, 1);
 
-  &--total {
-    border-bottom: none;
-    padding-top: 12px;
-    margin-top: 4px;
-    border-top: 2px solid var(--border-default);
-
-    .summary-row__label {
-      font-weight: 600;
-      color: var(--text-primary);
-    }
-
-    .summary-row__value {
-      font-size: 18px;
-      @include at-md { font-size: 20px; }
-    }
+  &:hover {
+    background: var(--bg-secondary, #1D1426);
+    border-color: var(--accent-primary, #9D50BB);
   }
 }
 
-/* Text color utilities */
+/* ═══ Text color utilities ═══ */
 .text-income {
   color: var(--success, #06D6A0);
 }
@@ -188,7 +153,7 @@
   color: var(--danger, #FF6B6B);
 }
 
-/* Date Range Selector */
+/* ═══ Date Range Selector (legacy, kept for backward compat) ═══ */
 .analytics-daterange {
   display: flex;
   gap: 4px;
@@ -225,7 +190,7 @@
   }
 }
 
-/* Change badges */
+/* ═══ Change badges ═══ */
 .change-badge {
   font-size: 11px;
   font-weight: 600;
@@ -237,7 +202,7 @@
   &--down { color: var(--danger, #FF6B6B); background: rgba(255, 107, 107, 0.1); }
 }
 
-/* Drill-down link */
+/* ═══ Drill-down link ═══ */
 .analytics-card__drilldown {
   display: inline-flex;
   align-items: center;

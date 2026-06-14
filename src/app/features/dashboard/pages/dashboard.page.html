@@ -66,14 +66,15 @@
       }
 
       <!-- Main content: Chart + Activity + Donut -->
+      <!-- TODO: Phase 3 — Replace with FtEChartComponent -->
       <div class="dashboard-content">
         <div class="dashboard-content__chart" ftSubtleReveal="fade-up" [delay]="200">
-          <ft-area-chart
-            [labels]="chartLabels()"
-            [datasets]="chartDatasets()"
-            [title]="'dashboard.monthlyOverview' | translate"
-            [subtitle]="'dashboard.last6Months' | translate"
-          />
+          @if (chartLabels().length > 0 && chartDatasets().length > 0) {
+            <div class="chart-placeholder">
+              <p>{{ 'dashboard.monthlyOverview' | translate }} — {{ 'dashboard.last6Months' | translate }}</p>
+              <small>ECharts migration in progress (Phase 3)</small>
+            </div>
+          }
         </div>
         <div class="dashboard-content__sidebar" ftSubtleReveal="fade-up" [delay]="300">
           <ft-recent-activity
@@ -82,11 +83,10 @@
           />
           @if (donutData().labels.length > 0) {
             <div class="dashboard-content__donut">
-              <ft-donut-chart
-                [data]="donutData()"
-                [title]="'dashboard.expenseBreakdown' | translate"
-                [subtitle]="'dashboard.byCategory' | translate"
-              />
+              <div class="chart-placeholder">
+                <p>{{ 'dashboard.expenseBreakdown' | translate }} — {{ 'dashboard.byCategory' | translate }}</p>
+                <small>ECharts migration in progress (Phase 3)</small>
+              </div>
             </div>
           }
         </div>
@@ -112,14 +112,19 @@
           <ft-insights-panel [loading]="true" />
         </div>
         <!-- Chart + Activity + Donut skeletons -->
+        <!-- TODO: Phase 3 — Replace with FtEChartComponent loading states -->
         <div class="dashboard-content">
           <div class="dashboard-content__chart" ftSubtleReveal="fade-up" [delay]="200">
-            <ft-area-chart [loading]="true" [labels]="[]" [datasets]="[]" />
+            <div class="chart-placeholder chart-placeholder--loading">
+              <div class="skeleton-bar"></div>
+            </div>
           </div>
           <div class="dashboard-content__sidebar" ftSubtleReveal="fade-up" [delay]="300">
             <ft-recent-activity [loading]="true" [items]="[]" />
             <div class="dashboard-content__donut">
-              <ft-donut-chart [loading]="true" [data]="{ labels: [], data: [], colors: [] }" />
+              <div class="chart-placeholder chart-placeholder--loading">
+                <div class="skeleton-bar"></div>
+              </div>
             </div>
           </div>
         </div>
