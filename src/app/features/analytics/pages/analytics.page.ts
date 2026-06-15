@@ -323,6 +323,17 @@ export class AnalyticsPage implements OnInit {
 
   readonly banks = computed<BankInfo[]>(() => this.store.banks());
 
+  /** Pre-computed category names for the filters component (Angular templates can't call .map()) */
+  readonly categoryNames = computed<string[]>(() =>
+    this.categoryAnalysis().map(c => c.name),
+  );
+
+  /** Safe variation value for the header — avoids optional chaining warning and empty-array crash */
+  readonly headerVariation = computed<number | null>(() => {
+    const kpi = this.kpis();
+    return kpi.length > 0 ? kpi[0].trend : null;
+  });
+
   // ─── ECharts options (computed) ─────────────────────────────────────────
 
   readonly trendChartOptions = computed<EChartsOption | undefined>(() => {
@@ -372,6 +383,14 @@ export class AnalyticsPage implements OnInit {
   readonly showContent = computed(() =>
     this.store.loadState() === 'ready' && !this.isNewUser() && !this.isFilteredEmpty(),
   );
+
+  readonly pageState = computed<'loading' | 'error' | 'welcome' | 'no-data' | 'content'>(() => {
+    if (this.isLoading()) return 'loading';
+    if (this.isError()) return 'error';
+    if (this.showWelcome()) return 'welcome';
+    if (this.showNoData()) return 'no-data';
+    return 'content';
+  });
 
   readonly errorMessage = computed(() => this.store.error());
 
