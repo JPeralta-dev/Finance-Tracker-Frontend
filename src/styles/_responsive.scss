@@ -52,6 +52,18 @@ $safe-padding-lg: 24px;
   }
 }
 
+$breakpoint-xl: 1440px;
+
+/**
+ * Apply styles at xl breakpoint (1440px+)
+ * Usage: @include at-xl { ... }
+ */
+@mixin at-xl {
+  @media (min-width: $breakpoint-xl) {
+    @content;
+  }
+}
+
 /**
  * Apply styles below md breakpoint (<768px)
  * Usage: @include below-md { ... }

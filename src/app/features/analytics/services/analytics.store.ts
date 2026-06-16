@@ -100,7 +100,7 @@ export class AnalyticsStore {
   /** Whether the user is new (no data at all) */
   readonly isNewUser = computed(() => {
     const s = this._summary();
-    if (!s) return false;
+    if (!s) return true; // null = no data = new user
     return s.totalIncome === 0 && s.totalExpenses === 0;
   });
 

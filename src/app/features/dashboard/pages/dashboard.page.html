@@ -66,29 +66,44 @@
       }
 
       <!-- Main content: Chart + Activity + Donut -->
-      <!-- TODO: Phase 3 — Replace with FtEChartComponent -->
       <div class="dashboard-content">
         <div class="dashboard-content__chart" ftSubtleReveal="fade-up" [delay]="200">
-          @if (chartLabels().length > 0 && chartDatasets().length > 0) {
-            <div class="chart-placeholder">
-              <p>{{ 'dashboard.monthlyOverview' | translate }} — {{ 'dashboard.last6Months' | translate }}</p>
-              <small>ECharts migration in progress (Phase 3)</small>
-            </div>
-          }
+          <ft-echart
+            [options]="areaChartOptions()"
+            [loading]="state() === 'loading'"
+            height="250px"
+          >
+            <ng-container loading><div class="chart-skeleton"></div></ng-container>
+            <ng-container empty><div class="chart-empty">{{ 'dashboard.noChartData' | translate }}</div></ng-container>
+            <ng-container error>
+              <div class="chart-error">
+                {{ 'dashboard.chartError' | translate }}
+                <button class="chart-retry-btn" (click)="retry()" type="button">{{ 'dashboard.retry' | translate }}</button>
+              </div>
+            </ng-container>
+          </ft-echart>
         </div>
         <div class="dashboard-content__sidebar" ftSubtleReveal="fade-up" [delay]="300">
           <ft-recent-activity
             [items]="activity()"
             [maxItems]="4"
           />
-          @if (donutData().labels.length > 0) {
-            <div class="dashboard-content__donut">
-              <div class="chart-placeholder">
-                <p>{{ 'dashboard.expenseBreakdown' | translate }} — {{ 'dashboard.byCategory' | translate }}</p>
-                <small>ECharts migration in progress (Phase 3)</small>
-              </div>
-            </div>
-          }
+          <div class="dashboard-content__donut">
+            <ft-echart
+              [options]="donutChartOptions()"
+              [loading]="state() === 'loading'"
+              height="200px"
+            >
+              <ng-container loading><div class="chart-skeleton"></div></ng-container>
+              <ng-container empty><div class="chart-empty">{{ 'dashboard.noCategoryData' | translate }}</div></ng-container>
+              <ng-container error>
+                <div class="chart-error">
+                  {{ 'dashboard.chartError' | translate }}
+                  <button class="chart-retry-btn" (click)="retry()" type="button">{{ 'dashboard.retry' | translate }}</button>
+                </div>
+              </ng-container>
+            </ft-echart>
+          </div>
         </div>
       </div>
     </div>

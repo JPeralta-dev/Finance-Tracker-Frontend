@@ -38,10 +38,16 @@ export const DEFAULT_INSIGHT_RULES: InsightRuleConfig = {
 
 @Injectable({ providedIn: 'root' })
 export class RuleBasedInsightsService implements InsightProvider {
-  private readonly config: InsightRuleConfig;
+  private config: InsightRuleConfig = { ...DEFAULT_INSIGHT_RULES };
 
-  constructor(config?: Partial<InsightRuleConfig>) {
-    this.config = { ...DEFAULT_INSIGHT_RULES, ...config };
+  constructor() {}
+
+  /**
+   * Override default rule thresholds at runtime.
+   * Useful for tests or future AI integration.
+   */
+  configure(overrides: Partial<InsightRuleConfig>): void {
+    this.config = { ...DEFAULT_INSIGHT_RULES, ...overrides };
   }
 
   /**

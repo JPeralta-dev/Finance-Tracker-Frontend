@@ -41,21 +41,21 @@ export type EChartState = 'loading' | 'empty' | 'error' | 'ready';
   imports: [CommonModule],
   template: `
     <div class="ft-echart-container" [style.height]="height()">
-      @if (state() === 'loading') {
+      @if (_state() === 'loading') {
         <ng-content select="[loading]" />
         @if (!hasLoadingContent) {
           <div class="ft-echart-skeleton">
             <div class="ft-echart-skeleton-bar"></div>
           </div>
         }
-      } @else if (state() === 'empty') {
+      } @else if (_state() === 'empty') {
         <ng-content select="[empty]" />
         @if (!hasEmptyContent) {
           <div class="ft-echart-empty">
             <span>No data available</span>
           </div>
         }
-      } @else if (state() === 'error') {
+      } @else if (_state() === 'error') {
         <ng-content select="[error]" />
         @if (!hasErrorContent) {
           <div class="ft-echart-error">
@@ -180,7 +180,7 @@ export class FtEChartComponent implements OnInit, OnDestroy, OnChanges {
 
   /** Current chart state */
   readonly state = output<EChartState>();
-  private readonly _state = signal<EChartState>('loading');
+  readonly _state = signal<EChartState>('loading');
 
   // ─── Internal ────────────────────────────────────────────────────────────
 
@@ -305,11 +305,11 @@ export class FtEChartComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private isEmptyOptions(opts: EChartsOption): boolean {
-    const series = (opts as Record<string, unknown>).series;
+    const series = (opts as Record<string, unknown>)['series'];
     if (!series) return true;
     if (Array.isArray(series)) {
       return series.length === 0 || series.every((s: Record<string, unknown>) => {
-        const data = s.data as unknown[] | undefined;
+        const data = s['data'] as unknown[] | undefined;
         return !data || data.length === 0;
       });
     }

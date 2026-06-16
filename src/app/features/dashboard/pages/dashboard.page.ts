@@ -4,8 +4,7 @@ import { RouterLink } from '@angular/router';
 import { catchError, forkJoin, of } from 'rxjs';
 
 import { StatsGridComponent } from '../components/stats-grid/stats-grid.component';
-// TODO: Phase 3 — Replace with FtEChartComponent imports
-// import { FtEChartComponent } from '../../../shared/charts';
+import { FtEChartComponent, EchartsThemeMapper } from '../../../shared/charts';
 import { RecentActivityComponent, ActivityItem } from '../components/recent-activity/recent-activity.component';
 import { InsightsPanelComponent } from '../../../shared/components/insights-panel/insights-panel.component';
 import { StatCardData } from '../components/stat-card/stat-card.types';
@@ -19,6 +18,7 @@ import { CategoryTranslatePipe } from '../../../core/pipes/category-translate.pi
 import { TranslationService } from '../../../core/services/translation.service';
 import { Category } from '../../../core/models/category.model';
 import { Insight } from '../../../core/models/insight.model';
+import type { EChartsOption } from 'echarts';
 
 type DashboardState = 'loading' | 'ready' | 'empty' | 'error';
 
@@ -72,9 +72,7 @@ function getChartColors(): ChartColors {
     CommonModule,
     RouterLink,
     StatsGridComponent,
-    // TODO: Phase 3 — Replace with FtEChartComponent
-    // AreaChartComponent,
-    // DonutChartComponent,
+    FtEChartComponent,
     RecentActivityComponent,
     InsightsPanelComponent,
     FtSubtleRevealDirective,
@@ -90,6 +88,7 @@ export class DashboardPage implements OnInit {
   private readonly financeService = inject(FinanceService);
   private readonly toast = inject(ToastService);
   private readonly i18n = inject(TranslationService);
+  private readonly themeMapper = inject(EchartsThemeMapper);
 
   readonly stats = signal<StatCardData[]>([]);
   readonly activity = signal<ActivityItem[]>([]);
@@ -112,6 +111,20 @@ export class DashboardPage implements OnInit {
 
   // Donut chart data
   readonly donutData = signal<DonutData>({ labels: [], data: [], colors: [] });
+
+  // ECharts options (computed)
+  readonly areaChartOptions = computed<EChartsOption | undefined>(() => {
+    const labels = this.chartLabels();
+    const datasets = this.chartDatasets();
+    if (labels.length === 0 || datasets.length === 0) return undefined;
+    return this.themeMapper.buildAreaOption(labels, datasets);
+  });
+
+  readonly donutChartOptions = computed<EChartsOption | undefined>(() => {
+    const data = this.donutData();
+    if (data.labels.length === 0 || data.data.length === 0) return undefined;
+    return this.themeMapper.buildDonutOption(data.labels, data.data);
+  });
 
   // Greeting based on time of day
   readonly greeting = computed(() => {

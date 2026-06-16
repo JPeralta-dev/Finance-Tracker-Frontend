@@ -408,15 +408,16 @@ export class AnalyticsPage implements OnInit {
 
   // ─── Lifecycle ──────────────────────────────────────────────────────────
 
-  ngOnInit(): void {
-    // Load banks once (no filter dependency)
-    this.loadBanks();
-
-    // React to filter changes
+  constructor() {
+    // React to filter changes and reload data
     effect(() => {
       const params = this.store.apiParams();
       this.loadData(params.range, params.bankId);
     }, { allowSignalWrites: false });
+  }
+
+  ngOnInit(): void {
+    this.loadBanks();
   }
 
   // ─── Actions ────────────────────────────────────────────────────────────

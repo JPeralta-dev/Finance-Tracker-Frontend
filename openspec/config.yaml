@@ -73,10 +73,15 @@ testing:
       available: false
       command: "—"
   existing_tests:
-    count: 5
-    locations:
-      - "src/app/core/services/auth.service.spec.ts"
-      - "src/app/core/services/toast.service.spec.ts"
-      - "src/app/core/interceptors/auth.interceptor.spec.ts"
-      - "src/app/core/guards/auth.guard.spec.ts"
-      - "src/app/shared/layout/profile-dropdown/profile-dropdown.component.spec.ts"
+    count: 42
+    spec_glob: "src/**/*.spec.ts"
+    coverage: |
+      Core services: auth, toast, translation, theme, telegram-link, notification, currency, i18n-sync
+      Core guards: auth, redirect-if-auth
+      Core interceptors: auth
+      Core pipes: ft-currency
+      Features: analytics (page + 2 services), categories, dashboard (2), profile (page + 3 components),
+        settings (6 sections), transactions (row)
+      Shared: design-tokens, echart (component + mapper), layout (topbar, profile-dropdown 3, 
+        notifications-dropdown, mobile-menu), directive (ft-subtle-reveal), language-dropdown, insights-panel
+      Landing: hero-section

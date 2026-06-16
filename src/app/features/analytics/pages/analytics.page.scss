@@ -1,7 +1,9 @@
-/* ─── Analytics Page ───────────────────────────────────────────────
-   Financial analytics dashboard with ECharts visualization.
-   Mobile-first: 1-col (320px) → 2-col (768px) → 3-col (1024px+).
-   OnPush change detection, trackBy in @for loops.
+/* ─── Analytics Page — Bento Grid Layout ─────────────────────────
+   Matches Flowr mockup distribution:
+   - Header: title + filters
+   - KPIs: 4 cards in a row
+   - Charts: Trends (wide) + Category (narrow) + Daily (narrow)
+   - Bottom: Insights (wide) + Transactions (narrow) + Summary (narrow)
    ─────────────────────────────────────────────────────────────────── */
 
 @import 'responsive';
@@ -9,13 +11,137 @@
 .analytics-page {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 24px;
   @include safe-padding;
+  max-width: 1440px;
+  margin: 0 auto;
+  width: 100%;
+
   @include at-md { gap: 28px; }
   @include at-xl { gap: 32px; }
 }
 
-/* ═══ Loading ═══ */
+/* ═══ Header Row ═══ */
+.analytics-header-row {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: flex-start;
+
+  @include at-md {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+  }
+
+  &__title {
+    flex: 1;
+  }
+
+  &__heading {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+    letter-spacing: -0.02em;
+
+    @include at-md { font-size: 32px; }
+  }
+
+  &__subtitle {
+    font-size: 14px;
+    color: var(--text-tertiary);
+    margin: 4px 0 0;
+  }
+
+  &__filters {
+    flex-shrink: 0;
+  }
+}
+
+/* ═══ KPIs Row ═══ */
+.analytics-kpis-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+
+  @include at-md {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include at-lg {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+}
+
+/* ═══ Charts Row ═══ */
+.analytics-charts-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+
+  @include at-md {
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  @include at-lg {
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 20px;
+  }
+
+  &__trends {
+    @include at-md {
+      grid-column: 1 / -1;
+    }
+
+    @include at-lg {
+      grid-column: auto;
+    }
+  }
+
+  &__category,
+  &__daily {
+    min-height: 320px;
+  }
+}
+
+/* ═══ Bottom Row ═══ */
+.analytics-bottom-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+
+  @include at-md {
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  @include at-lg {
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 20px;
+  }
+
+  &__insights {
+    @include at-md {
+      grid-column: 1 / -1;
+    }
+
+    @include at-lg {
+      grid-column: auto;
+    }
+  }
+
+  &__transactions,
+  &__summary {
+    min-height: 280px;
+  }
+}
+
+/* ═══ Loading State ═══ */
 .analytics-loading {
   &__title {
     font-family: var(--font-display);
@@ -60,23 +186,6 @@
 @keyframes pulse {
   0%, 100% { opacity: 0.6; }
   50% { opacity: 0.3; }
-}
-
-/* ═══ Grid Layout (mobile-first) ═══ */
-.analytics-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
-
-  @include at-md {
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-  }
-
-  @include at-xl {
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 24px;
-  }
 }
 
 /* ═══ Chart Card Slots ═══ */
@@ -151,70 +260,4 @@
 
 .text-expense {
   color: var(--danger, #FF6B6B);
-}
-
-/* ═══ Date Range Selector (legacy, kept for backward compat) ═══ */
-.analytics-daterange {
-  display: flex;
-  gap: 4px;
-  padding: 4px;
-  background: var(--bg-tertiary);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-sm);
-  width: fit-content;
-  margin-bottom: 4px;
-}
-
-.daterange-btn {
-  padding: 6px 14px;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--text-tertiary);
-  background: transparent;
-  border: none;
-  border-radius: calc(var(--radius-sm) - 2px);
-  cursor: pointer;
-  transition: all var(--duration-fast) var(--ease-out);
-
-  &:hover {
-    color: var(--text-secondary);
-    background: var(--bg-elevated);
-  }
-
-  &--active {
-    color: var(--text-inverse);
-    background: linear-gradient(135deg, var(--accent-start), var(--accent-mid));
-    box-shadow: var(--glow-accent);
-
-    &:hover { color: var(--text-inverse); }
-  }
-}
-
-/* ═══ Change badges ═══ */
-.change-badge {
-  font-size: 11px;
-  font-weight: 600;
-  margin-left: 8px;
-  padding: 2px 6px;
-  border-radius: var(--radius-full);
-
-  &--up { color: var(--success, #06D6A0); background: rgba(6, 214, 160, 0.1); }
-  &--down { color: var(--danger, #FF6B6B); background: rgba(255, 107, 107, 0.1); }
-}
-
-/* ═══ Drill-down link ═══ */
-.analytics-card__drilldown {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  margin-top: 12px;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--info);
-  text-decoration: none;
-  transition: color var(--duration-fast) var(--ease-out);
-
-  &:hover {
-    color: var(--accent-start);
-  }
 }
