@@ -1,4 +1,4 @@
-import { Component, input, computed, inject } from '@angular/core';
+import { Component, input, computed, inject, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgIcon } from '@ng-icons/core';
 import { TranslatePipe } from '../../../../core/pipes/translate.pipe';
@@ -13,6 +13,7 @@ import type { KpiData } from '../../analytics.types';
   imports: [CommonModule, NgIcon, TranslatePipe, FtSubtleRevealDirective],
   templateUrl: './kpi-card.component.html',
   styleUrl: './kpi-card.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class KpiCardComponent {
   private currencyService = inject(CurrencyService);

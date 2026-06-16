@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgIcon } from '@ng-icons/core';
 import { TranslatePipe } from '../../../../core/pipes/translate.pipe';
@@ -12,6 +12,7 @@ import type { CategoryAnalysis } from '../../analytics.types';
   imports: [CommonModule, NgIcon, TranslatePipe, FtSubtleRevealDirective],
   templateUrl: './analytics-category-breakdown.component.html',
   styleUrl: './analytics-category-breakdown.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AnalyticsCategoryBreakdownComponent {
   categories = input.required<CategoryAnalysis[]>();

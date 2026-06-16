@@ -1,132 +1,182 @@
 <div class="analytics-page">
-  @if (state() === 'loading') {
-    <!-- Loading state -->
-    <div class="analytics-loading" ftSubtleReveal="fade-up">
-      <h1 class="analytics-loading__title">{{ 'analytics.loading' | translate }}</h1>
-      <p class="analytics-loading__subtitle">{{ 'analytics.fetchingData' | translate }}</p>
-    </div>
-    <div class="analytics-skeleton" ftSubtleReveal="fade-up" [delay]="100">
-      <div class="skeleton-card skeleton-card--full"></div>
-      <div class="skeleton-card"></div>
-      <div class="skeleton-card"></div>
-    </div>
-  } @else if (state() === 'error') {
-    <!-- Error state -->
-    <ft-empty-state
-      icon="warning"
-      [title]="'analytics.errorTitle' | translate"
-      [description]="'analytics.errorDesc' | translate"
-      [actionLabel]="'analytics.retry' | translate"
-      [showActionBtn]="true"
-      (action)="retry()"
-    />
-  } @else if (state() === 'empty') {
-    <!-- Empty state -->
-    <ft-empty-state
-      icon="chart"
-      [title]="'analytics.emptyTitle' | translate"
-      [description]="'analytics.emptyDesc' | translate"
-      actionRoute="/transactions/new"
-      [actionLabel]="'analytics.addTransaction' | translate"
-    />
-  } @else {
-    <!-- Ready state -->
-    <div class="page-header" ftSubtleReveal="fade-up">
-      <h1 class="page-header__title">{{ 'analytics.title' | translate }}</h1>
-      <p class="page-header__subtitle">{{ 'analytics.subtitle' | translate }}</p>
-    </div>
-
-    <!-- Date Range Selector -->
-    <div class="analytics-daterange" ftSubtleReveal="fade-up" [delay]="50">
-      @for (range of dateRanges; track range.value) {
-        <button
-          class="daterange-btn"
-          [class.daterange-btn--active]="selectedRange() === range.value"
-          (click)="setRange(range.value)"
-        >
-          {{ range.label }}
-        </button>
-      }
-    </div>
-
-    <div class="analytics-grid">
-      <!-- Monthly Trends Chart -->
-      <div class="analytics-card analytics-card--full" ftSubtleReveal="fade-up" [delay]="100">
-        @if (monthlyLabels().length > 0 && monthlyDatasets().length > 0) {
-          <ft-area-chart
-            [labels]="monthlyLabels()"
-            [datasets]="monthlyDatasets()"
-            [title]="'analytics.monthlyTrends' | translate"
-            [subtitle]="selectedRangeLabel()"
-          />
-        } @else {
-          <div class="analytics-card__empty">
-            <ng-icon name="chart" size="2rem" />
-            <p>{{ 'analytics.noChartData' | translate }}</p>
-          </div>
-        }
+  @switch (pageState()) {
+    <!-- ═══ Loading State ═══ -->
+    @case ('loading') {
+      <div class="analytics-loading" ftSubtleReveal="fade-up">
+        <h1 class="analytics-loading__title">{{ 'analytics.loading' | translate }}</h1>
+        <p class="analytics-loading__subtitle">{{ 'analytics.fetchingData' | translate }}</p>
       </div>
-
-      <!-- Category Breakdown -->
-      <div class="analytics-card" ftSubtleReveal="fade-up" [delay]="200">
-        @if (donutData().labels.length > 0) {
-          <ft-donut-chart
-            [data]="donutData()"
-            [title]="'analytics.byCategory' | translate"
-            [subtitle]="'analytics.expenseBreakdown' | translate"
-          />
-          <a routerLink="/transactions" class="analytics-card__drilldown">
-            View transactions by category →
-          </a>
-        } @else {
-          <div class="analytics-card__empty">
-            <ng-icon name="chart" size="2rem" />
-            <p>{{ 'analytics.noCategoryData' | translate }}</p>
-          </div>
-        }
+      <div class="analytics-skeleton" ftSubtleReveal="fade-up" [delay]="100">
+        <div class="skeleton-card skeleton-card--full"></div>
+        <div class="skeleton-card"></div>
+        <div class="skeleton-card"></div>
       </div>
+    }
 
-      <!-- Summary Comparison -->
-      <div class="analytics-card" ftSubtleReveal="fade-up" [delay]="300">
-        <div class="summary-section">
-          <h3 class="summary-section__title">{{ 'analytics.summary' | translate }}</h3>
+    <!-- ═══ Error State ══ -->
+    @case ('error') {
+      <ft-empty-state
+        icon="warning"
+        [title]="'analytics.errorTitle' | translate"
+        [description]="errorMessage() || ('analytics.errorDesc' | translate)"
+        [actionLabel]="'analytics.retry' | translate"
+        [showActionBtn]="true"
+        (action)="retry()"
+        ftSubtleReveal="fade-up"
+        [delay]="0"
+      />
+    }
 
-          <div class="summary-row">
-            <span class="summary-row__label">{{ 'analytics.totalIncome' | translate }}</span>
-            <span class="summary-row__value text-income">
-              {{ formatAmount(totalIncome()) }}
-              @if (incomeChange() !== null) {
-                <span class="change-badge" [class.change-badge--up]="incomeChange()! >= 0" [class.change-badge--down]="incomeChange()! < 0">
-                  {{ incomeChange()! >= 0 ? '↑' : '↓' }} {{ incomeChange()! | number:'1.0-0' }}%
-                </span>
-              }
-            </span>
-          </div>
+    <!-- ═══ Welcome Empty State (new user) ══ -->
+    @case ('welcome') {
+      <ft-empty-state
+        icon="chart"
+        [title]="'analytics.welcomeTitle' | translate"
+        [description]="'analytics.welcomeDesc' | translate"
+        actionRoute="/transactions/new"
+        [actionLabel]="'analytics.addFirstTransaction' | translate"
+        ftSubtleReveal="fade-up"
+        [delay]="50"
+      />
+    }
 
-          <div class="summary-row">
-            <span class="summary-row__label">{{ 'analytics.totalExpenses' | translate }}</span>
-            <span class="summary-row__value text-expense">
-              {{ formatAmount(totalExpense()) }}
-              @if (expenseChange() !== null) {
-                <span class="change-badge" [class.change-badge--up]="expenseChange()! <= 0" [class.change-badge--down]="expenseChange()! > 0">
-                  {{ expenseChange()! <= 0 ? '↓' : '↑' }} {{ expenseChange()! | number:'1.0-0' }}%
-                </span>
-              }
-            </span>
-          </div>
+    <!-- ═══ No Data Empty State (filtered empty) ═══ -->
+    @case ('no-data') {
+      <ft-empty-state
+        icon="filter"
+        [title]="'analytics.noDataTitle' | translate"
+        [description]="'analytics.noDataDesc' | translate"
+        [showActionBtn]="true"
+        [actionLabel]="'analytics.clearFilters' | translate"
+        (action)="onFiltersReset()"
+        ftSubtleReveal="fade-up"
+        [delay]="50"
+      />
+    }
 
-          <div class="summary-row summary-row--total">
-            <span class="summary-row__label">{{ 'analytics.netSavings' | translate }}</span>
-            <span
-              class="summary-row__value"
-              [class.text-income]="netSavings() >= 0"
-              [class.text-expense]="netSavings() < 0"
-            >
-              {{ formatAmount(netSavings()) }}
-            </span>
-          </div>
+    <!-- ═══ Content State — Bento Grid Layout ═══ -->
+    @case ('content') {
+      <!-- 1. Header Row -->
+      <div class="analytics-header-row" ftSubtleReveal="fade-up" [delay]="0">
+        <div class="analytics-header-row__title">
+          <h1 class="analytics-header-row__heading">{{ 'analytics.title' | translate }}</h1>
+          <p class="analytics-header-row__subtitle">{{ 'analytics.subtitle' | translate }}</p>
+        </div>
+        <div class="analytics-header-row__filters">
+          <ft-analytics-filters
+            [categories]="categoryNames()"
+            (reset)="onFiltersReset()"
+          />
         </div>
       </div>
-    </div>
+
+      <!-- 2. KPI Cards Row (4 cards) -->
+      <div class="analytics-kpis-row" ftSubtleReveal="fade-up" [delay]="50">
+        <ft-analytics-kpis [kpis]="kpis()" [loading]="isLoading()" />
+      </div>
+
+      <!-- 3. Charts Row: Trends (wide) + Category (narrow) + Daily (narrow) -->
+      <div class="analytics-charts-row">
+        <!-- Monthly Trends (wide) -->
+        <div class="analytics-charts-row__trends" ftSubtleReveal="fade-up" [delay]="100">
+          <ft-analytics-chart-card
+            [title]="'analytics.monthlyTrends' | translate"
+            [subtitle]="'analytics.incomeVsExpenses' | translate"
+            [fullWidth]="true"
+            height="320px"
+          >
+            <ft-echart
+              [options]="trendChartOptions()"
+              [loading]="isLoading()"
+              height="280px"
+            >
+              <ng-container loading><div class="chart-skeleton"></div></ng-container>
+              <ng-container empty><div class="chart-empty">{{ 'analytics.noChartData' | translate }}</div></ng-container>
+              <ng-container error>
+                <div class="chart-error">
+                  {{ 'analytics.chartError' | translate }}
+                  <button class="chart-retry-btn" (click)="retry()" type="button">{{ 'analytics.retry' | translate }}</button>
+                </div>
+              </ng-container>
+            </ft-echart>
+          </ft-analytics-chart-card>
+        </div>
+
+        <!-- Category Breakdown (narrow) -->
+        <div class="analytics-charts-row__category" ftSubtleReveal="fade-up" [delay]="150">
+          <ft-analytics-chart-card
+            [title]="'analytics.byCategory' | translate"
+            [subtitle]="'analytics.expenseBreakdown' | translate"
+            height="320px"
+          >
+            <ft-echart
+              [options]="donutChartOptions()"
+              [loading]="isLoading()"
+              height="280px"
+            >
+              <ng-container loading><div class="chart-skeleton"></div></ng-container>
+              <ng-container empty><div class="chart-empty">{{ 'analytics.noCategoryData' | translate }}</div></ng-container>
+              <ng-container error>
+                <div class="chart-error">
+                  {{ 'analytics.chartError' | translate }}
+                  <button class="chart-retry-btn" (click)="retry()" type="button">{{ 'analytics.retry' | translate }}</button>
+                </div>
+              </ng-container>
+            </ft-echart>
+          </ft-analytics-chart-card>
+        </div>
+
+        <!-- Daily Spending (narrow) -->
+        <div class="analytics-charts-row__daily" ftSubtleReveal="fade-up" [delay]="200">
+          <ft-analytics-chart-card
+            [title]="'analytics.dailySpending' | translate"
+            [subtitle]="'analytics.thisWeek' | translate"
+            height="320px"
+          >
+            <ft-echart
+              [options]="dailyChartOptions()"
+              [loading]="isLoading()"
+              height="280px"
+            >
+              <ng-container loading><div class="chart-skeleton"></div></ng-container>
+              <ng-container empty><div class="chart-empty">{{ 'analytics.noDailyData' | translate }}</div></ng-container>
+              <ng-container error>
+                <div class="chart-error">
+                  {{ 'analytics.chartError' | translate }}
+                  <button class="chart-retry-btn" (click)="retry()" type="button">{{ 'analytics.retry' | translate }}</button>
+                </div>
+              </ng-container>
+            </ft-echart>
+          </ft-analytics-chart-card>
+        </div>
+      </div>
+
+      <!-- 4. Bottom Row: Insights (wide) + Transactions (narrow) + Summary (narrow) -->
+      <div class="analytics-bottom-row">
+        <!-- Insights Panel (wide) -->
+        <div class="analytics-bottom-row__insights" ftSubtleReveal="fade-up" [delay]="250">
+          <ft-analytics-insights
+            [insights]="uiInsights()"
+            [loading]="isLoading()"
+          />
+        </div>
+
+        <!-- Recent Transactions (narrow) -->
+        <div class="analytics-bottom-row__transactions" ftSubtleReveal="fade-up" [delay]="300">
+          <ft-analytics-transactions
+            [transactions]="uiTransactions()"
+            [loading]="isLoading()"
+          />
+        </div>
+
+        <!-- Financial Summary (narrow) -->
+        <div class="analytics-bottom-row__summary" ftSubtleReveal="fade-up" [delay]="350">
+          <ft-analytics-comparison
+            [comparisons]="comparisons()"
+            [loading]="isLoading()"
+          />
+        </div>
+      </div>
+    }
   }
 </div>

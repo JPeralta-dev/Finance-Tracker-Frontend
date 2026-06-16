@@ -1,4 +1,4 @@
-import { Component, input, output, model } from '@angular/core';
+import { Component, input, output, model, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgIcon } from '@ng-icons/core';
 import { TranslatePipe } from '../../../../core/pipes/translate.pipe';
@@ -10,6 +10,7 @@ import { ICONS } from '../../../../shared/icons/icon-registry';
   imports: [CommonModule, NgIcon, TranslatePipe],
   templateUrl: './analytics-filters.component.html',
   styleUrl: './analytics-filters.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AnalyticsFiltersComponent {
   open = model(false);

@@ -7,7 +7,7 @@
 } @else {
   <div class="analytics-comparison">
     @for (comp of comparisons(); track comp.labelKey) {
-      <div class="comparison-card" ftSubtleReveal="fade-up" [delay]="$index * 80">
+      <div class="comparison-card" ftSubtleReveal="fade-up" [delay]="$index * 50">
         <div class="comparison-card__label">{{ comp.labelKey | translate }}</div>
         <div class="comparison-card__bars">
           <div class="comparison-card__bar comparison-card__bar--current">

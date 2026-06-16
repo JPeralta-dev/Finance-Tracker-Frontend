@@ -68,27 +68,42 @@
       <!-- Main content: Chart + Activity + Donut -->
       <div class="dashboard-content">
         <div class="dashboard-content__chart" ftSubtleReveal="fade-up" [delay]="200">
-          <ft-area-chart
-            [labels]="chartLabels()"
-            [datasets]="chartDatasets()"
-            [title]="'dashboard.monthlyOverview' | translate"
-            [subtitle]="'dashboard.last6Months' | translate"
-          />
+          <ft-echart
+            [options]="areaChartOptions()"
+            [loading]="state() === 'loading'"
+            height="250px"
+          >
+            <ng-container loading><div class="chart-skeleton"></div></ng-container>
+            <ng-container empty><div class="chart-empty">{{ 'dashboard.noChartData' | translate }}</div></ng-container>
+            <ng-container error>
+              <div class="chart-error">
+                {{ 'dashboard.chartError' | translate }}
+                <button class="chart-retry-btn" (click)="retry()" type="button">{{ 'dashboard.retry' | translate }}</button>
+              </div>
+            </ng-container>
+          </ft-echart>
         </div>
         <div class="dashboard-content__sidebar" ftSubtleReveal="fade-up" [delay]="300">
           <ft-recent-activity
             [items]="activity()"
             [maxItems]="4"
           />
-          @if (donutData().labels.length > 0) {
-            <div class="dashboard-content__donut">
-              <ft-donut-chart
-                [data]="donutData()"
-                [title]="'dashboard.expenseBreakdown' | translate"
-                [subtitle]="'dashboard.byCategory' | translate"
-              />
-            </div>
-          }
+          <div class="dashboard-content__donut">
+            <ft-echart
+              [options]="donutChartOptions()"
+              [loading]="state() === 'loading'"
+              height="200px"
+            >
+              <ng-container loading><div class="chart-skeleton"></div></ng-container>
+              <ng-container empty><div class="chart-empty">{{ 'dashboard.noCategoryData' | translate }}</div></ng-container>
+              <ng-container error>
+                <div class="chart-error">
+                  {{ 'dashboard.chartError' | translate }}
+                  <button class="chart-retry-btn" (click)="retry()" type="button">{{ 'dashboard.retry' | translate }}</button>
+                </div>
+              </ng-container>
+            </ft-echart>
+          </div>
         </div>
       </div>
     </div>
@@ -112,14 +127,19 @@
           <ft-insights-panel [loading]="true" />
         </div>
         <!-- Chart + Activity + Donut skeletons -->
+        <!-- TODO: Phase 3 — Replace with FtEChartComponent loading states -->
         <div class="dashboard-content">
           <div class="dashboard-content__chart" ftSubtleReveal="fade-up" [delay]="200">
-            <ft-area-chart [loading]="true" [labels]="[]" [datasets]="[]" />
+            <div class="chart-placeholder chart-placeholder--loading">
+              <div class="skeleton-bar"></div>
+            </div>
           </div>
           <div class="dashboard-content__sidebar" ftSubtleReveal="fade-up" [delay]="300">
             <ft-recent-activity [loading]="true" [items]="[]" />
             <div class="dashboard-content__donut">
-              <ft-donut-chart [loading]="true" [data]="{ labels: [], data: [], colors: [] }" />
+              <div class="chart-placeholder chart-placeholder--loading">
+                <div class="skeleton-bar"></div>
+              </div>
             </div>
           </div>
         </div>
