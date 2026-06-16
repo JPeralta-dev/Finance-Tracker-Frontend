@@ -1,7 +1,7 @@
 import { Component, input, output, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { NgIcon, provideIcons } from '@ng-icons/core';
+import { NgIcon } from '@ng-icons/core';
 import { ICONS } from '../../../../shared/icons/icon-registry';
 import { TranslatePipe } from '../../../../core/pipes/translate.pipe';
 import type { User } from '../../../../core/models/user.model';
@@ -10,7 +10,6 @@ import type { User } from '../../../../core/models/user.model';
   selector: 'app-profile-dropdown-menu',
   standalone: true,
   imports: [CommonModule, RouterLink, NgIcon, TranslatePipe],
-  providers: [provideIcons(ICONS)],
   templateUrl: './profile-dropdown-menu.component.html',
   styleUrl: './profile-dropdown-menu.component.scss',
 })

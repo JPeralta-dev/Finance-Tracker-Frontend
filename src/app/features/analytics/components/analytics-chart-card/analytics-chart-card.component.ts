@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FtSubtleRevealDirective } from '../../../../shared/directives/ft-subtle-reveal.directive';
 
@@ -8,6 +8,7 @@ import { FtSubtleRevealDirective } from '../../../../shared/directives/ft-subtle
   imports: [CommonModule, FtSubtleRevealDirective],
   templateUrl: './analytics-chart-card.component.html',
   styleUrl: './analytics-chart-card.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AnalyticsChartCardComponent {
   title = input.required<string>();

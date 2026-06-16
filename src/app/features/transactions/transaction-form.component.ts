@@ -1,12 +1,13 @@
-import { Component, OnInit, signal, computed, inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, signal, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
-import { catchError, of } from 'rxjs';
-import { NgIcon, provideIcons } from '@ng-icons/core';
+import { Subscription, catchError, of } from 'rxjs';
+import { NgIcon } from '@ng-icons/core';
 import { ICONS, getCategoryIcon } from '../../shared/icons/icon-registry';
 import { FinanceService } from '../../core/services/finance.service';
+import { ModalService } from '../../core/services/modal.service';
 import { Category } from '../../core/models/category.model';
 import { TranslatePipe } from '../../core/pipes/translate.pipe';
 import { CategoryTranslatePipe } from '../../core/pipes/category-translate.pipe';
@@ -29,16 +30,18 @@ interface CategoryOption extends Category {
     CategoryTranslatePipe,
     FtSubtleRevealDirective,
   ],
-  providers: [provideIcons(ICONS)],
   templateUrl: './transaction-form.component.html',
   styleUrl: './transaction-form.component.scss',
 })
-export class TransactionFormComponent implements OnInit {
+export class TransactionFormComponent implements OnInit, OnDestroy {
   private fb = inject(FormBuilder);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   private financeService = inject(FinanceService);
+  private modalService = inject(ModalService);
   readonly currencySymbol = inject(CurrencyService).currencyConfig().symbol;
+
+  private categorySavedSub?: Subscription;
 
   // State
   readonly isEdit = signal(false);
@@ -71,6 +74,13 @@ export class TransactionFormComponent implements OnInit {
   ngOnInit(): void {
     this.loadCategories();
     this.checkEditMode();
+    this.categorySavedSub = this.modalService.categorySaved$.subscribe(() => {
+      this.loadCategories();
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.categorySavedSub?.unsubscribe();
   }
 
   private loadCategories(): void {

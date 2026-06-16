@@ -143,7 +143,10 @@
     "emptyOverview": "No transactions yet",
     "emptyOverviewDesc": "Your financial overview will appear here once you start adding transactions.",
     "expenseBreakdown": "Expense Breakdown",
-    "byCategory": "By category"
+    "byCategory": "By category",
+    "noChartData": "No chart data yet",
+    "noCategoryData": "No category data yet",
+    "chartError": "Error loading chart"
   },
   "insights": {
     "title": "AI Insights",
@@ -325,13 +328,17 @@
     "title": "Analytics",
     "subtitle": "Visualize your financial trends and breakdowns.",
     "monthlyTrends": "Monthly Trends",
+    "incomeVsExpenses": "Income vs Expenses",
     "last6Months": "Last 6 months",
     "byCategory": "By Category",
     "expenseBreakdown": "Expense Breakdown",
+    "dailySpending": "Daily Spending",
+    "thisWeek": "This week",
     "summary": "Summary",
     "totalIncome": "Total Income",
     "totalExpenses": "Total Expenses",
     "netSavings": "Net Savings",
+    "savingsRate": "Savings Rate",
     "emptyTitle": "No data yet",
     "emptyDesc": "Start logging transactions to see your financial analytics.",
     "loading": "Loading analytics...",
@@ -341,7 +348,51 @@
     "retry": "Retry",
     "addTransaction": "Add transaction",
     "noCategoryData": "No category data yet",
-    "noChartData": "No monthly data yet"
+    "noChartData": "No monthly data yet",
+    "noDailyData": "No daily spending data",
+    "chartError": "Error loading chart",
+    "welcomeTitle": "Welcome to Analytics",
+    "welcomeDesc": "Start by adding your first transaction to see insights.",
+    "addFirstTransaction": "Add First Transaction",
+    "noDataTitle": "No Data for This Period",
+    "noDataDesc": "Try adjusting your filters to see results.",
+    "clearFilters": "Clear Filters",
+    "period": {
+      "1m": "1M",
+      "3m": "3M",
+      "6m": "6M",
+      "1y": "1Y"
+    },
+    "vsLastMonth": "vs last month",
+    "filter": {
+      "all": "All",
+      "income": "Income",
+      "expense": "Expense",
+      "more": "More filters",
+      "category": "Category",
+      "allCats": "All categories",
+      "reset": "Reset"
+    },
+    "insight": {
+      "spending": "Spending Alert",
+      "savings": "Savings Insight",
+      "anomaly": "Anomaly Detected",
+      "positive": "Great Job!",
+      "subscription": "Subscription Alert",
+      "low": "low",
+      "medium": "medium",
+      "high": "high"
+    },
+    "story": {
+      "greatSavings": "Great job! Savings rate of {{rate}}% is above target.",
+      "negativeSavings": "You're spending {{rate}}% more than you earn.",
+      "spendingSpike": "Spending spike detected: {{amount}} this month.",
+      "noNotableEvents": "No notable events this period."
+    },
+    "comparison": {
+      "income": "Income",
+      "expenses": "Expenses"
+    }
   },
   "profile": {
     "title": "Profile",

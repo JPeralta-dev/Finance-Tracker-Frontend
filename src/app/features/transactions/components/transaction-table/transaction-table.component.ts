@@ -1,6 +1,6 @@
 import { Component, input, output, computed, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgIcon, provideIcons } from '@ng-icons/core';
+import { NgIcon } from '@ng-icons/core';
 import { TransactionRowComponent } from '../transaction-row/transaction-row.component';
 import { TransactionFiltersComponent } from '../transaction-filters/transaction-filters.component';
 import { PaginationComponent } from '../../../../shared/ui/pagination/pagination.component';
@@ -11,7 +11,6 @@ import { ICONS } from '../../../../shared/icons/icon-registry';
   selector: 'ft-transaction-table',
   standalone: true,
   imports: [CommonModule, NgIcon, TransactionRowComponent, TransactionFiltersComponent, PaginationComponent],
-  providers: [provideIcons(ICONS)],
   templateUrl: './transaction-table.component.html',
   styleUrl: './transaction-table.component.scss',
 })

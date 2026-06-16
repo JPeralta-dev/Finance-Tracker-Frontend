@@ -143,7 +143,10 @@
     "emptyOverview": "Sin transacciones aún",
     "emptyOverviewDesc": "Tu resumen financiero aparecerá aquí una vez que comiences a agregar transacciones.",
     "expenseBreakdown": "Desglose de Gastos",
-    "byCategory": "Por categoría"
+    "byCategory": "Por categoría",
+    "noChartData": "Sin datos de gráfico aún",
+    "noCategoryData": "Sin datos de categorías aún",
+    "chartError": "Error al cargar gráfico"
   },
   "insights": {
     "title": "Insights IA",
@@ -325,13 +328,17 @@
     "title": "Análisis",
     "subtitle": "Visualizá tus tendencias financieras y desgloses.",
     "monthlyTrends": "Tendencias Mensuales",
+    "incomeVsExpenses": "Ingresos vs Gastos",
     "last6Months": "Últimos 6 meses",
     "byCategory": "Por Categoría",
     "expenseBreakdown": "Desglose de Gastos",
+    "dailySpending": "Gastos por Día",
+    "thisWeek": "Esta semana",
     "summary": "Resumen",
     "totalIncome": "Ingreso Total",
     "totalExpenses": "Gastos Totales",
     "netSavings": "Ahorro Neto",
+    "savingsRate": "Tasa de Ahorro",
     "emptyTitle": "Sin datos aún",
     "emptyDesc": "Empezá a registrar transacciones para ver tu análisis financiero.",
     "loading": "Cargando análisis...",
@@ -341,7 +348,51 @@
     "retry": "Reintentar",
     "addTransaction": "Agregar transacción",
     "noCategoryData": "Sin datos de categorías aún",
-    "noChartData": "Sin datos mensuales aún"
+    "noChartData": "Sin datos mensuales aún",
+    "noDailyData": "Sin datos de gastos diarios",
+    "chartError": "Error al cargar gráfico",
+    "welcomeTitle": "Bienvenido a Análisis",
+    "welcomeDesc": "Empezá agregando tu primera transacción para ver insights.",
+    "addFirstTransaction": "Agregar Primera Transacción",
+    "noDataTitle": "Sin Datos para Este Período",
+    "noDataDesc": "Intentá ajustar los filtros para ver resultados.",
+    "clearFilters": "Limpiar Filtros",
+    "period": {
+      "1m": "1M",
+      "3m": "3M",
+      "6m": "6M",
+      "1y": "1A"
+    },
+    "vsLastMonth": "vs mes anterior",
+    "filter": {
+      "all": "Todos",
+      "income": "Ingresos",
+      "expense": "Gastos",
+      "more": "Más filtros",
+      "category": "Categoría",
+      "allCats": "Todas las categorías",
+      "reset": "Resetear"
+    },
+    "insight": {
+      "spending": "Alerta de Gastos",
+      "savings": "Insight de Ahorro",
+      "anomaly": "Anomalía Detectada",
+      "positive": "¡Buen Trabajo!",
+      "subscription": "Alerta de Suscripción",
+      "low": "bajo",
+      "medium": "medio",
+      "high": "alto"
+    },
+    "story": {
+      "greatSavings": "¡Buen trabajo! Tasa de ahorro del {{rate}}% está por encima del objetivo.",
+      "negativeSavings": "Estás gastando {{rate}}% más de lo que ganás.",
+      "spendingSpike": "Pico de gastos detectado: {{amount}} este mes.",
+      "noNotableEvents": "Sin eventos notables este período."
+    },
+    "comparison": {
+      "income": "Ingresos",
+      "expenses": "Gastos"
+    }
   },
   "profile": {
     "title": "Perfil",

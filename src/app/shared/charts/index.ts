@@ -1,16 +1,14 @@
 /**
  * Shared Chart Components — Barrel Export
  *
- * Chart.js wrappers themed for Obsidian Glass design system.
+ * ECharts-based chart components themed for Obsidian Glass design system.
+ * Replaced Chart.js wrappers (v1.0) with modular ECharts (v2.0).
  */
 
-export { ChartService } from './chart.service';
-export { AreaChartComponent } from './area-chart/area-chart.component';
-export { BarChartComponent } from './bar-chart/bar-chart.component';
-export { DonutChartComponent } from './donut-chart/donut-chart.component';
+// ECharts components
+export { FtEChartComponent, EChartState } from './echarts/ft-echart.component';
+export { EchartsThemeMapper } from './echarts/echarts-theme.mapper';
+export { registerECharts } from './echarts/echarts-module';
 
-// Types
+// Types (preserved for backward compatibility where applicable)
 export type { ChartDataset, ChartOptions, ChartPoint } from './chart.types';
-export type { AreaDataset } from './area-chart/area-chart.component';
-export type { BarDataset } from './bar-chart/bar-chart.component';
-export type { DonutData } from './donut-chart/donut-chart.component';

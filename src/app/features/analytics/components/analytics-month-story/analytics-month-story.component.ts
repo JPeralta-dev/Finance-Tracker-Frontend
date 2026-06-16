@@ -1,6 +1,6 @@
-import { Component, input } from '@angular/core';
+import { Component, input, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgIcon, provideIcons } from '@ng-icons/core';
+import { NgIcon } from '@ng-icons/core';
 import { TranslatePipe } from '../../../../core/pipes/translate.pipe';
 import { ICONS } from '../../../../shared/icons/icon-registry';
 import type { MonthStory } from '../../analytics.types';
@@ -9,9 +9,9 @@ import type { MonthStory } from '../../analytics.types';
   selector: 'ft-analytics-month-story',
   standalone: true,
   imports: [CommonModule, NgIcon, TranslatePipe],
-  providers: [provideIcons(ICONS)],
   templateUrl: './analytics-month-story.component.html',
   styleUrl: './analytics-month-story.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AnalyticsMonthStoryComponent {
   stories = input.required<MonthStory[]>();

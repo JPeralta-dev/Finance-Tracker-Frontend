@@ -1,4 +1,4 @@
-import { Injectable, signal, computed } from '@angular/core';
+import { Injectable, signal, computed, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 
@@ -10,6 +10,9 @@ export class TranslationService {
   private readonly TRANSLATIONS_KEY = 'flowr_translations';
   private readonly defaultLang: Language = 'es';
 
+  // Lazy-inject HttpClient — only needed for async fetch, not for constructor
+  private http = inject(HttpClient, { optional: true });
+
   private _translations = signal<Record<string, any>>({});
   private _currentLang = signal<Language>(this.defaultLang);
   private _loaded = signal(false);
@@ -18,47 +21,55 @@ export class TranslationService {
   readonly translations = this._translations.asReadonly();
   readonly isLoaded = this._loaded.asReadonly();
 
-  constructor(private http: HttpClient) {
-    this.loadFromStorage();
-  }
-
-  private loadFromStorage(): void {
-    const stored = localStorage.getItem(this.STORAGE_KEY) as Language | null;
-    const lang = stored || this.defaultLang;
-    this._currentLang.set(lang);
-
-    // Check if translations were pre-loaded by APP_INITIALIZER
-    const preloaded = localStorage.getItem(this.TRANSLATIONS_KEY);
-    if (preloaded) {
+  constructor() {
+    // Try loading from localStorage first (sync, no blocking)
+    const cached = localStorage.getItem(this.TRANSLATIONS_KEY);
+    if (cached) {
       try {
-        this._translations.set(JSON.parse(preloaded));
+        this._translations.set(JSON.parse(cached));
         this._loaded.set(true);
-        return;
       } catch {
-        // Invalid JSON, fall through to HTTP load
+        // Invalid JSON, fall through to async fetch
       }
     }
 
-    // Fallback: load via HTTP
-    this.setLanguage(lang);
+    // Restore language preference
+    const stored = localStorage.getItem(this.STORAGE_KEY) as Language | null;
+    if (stored) {
+      this._currentLang.set(stored);
+      document.documentElement.lang = stored;
+    }
+
+    // If not cached, fetch async in background
+    if (!this._loaded()) {
+      this.fetchTranslations();
+    }
   }
 
-  async setLanguage(lang: Language): Promise<void> {
-    if (lang === this._currentLang()) return;
+  private async fetchTranslations(): Promise<void> {
+    if (!this.http) return;
 
+    const lang = this._currentLang();
     try {
       const data = await firstValueFrom(
         this.http.get<Record<string, any>>(`/assets/i18n/${lang}.json`)
       );
       this._translations.set(data);
-      this._currentLang.set(lang);
       this._loaded.set(true);
-      localStorage.setItem(this.STORAGE_KEY, lang);
       localStorage.setItem(this.TRANSLATIONS_KEY, JSON.stringify(data));
-      document.documentElement.lang = lang;
     } catch (error) {
       console.error(`Failed to load language ${lang}`, error);
     }
+  }
+
+  async setLanguage(lang: Language): Promise<void> {
+    if (lang === this._currentLang()) return;
+
+    this._currentLang.set(lang);
+    localStorage.setItem(this.STORAGE_KEY, lang);
+    document.documentElement.lang = lang;
+
+    await this.fetchTranslations();
   }
 
   translate(key: string, params?: Record<string, number | string>): string {

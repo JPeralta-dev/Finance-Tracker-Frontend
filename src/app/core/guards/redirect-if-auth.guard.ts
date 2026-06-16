@@ -7,7 +7,10 @@ export const redirectIfAuthGuard: CanActivateFn = (_route, _state) => {
   const router = inject(Router);
   const authService = inject(AuthService);
 
-  // Wait for session check to complete before deciding
+  // Public routes: mark auth ready immediately, no HTTP call needed
+  authService.markAuthReady();
+
+  // Wait for authReady (already true) before deciding
   return authService.authReady$.pipe(
     filter((ready) => ready),
     take(1),

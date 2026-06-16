@@ -2,7 +2,7 @@ import { Component, OnInit, signal, inject, computed, OnDestroy } from '@angular
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { NgIcon, provideIcons } from '@ng-icons/core';
+import { NgIcon } from '@ng-icons/core';
 import { Subscription } from 'rxjs';
 import { ICONS } from '../../shared/icons/icon-registry';
 import { FinanceService } from '../../core/services/finance.service';
@@ -34,7 +34,6 @@ import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog.c
     FtSubtleRevealDirective,
     ConfirmDialogComponent,
   ],
-  providers: [provideIcons(ICONS)],
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.scss',
 })
