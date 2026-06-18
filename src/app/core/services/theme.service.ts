@@ -43,7 +43,7 @@ export class ThemeService {
 
     if ('startViewTransition' in document) {
       this.ngZone.runOutsideAngular(() => {
-        document.startViewTransition(performSwitch);
+        (document as any).startViewTransition(performSwitch);
       });
     } else {
       performSwitch();
