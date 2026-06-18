@@ -13,6 +13,7 @@ import { TranslatePipe } from '../../core/pipes/translate.pipe';
 import { CategoryTranslatePipe } from '../../core/pipes/category-translate.pipe';
 import { FtSubtleRevealDirective } from '../../shared/directives/ft-subtle-reveal.directive';
 import { CurrencyService } from '../../core/services/currency.service';
+import { CategorySelectComponent } from '../../shared/ui/category-select/category-select.component';
 
 interface CategoryOption extends Category {
   iconKey: string;
@@ -29,6 +30,7 @@ interface CategoryOption extends Category {
     TranslatePipe,
     CategoryTranslatePipe,
     FtSubtleRevealDirective,
+    CategorySelectComponent,
   ],
   templateUrl: './transaction-form.component.html',
   styleUrl: './transaction-form.component.scss',
@@ -203,6 +205,15 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
       })
     ).subscribe(() => {
       this.router.navigate(['/transactions']);
+    });
+  }
+
+  onAddCategoryFromForm(): void {
+    this.modalService.openCategoryModal({
+      name: '',
+      icon: '',
+      color: '#9D50BB',
+      kind: this.form.get('type')?.value === 'income' ? 'income' : 'expense',
     });
   }
 }

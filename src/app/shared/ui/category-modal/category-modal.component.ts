@@ -105,7 +105,8 @@ export class CategoryModalComponent {
 
   constructor() {
     effect(() => {
-      const wantsOpen = this.modal().isOpen;
+      const state = this.modal();
+      const wantsOpen = state.isOpen;
       if (wantsOpen) {
         this.isVisible.set(true);
         // Next tick: trigger open animation
