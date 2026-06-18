@@ -1,14 +1,18 @@
-import { Component, input, output } from '@angular/core';
+import { Component, input, output, effect, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'ft-confirm-dialog',
   standalone: true,
   imports: [CommonModule],
   template: `
-    @if (visible()) {
-      <div class="confirm-overlay" @dialogAnimation (click)="cancel.emit()">
+    @if (isVisible()) {
+      <div
+        class="confirm-overlay t-modal"
+        [class.is-open]="isOpen()"
+        [class.is-closing]="isClosing()"
+        (click)="cancel.emit()"
+      >
         <div class="confirm-dialog" (click)="$event.stopPropagation()">
           <div class="confirm-dialog__icon">⚠️</div>
           <h3 class="confirm-dialog__title">{{ title() }}</h3>
@@ -106,17 +110,6 @@ import { animate, style, transition, trigger } from '@angular/animations';
       }
     }
   `],
-  animations: [
-    trigger('dialogAnimation', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate('200ms ease-out', style({ opacity: 1 })),
-      ]),
-      transition(':leave', [
-        animate('150ms ease-in', style({ opacity: 0 })),
-      ]),
-    ]),
-  ],
 })
 export class ConfirmDialogComponent {
   visible = input<boolean>(false);
@@ -127,4 +120,34 @@ export class ConfirmDialogComponent {
 
   confirm = output<void>();
   cancel = output<void>();
+
+  // CSS transition state machine
+  readonly isVisible = signal(false);
+  readonly isOpen = signal(false);
+  readonly isClosing = signal(false);
+
+  constructor() {
+    effect(() => {
+      const wantsOpen = this.visible();
+      if (wantsOpen) {
+        this.isVisible.set(true);
+        requestAnimationFrame(() => this.isOpen.set(true));
+      } else if (this.isVisible()) {
+        this.isOpen.set(false);
+        this.isClosing.set(true);
+        const closeMs = this.readCloseDuration();
+        setTimeout(() => {
+          this.isClosing.set(false);
+          this.isVisible.set(false);
+        }, closeMs);
+      }
+    });
+  }
+
+  private readCloseDuration(): number {
+    const val = getComputedStyle(document.documentElement)
+      .getPropertyValue('--modal-close-dur')
+      .trim();
+    return parseFloat(val) || 150;
+  }
 }

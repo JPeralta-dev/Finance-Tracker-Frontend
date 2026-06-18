@@ -1,4 +1,4 @@
-import { Component, inject, signal, computed, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, inject, signal, computed, effect, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgIcon } from '@ng-icons/core';
 import { FormsModule } from '@angular/forms';
@@ -19,6 +19,11 @@ export class CommandPaletteComponent implements AfterViewInit, OnDestroy {
   readonly open = this.commandService.open;
   readonly query = signal('');
   readonly selectedIndex = signal(0);
+
+  // CSS transition state machine
+  readonly isVisible = signal(false);
+  readonly isOpen = signal(false);
+  readonly isClosing = signal(false);
 
   readonly filteredItems = computed(() => {
     const q = this.query().toLowerCase();
@@ -44,9 +49,37 @@ export class CommandPaletteComponent implements AfterViewInit, OnDestroy {
     return groups;
   });
 
+  constructor() {
+    effect(() => {
+      const wantsOpen = this.open();
+      if (wantsOpen) {
+        this.isVisible.set(true);
+        requestAnimationFrame(() => {
+          this.isOpen.set(true);
+          this.inputRef?.nativeElement?.focus();
+        });
+      } else if (this.isVisible()) {
+        this.isOpen.set(false);
+        this.isClosing.set(true);
+        const closeMs = this.readCloseDuration();
+        setTimeout(() => {
+          this.isClosing.set(false);
+          this.isVisible.set(false);
+        }, closeMs);
+      }
+    });
+  }
+
+  private readCloseDuration(): number {
+    const val = getComputedStyle(document.documentElement)
+      .getPropertyValue('--modal-close-dur')
+      .trim();
+    return parseFloat(val) || 150;
+  }
+
   ngAfterViewInit(): void {
     if (this.open()) {
-      this.inputRef?.nativeElement.focus();
+      this.inputRef?.nativeElement?.focus();
     }
   }
 
