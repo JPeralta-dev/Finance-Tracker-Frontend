@@ -8,6 +8,9 @@
 
 .stat-card {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   background: var(--glass-bg);
   backdrop-filter: blur(var(--glass-blur));
   -webkit-backdrop-filter: blur(var(--glass-blur));
@@ -84,6 +87,9 @@
 
   /* ── Value ── */
   &__value {
+    flex: 1;
+    display: flex;
+    align-items: center;
     font-family: var(--font-body);
     font-size: 24px;
     font-weight: 600;
@@ -151,4 +157,62 @@
   border-radius: 50%;
   background: var(--accent-end);
   animation: pulse-slow 3s ease-in-out infinite;
+}
+
+/* ── Hover Overlay ───────────────────────────────────────────────
+   Reveals insight text on hover with a smooth slide-up.
+   Touch devices get tap-to-reveal via :focus-within.
+   ─────────────────────────────────────────────────────────────── */
+.stat-card__overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  padding: 16px;
+  @include at-md { padding: 20px; }
+  background: linear-gradient(
+    to top,
+    var(--bg-elevated) 0%,
+    rgba(54, 40, 69, 0.85) 40%,
+    transparent 100%
+  );
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity var(--duration-normal) var(--ease-out);
+  will-change: opacity;
+}
+
+.stat-card__overlay-text {
+  font-size: 11px;
+  color: var(--text-primary);
+  line-height: 1.5;
+  @include at-md { font-size: 12px; }
+}
+
+/* Hover reveal — only on devices with hover capability */
+@media (hover: hover) {
+  .stat-card:hover .stat-card__overlay {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .stat-card:hover .stat-card__header,
+  .stat-card:hover .stat-card__value {
+    transform: translateY(-2px);
+    transition: transform var(--duration-normal) var(--ease-out);
+  }
+}
+
+/* Tap/Keyboard reveal for touch devices */
+.stat-card:focus-within .stat-card__overlay {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Reduced motion: instant reveal */
+@media (prefers-reduced-motion: reduce) {
+  .stat-card__overlay {
+    transition: none !important;
+  }
 }
