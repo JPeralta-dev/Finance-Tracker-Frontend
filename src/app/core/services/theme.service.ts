@@ -1,4 +1,4 @@
-import { Injectable, signal, effect, inject } from '@angular/core';
+import { Injectable, signal, effect, inject, NgZone } from '@angular/core';
 
 export type Theme = 'dark' | 'light';
 
@@ -6,6 +6,7 @@ export type Theme = 'dark' | 'light';
 export class ThemeService {
   private readonly STORAGE_KEY = 'flowr_theme';
   private readonly defaultTheme: Theme = 'dark';
+  private readonly ngZone = inject(NgZone);
 
   private _currentTheme = signal<Theme>(this.defaultTheme);
   readonly currentTheme = this._currentTheme.asReadonly();
@@ -35,8 +36,18 @@ export class ThemeService {
   }
 
   toggleTheme(): void {
-    const current = this._currentTheme();
-    this.setTheme(current === 'dark' ? 'light' : 'dark');
+    const next = this._currentTheme() === 'dark' ? 'light' : 'dark';
+    const performSwitch = () => {
+      this.setTheme(next);
+    };
+
+    if ('startViewTransition' in document) {
+      this.ngZone.runOutsideAngular(() => {
+        document.startViewTransition(performSwitch);
+      });
+    } else {
+      performSwitch();
+    }
   }
 
   private loadStoredTheme(): void {
