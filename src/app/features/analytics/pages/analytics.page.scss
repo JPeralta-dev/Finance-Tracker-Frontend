@@ -1,6 +1,9 @@
-/* ─── Analytics Page ───────────────────────────────────────────────
-   Financial analytics: monthly trends, category breakdown, summary.
-   Responsive: stacks on mobile, 2-col on tablet+.
+/* ─── Analytics Page — Bento Grid Layout ─────────────────────────
+   Matches Flowr mockup distribution:
+   - Header: title + filters
+   - KPIs: 4 cards in a row
+   - Charts: Trends (wide) + Category (narrow) + Daily (narrow)
+   - Bottom: Insights (wide) + Transactions (narrow) + Summary (narrow)
    ─────────────────────────────────────────────────────────────────── */
 
 @import 'responsive';
@@ -10,10 +13,135 @@
   flex-direction: column;
   gap: 24px;
   @include safe-padding;
-  @include at-md { gap: 32px; }
+  max-width: 1440px;
+  margin: 0 auto;
+  width: 100%;
+
+  @include at-md { gap: 28px; }
+  @include at-xl { gap: 32px; }
 }
 
-/* Loading */
+/* ═══ Header Row ═══ */
+.analytics-header-row {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: flex-start;
+
+  @include at-md {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+  }
+
+  &__title {
+    flex: 1;
+  }
+
+  &__heading {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+    letter-spacing: -0.02em;
+
+    @include at-md { font-size: 32px; }
+  }
+
+  &__subtitle {
+    font-size: 14px;
+    color: var(--text-tertiary);
+    margin: 4px 0 0;
+  }
+
+  &__filters {
+    flex-shrink: 0;
+  }
+}
+
+/* ═══ KPIs Row ═══ */
+.analytics-kpis-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+
+  @include at-md {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include at-lg {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+}
+
+/* ═══ Charts Row ═══ */
+.analytics-charts-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+
+  @include at-md {
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  @include at-lg {
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 20px;
+  }
+
+  &__trends {
+    @include at-md {
+      grid-column: 1 / -1;
+    }
+
+    @include at-lg {
+      grid-column: auto;
+    }
+  }
+
+  &__category,
+  &__daily {
+    min-height: 320px;
+  }
+}
+
+/* ═══ Bottom Row ═══ */
+.analytics-bottom-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+
+  @include at-md {
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  @include at-lg {
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 20px;
+  }
+
+  &__insights {
+    @include at-md {
+      grid-column: 1 / -1;
+    }
+
+    @include at-lg {
+      grid-column: auto;
+    }
+  }
+
+  &__transactions,
+  &__summary {
+    min-height: 280px;
+  }
+}
+
+/* ═══ Loading State ═══ */
 .analytics-loading {
   &__title {
     font-family: var(--font-display);
@@ -60,196 +188,76 @@
   50% { opacity: 0.3; }
 }
 
-/* Page header */
-.page-header {
-  &__title {
-    font-family: var(--font-display);
-    font-size: 24px;
-    font-weight: 700;
-    color: var(--text-primary);
-    margin: 0;
-    letter-spacing: -0.02em;
-    @include at-md { font-size: 28px; }
-  }
+/* ═══ Chart Card Slots ═══ */
+.chart-skeleton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  min-height: 200px;
+  animation: pulse 1.5s ease-in-out infinite;
 
-  &__subtitle {
-    font-size: 14px;
-    color: var(--text-tertiary);
-    margin: 6px 0 0;
-  }
-}
-
-/* Grid layout */
-.analytics-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
-
-  @include at-md {
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
+  &::after {
+    content: '';
+    width: 60%;
+    height: 8px;
+    border-radius: 4px;
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.04) 25%,
+      rgba(255, 255, 255, 0.08) 50%,
+      rgba(255, 255, 255, 0.04) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s ease-in-out infinite;
   }
 }
 
-.analytics-card {
-  background: var(--bg-secondary);
-  border-radius: var(--radius-md);
-  border: 1px solid var(--border-default);
-  padding: 16px;
-  box-shadow: var(--shadow-sm);
-  transition: box-shadow 0.3s ease, transform 0.3s ease;
-  @include at-md { padding: 24px; }
-
-  &:hover {
-    box-shadow: var(--shadow-md);
-    transform: translateY(-1px);
-  }
-
-  &--full {
-    grid-column: 1 / -1;
-  }
-
-  &__empty {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    min-height: 200px;
-    color: var(--text-tertiary);
-    font-size: 14px;
-    text-align: center;
-
-    ng-icon {
-      opacity: 0.5;
-    }
-  }
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }
-.summary-section {
+
+.chart-empty,
+.chart-error {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-
-  &__title {
-    font-family: var(--font-display);
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--text-primary);
-    margin: 0;
-    letter-spacing: -0.01em;
-    @include at-md { font-size: 18px; }
-  }
-}
-
-.summary-row {
-  display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 10px 0;
-  border-bottom: 1px solid var(--border-subtle);
+  justify-content: center;
+  height: 100%;
+  min-height: 200px;
+  gap: 8px;
+  color: var(--text-tertiary, rgba(243, 232, 255, 0.4));
+  font-size: 14px;
+  text-align: center;
+}
 
-  &__label {
-    font-size: 13px;
-    color: var(--text-secondary);
-    @include at-md { font-size: 14px; }
-  }
+.chart-error {
+  color: var(--danger, #FF6B6B);
+}
 
-  &__value {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--text-primary);
-    @include at-md { font-size: 16px; }
-  }
+.chart-retry-btn {
+  margin-top: 8px;
+  padding: 6px 16px;
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.08));
+  border-radius: 8px;
+  background: var(--bg-tertiary, #2A1E35);
+  color: var(--text-primary, #F3E8FF);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 200ms cubic-bezier(0.32, 0.72, 0, 1);
 
-  &--total {
-    border-bottom: none;
-    padding-top: 12px;
-    margin-top: 4px;
-    border-top: 2px solid var(--border-default);
-
-    .summary-row__label {
-      font-weight: 600;
-      color: var(--text-primary);
-    }
-
-    .summary-row__value {
-      font-size: 18px;
-      @include at-md { font-size: 20px; }
-    }
+  &:hover {
+    background: var(--bg-secondary, #1D1426);
+    border-color: var(--accent-primary, #9D50BB);
   }
 }
 
-/* Text color utilities */
+/* ═══ Text color utilities ═══ */
 .text-income {
   color: var(--success, #06D6A0);
 }
 
 .text-expense {
   color: var(--danger, #FF6B6B);
-}
-
-/* Date Range Selector */
-.analytics-daterange {
-  display: flex;
-  gap: 4px;
-  padding: 4px;
-  background: var(--bg-tertiary);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-sm);
-  width: fit-content;
-  margin-bottom: 4px;
-}
-
-.daterange-btn {
-  padding: 6px 14px;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--text-tertiary);
-  background: transparent;
-  border: none;
-  border-radius: calc(var(--radius-sm) - 2px);
-  cursor: pointer;
-  transition: all var(--duration-fast) var(--ease-out);
-
-  &:hover {
-    color: var(--text-secondary);
-    background: var(--bg-elevated);
-  }
-
-  &--active {
-    color: var(--text-inverse);
-    background: linear-gradient(135deg, var(--accent-start), var(--accent-mid));
-    box-shadow: var(--glow-accent);
-
-    &:hover { color: var(--text-inverse); }
-  }
-}
-
-/* Change badges */
-.change-badge {
-  font-size: 11px;
-  font-weight: 600;
-  margin-left: 8px;
-  padding: 2px 6px;
-  border-radius: var(--radius-full);
-
-  &--up { color: var(--success, #06D6A0); background: rgba(6, 214, 160, 0.1); }
-  &--down { color: var(--danger, #FF6B6B); background: rgba(255, 107, 107, 0.1); }
-}
-
-/* Drill-down link */
-.analytics-card__drilldown {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  margin-top: 12px;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--info);
-  text-decoration: none;
-  transition: color var(--duration-fast) var(--ease-out);
-
-  &:hover {
-    color: var(--accent-start);
-  }
 }

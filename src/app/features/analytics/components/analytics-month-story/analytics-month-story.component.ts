@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgIcon } from '@ng-icons/core';
 import { TranslatePipe } from '../../../../core/pipes/translate.pipe';
@@ -11,6 +11,7 @@ import type { MonthStory } from '../../analytics.types';
   imports: [CommonModule, NgIcon, TranslatePipe],
   templateUrl: './analytics-month-story.component.html',
   styleUrl: './analytics-month-story.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AnalyticsMonthStoryComponent {
   stories = input.required<MonthStory[]>();

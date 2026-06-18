@@ -25,7 +25,7 @@
     "@fontsource/space-grotesk": "^5.2.10",
     "@ng-icons/core": "^26.5.0",
     "@ng-icons/heroicons": "^26.5.0",
-    "chart.js": "^4.4.0",
+    "echarts": "^5.5.0",
     "esbuild": "^0.20.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

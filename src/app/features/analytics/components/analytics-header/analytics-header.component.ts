@@ -1,4 +1,4 @@
-import { Component, input, output } from '@angular/core';
+import { Component, input, output, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgIcon } from '@ng-icons/core';
 import { TranslatePipe } from '../../../../core/pipes/translate.pipe';
@@ -13,6 +13,7 @@ export type PeriodOption = '1m' | '3m' | '6m' | '1y';
   imports: [CommonModule, NgIcon, TranslatePipe, FtSubtleRevealDirective],
   templateUrl: './analytics-header.component.html',
   styleUrl: './analytics-header.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AnalyticsHeaderComponent {
   title = input.required<string>();
