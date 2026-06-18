@@ -82,6 +82,9 @@
     font-weight: 500;
     color: var(--text-secondary);
     letter-spacing: 0.01em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     @include at-md { font-size: 13px; }
   }
 
@@ -147,7 +150,11 @@
     gap: 6px;
     font-size: 10px;
     color: var(--text-tertiary);
-    @include at-md { font-size: 11px; }
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 140px;
+    @include at-md { font-size: 11px; max-width: 160px; }
   }
 }
 
@@ -160,7 +167,8 @@
 }
 
 /* ── Hover Overlay ───────────────────────────────────────────────
-   Reveals insight text on hover with a smooth slide-up.
+   Slides up from bottom on hover revealing insight text.
+   Uses translateY for GPU-accelerated motion.
    Touch devices get tap-to-reveal via :focus-within.
    ─────────────────────────────────────────────────────────────── */
 .stat-card__overlay {
@@ -176,23 +184,31 @@
     rgba(54, 40, 69, 0.85) 40%,
     transparent 100%
   );
+  transform: translateY(12px);
   opacity: 0;
   pointer-events: none;
   transition:
-    opacity var(--duration-normal) var(--ease-out);
-  will-change: opacity;
+    transform var(--duration-normal) var(--ease-out),
+    opacity   var(--duration-normal) var(--ease-out);
+  will-change: transform, opacity;
 }
 
 .stat-card__overlay-text {
   font-size: 11px;
   color: var(--text-primary);
   line-height: 1.5;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
   @include at-md { font-size: 12px; }
 }
 
 /* Hover reveal — only on devices with hover capability */
 @media (hover: hover) {
   .stat-card:hover .stat-card__overlay {
+    transform: translateY(0);
     opacity: 1;
     pointer-events: auto;
   }
@@ -206,6 +222,7 @@
 
 /* Tap/Keyboard reveal for touch devices */
 .stat-card:focus-within .stat-card__overlay {
+  transform: translateY(0);
   opacity: 1;
   pointer-events: auto;
 }
