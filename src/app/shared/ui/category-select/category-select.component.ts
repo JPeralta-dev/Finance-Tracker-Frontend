@@ -52,7 +52,7 @@ export class CategorySelectComponent implements ControlValueAccessor {
   readonly highlightedIndex = signal(-1);
 
   // CVA
-  private _value = '';
+  private _value = signal<string>('');
   private onChange: (value: string) => void = () => {};
   private onTouched: () => void = () => {};
 
@@ -66,13 +66,14 @@ export class CategorySelectComponent implements ControlValueAccessor {
   });
 
   readonly selectedCategory = computed(() => {
-    if (!this._value) return null;
-    return this.categories().find((c) => c.name === this._value) || null;
+    const val = this._value();
+    if (!val) return null;
+    return this.categories().find((c) => c.name === val) || null;
   });
 
   // CVA methods
   writeValue(value: string): void {
-    this._value = value;
+    this._value.set(value ?? '');
   }
 
   registerOnChange(fn: (value: string) => void): void {
@@ -111,7 +112,7 @@ export class CategorySelectComponent implements ControlValueAccessor {
   }
 
   selectCategory(name: string): void {
-    this._value = name;
+    this._value.set(name);
     this.onChange(name);
     this.close();
   }

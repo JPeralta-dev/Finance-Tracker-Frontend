@@ -69,6 +69,9 @@ importers:
       '@angular/compiler-cli':
         specifier: ^17.3.0
         version: 17.3.12(@angular/compiler@17.3.12(@angular/core@17.3.12(rxjs@7.8.2)(zone.js@0.14.10)))(typescript@5.4.5)
+      '@esbuild/linux-x64':
+        specifier: ^0.28.1
+        version: 0.28.1
       '@types/jasmine':
         specifier: ~5.1.0
         version: 5.1.15
@@ -1087,6 +1090,12 @@ packages:
   '@esbuild/linux-x64@0.21.5':
     resolution: {integrity: sha512-1rYdTpyv03iycF1+BhzrzQJCdOuAOtaqHTWJZCWvijKD2N5Xu0TtVC8/+1faWqcP9iBCWOmjmhoH94dH82BxPQ==}
     engines: {node: '>=12'}
+    cpu: [x64]
+    os: [linux]
+
+  '@esbuild/linux-x64@0.28.1':
+    resolution: {integrity: sha512-u/anNYF2mmVOEDwLtnQ1wOr3EZ9sTNGLWrsYGYwHWzGA3Si84IOkHXlbWTD1NB+9/1lcnweYKO54uhxZydNzfA==}
+    engines: {node: '>=18'}
     cpu: [x64]
     os: [linux]
 
@@ -5523,6 +5532,8 @@ snapshots:
 
   '@esbuild/linux-x64@0.21.5':
     optional: true
+
+  '@esbuild/linux-x64@0.28.1': {}
 
   '@esbuild/netbsd-x64@0.20.1':
     optional: true

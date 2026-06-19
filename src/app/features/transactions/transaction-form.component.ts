@@ -14,6 +14,7 @@ import { CategoryTranslatePipe } from '../../core/pipes/category-translate.pipe'
 import { FtSubtleRevealDirective } from '../../shared/directives/ft-subtle-reveal.directive';
 import { CurrencyService } from '../../core/services/currency.service';
 import { CategorySelectComponent } from '../../shared/ui/category-select/category-select.component';
+import { FtNumberFormatDirective } from '../../shared/directives/ft-number-format.directive';
 
 interface CategoryOption extends Category {
   iconKey: string;
@@ -31,6 +32,7 @@ interface CategoryOption extends Category {
     CategoryTranslatePipe,
     FtSubtleRevealDirective,
     CategorySelectComponent,
+    FtNumberFormatDirective,
   ],
   templateUrl: './transaction-form.component.html',
   styleUrl: './transaction-form.component.scss',

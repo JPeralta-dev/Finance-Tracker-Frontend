@@ -58,13 +58,13 @@
               <span class="currency-symbol">{{ currencySymbol }}</span>
               <input
                 id="amount"
-                type="number"
+                type="text"
+                inputmode="decimal"
                 formControlName="amount"
                 placeholder="0.00"
                 class="form-input currency-input"
                 [class.error]="isInvalid('amount')"
-                min="0"
-                step="0.01"
+                ftNumberFormat
               />
             </div>
             @if (isInvalid('amount')) {
