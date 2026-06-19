@@ -161,14 +161,27 @@ export class DashboardPage implements OnInit {
     };
   }
 
+  /** Map range string to months for chart API */
+  private rangeToMonths(range: string): number {
+    switch (range) {
+      case '7d': return 1;
+      case '30d': return 3;
+      case '6m': return 6;
+      case '1y': return 12;
+      default: return 6;
+    }
+  }
+
   private loadData(range?: string): void {
     this.state.set('loading');
 
-    const dateRange = range ? this.computeDateRange(range) : null;
+    const currentRange = range ?? this.selectedRange();
+    const dateRange = currentRange ? this.computeDateRange(currentRange) : null;
+    const months = this.rangeToMonths(currentRange);
 
     forkJoin({
       summary: this.financeService.getSummary().pipe(catchError(() => of(null))),
-      chart: this.financeService.getMonthlyChart().pipe(catchError(() => of(null))),
+      chart: this.financeService.getMonthlyChart(months).pipe(catchError(() => of(null))),
       transactions: this.financeService.getTransactions({
         limit: 5,
         sortBy: 'date',

@@ -90,8 +90,10 @@ export class FinanceService {
 
   // ── Chart ─────────────────────────────────────────────────────────────────
 
-  getMonthlyChart(): Observable<ChartData[]> {
-    return this.http.get<ChartData[]>(`${this.base}/chart/monthly`);
+  getMonthlyChart(months?: number): Observable<ChartData[]> {
+    let params = new HttpParams();
+    if (months) params = params.set('months', months);
+    return this.http.get<ChartData[]>(`${this.base}/chart/monthly`, { params });
     // MOCK: return of(MOCK_CHART_DATA).pipe(delay(700));
   }
 
