@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgIcon } from '@ng-icons/core';
@@ -9,15 +9,19 @@ import { ToastService } from '../../../core/services/toast.service';
 import { TranslationService } from '../../../core/services/translation.service';
 import { TranslatePipe } from '../../../core/pipes/translate.pipe';
 import { CategoryTranslatePipe } from '../../../core/pipes/category-translate.pipe';
-import { modalAnimation } from '../../animations';
 
 @Component({
   selector: 'ft-category-modal',
   standalone: true,
   imports: [CommonModule, FormsModule, NgIcon, TranslatePipe, CategoryTranslatePipe],
   template: `
-    @if (modal().isOpen) {
-      <div class="modal-overlay" [@modalAnimation] (click)="close()">
+    @if (isVisible()) {
+      <div
+        class="modal-overlay t-modal"
+        [class.is-open]="isOpen()"
+        [class.is-closing]="isClosing()"
+        (click)="close()"
+      >
         <div class="modal-content" (click)="$event.stopPropagation()">
           <div class="modal-header">
             <h2>{{ (modal().isEditing ? 'categories.edit_title' : 'categories.new_title') | translate }}</h2>
@@ -84,7 +88,6 @@ import { modalAnimation } from '../../animations';
     }
   `,
   styleUrl: './category-modal.component.scss',
-  animations: [modalAnimation],
 })
 export class CategoryModalComponent {
   private modalService = inject(ModalService);
@@ -94,6 +97,40 @@ export class CategoryModalComponent {
 
   readonly modal = this.modalService.categoryModal;
   readonly submitting = signal(false);
+
+  // Modal CSS transition state machine
+  readonly isVisible = signal(false);
+  readonly isOpen = signal(false);
+  readonly isClosing = signal(false);
+
+  constructor() {
+    effect(() => {
+      const state = this.modal();
+      const wantsOpen = state.isOpen;
+      if (wantsOpen) {
+        this.isVisible.set(true);
+        // Next tick: trigger open animation
+        requestAnimationFrame(() => this.isOpen.set(true));
+      } else if (this.isVisible()) {
+        // Start close animation
+        this.isOpen.set(false);
+        this.isClosing.set(true);
+        // Read close duration from CSS custom property
+        const closeMs = this.readCloseDuration();
+        setTimeout(() => {
+          this.isClosing.set(false);
+          this.isVisible.set(false);
+        }, closeMs);
+      }
+    }, { allowSignalWrites: true });
+  }
+
+  private readCloseDuration(): number {
+    const val = getComputedStyle(document.documentElement)
+      .getPropertyValue('--modal-close-dur')
+      .trim();
+    return parseFloat(val) || 150;
+  }
 
   updateField(field: string, value: string): void {
     this.modalService.updateFormData({ [field]: value });

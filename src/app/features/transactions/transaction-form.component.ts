@@ -13,6 +13,8 @@ import { TranslatePipe } from '../../core/pipes/translate.pipe';
 import { CategoryTranslatePipe } from '../../core/pipes/category-translate.pipe';
 import { FtSubtleRevealDirective } from '../../shared/directives/ft-subtle-reveal.directive';
 import { CurrencyService } from '../../core/services/currency.service';
+import { CategorySelectComponent } from '../../shared/ui/category-select/category-select.component';
+import { FtNumberFormatDirective } from '../../shared/directives/ft-number-format.directive';
 
 interface CategoryOption extends Category {
   iconKey: string;
@@ -29,6 +31,8 @@ interface CategoryOption extends Category {
     TranslatePipe,
     CategoryTranslatePipe,
     FtSubtleRevealDirective,
+    CategorySelectComponent,
+    FtNumberFormatDirective,
   ],
   templateUrl: './transaction-form.component.html',
   styleUrl: './transaction-form.component.scss',
@@ -50,11 +54,11 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
   readonly successMsg = signal('');
   readonly errorMsg = signal('');
   readonly categories = signal<CategoryOption[]>([]);
+  readonly selectedType = signal<'income' | 'expense'>('expense');
 
   // Filtered categories based on selected type
   readonly filteredCategories = computed(() => {
-    const type = this.form.get('type')?.value;
-    if (!type) return this.categories();
+    const type = this.selectedType();
     if (type === 'income') {
       return this.categories().filter(c => c.kind === 'income' || c.kind === 'mixed');
     }
@@ -116,6 +120,7 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
       ).subscribe({
         next: (tx: any) => {
           if (!tx) return;
+          this.selectedType.set(tx.type);
           this.form.patchValue({
             type: tx.type,
             amount: tx.amount,
@@ -130,6 +135,7 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
   }
 
   setType(type: 'income' | 'expense'): void {
+    this.selectedType.set(type);
     this.form.get('type')?.setValue(type);
     this.form.get('category')?.setValue('');
   }
@@ -203,6 +209,15 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
       })
     ).subscribe(() => {
       this.router.navigate(['/transactions']);
+    });
+  }
+
+  onAddCategoryFromForm(): void {
+    this.modalService.openCategoryModal({
+      name: '',
+      icon: '',
+      color: '#9D50BB',
+      kind: this.selectedType(),
     });
   }
 }

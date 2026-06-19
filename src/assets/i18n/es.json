@@ -193,7 +193,7 @@
     "addFirstTransaction": "Agregar Transacción",
     "newTransaction": "+ Nueva Transacción",
     "form": {
-      "back": "← Volver a transacciones",
+      "back": "Volver a transacciones",
       "new_title": "Nueva Transacción",
       "edit_title": "Editar Transacción",
       "new_subtitle": "Completa los detalles para registrar una transacción",
@@ -237,7 +237,7 @@
   "categories": {
     "title": "Categorías",
     "subtitle": "Desglose de gastos por categoría",
-    "new": "+ Nueva Categoría",
+    "new": "Nueva Categoría",
     "add": "Agregar",
     "edit": "Editar",
     "delete": "Eliminar",
@@ -254,7 +254,8 @@
     "empty": {
       "title": "No hay categorías aún",
       "desc": "Agrega transacciones para ver las categorías aquí.",
-      "action": "+ Nueva Transacción"
+      "action": "+ Nueva Transacción",
+      "search": "Ninguna categoría coincide con tu búsqueda"
     },
     "form": {
       "name": "Nombre",

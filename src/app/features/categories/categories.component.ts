@@ -77,6 +77,8 @@ export class CategoriesComponent implements OnInit, OnDestroy {
     this.loading.set(true);
     this.financeService.getCategories().subscribe({
       next: (data) => {
+        console.log(data);
+        
         this.categories.set(data);
         this.loading.set(false);
       },

@@ -13,7 +13,7 @@
       </div>
     }
 
-    <!-- ═══ Error State ══ -->
+    <!-- ═══ Error State ═══ -->
     @case ('error') {
       <ft-empty-state
         icon="warning"
@@ -27,35 +27,21 @@
       />
     }
 
-    <!-- ═══ Welcome Empty State (new user) ══ -->
-    @case ('welcome') {
-      <ft-empty-state
-        icon="chart"
-        [title]="'analytics.welcomeTitle' | translate"
-        [description]="'analytics.welcomeDesc' | translate"
-        actionRoute="/transactions/new"
-        [actionLabel]="'analytics.addFirstTransaction' | translate"
-        ftSubtleReveal="fade-up"
-        [delay]="50"
-      />
-    }
-
-    <!-- ═══ No Data Empty State (filtered empty) ═══ -->
-    @case ('no-data') {
-      <ft-empty-state
-        icon="filter"
-        [title]="'analytics.noDataTitle' | translate"
-        [description]="'analytics.noDataDesc' | translate"
-        [showActionBtn]="true"
-        [actionLabel]="'analytics.clearFilters' | translate"
-        (action)="onFiltersReset()"
-        ftSubtleReveal="fade-up"
-        [delay]="50"
-      />
-    }
-
-    <!-- ═══ Content State — Bento Grid Layout ═══ -->
+    <!-- ═══ Content State — Always visible when loaded ═══ -->
     @case ('content') {
+      <!-- Welcome banner for new users — subtle, not blocking -->
+      @if (isNewUser()) {
+        <div class="analytics-welcome-banner" ftSubtleReveal="fade-up" [delay]="0">
+          <div class="analytics-welcome-banner__content">
+            <ng-icon name="chart" size="1.25rem" class="analytics-welcome-banner__icon" />
+            <span>{{ 'analytics.welcomeBanner' | translate }}</span>
+          </div>
+          <a routerLink="/transactions/new" class="analytics-welcome-banner__cta">
+            {{ 'analytics.addFirstTransaction' | translate }}
+          </a>
+        </div>
+      }
+
       <!-- 1. Header Row -->
       <div class="analytics-header-row" ftSubtleReveal="fade-up" [delay]="0">
         <div class="analytics-header-row__title">
@@ -70,9 +56,9 @@
         </div>
       </div>
 
-      <!-- 2. KPI Cards Row (4 cards) -->
+      <!-- 2. KPI Cards Row (always visible) -->
       <div class="analytics-kpis-row" ftSubtleReveal="fade-up" [delay]="50">
-        <ft-analytics-kpis [kpis]="kpis()" [loading]="isLoading()" />
+        <ft-analytics-kpis [kpis]="kpis()" [loading]="false" />
       </div>
 
       <!-- 3. Charts Row: Trends (wide) + Category (narrow) + Daily (narrow) -->
@@ -151,13 +137,13 @@
         </div>
       </div>
 
-      <!-- 4. Bottom Row: Insights (wide) + Transactions (narrow) + Summary (narrow) -->
+      <!-- 4. Bottom Row: Insights + Transactions + Summary -->
       <div class="analytics-bottom-row">
         <!-- Insights Panel (wide) -->
         <div class="analytics-bottom-row__insights" ftSubtleReveal="fade-up" [delay]="250">
           <ft-analytics-insights
             [insights]="uiInsights()"
-            [loading]="isLoading()"
+            [loading]="false"
           />
         </div>
 
@@ -165,7 +151,7 @@
         <div class="analytics-bottom-row__transactions" ftSubtleReveal="fade-up" [delay]="300">
           <ft-analytics-transactions
             [transactions]="uiTransactions()"
-            [loading]="isLoading()"
+            [loading]="false"
           />
         </div>
 
@@ -173,7 +159,7 @@
         <div class="analytics-bottom-row__summary" ftSubtleReveal="fade-up" [delay]="350">
           <ft-analytics-comparison
             [comparisons]="comparisons()"
-            [loading]="isLoading()"
+            [loading]="false"
           />
         </div>
       </div>

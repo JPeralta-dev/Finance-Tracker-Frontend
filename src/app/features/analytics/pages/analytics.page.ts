@@ -53,9 +53,19 @@ export function mapToKpis(
   currencySymbol: string,
   i18n: TranslationService,
 ): KpiData[] {
-  if (!summary) return [];
-
   const t = i18n.translate.bind(i18n);
+
+  // Defensive: detect if summary is wrapped (backend bug) or null
+  const hasValidData = summary && typeof summary.totalIncome === 'number';
+  if (!hasValidData) {
+    return [
+      { icon: 'trendingUp', labelKey: 'analytics.totalIncome', value: 0, prefix: currencySymbol, trend: 0 },
+      { icon: 'trendingDown', labelKey: 'analytics.totalExpenses', value: 0, prefix: currencySymbol, trend: 0 },
+      { icon: 'wallet', labelKey: 'analytics.netSavings', value: 0, prefix: currencySymbol, trend: 0 },
+      { icon: 'percent', labelKey: 'analytics.savingsRate', value: 0, suffix: '%', trend: 0 },
+    ];
+  }
+
   const lastIncome = trend?.income?.[trend.income.length - 1] ?? 0;
   const prevIncome = trend?.income?.[trend.income.length - 2] ?? lastIncome;
   const lastExpense = trend?.expenses?.[trend.expenses.length - 1] ?? 0;
@@ -128,7 +138,13 @@ export function mapToComparisons(
   currencySymbol: string,
   i18n: TranslationService,
 ): ComparisonData[] {
-  if (!summary) return [];
+  const hasValidData = summary && typeof summary.totalIncome === 'number';
+  if (!hasValidData) {
+    return [
+      { labelKey: 'analytics.comparison.income', current: 0, previous: 0, percentChange: 0, trend: 'stable' },
+      { labelKey: 'analytics.comparison.expenses', current: 0, previous: 0, percentChange: 0, trend: 'stable' },
+    ];
+  }
 
   const currentIncome = summary.totalIncome;
   const prevIncome = summary.incomeChange !== 0
@@ -201,7 +217,14 @@ export function generateMonthStories(
   i18n: TranslationService,
 ): MonthStory[] {
   const stories: MonthStory[] = [];
-  if (!summary) return stories;
+  if (!summary) {
+    stories.push({
+      icon: 'info',
+      messageKey: 'analytics.story.noData',
+      type: 'neutral',
+    });
+    return stories;
+  }
 
   const t = i18n.translate.bind(i18n);
 
@@ -376,19 +399,13 @@ export class AnalyticsPage implements OnInit {
   readonly isLoading = computed(() => this.store.loadState() === 'loading');
   readonly isError = computed(() => this.store.loadState() === 'error');
   readonly isNewUser = computed(() => this.store.isNewUser());
-  readonly isFilteredEmpty = computed(() => this.store.isFilteredEmpty());
 
-  readonly showWelcome = computed(() => this.store.loadState() === 'ready' && this.isNewUser());
-  readonly showNoData = computed(() => this.store.loadState() === 'ready' && this.isFilteredEmpty());
-  readonly showContent = computed(() =>
-    this.store.loadState() === 'ready' && !this.isNewUser() && !this.isFilteredEmpty(),
-  );
+  /** Show content layout whenever data is loaded — even with zero values */
+  readonly showContent = computed(() => this.store.loadState() === 'ready');
 
-  readonly pageState = computed<'loading' | 'error' | 'welcome' | 'no-data' | 'content'>(() => {
+  readonly pageState = computed<'loading' | 'error' | 'content'>(() => {
     if (this.isLoading()) return 'loading';
     if (this.isError()) return 'error';
-    if (this.showWelcome()) return 'welcome';
-    if (this.showNoData()) return 'no-data';
     return 'content';
   });
 
@@ -413,7 +430,7 @@ export class AnalyticsPage implements OnInit {
     effect(() => {
       const params = this.store.apiParams();
       this.loadData(params.range, params.bankId);
-    }, { allowSignalWrites: false });
+    }, { allowSignalWrites: true });
   }
 
   ngOnInit(): void {

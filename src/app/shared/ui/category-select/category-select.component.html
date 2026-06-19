@@ -1,0 +1,88 @@
+<div
+  class="category-select"
+  [class.is-open]="isOpen()"
+  [class.has-value]="selectedCategory()"
+  (keydown)="onKeyDown($event)"
+  tabindex="0"
+  role="listbox"
+  [attr.aria-expanded]="isOpen()"
+  [attr.aria-label]="'transactions.form.category' | translate"
+>
+  <!-- Trigger Button -->
+  <button
+    type="button"
+    class="select-trigger"
+    (click)="toggle()"
+    [class.has-selection]="selectedCategory()"
+  >
+    @if (selectedCategory(); as cat) {
+      <span class="selected-icon" [style.background]="cat.color + '22'">
+        <ng-icon [name]="cat.iconKey" size="1rem" [style.color]="cat.color" />
+      </span>
+      <span class="selected-name">{{ cat.name | categoryTranslate }}</span>
+    } @else {
+      <span class="placeholder">{{ placeholder() }}</span>
+    }
+    <ng-icon name="chevronRight" size="0.875rem" class="chevron" />
+  </button>
+
+  <!-- Dropdown Panel -->
+  @if (isOpen()) {
+    <div class="dropdown-panel" ftSubtleReveal="fade-up">
+      <!-- Search Input -->
+      <div class="search-wrap">
+        <ng-icon name="search" size="0.875rem" class="search-icon" />
+        <input
+          type="text"
+          class="search-input"
+          [placeholder]="'common.search' | translate"
+          (input)="onSearchInput($event)"
+          [value]="searchQuery()"
+          #searchInput
+        />
+      </div>
+
+      <!-- Category List -->
+      <div class="category-list" role="listbox">
+        @if (filteredCategories().length === 0) {
+          <div class="empty-state">
+            <ng-icon name="search" size="1.25rem" />
+            <span>{{ ('categories.empty.search' | translate) || 'No categories match your search' }}</span>
+          </div>
+        } @else {
+          @for (cat of filteredCategories(); track cat.id; let idx = $index) {
+            <button
+              type="button"
+              class="category-item"
+              [class.is-selected]="selectedCategory()?.id === cat.id"
+              [class.is-highlighted]="idx === highlightedIndex()"
+              (click)="selectCategory(cat.name)"
+              role="option"
+              [attr.aria-selected]="selectedCategory()?.id === cat.id"
+            >
+              <span class="cat-icon" [style.background]="cat.color + '22'">
+                <ng-icon [name]="cat.iconKey" size="1rem" [style.color]="cat.color" />
+              </span>
+              <span class="cat-name">{{ cat.name | categoryTranslate }}</span>
+              @if (selectedCategory()?.id === cat.id) {
+                <ng-icon name="check" size="0.875rem" class="check-icon" />
+              }
+            </button>
+          }
+        }
+      </div>
+
+      <!-- Add New Category Button -->
+      <div class="dropdown-footer">
+        <button
+          type="button"
+          class="btn-add-category"
+          (click)="onAddCategory()"
+        >
+          <ng-icon name="plus" size="0.875rem" />
+          {{ 'categories.new' | translate }}
+        </button>
+      </div>
+    </div>
+  }
+</div>

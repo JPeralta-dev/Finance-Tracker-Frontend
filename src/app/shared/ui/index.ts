@@ -12,6 +12,7 @@ export { UiCardComponent } from './ui-card/ui-card.component';
 export { UiBadgeComponent } from './ui-badge/ui-badge.component';
 export { SectionHeaderComponent } from './section-header/section-header.component';
 export { PaginationComponent } from './pagination/pagination.component';
+export { CategorySelectComponent } from './category-select/category-select.component';
 
 // Types
 export type { GlassVariant } from './glass-panel/glass-panel.component';

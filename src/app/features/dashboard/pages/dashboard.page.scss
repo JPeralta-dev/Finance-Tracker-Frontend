@@ -244,3 +244,44 @@
     border-color: var(--accent-primary, #9D50BB);
   }
 }
+
+/* ═══ Welcome Banner ═══ */
+.dashboard-welcome-banner {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 14px 20px;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  background: var(--glass-bg);
+  align-items: flex-start;
+
+  @media (min-width: 480px) {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  span {
+    color: var(--text-secondary);
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  &__cta {
+    padding: 8px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-inverse);
+    background: linear-gradient(135deg, var(--accent-start), var(--accent-mid));
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: all var(--duration-fast) var(--ease-out);
+
+    &:hover {
+      box-shadow: 0 0 24px rgba(157, 80, 187, 0.35);
+      transform: translateY(-1px);
+    }
+  }
+}

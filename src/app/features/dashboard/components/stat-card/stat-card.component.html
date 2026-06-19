@@ -41,4 +41,11 @@
       }
     </div>
   }
+
+  <!-- Hover overlay: reveals insight in detail -->
+  @if (data().insight) {
+    <div class="stat-card__overlay">
+      <span class="stat-card__overlay-text">{{ (data().insight || '') | translate }}</span>
+    </div>
+  }
 </div>

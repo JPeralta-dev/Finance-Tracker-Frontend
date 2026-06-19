@@ -64,7 +64,10 @@ export class TopbarComponent {
         const title = ROUTE_TITLES[url] ?? '';
         const isNavMatch = title !== '' && NAV_ITEM_LABELS.includes(title);
         this.pageTitle.set(isNavMatch ? '' : title);
-        this.showHomeButton.set(PRIVATE_PATHS.some(path => url.startsWith(path)));
+        // Show home button only on private routes that are NOT main nav pages
+        const isPrivate = PRIVATE_PATHS.some(path => url.startsWith(path));
+        const isMainNav = NAV_ITEMS.some(item => url === item.path || url.startsWith(item.path + '/'));
+        this.showHomeButton.set(isPrivate && !isMainNav);
       });
 
     // Initialize on component creation
@@ -72,7 +75,10 @@ export class TopbarComponent {
     const initTitle = ROUTE_TITLES[currentUrl] ?? '';
     const isInitNavMatch = initTitle !== '' && NAV_ITEM_LABELS.includes(initTitle);
     this.pageTitle.set(isInitNavMatch ? '' : initTitle);
-    this.showHomeButton.set(PRIVATE_PATHS.some(path => currentUrl.startsWith(path)));
+    // Show home button only on private routes that are NOT main nav pages
+    const isInitPrivate = PRIVATE_PATHS.some(path => currentUrl.startsWith(path));
+    const isInitMainNav = NAV_ITEMS.some(item => currentUrl === item.path || currentUrl.startsWith(item.path + '/'));
+    this.showHomeButton.set(isInitPrivate && !isInitMainNav);
   }
 
   onToggleMenu(): void {
