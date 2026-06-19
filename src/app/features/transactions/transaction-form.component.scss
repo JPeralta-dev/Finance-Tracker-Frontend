@@ -1,9 +1,6 @@
 .tx-overlay {
   position: fixed;
-  top: -20px;
-  right: -20px;
-  bottom: -20px;
-  left: -20px;
+  inset: 0;
   z-index: 10000;
   display: flex;
   align-items: center;
@@ -376,8 +373,16 @@
 
 /* Responsive */
 @media (max-width: 640px) {
+  .tx-overlay {
+    padding: 16px 12px;
+    align-items: flex-start;
+  }
+
   .form-card {
     padding: 22px 18px;
+    max-height: 90vh;
+    overflow-y: auto;
+    margin: 0;
   }
 
   .form-actions {
