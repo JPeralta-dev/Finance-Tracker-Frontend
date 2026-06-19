@@ -52,11 +52,11 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
   readonly successMsg = signal('');
   readonly errorMsg = signal('');
   readonly categories = signal<CategoryOption[]>([]);
+  readonly selectedType = signal<'income' | 'expense'>('expense');
 
   // Filtered categories based on selected type
   readonly filteredCategories = computed(() => {
-    const type = this.form.get('type')?.value;
-    if (!type) return this.categories();
+    const type = this.selectedType();
     if (type === 'income') {
       return this.categories().filter(c => c.kind === 'income' || c.kind === 'mixed');
     }
@@ -118,6 +118,7 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
       ).subscribe({
         next: (tx: any) => {
           if (!tx) return;
+          this.selectedType.set(tx.type);
           this.form.patchValue({
             type: tx.type,
             amount: tx.amount,
@@ -132,6 +133,7 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
   }
 
   setType(type: 'income' | 'expense'): void {
+    this.selectedType.set(type);
     this.form.get('type')?.setValue(type);
     this.form.get('category')?.setValue('');
   }
@@ -213,7 +215,7 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
       name: '',
       icon: '',
       color: '#9D50BB',
-      kind: this.form.get('type')?.value === 'income' ? 'income' : 'expense',
+      kind: this.selectedType(),
     });
   }
 }
