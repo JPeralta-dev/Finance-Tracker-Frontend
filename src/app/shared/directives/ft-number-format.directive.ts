@@ -1,12 +1,12 @@
-import { Directive, ElementRef, HostListener, inject, OnInit, effect } from '@angular/core';
+import { Directive, ElementRef, HostListener, inject, OnInit } from '@angular/core';
 import { NgControl } from '@angular/forms';
-import { CurrencyService } from '../../core/services/currency.service';
 
 /**
- * Formats numeric input with thousands separators and proper decimal handling.
- * - Shows thousands separators as you type (1,000,000)
- * - Shows cents (2 decimals) when currency uses them (e.g. USD)
- * - Writes the raw numeric value to the form control
+ * Formats numeric input with thousands separators on blur.
+ * - While typing: raw number entry (digits, dot, comma allowed)
+ * - On blur: formats with thousands separators and 2 decimals (e.g. 1,234,567.89)
+ * - On focus: reverts to raw number for easy editing
+ * - Currency-agnostic: always uses comma for thousands, dot for decimals
  *
  * Usage: <input ftNumberFormat formControlName="amount" />
  */
@@ -17,29 +17,21 @@ import { CurrencyService } from '../../core/services/currency.service';
 export class FtNumberFormatDirective implements OnInit {
   private el = inject(ElementRef);
   private ngControl = inject(NgControl);
-  private currencyService = inject(CurrencyService);
-
-  private decimals = 2;
-  private locale = 'en-US';
-
-  constructor() {
-    // React to currency config changes using effect
-    effect(() => {
-      const cfg = this.currencyService.currencyConfig();
-      this.decimals = cfg.decimals;
-      this.locale = cfg.locale;
-    });
-  }
 
   ngOnInit(): void {
-    const config = this.currencyService.currencyConfig();
-    this.decimals = config.decimals;
-    this.locale = config.locale;
-
     // Format initial value if the control already has one
     const raw = this.getRawValue();
     if (raw !== null) {
       this.setDisplayValue(this.formatNumber(raw));
+    }
+  }
+
+  @HostListener('focus')
+  onFocus(): void {
+    // Show raw number for easy editing
+    const raw = this.getRawValue();
+    if (raw !== null) {
+      this.setDisplayValue(String(raw));
     }
   }
 
@@ -51,22 +43,10 @@ export class FtNumberFormatDirective implements OnInit {
   @HostListener('input', ['$event'])
   onInput(event: Event): void {
     const input = event.target as HTMLInputElement;
-    const cursorPos = input.selectionStart ?? 0;
-    const oldLength = input.value.length;
-
-    // Strip everything except digits and decimal separator
     const raw = this.parseInput(input.value);
 
     if (raw !== null) {
-      const formatted = this.formatNumber(raw);
-      this.setDisplayValue(formatted);
       this.ngControl.control?.setValue(raw, { emitModelToViewChange: false });
-
-      // Adjust cursor position after formatting
-      const newLength = formatted.length;
-      const adjustment = newLength - oldLength;
-      const newPos = Math.max(0, Math.min(cursorPos + adjustment, newLength));
-      input.setSelectionRange(newPos, newPos);
     } else {
       this.ngControl.control?.setValue(null, { emitModelToViewChange: false });
     }
@@ -82,10 +62,10 @@ export class FtNumberFormatDirective implements OnInit {
     ];
     if (allowed.includes(event.key)) return;
 
-    // Allow: Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+X
+    // Allow: Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+X, Cmd equivalents
     if ((event.ctrlKey || event.metaKey) && ['a', 'c', 'v', 'x'].includes(event.key.toLowerCase())) return;
 
-    // Block non-numeric characters (except decimal point and comma)
+    // Block non-numeric characters (except dot and comma)
     if (!/^[0-9.,]$/.test(event.key)) {
       event.preventDefault();
     }
@@ -93,39 +73,50 @@ export class FtNumberFormatDirective implements OnInit {
 
   /**
    * Parse the input string to a raw number.
-   * Strips thousands separators, keeps the decimal part.
+   * Treats comma as thousands separator, dot as decimal separator.
    */
   private parseInput(value: string): number | null {
-    if (!value) return null;
+    if (!value || !value.trim()) return null;
 
-    // Remove all thousands separators (commas, dots, spaces)
-    let cleaned = value.replace(/[,\s]/g, '');
+    let cleaned = value.trim();
 
-    // Handle multiple decimal points - treat all but last as thousands separators
+    // Remove all commas (thousands separators)
+    cleaned = cleaned.replace(/,/g, '');
+
+    // Handle multiple dots - keep only the last one as decimal separator
     const parts = cleaned.split('.');
     if (parts.length > 2) {
+      // Remove all dots except the last one
       cleaned = parts.slice(0, -1).join('') + '.' + parts[parts.length - 1];
     }
 
     // Remove any remaining non-numeric chars except decimal point
     cleaned = cleaned.replace(/[^\d.]/g, '');
 
+    if (!cleaned || cleaned === '.') return null;
+
     const num = parseFloat(cleaned);
     return isNaN(num) ? null : num;
   }
 
   /**
-   * Format a number with thousands separators and proper decimals.
+   * Format a number with thousands separators (commas) and 2 decimal places.
+   * e.g. 1234567.89 -> "1,234,567.89"
    */
   private formatNumber(value: number): string {
-    return value.toLocaleString(this.locale, {
-      minimumFractionDigits: this.decimals,
-      maximumFractionDigits: this.decimals,
-    });
+    // Manual formatting to avoid locale dependency
+    const parts = value.toFixed(2).split('.');
+    const intPart = parts[0];
+    const decPart = parts[1];
+
+    // Add thousands separators
+    const formatted = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+    return `${formatted}.${decPart}`;
   }
 
   /**
-   * Apply formatting to the current input value (used on blur).
+   * Apply formatting on blur.
    */
   private applyFormatting(): void {
     const input = this.el.nativeElement as HTMLInputElement;
@@ -134,7 +125,7 @@ export class FtNumberFormatDirective implements OnInit {
     if (raw !== null && raw > 0) {
       this.setDisplayValue(this.formatNumber(raw));
       this.ngControl.control?.setValue(raw, { emitModelToViewChange: false });
-    } else if (raw === null || raw === 0) {
+    } else {
       this.setDisplayValue('');
       this.ngControl.control?.setValue(null, { emitModelToViewChange: false });
     }
