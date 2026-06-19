@@ -160,6 +160,50 @@ describe('RuleBasedInsightsService', () => {
 
       expect(spendingInsight).toBeUndefined();
     });
+
+    it('should NOT crash when monthlyTrend has undefined expenses', () => {
+      const data: AnalyticsData = {
+        ...emptyData(),
+        monthlyTrend: {
+          labels: ['May', 'Jun'],
+          income: [5000, 5000],
+          expenses: undefined as unknown as number[],
+        },
+      };
+
+      expect(() => service.generateInsights(data)).not.toThrow();
+      const spendingInsight = service.generateInsights(data).find((i) => i.type === 'spending');
+      expect(spendingInsight).toBeUndefined();
+    });
+
+    it('should NOT crash when monthlyTrend is missing expenses field entirely', () => {
+      const data: AnalyticsData = {
+        ...emptyData(),
+        monthlyTrend: {
+          labels: ['May', 'Jun'],
+          income: [5000, 5000],
+        } as unknown as MonthlyTrend,
+      };
+
+      expect(() => service.generateInsights(data)).not.toThrow();
+      const spendingInsight = service.generateInsights(data).find((i) => i.type === 'spending');
+      expect(spendingInsight).toBeUndefined();
+    });
+
+    it('should NOT crash when monthlyTrend has empty expenses array', () => {
+      const data: AnalyticsData = {
+        ...emptyData(),
+        monthlyTrend: {
+          labels: [],
+          income: [],
+          expenses: [],
+        },
+      };
+
+      const result = service.generateInsights(data);
+      const spendingInsight = result.find((i) => i.type === 'spending');
+      expect(spendingInsight).toBeUndefined();
+    });
   });
 
   // ─── Rule: Savings Rate ─────────────────────────────────────────────────
