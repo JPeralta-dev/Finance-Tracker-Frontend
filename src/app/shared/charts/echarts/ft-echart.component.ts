@@ -32,7 +32,10 @@ import {
   PLATFORM_ID,
 } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import type { EChartsOption, ECharts } from 'echarts';
+import type { EChartsOption } from 'echarts';
+import type { EChartsType } from 'echarts/core';
+
+import { registerECharts } from './echarts-module';
 
 /** ECharts state machine */
 export type EChartState = 'loading' | 'empty' | 'error' | 'ready';
@@ -173,7 +176,7 @@ export class FtEChartComponent implements OnInit, OnDestroy, OnChanges, AfterCon
   // ─── Outputs ─────────────────────────────────────────────────────────────
 
   /** Emits the ECharts instance when initialization completes */
-  chartReady = output<ECharts>();
+  chartReady = output<EChartsType>();
 
   /** Emits when an error occurs */
   chartError = output<Error>();
@@ -191,9 +194,8 @@ export class FtEChartComponent implements OnInit, OnDestroy, OnChanges, AfterCon
   private readonly destroyRef = inject(DestroyRef);
   private readonly platformId = inject(PLATFORM_ID);
 
-  private chartInstance: ECharts | null = null;
+  private chartInstance: EChartsType | null = null;
   private resizeObserver: ResizeObserver | null = null;
-  private echartsImport: typeof import('echarts') | null = null;
 
   /** Detect if user provided custom slot content */
   private hasLoadingContent = false;
@@ -265,7 +267,7 @@ export class FtEChartComponent implements OnInit, OnDestroy, OnChanges, AfterCon
   }
 
   /** Get the raw ECharts instance (for external resize calls) */
-  getInstance(): ECharts | null {
+  getInstance(): EChartsType | null {
     return this.chartInstance;
   }
 
@@ -273,10 +275,8 @@ export class FtEChartComponent implements OnInit, OnDestroy, OnChanges, AfterCon
 
   private async initChart(): Promise<void> {
     try {
-      // Lazy load ECharts
-      if (!this.echartsImport) {
-        this.echartsImport = await import('echarts');
-      }
+      await registerECharts();
+      const { init } = await import('echarts/core');
 
       const opts = this.options();
 
@@ -292,8 +292,7 @@ export class FtEChartComponent implements OnInit, OnDestroy, OnChanges, AfterCon
       }
 
       // Initialize chart
-      const echarts = this.echartsImport;
-      this.chartInstance = echarts.init(this.containerRef.nativeElement);
+      this.chartInstance = init(this.containerRef.nativeElement);
 
       this.chartInstance.setOption(opts);
 
