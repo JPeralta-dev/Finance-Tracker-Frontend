@@ -230,7 +230,7 @@ export class DashboardPage implements OnInit {
         // Process categories for donut chart (expense categories only)
         if (categories && categories.length > 0) {
           this.categories.set(categories);
-          const expenseCats = categories.filter(c => c.kind === 'expense' || c.kind === 'mixed').filter(c => c.total > 0);
+          const expenseCats = categories.filter(c => c.kind === 'expense' || c.kind === 'mixed').filter(c => c.total > 0).filter(c => c.name);
           const colors = getChartColors();
           this.donutData.set({
             labels: expenseCats.map(c => this.i18n.translate(c.name)),

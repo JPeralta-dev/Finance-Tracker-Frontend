@@ -73,6 +73,8 @@ export class TranslationService {
   }
 
   translate(key: string, params?: Record<string, number | string>): string {
+    // Null/undefined/empty guard — never crash on invalid keys
+    if (!key || typeof key !== 'string') return '';
     if (!this._loaded()) return key;
 
     const keys = key.split('.');
