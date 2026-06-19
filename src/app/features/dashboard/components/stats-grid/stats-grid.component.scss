@@ -9,6 +9,7 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 12px;
+  align-items: stretch;
 
   @include at-md {
     grid-template-columns: repeat(2, 1fr);

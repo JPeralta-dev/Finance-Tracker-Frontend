@@ -1,4 +1,4 @@
-import { Component, input, output, inject } from '@angular/core';
+import { Component, input, output, inject, effect, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, Router } from '@angular/router';
 import { NgIcon } from '@ng-icons/core';
@@ -28,6 +28,36 @@ export class MobileMenuComponent {
   close = output<void>();
 
   readonly currentUser = this.authService.currentUser;
+
+  // CSS transition state machine
+  readonly isVisible = signal(false);
+  readonly isDrawerOpen = signal(false);
+  readonly isClosing = signal(false);
+
+  constructor() {
+    effect(() => {
+      const wantsOpen = this.isOpen();
+      if (wantsOpen) {
+        this.isVisible.set(true);
+        requestAnimationFrame(() => this.isDrawerOpen.set(true));
+      } else if (this.isVisible()) {
+        this.isDrawerOpen.set(false);
+        this.isClosing.set(true);
+        const closeMs = this.readCloseDuration();
+        setTimeout(() => {
+          this.isClosing.set(false);
+          this.isVisible.set(false);
+        }, closeMs);
+      }
+    }, { allowSignalWrites: true });
+  }
+
+  private readCloseDuration(): number {
+    const val = getComputedStyle(document.documentElement)
+      .getPropertyValue('--panel-close-dur')
+      .trim();
+    return parseFloat(val) || 350;
+  }
 
   onClose(): void {
     this.close.emit();

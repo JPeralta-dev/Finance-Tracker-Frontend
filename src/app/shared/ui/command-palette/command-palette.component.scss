@@ -12,7 +12,11 @@
   background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  animation: fadeIn 0.2s ease-out;
+}
+
+/* t-modal handles open/close via .is-open and .is-closing classes */
+.cmd-backdrop.t-modal.is-open {
+  /* backdrop transitions are inherited from t-modal */
 }
 
 .cmd-container {
@@ -23,7 +27,6 @@
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-xl);
   overflow: hidden;
-  animation: scaleIn 0.2s var(--ease-out);
 }
 
 .cmd-input-wrapper {
@@ -134,12 +137,6 @@
   font-size: 14px;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes scaleIn {
-  from { transform: scale(0.98); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
-}
+/* Keyframes replaced by global .t-modal pattern (styles.scss)
+   Fade + scale now handled by transitions-dev CSS custom properties:
+   --modal-open-dur: 250ms, --modal-close-dur: 150ms, --modal-scale: 0.96 */

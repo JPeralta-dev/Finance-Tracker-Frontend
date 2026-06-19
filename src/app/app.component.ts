@@ -7,13 +7,11 @@ import { ToastContainerComponent } from './shared/ui/toast/toast.component';
 import { CategoryModalComponent } from './shared/ui/category-modal/category-modal.component';
 import { CommandService } from './core/services/command.service';
 import { AuthService } from './core/services/auth.service';
-import { pageTransition } from './shared/animations';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet, TopbarComponent, CommandPaletteComponent, ToastContainerComponent, CategoryModalComponent],
-  animations: [pageTransition],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
