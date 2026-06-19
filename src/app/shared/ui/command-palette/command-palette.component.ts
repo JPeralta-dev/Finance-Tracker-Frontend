@@ -67,7 +67,7 @@ export class CommandPaletteComponent implements AfterViewInit, OnDestroy {
           this.isVisible.set(false);
         }, closeMs);
       }
-    });
+    }, { allowSignalWrites: true });
   }
 
   private readCloseDuration(): number {

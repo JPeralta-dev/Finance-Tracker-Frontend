@@ -413,7 +413,7 @@ export class AnalyticsPage implements OnInit {
     effect(() => {
       const params = this.store.apiParams();
       this.loadData(params.range, params.bankId);
-    }, { allowSignalWrites: false });
+    }, { allowSignalWrites: true });
   }
 
   ngOnInit(): void {

@@ -122,7 +122,7 @@ export class CategoryModalComponent {
           this.isVisible.set(false);
         }, closeMs);
       }
-    });
+    }, { allowSignalWrites: true });
   }
 
   private readCloseDuration(): number {

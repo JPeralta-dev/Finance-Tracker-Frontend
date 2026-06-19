@@ -49,7 +49,7 @@ export class MobileMenuComponent {
           this.isVisible.set(false);
         }, closeMs);
       }
-    });
+    }, { allowSignalWrites: true });
   }
 
   private readCloseDuration(): number {

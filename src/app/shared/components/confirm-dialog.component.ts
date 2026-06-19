@@ -141,7 +141,7 @@ export class ConfirmDialogComponent {
           this.isVisible.set(false);
         }, closeMs);
       }
-    });
+    }, { allowSignalWrites: true });
   }
 
   private readCloseDuration(): number {
