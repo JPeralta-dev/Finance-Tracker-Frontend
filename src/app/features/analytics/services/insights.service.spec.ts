@@ -12,6 +12,7 @@ import {
   InsightRuleConfig,
 } from './insights.service';
 import type { AnalyticsData, InsightData } from './insights.provider';
+import type { MonthlyTrend } from '../services/analytics-api.service';
 
 describe('RuleBasedInsightsService', () => {
   let service: RuleBasedInsightsService;

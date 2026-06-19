@@ -142,16 +142,39 @@ export class DashboardPage implements OnInit {
   });
 
   ngOnInit(): void {
-    this.loadData();
+    this.loadData(this.selectedRange());
   }
 
-  private loadData(): void {
+  private computeDateRange(range: string): { startDate: string; endDate: string } | null {
+    const now = new Date();
+    let startDate: Date;
+    switch (range) {
+      case '7d': startDate = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000); break;
+      case '30d': startDate = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000); break;
+      case '6m': startDate = new Date(now.getTime() - 180 * 24 * 60 * 60 * 1000); break;
+      case '1y': startDate = new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000); break;
+      default: return null;
+    }
+    return {
+      startDate: startDate.toISOString(),
+      endDate: new Date().toISOString(),
+    };
+  }
+
+  private loadData(range?: string): void {
     this.state.set('loading');
+
+    const dateRange = range ? this.computeDateRange(range) : null;
 
     forkJoin({
       summary: this.financeService.getSummary().pipe(catchError(() => of(null))),
       chart: this.financeService.getMonthlyChart().pipe(catchError(() => of(null))),
-      transactions: this.financeService.getTransactions({ limit: 5, sortBy: 'date', sortDir: 'desc' }).pipe(catchError(() => of(null))),
+      transactions: this.financeService.getTransactions({
+        limit: 5,
+        sortBy: 'date',
+        sortDir: 'desc',
+        ...(dateRange ? { startDate: dateRange.startDate, endDate: dateRange.endDate } : {}),
+      }).pipe(catchError(() => of(null))),
       categories: this.financeService.getCategories().pipe(catchError(() => of([]))),
       insights: this.financeService.getInsights().pipe(catchError(() => of([]))),
     }).subscribe({
@@ -253,10 +276,11 @@ export class DashboardPage implements OnInit {
   }
 
   retry(): void {
-    this.loadData();
+    this.loadData(this.selectedRange());
   }
 
   setRange(range: string): void {
     this.selectedRange.set(range);
+    this.loadData(range);
   }
 }
