@@ -55,8 +55,9 @@ export function mapToKpis(
 ): KpiData[] {
   const t = i18n.translate.bind(i18n);
 
-  if (!summary) {
-    // Return placeholder KPIs with zero values so the user sees the full layout
+  // Defensive: detect if summary is wrapped (backend bug) or null
+  const hasValidData = summary && typeof summary.totalIncome === 'number';
+  if (!hasValidData) {
     return [
       { icon: 'trendingUp', labelKey: 'analytics.totalIncome', value: 0, prefix: currencySymbol, trend: 0 },
       { icon: 'trendingDown', labelKey: 'analytics.totalExpenses', value: 0, prefix: currencySymbol, trend: 0 },
@@ -137,7 +138,8 @@ export function mapToComparisons(
   currencySymbol: string,
   i18n: TranslationService,
 ): ComparisonData[] {
-  if (!summary) {
+  const hasValidData = summary && typeof summary.totalIncome === 'number';
+  if (!hasValidData) {
     return [
       { labelKey: 'analytics.comparison.income', current: 0, previous: 0, percentChange: 0, trend: 'stable' },
       { labelKey: 'analytics.comparison.expenses', current: 0, previous: 0, percentChange: 0, trend: 'stable' },
