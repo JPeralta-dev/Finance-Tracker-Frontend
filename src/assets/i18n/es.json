@@ -392,7 +392,9 @@
     },
     "comparison": {
       "income": "Ingresos",
-      "expenses": "Gastos"
+      "expenses": "Gastos",
+      "current": "Actual",
+      "previous": "Anterior"
     }
   },
   "profile": {
