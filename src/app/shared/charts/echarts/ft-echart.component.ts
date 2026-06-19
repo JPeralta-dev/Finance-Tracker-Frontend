@@ -24,6 +24,7 @@ import {
   OnDestroy,
   OnChanges,
   AfterContentInit,
+  AfterViewInit,
   SimpleChanges,
   ChangeDetectionStrategy,
   inject,
@@ -161,7 +162,7 @@ export type EChartState = 'loading' | 'empty' | 'error' | 'ready';
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FtEChartComponent implements OnInit, OnDestroy, OnChanges, AfterContentInit {
+export class FtEChartComponent implements OnInit, OnDestroy, OnChanges, AfterContentInit, AfterViewInit {
   // ─── Inputs ──────────────────────────────────────────────────────────────
 
   /** ECharts configuration options */
@@ -224,8 +225,12 @@ export class FtEChartComponent implements OnInit, OnDestroy, OnChanges, AfterCon
 
     if (this.loading()) {
       this._state.set('loading');
-      return;
     }
+  }
+
+  ngAfterViewInit(): void {
+    if (!isPlatformBrowser(this.platformId)) return;
+    if (this.loading()) return;
 
     this.initChart();
   }
@@ -245,12 +250,18 @@ export class FtEChartComponent implements OnInit, OnDestroy, OnChanges, AfterCon
       return;
     }
 
-    if (changes['options'] && this.chartInstance) {
+    if (changes['options']) {
       const opts = this.options();
-      if (opts) {
-        this.updateChart(opts);
-      } else {
+      if (opts && !this.isEmptyOptions(opts)) {
+        if (this.chartInstance) {
+          this.updateChart(opts);
+        } else {
+          // Options became available — initialize chart
+          this.initChart();
+        }
+      } else if (this.chartInstance) {
         this._state.set('empty');
+        this.disposeChart();
       }
     }
   }
