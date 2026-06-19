@@ -18,10 +18,12 @@ import {
   output,
   signal,
   ViewChild,
+  ContentChild,
   ElementRef,
   OnInit,
   OnDestroy,
   OnChanges,
+  AfterContentInit,
   SimpleChanges,
   ChangeDetectionStrategy,
   inject,
@@ -43,21 +45,21 @@ export type EChartState = 'loading' | 'empty' | 'error' | 'ready';
     <div class="ft-echart-container" [style.height]="height()">
       @if (_state() === 'loading') {
         <ng-content select="[loading]" />
-        @if (!hasLoadingContent) {
+        @if (!_hasLoadingContent()) {
           <div class="ft-echart-skeleton">
             <div class="ft-echart-skeleton-bar"></div>
           </div>
         }
       } @else if (_state() === 'empty') {
         <ng-content select="[empty]" />
-        @if (!hasEmptyContent) {
+        @if (!_hasEmptyContent()) {
           <div class="ft-echart-empty">
             <span>No data available</span>
           </div>
         }
       } @else if (_state() === 'error') {
         <ng-content select="[error]" />
-        @if (!hasErrorContent) {
+        @if (!_hasErrorContent()) {
           <div class="ft-echart-error">
             <span>Error loading chart</span>
             <button class="ft-echart-retry" (click)="retry()" type="button">
@@ -156,7 +158,7 @@ export type EChartState = 'loading' | 'empty' | 'error' | 'ready';
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FtEChartComponent implements OnInit, OnDestroy, OnChanges {
+export class FtEChartComponent implements OnInit, OnDestroy, OnChanges, AfterContentInit {
   // ─── Inputs ──────────────────────────────────────────────────────────────
 
   /** ECharts configuration options */
@@ -194,9 +196,19 @@ export class FtEChartComponent implements OnInit, OnDestroy, OnChanges {
   private echartsImport: typeof import('echarts') | null = null;
 
   /** Detect if user provided custom slot content */
-  hasLoadingContent = false;
-  hasEmptyContent = false;
-  hasErrorContent = false;
+  private hasLoadingContent = false;
+  private hasEmptyContent = false;
+  private hasErrorContent = false;
+
+  // Query projected content to detect if user provided custom slots
+  @ContentChild('[loading]', { read: ElementRef }) private loadingSlot?: ElementRef;
+  @ContentChild('[empty]', { read: ElementRef }) private emptySlot?: ElementRef;
+  @ContentChild('[error]', { read: ElementRef }) private errorSlot?: ElementRef;
+
+  /** Expose content detection flags for the template */
+  readonly _hasLoadingContent = signal(false);
+  readonly _hasEmptyContent = signal(false);
+  readonly _hasErrorContent = signal(false);
 
   constructor() {
     // Sync internal state to output
@@ -214,6 +226,13 @@ export class FtEChartComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     this.initChart();
+  }
+
+  ngAfterContentInit(): void {
+    // Detect projected ng-content slots and update signals
+    this._hasLoadingContent.set(!!this.loadingSlot);
+    this._hasEmptyContent.set(!!this.emptySlot);
+    this._hasErrorContent.set(!!this.errorSlot);
   }
 
   ngOnChanges(changes: SimpleChanges): void {

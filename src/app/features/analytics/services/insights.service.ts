@@ -82,7 +82,7 @@ export class RuleBasedInsightsService implements InsightProvider {
     const insights: InsightData[] = [];
     const trend = data.monthlyTrend;
 
-    if (!trend || trend.expenses.length < 2) return insights;
+    if (!trend?.expenses?.length || trend.expenses.length < 2) return insights;
 
     const expenses = trend.expenses;
     const currentMonth = expenses[expenses.length - 1];

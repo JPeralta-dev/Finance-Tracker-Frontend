@@ -142,16 +142,52 @@ export class DashboardPage implements OnInit {
   });
 
   ngOnInit(): void {
-    this.loadData();
+    this.loadData(this.selectedRange());
   }
 
-  private loadData(): void {
+  private computeDateRange(range: string): { startDate: string; endDate: string } | null {
+    const now = new Date();
+    let startDate: Date;
+    switch (range) {
+      case '7d': startDate = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000); break;
+      case '30d': startDate = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000); break;
+      case '6m': startDate = new Date(now.getTime() - 180 * 24 * 60 * 60 * 1000); break;
+      case '1y': startDate = new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000); break;
+      default: return null;
+    }
+    return {
+      startDate: startDate.toISOString(),
+      endDate: new Date().toISOString(),
+    };
+  }
+
+  /** Map range string to months for chart API */
+  private rangeToMonths(range: string): number {
+    switch (range) {
+      case '7d': return 1;
+      case '30d': return 3;
+      case '6m': return 6;
+      case '1y': return 12;
+      default: return 6;
+    }
+  }
+
+  private loadData(range?: string): void {
     this.state.set('loading');
+
+    const currentRange = range ?? this.selectedRange();
+    const dateRange = currentRange ? this.computeDateRange(currentRange) : null;
+    const months = this.rangeToMonths(currentRange);
 
     forkJoin({
       summary: this.financeService.getSummary().pipe(catchError(() => of(null))),
-      chart: this.financeService.getMonthlyChart().pipe(catchError(() => of(null))),
-      transactions: this.financeService.getTransactions({ limit: 5, sortBy: 'date', sortDir: 'desc' }).pipe(catchError(() => of(null))),
+      chart: this.financeService.getMonthlyChart(months).pipe(catchError(() => of(null))),
+      transactions: this.financeService.getTransactions({
+        limit: 5,
+        sortBy: 'date',
+        sortDir: 'desc',
+        ...(dateRange ? { startDate: dateRange.startDate, endDate: dateRange.endDate } : {}),
+      }).pipe(catchError(() => of(null))),
       categories: this.financeService.getCategories().pipe(catchError(() => of([]))),
       insights: this.financeService.getInsights().pipe(catchError(() => of([]))),
     }).subscribe({
@@ -162,7 +198,9 @@ export class DashboardPage implements OnInit {
           return;
         }
 
-        if (summary) {
+        // Defensive: check if summary has valid shape (backend might wrap it)
+        const hasValidSummary = summary && typeof summary.totalIncome === 'number';
+        if (hasValidSummary) {
           this.stats.set(this.mapSummary(summary));
         } else {
           // Show zero stats so the layout is always visible
@@ -251,10 +289,11 @@ export class DashboardPage implements OnInit {
   }
 
   retry(): void {
-    this.loadData();
+    this.loadData(this.selectedRange());
   }
 
   setRange(range: string): void {
     this.selectedRange.set(range);
+    this.loadData(range);
   }
 }
