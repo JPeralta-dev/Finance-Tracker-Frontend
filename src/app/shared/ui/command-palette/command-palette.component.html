@@ -1,5 +1,10 @@
-@if (open()) {
-  <div class="cmd-backdrop" (click)="onBackdropClick()">
+@if (isVisible()) {
+  <div
+    class="cmd-backdrop t-modal"
+    [class.is-open]="isOpen()"
+    [class.is-closing]="isClosing()"
+    (click)="onBackdropClick()"
+  >
     <div class="cmd-container">
       <!-- Search Input -->
       <div class="cmd-input-wrapper">

@@ -58,13 +58,13 @@
               <span class="currency-symbol">{{ currencySymbol }}</span>
               <input
                 id="amount"
-                type="number"
+                type="text"
+                inputmode="decimal"
                 formControlName="amount"
                 placeholder="0.00"
                 class="form-input currency-input"
                 [class.error]="isInvalid('amount')"
-                min="0"
-                step="0.01"
+                ftNumberFormat
               />
             </div>
             @if (isInvalid('amount')) {
@@ -98,21 +98,12 @@
           <!-- Category -->
           <div class="form-group">
             <label class="form-label" for="category">{{ 'transactions.form.category' | translate }}</label>
-            <div class="input-wrap">
-              <select
-                id="category"
-                formControlName="category"
-                class="form-input form-select"
-                [class.error]="isInvalid('category')"
-              >
-                <option value="" disabled>{{ 'transactions.form.category_placeholder' | translate }}</option>
-                @for (cat of filteredCategories(); track cat.id) {
-                  <option [value]="cat.name">
-                    {{ cat.name | categoryTranslate }}
-                  </option>
-                }
-              </select>
-            </div>
+            <ft-category-select
+              [categories]="filteredCategories()"
+              [placeholder]="'transactions.form.category_placeholder' | translate"
+              formControlName="category"
+              (addCategory)="onAddCategoryFromForm()"
+            />
             @if (isInvalid('category')) {
               <span class="error-msg">
                 {{ 'transactions.form.errors.' + getErrorMessage('category') | translate }}

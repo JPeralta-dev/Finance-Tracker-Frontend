@@ -67,6 +67,23 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
+  align-items: stretch;
+}
+
+/* Force cards to fill grid cell height */
+.features__grid ft-feature-card {
+  height: 100%;
+}
+
+/* Feature cards stagger animation */
+.features__grid ft-feature-card {
+  opacity: 0;
+  animation: cardFadeIn 0.5s ease-out forwards;
+}
+
+/* Force all cards in a row to same height */
+.features__grid ft-feature-card {
+  height: 100%;
 }
 
 /* Feature cards stagger animation */

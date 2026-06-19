@@ -8,28 +8,8 @@
       [actionLabel]="'dashboard.retry' | translate"
       (action)="retry()"
     />
-  } @else if (state() === 'empty') {
-    <!-- Empty state — no transactions yet -->
-    <div class="dashboard-greeting" ftSubtleReveal="fade-up">
-      <div>
-        <h1 class="dashboard-greeting__title">{{ 'dashboard.welcomeTitle' | translate }}</h1>
-        <p class="dashboard-greeting__subtitle">
-          {{ 'dashboard.welcomeSubtitle' | translate }}
-        </p>
-      </div>
-      <a routerLink="/transactions/new" class="dashboard-greeting__cta" [ftHoverDepth]="8">
-        {{ 'dashboard.newTransaction' | translate }}
-      </a>
-    </div>
-    <ft-empty-state
-      icon="wallet"
-      [title]="'dashboard.emptyOverview' | translate"
-      [description]="'dashboard.emptyOverviewDesc' | translate"
-      [actionLabel]="'dashboard.addTransaction' | translate"
-      actionRoute="/transactions/new"
-    />
   } @else if (state() === 'ready') {
-    <!-- Ready content (only rendered when data is loaded) -->
+    <!-- Ready content (always rendered — even with zero data) -->
     <div class="dashboard-content-layer dashboard-content-layer--ready">
       <!-- Greeting -->
       <div class="dashboard-greeting" ftSubtleReveal="fade-up">
@@ -38,6 +18,16 @@
           {{ 'dashboard.newTransaction' | translate }}
         </a>
       </div>
+
+      <!-- Welcome banner for new users -->
+      @if (!hasData()) {
+        <div class="dashboard-welcome-banner" ftSubtleReveal="fade-up" [delay]="25">
+          <span>{{ 'dashboard.welcomeBanner' | translate }}</span>
+          <a routerLink="/transactions/new" class="dashboard-welcome-banner__cta">
+            {{ 'dashboard.addTransaction' | translate }}
+          </a>
+        </div>
+      }
 
       <!-- Date Range Selector -->
       <div class="dashboard-daterange" ftSubtleReveal="fade-up" [delay]="50">
@@ -52,7 +42,7 @@
         }
       </div>
 
-      <!-- Stats Grid -->
+      <!-- Stats Grid (always visible — shows zeros when empty) -->
       <div ftSubtleReveal="fade-up" [delay]="100">
         <ft-stats-grid [stats]="stats()" [loading]="false" />
       </div>
@@ -70,7 +60,7 @@
         <div class="dashboard-content__chart" ftSubtleReveal="fade-up" [delay]="200">
           <ft-echart
             [options]="areaChartOptions()"
-            [loading]="state() === 'loading'"
+            [loading]="false"
             height="250px"
           >
             <ng-container loading><div class="chart-skeleton"></div></ng-container>
@@ -91,7 +81,7 @@
           <div class="dashboard-content__donut">
             <ft-echart
               [options]="donutChartOptions()"
-              [loading]="state() === 'loading'"
+              [loading]="false"
               height="200px"
             >
               <ng-container loading><div class="chart-skeleton"></div></ng-container>
@@ -107,43 +97,39 @@
         </div>
       </div>
     </div>
+  }
 
-    <!-- Loading overlay (absolute-positioned, fades out on transition) -->
-    @if (state() === 'loading') {
-      <div class="dashboard-content-layer dashboard-content-layer--loading">
-        <!-- Loading state -->
-        <div class="dashboard-greeting" ftSubtleReveal="fade-up">
-          <div>
-            <h1 class="dashboard-greeting__title">{{ 'dashboard.loading' | translate }}</h1>
-            <p class="dashboard-greeting__subtitle">{{ 'dashboard.fetchingData' | translate }}</p>
+  <!-- Loading overlay -->
+  @if (state() === 'loading') {
+    <div class="dashboard-content-layer dashboard-content-layer--loading">
+      <div class="dashboard-greeting" ftSubtleReveal="fade-up">
+        <div>
+          <h1 class="dashboard-greeting__title">{{ 'dashboard.loading' | translate }}</h1>
+          <p class="dashboard-greeting__subtitle">{{ 'dashboard.fetchingData' | translate }}</p>
+        </div>
+      </div>
+      <div ftSubtleReveal="fade-up" [delay]="100">
+        <ft-stats-grid [stats]="[]" [loading]="true" />
+      </div>
+      <div ftSubtleReveal="fade-up" [delay]="150" class="dashboard-insights">
+        <h2 class="dashboard-insights__title">{{ 'insights.title' | translate }}</h2>
+        <ft-insights-panel [loading]="true" />
+      </div>
+      <div class="dashboard-content">
+        <div class="dashboard-content__chart" ftSubtleReveal="fade-up" [delay]="200">
+          <div class="chart-placeholder chart-placeholder--loading">
+            <div class="skeleton-bar"></div>
           </div>
         </div>
-        <div ftSubtleReveal="fade-up" [delay]="100">
-          <ft-stats-grid [stats]="[]" [loading]="true" />
-        </div>
-        <!-- Insights skeleton -->
-        <div ftSubtleReveal="fade-up" [delay]="150" class="dashboard-insights">
-          <h2 class="dashboard-insights__title">{{ 'insights.title' | translate }}</h2>
-          <ft-insights-panel [loading]="true" />
-        </div>
-        <!-- Chart + Activity + Donut skeletons -->
-        <!-- TODO: Phase 3 — Replace with FtEChartComponent loading states -->
-        <div class="dashboard-content">
-          <div class="dashboard-content__chart" ftSubtleReveal="fade-up" [delay]="200">
+        <div class="dashboard-content__sidebar" ftSubtleReveal="fade-up" [delay]="300">
+          <ft-recent-activity [loading]="true" [items]="[]" />
+          <div class="dashboard-content__donut">
             <div class="chart-placeholder chart-placeholder--loading">
               <div class="skeleton-bar"></div>
             </div>
           </div>
-          <div class="dashboard-content__sidebar" ftSubtleReveal="fade-up" [delay]="300">
-            <ft-recent-activity [loading]="true" [items]="[]" />
-            <div class="dashboard-content__donut">
-              <div class="chart-placeholder chart-placeholder--loading">
-                <div class="skeleton-bar"></div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
-    }
+    </div>
   }
 </div>

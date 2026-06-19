@@ -190,7 +190,7 @@
     "addFirstTransaction": "Ajouter Transaction",
     "newTransaction": "+ Nouvelle Transaction",
     "form": {
-      "back": "← Retour aux transactions",
+      "back": "Retour aux transactions",
       "new_title": "Nouvelle Transaction",
       "edit_title": "Modifier la Transaction",
       "new_subtitle": "Remplissez les détails pour enregistrer une transaction",
@@ -234,7 +234,7 @@
   "categories": {
     "title": "Catégories",
     "subtitle": "Répartition des dépenses par catégorie",
-    "new": "+ Nouvelle Catégorie",
+    "new": "Nouvelle Catégorie",
     "add": "Ajouter",
     "edit": "Modifier",
     "delete": "Supprimer",
@@ -251,7 +251,8 @@
     "empty": {
       "title": "Pas encore de catégories",
       "desc": "Ajoutez des transactions pour voir les catégories apparaître ici.",
-      "action": "+ Nouvelle Transaction"
+      "action": "+ Nouvelle Transaction",
+      "search": "Aucune catégorie ne correspond à votre recherche"
     },
     "form": {
       "name": "Nom",

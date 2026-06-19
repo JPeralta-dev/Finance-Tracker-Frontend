@@ -193,7 +193,7 @@
     "addFirstTransaction": "Add Transaction",
     "newTransaction": "+ New Transaction",
     "form": {
-      "back": "← Back to transactions",
+      "back": "Back to transactions",
       "new_title": "New Transaction",
       "edit_title": "Edit Transaction",
       "new_subtitle": "Fill in the details to record a transaction",
@@ -237,7 +237,7 @@
   "categories": {
     "title": "Categories",
     "subtitle": "Spending breakdown by category",
-    "new": "+ New Category",
+    "new": "New Category",
     "add": "Add",
     "edit": "Edit",
     "delete": "Delete",
@@ -254,7 +254,8 @@
     "empty": {
       "title": "No categories yet",
       "desc": "Add some transactions to see categories appear here.",
-      "action": "+ New Transaction"
+      "action": "+ New Transaction",
+      "search": "No categories match your search"
     },
     "form": {
       "name": "Name",

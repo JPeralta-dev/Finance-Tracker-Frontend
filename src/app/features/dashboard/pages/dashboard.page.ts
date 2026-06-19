@@ -20,7 +20,7 @@ import { Category } from '../../../core/models/category.model';
 import { Insight } from '../../../core/models/insight.model';
 import type { EChartsOption } from 'echarts';
 
-type DashboardState = 'loading' | 'ready' | 'empty' | 'error';
+type DashboardState = 'loading' | 'ready' | 'error';
 
 // ─── Temporary types (Phase 3 will replace with ECharts types) ────────────
 
@@ -134,6 +134,13 @@ export class DashboardPage implements OnInit {
     return 'dashboard.greeting_evening';
   });
 
+  // Whether the user has any real transaction data (non-zero values)
+  readonly hasData = computed(() => {
+    const s = this.stats();
+    if (s.length === 0) return false;
+    return s.some(stat => stat.value !== 0);
+  });
+
   ngOnInit(): void {
     this.loadData();
   }
@@ -157,6 +164,9 @@ export class DashboardPage implements OnInit {
 
         if (summary) {
           this.stats.set(this.mapSummary(summary));
+        } else {
+          // Show zero stats so the layout is always visible
+          this.stats.set(this.mapSummary({ totalBalance: 0, totalIncome: 0, totalExpenses: 0, savingsRate: 0 }));
         }
 
         if (chart && chart.length > 0) {
@@ -196,9 +206,8 @@ export class DashboardPage implements OnInit {
           this.insights.set(insights);
         }
 
-        // Check if user has any data at all
-        const hasData = summary?.totalIncome !== 0 || summary?.totalExpenses !== 0 || (transactions?.length ?? 0) > 0;
-        this.state.set(hasData ? 'ready' : 'empty');
+        // Always show ready state — even with zero data so the user sees the full layout
+        this.state.set('ready');
       },
       error: () => {
         this.state.set('error');

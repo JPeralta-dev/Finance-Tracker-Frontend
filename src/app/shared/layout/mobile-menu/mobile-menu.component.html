@@ -1,6 +1,15 @@
-@if (isOpen()) {
-  <div class="mobile-menu-backdrop" (click)="onClose()"></div>
-  <div class="mobile-menu-drawer">
+@if (isVisible()) {
+  <div
+    class="mobile-menu-backdrop"
+    [class.is-open]="isDrawerOpen()"
+    [class.is-closing]="isClosing()"
+    (click)="onClose()"
+  ></div>
+  <div
+    class="mobile-menu-drawer"
+    [class.is-open]="isDrawerOpen()"
+    [class.is-closing]="isClosing()"
+  >
     <div class="mobile-menu-header">
       <span class="mobile-menu-logo">Flowr</span>
       <button class="mobile-menu-close" (click)="onClose()" aria-label="Close menu">
