@@ -166,7 +166,7 @@ export class DashboardPage implements OnInit {
           this.chartLabels.set(chart.map(d => d.month));
           this.chartDatasets.set([
             { label: this.i18n.translate('transactions.form.income'), data: chart.map(d => d.income), color: colors.income },
-            { label: this.i18n.translate('transactions.form.expense'), data: chart.map(d => d.expenses), color: colors.expense },
+            { label: this.i18n.translate('transactions.form.expense'), data: chart.map(d => Math.abs(d.expenses)), color: colors.expense },
           ]);
         }
 
