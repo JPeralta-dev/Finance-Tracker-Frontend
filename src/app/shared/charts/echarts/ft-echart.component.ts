@@ -71,9 +71,9 @@ export type EChartState = 'loading' | 'empty' | 'error' | 'ready';
             </button>
           </div>
         }
-      } @else {
-        <div #chartContainer class="ft-echart-canvas"></div>
       }
+      <!-- Always in DOM so ViewChild resolves; hidden until state === 'ready' -->
+      <div #chartContainer class="ft-echart-canvas" [class.ft-echart-canvas--hidden]="_state() !== 'ready'"></div>
     </div>
   `,
   styles: `
@@ -91,6 +91,10 @@ export type EChartState = 'loading' | 'empty' | 'error' | 'ready';
     .ft-echart-canvas {
       width: 100%;
       height: 100%;
+    }
+
+    .ft-echart-canvas--hidden {
+      display: none;
     }
 
     .ft-echart-skeleton {
@@ -216,7 +220,9 @@ export class FtEChartComponent implements OnInit, OnDestroy, OnChanges, AfterCon
   constructor() {
     // Sync internal state to output
     effect(() => {
-      this.state.emit(this._state());
+      const newState = this._state();
+      console.log('[FtEChartComponent] state transition:', newState);
+      this.state.emit(newState);
     });
   }
 
@@ -229,9 +235,11 @@ export class FtEChartComponent implements OnInit, OnDestroy, OnChanges, AfterCon
   }
 
   ngAfterViewInit(): void {
+    console.log('[FtEChartComponent] ngAfterViewInit - platformBrowser:', isPlatformBrowser(this.platformId), 'loading:', this.loading());
     if (!isPlatformBrowser(this.platformId)) return;
     if (this.loading()) return;
 
+    console.log('[FtEChartComponent] ngAfterViewInit -> calling initChart()');
     this.initChart();
   }
 
@@ -255,10 +263,11 @@ export class FtEChartComponent implements OnInit, OnDestroy, OnChanges, AfterCon
       if (opts && !this.isEmptyOptions(opts)) {
         if (this.chartInstance) {
           this.updateChart(opts);
-        } else {
-          // Options became available — initialize chart
+        } else if (this.containerRef) {
+          // ViewChild is resolved — initialize chart now
           this.initChart();
         }
+        // If containerRef is not yet available, ngAfterViewInit will call initChart()
       } else if (this.chartInstance) {
         this._state.set('empty');
         this.disposeChart();
@@ -285,36 +294,50 @@ export class FtEChartComponent implements OnInit, OnDestroy, OnChanges, AfterCon
   // ─── Private ─────────────────────────────────────────────────────────────
 
   private async initChart(): Promise<void> {
+    console.log('[FtEChartComponent] initChart() START');
     try {
+      console.log('[FtEChartComponent] initChart: awaiting registerECharts()...');
       await registerECharts();
+      console.log('[FtEChartComponent] initChart: registerECharts() OK, importing echarts/core...');
       const { init } = await import('echarts/core');
+      console.log('[FtEChartComponent] initChart: echarts/core imported OK, init =', typeof init);
 
       const opts = this.options();
+      console.log('[FtEChartComponent] initChart: options =', opts ? 'present' : 'undefined');
 
       // Check for empty data
       if (!opts || this.isEmptyOptions(opts)) {
+        console.log('[FtEChartComponent] initChart: empty options -> state=empty');
         this._state.set('empty');
         return;
       }
 
       if (!this.containerRef) {
+        console.error('[FtEChartComponent] initChart: containerRef is undefined!');
         this._state.set('error');
         return;
       }
 
+      console.log('[FtEChartComponent] initChart: calling echarts init() with element:', this.containerRef.nativeElement?.tagName);
       // Initialize chart
       this.chartInstance = init(this.containerRef.nativeElement);
+      console.log('[FtEChartComponent] initChart: echarts instance created:', !!this.chartInstance);
 
+      console.log('[FtEChartComponent] initChart: calling setOption()');
       this.chartInstance.setOption(opts);
 
       // Setup resize observer
       this.setupResizeObserver();
+      console.log('[FtEChartComponent] initChart: ResizeObserver set up');
 
       this._state.set('ready');
       this.chartReady.emit(this.chartInstance);
+      console.log('[FtEChartComponent] initChart: SUCCESS - state=ready');
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error('[FtEChartComponent] Failed to initialize chart:', error);
+      console.error('[FtEChartComponent] initChart: CATCH BLOCK - error type:', error?.constructor?.name);
+      console.error('[FtEChartComponent] initChart: error message:', (error as Error)?.message || String(error));
+      console.error('[FtEChartComponent] initChart: error stack:', (error as Error)?.stack?.substring(0, 500));
       this._state.set('error');
       this.chartError.emit(error instanceof Error ? error : new Error(String(error)));
     }
