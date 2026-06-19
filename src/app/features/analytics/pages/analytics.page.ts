@@ -217,7 +217,8 @@ export function generateMonthStories(
   i18n: TranslationService,
 ): MonthStory[] {
   const stories: MonthStory[] = [];
-  if (!summary) {
+  const hasValidData = summary && typeof summary.savingsRate === 'number';
+  if (!hasValidData) {
     stories.push({
       icon: 'info',
       messageKey: 'analytics.story.noData',

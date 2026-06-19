@@ -162,7 +162,9 @@ export class DashboardPage implements OnInit {
           return;
         }
 
-        if (summary) {
+        // Defensive: check if summary has valid shape (backend might wrap it)
+        const hasValidSummary = summary && typeof summary.totalIncome === 'number';
+        if (hasValidSummary) {
           this.stats.set(this.mapSummary(summary));
         } else {
           // Show zero stats so the layout is always visible
