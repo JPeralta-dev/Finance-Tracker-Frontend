@@ -371,7 +371,7 @@ export class AnalyticsPage implements OnInit {
       trend.labels,
       [
         { label: this.i18n.translate('transactions.form.income'), data: trend.income, color: colors[7] }, // success green
-        { label: this.i18n.translate('transactions.form.expense'), data: trend.expenses, color: colors[4] }, // danger red
+        { label: this.i18n.translate('transactions.form.expense'), data: trend.expenses.map(e => Math.abs(e)), color: colors[4] }, // danger red
       ],
     );
   });
