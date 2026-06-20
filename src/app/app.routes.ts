@@ -23,10 +23,30 @@ export const routes: Routes = [
     canActivate: [redirectIfAuthGuard],
   },
   {
-    path: 'dashboard',
+    path: 'home',
     loadComponent: () =>
       import('./features/dashboard/pages/dashboard.page').then(m => m.DashboardPage),
     canActivate: [authGuard],
+  },
+  {
+    path: 'dashboard',
+    redirectTo: 'home',
+    pathMatch: 'full',
+  },
+  {
+    path: 'dashboard',
+    redirectTo: 'home',
+    pathMatch: 'full',
+  },
+  {
+    path: 'dashboard',
+    redirectTo: 'home',
+    pathMatch: 'full',
+  },
+  {
+    path: 'dashboard',
+    redirectTo: 'home',
+    pathMatch: 'full',
   },
   {
     path: 'transactions',

@@ -1,133 +1,99 @@
 <div class="dashboard-page" [class.dashboard-page--loading]="state() === 'loading'">
   @if (state() === 'error') {
-    <!-- Error state -->
     <ft-empty-state
       icon="warning"
-      [title]="'dashboard.errorTitle' | translate"
-      [description]="'dashboard.errorDesc' | translate"
-      [actionLabel]="'dashboard.retry' | translate"
+      [title]="'home.errorTitle' | translate"
+      [description]="'home.errorDesc' | translate"
+      [actionLabel]="'home.retry' | translate"
       (action)="retry()"
     />
   } @else if (state() === 'ready') {
-    <!-- Ready content (always rendered — even with zero data) -->
     <div class="dashboard-content-layer dashboard-content-layer--ready">
       <!-- Greeting -->
       <div class="dashboard-greeting" ftSubtleReveal="fade-up">
-        <h1 class="dashboard-greeting__title">{{ greeting() | translate }}</h1>
+        <div>
+          <h1 class="dashboard-greeting__title">{{ greeting() | translate }}</h1>
+          <p class="dashboard-greeting__subtitle">{{ today() }}</p>
+        </div>
         <a routerLink="/transactions/new" class="dashboard-greeting__cta" [ftHoverDepth]="8">
-          {{ 'dashboard.newTransaction' | translate }}
+          {{ 'home.newTransaction' | translate }}
         </a>
       </div>
 
-      <!-- Welcome banner for new users -->
+      <!-- Welcome banner -->
       @if (!hasData()) {
         <div class="dashboard-welcome-banner" ftSubtleReveal="fade-up" [delay]="25">
-          <span>{{ 'dashboard.welcomeBanner' | translate }}</span>
+          <span>{{ 'home.welcomeBanner' | translate }}</span>
           <a routerLink="/transactions/new" class="dashboard-welcome-banner__cta">
-            {{ 'dashboard.addTransaction' | translate }}
+            {{ 'home.addTransaction' | translate }}
           </a>
         </div>
       }
 
-      <!-- Date Range Selector -->
-      <div class="dashboard-daterange" ftSubtleReveal="fade-up" [delay]="50">
-        @for (range of dateRanges; track range.value) {
-          <button
-            class="daterange-btn"
-            [class.daterange-btn--active]="selectedRange() === range.value"
-            (click)="setRange(range.value)"
-          >
-            {{ range.label }}
-          </button>
-        }
+      <!-- Quick Actions -->
+      <div class="dashboard-actions" ftSubtleReveal="fade-up" [delay]="50">
+        <a routerLink="/transactions/new" class="action-card" [ftHoverDepth]="6">
+          <span class="action-card__icon">↓</span>
+          <span class="action-card__label">{{ 'home.addExpense' | translate }}</span>
+        </a>
+        <a routerLink="/transactions/new" class="action-card" [ftHoverDepth]="6">
+          <span class="action-card__icon">↑</span>
+          <span class="action-card__label">{{ 'home.addIncome' | translate }}</span>
+        </a>
+        <a routerLink="/categories" class="action-card" [ftHoverDepth]="6">
+          <span class="action-card__icon">#</span>
+          <span class="action-card__label">{{ 'home.manageCategories' | translate }}</span>
+        </a>
+        <a routerLink="/analytics" class="action-card" [ftHoverDepth]="6">
+          <span class="action-card__icon">↗</span>
+          <span class="action-card__label">{{ 'home.viewAnalytics' | translate }}</span>
+        </a>
       </div>
 
-      <!-- Stats Grid (always visible — shows zeros when empty) -->
+      <!-- Stats Grid -->
       <div ftSubtleReveal="fade-up" [delay]="100">
         <ft-stats-grid [stats]="stats()" [loading]="false" />
       </div>
 
-      <!-- AI Insights Panel -->
-      @if (insights().length > 0) {
-        <div ftSubtleReveal="fade-up" [delay]="150" class="dashboard-insights">
-          <h2 class="dashboard-insights__title">{{ 'insights.title' | translate }}</h2>
-          <ft-insights-panel [insights]="insights()" />
-        </div>
-      }
-
-      <!-- Main content: Chart + Activity + Donut -->
+      <!-- Main content: Chart + Activity -->
       <div class="dashboard-content">
         <div class="dashboard-content__chart" ftSubtleReveal="fade-up" [delay]="200">
-          <ft-echart
-            [options]="areaChartOptions()"
-            [loading]="false"
-            height="250px"
-          >
+          <div class="chart-header">
+            <h2 class="chart-header__title">{{ 'home.monthlyOverview' | translate }}</h2>
+          </div>
+          <ft-echart [options]="areaChartOptions()" [loading]="false" height="280px">
             <ng-container loading><div class="chart-skeleton"></div></ng-container>
-            <ng-container empty><div class="chart-empty">{{ 'dashboard.noChartData' | translate }}</div></ng-container>
+            <ng-container empty><div class="chart-empty">{{ 'home.noChartData' | translate }}</div></ng-container>
             <ng-container error>
-              <div class="chart-error">
-                {{ 'dashboard.chartError' | translate }}
-                <button class="chart-retry-btn" (click)="retry()" type="button">{{ 'dashboard.retry' | translate }}</button>
-              </div>
+              <div class="chart-error">{{ 'home.chartError' | translate }}<button class="chart-retry-btn" (click)="retry()" type="button">{{ 'home.retry' | translate }}</button></div>
             </ng-container>
           </ft-echart>
         </div>
-        <div class="dashboard-content__sidebar" ftSubtleReveal="fade-up" [delay]="300">
-          <ft-recent-activity
-            [items]="activity()"
-            [maxItems]="4"
-          />
-          <div class="dashboard-content__donut">
-            <ft-echart
-              [options]="donutChartOptions()"
-              [loading]="false"
-              height="200px"
-            >
-              <ng-container loading><div class="chart-skeleton"></div></ng-container>
-              <ng-container empty><div class="chart-empty">{{ 'dashboard.noCategoryData' | translate }}</div></ng-container>
-              <ng-container error>
-                <div class="chart-error">
-                  {{ 'dashboard.chartError' | translate }}
-                  <button class="chart-retry-btn" (click)="retry()" type="button">{{ 'dashboard.retry' | translate }}</button>
-                </div>
-              </ng-container>
-            </ft-echart>
-          </div>
+        <div class="dashboard-content__sidebar" ftSubtleReveal="fade-up" [delay]="250">
+          <ft-recent-activity [items]="activity()" [maxItems]="5" />
         </div>
       </div>
     </div>
   }
 
-  <!-- Loading overlay -->
+  <!-- Loading -->
   @if (state() === 'loading') {
     <div class="dashboard-content-layer dashboard-content-layer--loading">
       <div class="dashboard-greeting" ftSubtleReveal="fade-up">
         <div>
-          <h1 class="dashboard-greeting__title">{{ 'dashboard.loading' | translate }}</h1>
-          <p class="dashboard-greeting__subtitle">{{ 'dashboard.fetchingData' | translate }}</p>
+          <h1 class="dashboard-greeting__title">{{ 'home.loading' | translate }}</h1>
+          <p class="dashboard-greeting__subtitle">{{ 'home.fetchingData' | translate }}</p>
         </div>
       </div>
       <div ftSubtleReveal="fade-up" [delay]="100">
         <ft-stats-grid [stats]="[]" [loading]="true" />
       </div>
-      <div ftSubtleReveal="fade-up" [delay]="150" class="dashboard-insights">
-        <h2 class="dashboard-insights__title">{{ 'insights.title' | translate }}</h2>
-        <ft-insights-panel [loading]="true" />
-      </div>
       <div class="dashboard-content">
         <div class="dashboard-content__chart" ftSubtleReveal="fade-up" [delay]="200">
-          <div class="chart-placeholder chart-placeholder--loading">
-            <div class="skeleton-bar"></div>
-          </div>
+          <div class="chart-placeholder chart-placeholder--loading"><div class="skeleton-bar"></div></div>
         </div>
         <div class="dashboard-content__sidebar" ftSubtleReveal="fade-up" [delay]="300">
           <ft-recent-activity [loading]="true" [items]="[]" />
-          <div class="dashboard-content__donut">
-            <div class="chart-placeholder chart-placeholder--loading">
-              <div class="skeleton-bar"></div>
-            </div>
-          </div>
         </div>
       </div>
     </div>

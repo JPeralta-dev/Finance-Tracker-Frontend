@@ -121,15 +121,17 @@ export function mapToCategoryAnalysis(
     freelance: 'code', investment: 'trendingUp', other: 'circle',
   };
 
-  return breakdown.categories.map((cat, i) => ({
-    name: i18n.translate(cat.name),
-    icon: icons[cat.name.toLowerCase()] ?? 'circle',
-    color: colors[i % colors.length],
-    total: cat.amount,
-    percentage: cat.percentage,
-    change: 0, // Would need historical data; placeholder for now
-    trend: 'stable' as const,
-  }));
+  return breakdown.categories
+    .filter(cat => cat.name) // Skip categories with null/undefined names
+    .map((cat, i) => ({
+      name: i18n.translate(cat.name),
+      icon: icons[cat.name.toLowerCase()] ?? 'other',
+      color: colors[i % colors.length],
+      total: cat.amount,
+      percentage: cat.percentage,
+      change: 0, // Would need historical data; placeholder for now
+      trend: 'stable' as const,
+    }));
 }
 
 /** Map API summary to ComparisonData */
@@ -369,7 +371,7 @@ export class AnalyticsPage implements OnInit {
       trend.labels,
       [
         { label: this.i18n.translate('transactions.form.income'), data: trend.income, color: colors[7] }, // success green
-        { label: this.i18n.translate('transactions.form.expense'), data: trend.expenses, color: colors[4] }, // danger red
+        { label: this.i18n.translate('transactions.form.expense'), data: trend.expenses.map(e => Math.abs(e)), color: colors[4] }, // danger red
       ],
     );
   });
@@ -379,8 +381,8 @@ export class AnalyticsPage implements OnInit {
     if (!breakdown?.categories || breakdown.categories.length === 0) return undefined;
 
     return this.themeMapper.buildDonutOption(
-      breakdown.categories.map(c => this.i18n.translate(c.name)),
-      breakdown.categories.map(c => c.amount),
+      breakdown.categories.filter(c => c.name).map(c => this.i18n.translate(c.name)),
+      breakdown.categories.filter(c => c.name).map(c => c.amount),
     );
   });
 

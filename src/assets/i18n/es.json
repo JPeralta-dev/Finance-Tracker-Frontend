@@ -61,7 +61,7 @@
     "signInWithGoogle": "Ingresar con Google"
   },
   "nav": {
-    "dashboard": "Dashboard",
+    "home": "Inicio",
     "transactions": "Transacciones",
     "categories": "Categorías",
     "analytics": "Análisis",
@@ -111,7 +111,7 @@
       "button": "Comenzar Gratis"
     }
   },
-  "dashboard": {
+  "home": {
     "greeting_morning": "Buenos días",
     "greeting_afternoon": "Buenas tardes",
     "greeting_evening": "Buenas noches",
@@ -126,7 +126,10 @@
     "onTrack": "En camino",
     "couldImprove": "Podría mejorar",
     "monthlyOverview": "Resumen Mensual",
-    "last6Months": "Últimos 6 meses",
+    "addExpense": "Agregar Gasto",
+    "addIncome": "Agregar Ingreso",
+    "manageCategories": "Categorías",
+    "viewAnalytics": "Ver Analytics",
     "recentActivity": "Actividad Reciente",
     "latestTransactions": "Tus últimas transacciones",
     "viewAll": "Ver todo →",
@@ -140,12 +143,10 @@
     "retry": "Reintentar",
     "welcomeTitle": "¡Bienvenido!",
     "welcomeSubtitle": "Comienza a rastrear tus finanzas agregando tu primera transacción.",
+    "welcomeBanner": "Comienza tu viaje financiero",
     "emptyOverview": "Sin transacciones aún",
     "emptyOverviewDesc": "Tu resumen financiero aparecerá aquí una vez que comiences a agregar transacciones.",
-    "expenseBreakdown": "Desglose de Gastos",
-    "byCategory": "Por categoría",
     "noChartData": "Sin datos de gráfico aún",
-    "noCategoryData": "Sin datos de categorías aún",
     "chartError": "Error al cargar gráfico"
   },
   "insights": {
@@ -392,7 +393,9 @@
     },
     "comparison": {
       "income": "Ingresos",
-      "expenses": "Gastos"
+      "expenses": "Gastos",
+      "current": "Actual",
+      "previous": "Anterior"
     }
   },
   "profile": {
