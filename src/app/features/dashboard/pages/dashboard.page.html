@@ -30,14 +30,14 @@
         </div>
       }
 
-      <!-- ROW 1: Balance Total + Tasa de Ahorro -->
+      <!-- ROW 1: Balance Total + Ingreso Mensual -->
       <div class="dashboard-row dashboard-row--stats" ftSubtleReveal="fade-up" [delay]="75">
         <div class="stats-grid stats-grid--2col">
           @for (stat of stats().slice(0, 2); track stat.id) {
             <div class="stat-card-large">
               <div class="stat-card-large__icon">
                 @if (stat.icon === 'wallet') { <ft-icon name="wallet" [size]="22" /> }
-                @if (stat.icon === 'subscription') { <ft-icon name="chart" [size]="22" /> }
+                @if (stat.icon === 'income') { <ft-icon name="arrow-up" [size]="22" /> }
               </div>
               <div class="stat-card-large__body">
                 <span class="stat-card-large__label">{{ stat.label | translate }}</span>
@@ -57,19 +57,23 @@
         </div>
       </div>
 
-      <!-- ROW 2: Ingreso Mensual + Gastos Mensuales -->
+      <!-- ROW 2: Gastos Mensuales + Tasa de Ahorro -->
       <div class="dashboard-row dashboard-row--stats" ftSubtleReveal="fade-up" [delay]="100">
         <div class="stats-grid stats-grid--2col">
           @for (stat of stats().slice(2, 4); track stat.id) {
             <div class="stat-card-large">
               <div class="stat-card-large__icon">
-                @if (stat.icon === 'income') { <ft-icon name="arrow-up" [size]="22" /> }
                 @if (stat.icon === 'expense') { <ft-icon name="arrow-down" [size]="22" /> }
+                @if (stat.icon === 'subscription') { <ft-icon name="chart" [size]="22" /> }
               </div>
               <div class="stat-card-large__body">
                 <span class="stat-card-large__label">{{ stat.label | translate }}</span>
                 <span class="stat-card-large__value">
-                  {{ stat.value | number: '1.0-0' }}
+                  @if (stat.id === 'savings') {
+                    {{ stat.value }}%
+                  } @else {
+                    {{ stat.value | number: '1.0-0' }}
+                  }
                 </span>
               </div>
             </div>
