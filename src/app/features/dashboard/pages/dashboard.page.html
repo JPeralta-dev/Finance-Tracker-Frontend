@@ -30,47 +30,81 @@
         </div>
       }
 
-      <!-- Quick Actions -->
-      <div class="dashboard-actions" ftSubtleReveal="fade-up" [delay]="50">
-        <a routerLink="/transactions/new" class="action-card" [ftHoverDepth]="6">
-          <span class="action-card__icon">↓</span>
-          <span class="action-card__label">{{ 'home.addExpense' | translate }}</span>
-        </a>
-        <a routerLink="/transactions/new" class="action-card" [ftHoverDepth]="6">
-          <span class="action-card__icon">↑</span>
-          <span class="action-card__label">{{ 'home.addIncome' | translate }}</span>
-        </a>
-        <a routerLink="/categories" class="action-card" [ftHoverDepth]="6">
-          <span class="action-card__icon">#</span>
-          <span class="action-card__label">{{ 'home.manageCategories' | translate }}</span>
-        </a>
-        <a routerLink="/analytics" class="action-card" [ftHoverDepth]="6">
-          <span class="action-card__icon">↗</span>
-          <span class="action-card__label">{{ 'home.viewAnalytics' | translate }}</span>
-        </a>
-      </div>
-
-      <!-- Stats Grid -->
-      <div ftSubtleReveal="fade-up" [delay]="100">
-        <ft-stats-grid [stats]="stats()" [loading]="false" />
-      </div>
-
-      <!-- Main content: Chart + Activity -->
-      <div class="dashboard-content">
-        <div class="dashboard-content__chart" ftSubtleReveal="fade-up" [delay]="200">
-          <div class="chart-header">
-            <h2 class="chart-header__title">{{ 'home.monthlyOverview' | translate }}</h2>
-          </div>
-          <ft-echart [options]="areaChartOptions()" [loading]="false" height="280px">
-            <ng-container loading><div class="chart-skeleton"></div></ng-container>
-            <ng-container empty><div class="chart-empty">{{ 'home.noChartData' | translate }}</div></ng-container>
-            <ng-container error>
-              <div class="chart-error">{{ 'home.chartError' | translate }}<button class="chart-retry-btn" (click)="retry()" type="button">{{ 'home.retry' | translate }}</button></div>
-            </ng-container>
-          </ft-echart>
+      <!-- ROW 1: Balance Total + Tasa de Ahorro -->
+      <div class="dashboard-row dashboard-row--stats" ftSubtleReveal="fade-up" [delay]="75">
+        <div class="stats-grid stats-grid--2col">
+          @for (stat of stats().slice(0, 2); track stat.id) {
+            <div class="stat-card-large">
+              <div class="stat-card-large__icon">
+                @if (stat.icon === 'wallet') { <ft-icon name="wallet" [size]="22" /> }
+                @if (stat.icon === 'subscription') { <ft-icon name="chart" [size]="22" /> }
+              </div>
+              <div class="stat-card-large__body">
+                <span class="stat-card-large__label">{{ stat.label | translate }}</span>
+                <span class="stat-card-large__value" [class.stat-card-large__value--accent]="stat.id === 'balance'">
+                  @if (stat.id === 'savings') {
+                    {{ stat.value }}%
+                  } @else {
+                    {{ stat.value | number: '1.0-0' }}
+                  }
+                </span>
+                @if (stat.insight) {
+                  <span class="stat-card-large__insight">{{ stat.insight | translate }}</span>
+                }
+              </div>
+            </div>
+          }
         </div>
-        <div class="dashboard-content__sidebar" ftSubtleReveal="fade-up" [delay]="250">
-          <ft-recent-activity [items]="activity()" [maxItems]="5" />
+      </div>
+
+      <!-- ROW 2: Ingreso Mensual + Gastos Mensuales -->
+      <div class="dashboard-row dashboard-row--stats" ftSubtleReveal="fade-up" [delay]="100">
+        <div class="stats-grid stats-grid--2col">
+          @for (stat of stats().slice(2, 4); track stat.id) {
+            <div class="stat-card-large">
+              <div class="stat-card-large__icon">
+                @if (stat.icon === 'income') { <ft-icon name="arrow-up" [size]="22" /> }
+                @if (stat.icon === 'expense') { <ft-icon name="arrow-down" [size]="22" /> }
+              </div>
+              <div class="stat-card-large__body">
+                <span class="stat-card-large__label">{{ stat.label | translate }}</span>
+                <span class="stat-card-large__value">
+                  {{ stat.value | number: '1.0-0' }}
+                </span>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- ROW 3: AI Insights Card (premium gated) -->
+      <div class="dashboard-row dashboard-row--premium" ftSubtleReveal="fade-up" [delay]="125">
+        <ft-ai-insights-card />
+      </div>
+
+      <!-- ROW 4: Goals Widget (premium gated) -->
+      <div class="dashboard-row dashboard-row--premium" ftSubtleReveal="fade-up" [delay]="150">
+        <ft-goals-widget />
+      </div>
+
+      <!-- ROW 5: Chart + Recent Activity -->
+      <div class="dashboard-row dashboard-row--content" ftSubtleReveal="fade-up" [delay]="175">
+        <div class="dashboard-content">
+          <div class="dashboard-content__chart">
+            <div class="chart-header">
+              <h2 class="chart-header__title">{{ 'home.monthlyOverview' | translate }}</h2>
+            </div>
+            <ft-echart [options]="areaChartOptions()" [loading]="false" height="280px">
+              <ng-container loading><div class="chart-skeleton"></div></ng-container>
+              <ng-container empty><div class="chart-empty">{{ 'home.noChartData' | translate }}</div></ng-container>
+              <ng-container error>
+                <div class="chart-error">{{ 'home.chartError' | translate }}<button class="chart-retry-btn" (click)="retry()" type="button">{{ 'home.retry' | translate }}</button></div>
+              </ng-container>
+            </ft-echart>
+          </div>
+          <div class="dashboard-content__sidebar">
+            <ft-recent-activity [items]="activity()" [maxItems]="5" />
+          </div>
         </div>
       </div>
     </div>
@@ -85,8 +119,16 @@
           <p class="dashboard-greeting__subtitle">{{ 'home.fetchingData' | translate }}</p>
         </div>
       </div>
-      <div ftSubtleReveal="fade-up" [delay]="100">
-        <ft-stats-grid [stats]="[]" [loading]="true" />
+      <div class="stats-grid stats-grid--2col" ftSubtleReveal="fade-up" [delay]="100">
+        @for (_ of [1, 2, 3, 4]; track $index) {
+          <div class="stat-card-large stat-card-large--skeleton">
+            <div class="stat-card-large__icon"></div>
+            <div class="stat-card-large__body">
+              <div class="skeleton-line skeleton-line--short"></div>
+              <div class="skeleton-line skeleton-line--wide"></div>
+            </div>
+          </div>
+        }
       </div>
       <div class="dashboard-content">
         <div class="dashboard-content__chart" ftSubtleReveal="fade-up" [delay]="200">
