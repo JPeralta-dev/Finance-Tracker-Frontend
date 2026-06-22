@@ -38,7 +38,6 @@ import { CurrencyService } from '../../../core/services/currency.service';
 import { ToastService } from '../../../core/services/toast.service';
 import { AnalyticsApiService, AnalyticsSummary, MonthlyTrend, CategoryBreakdown, DailySpending, AnalyticsInsight, AnalyticsTransaction, BankInfo, DateRange } from '../services/analytics-api.service';
 import { AnalyticsStore } from '../services/analytics.store';
-import { RuleBasedInsightsService } from '../services/insights.service';
 import { ICONS } from '../../../shared/icons/icon-registry';
 
 // ─── Types ──────────────────────────────────────────────────────────────────
@@ -122,10 +121,10 @@ export function mapToCategoryAnalysis(
   };
 
   return breakdown.categories
-    .filter(cat => cat.name) // Skip categories with null/undefined names
+    .filter(cat => cat.category) // Skip categories with null/undefined names
     .map((cat, i) => ({
-      name: i18n.translate(cat.name),
-      icon: icons[cat.name.toLowerCase()] ?? 'other',
+      name: i18n.translate(cat.category),
+      icon: icons[cat.category.toLowerCase()] ?? 'other',
       color: colors[i % colors.length],
       total: cat.amount,
       percentage: cat.percentage,
@@ -184,7 +183,7 @@ export function mapToRelevantTransactions(
     description: tx.merchant,
     category: tx.category,
     amount: Math.abs(tx.amount),
-    type: tx.amount >= 0 ? 'income' : 'expense',
+    type: tx.type,
     date: tx.date,
     icon: tx.icon || 'circle',
   }));
@@ -198,16 +197,19 @@ export function mapToUiInsights(
   const iconMap: Record<string, string> = {
     spending: 'trendingUp', savings: 'wallet', anomaly: 'alertTriangle',
     positive: 'star', subscription: 'repeat',
+    warning: 'alertTriangle', info: 'info', success: 'star', trend: 'trendingUp',
   };
   const typeMap: Record<string, 'success' | 'warning' | 'info' | 'trend'> = {
     high: 'warning', medium: 'info', low: 'success',
+    warning: 'warning', info: 'info', success: 'success', trend: 'trend',
   };
 
   return insights.map(ins => ({
     icon: iconMap[ins.type] ?? 'info',
     titleKey: `analytics.insight.${ins.type}`,
     messageKey: ins.message,
-    type: typeMap[ins.severity] ?? 'info',
+    params: ins.data as Record<string, number | string> | undefined,
+    type: typeMap[ins.severity] ?? typeMap[ins.type] ?? 'info',
     severity: ins.severity,
   }));
 }
@@ -302,7 +304,6 @@ export class AnalyticsPage implements OnInit {
   private readonly store = inject(AnalyticsStore);
   private readonly api = inject(AnalyticsApiService);
   private readonly themeMapper = inject(EchartsThemeMapper);
-  private readonly insightsService = inject(RuleBasedInsightsService);
   private readonly currencyService = inject(CurrencyService);
   private readonly i18n = inject(TranslationService);
   private readonly toast = inject(ToastService);
@@ -381,8 +382,8 @@ export class AnalyticsPage implements OnInit {
     if (!breakdown?.categories || breakdown.categories.length === 0) return undefined;
 
     return this.themeMapper.buildDonutOption(
-      breakdown.categories.filter(c => c.name).map(c => this.i18n.translate(c.name)),
-      breakdown.categories.filter(c => c.name).map(c => c.amount),
+      breakdown.categories.filter(c => c.category).map(c => this.i18n.translate(c.category)),
+      breakdown.categories.filter(c => c.category).map(c => c.amount),
     );
   });
 
@@ -497,22 +498,8 @@ export class AnalyticsPage implements OnInit {
         if (insights?.insights) this.store.setInsights(insights.insights);
         if (transactions?.transactions) this.store.setTransactions(transactions.transactions);
 
-        // Generate rule-based insights from loaded data
-        const analyticsData = {
-          summary: this.store.summary(),
-          monthlyTrend: this.store.monthlyTrend(),
-          categoryBreakdown: this.store.categoryBreakdown(),
-          dailySpending: this.store.dailySpending(),
-        };
-        const ruleInsights = this.insightsService.generateInsights(analyticsData);
-        // Merge API insights with rule-based insights
-        const merged = [...this.store.insights(), ...ruleInsights.map(ri => ({
-          type: ri.type,
-          message: ri.message,
-          severity: ri.severity,
-          actionable: ri.actionable,
-        }))];
-        this.store.setInsights(merged);
+        // Insights come from the backend API only (Spanish, rule-based)
+        // No frontend merge — avoids duplicate English messages
 
         this.store.setReady();
       },

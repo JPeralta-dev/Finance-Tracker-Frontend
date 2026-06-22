@@ -1,0 +1,235 @@
+/* ─── AI Insights Card ────────────────────────────────────────────── */
+
+.insights-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  backdrop-filter: blur(12px);
+}
+
+.insights-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.insights-card__title {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+  letter-spacing: -0.01em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.insights-card__icon {
+  font-size: 20px;
+}
+
+.insights-card__link {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--accent-start);
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-out);
+
+  &:hover {
+    color: var(--accent-mid);
+  }
+}
+
+/* ── Upgrade prompt (free users) ─────────────────────────────────── */
+
+.insights-card__upgrade {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+}
+
+.insights-card__blur {
+  filter: blur(4px);
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.insights-card__cta-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: linear-gradient(135deg, rgba(18, 11, 26, 0.6), rgba(29, 20, 38, 0.8));
+  border-radius: var(--radius-md);
+}
+
+.insights-card__cta-text {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+  text-align: center;
+}
+
+.insights-card__cta-btn {
+  padding: 10px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-inverse);
+  background: linear-gradient(135deg, var(--accent-start), var(--accent-mid));
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  box-shadow: var(--glow-accent);
+  transition:
+    box-shadow var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+
+  &:hover {
+    box-shadow: 0 0 40px rgba(217, 70, 239, 0.4);
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: scale(0.97);
+  }
+}
+
+/* ── Skeleton ────────────────────────────────────────────────────── */
+
+.insights-card__skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.skeleton-insight {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.skeleton-insight__icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: var(--bg-tertiary);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.skeleton-insight__lines {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.skeleton-insight__line {
+  height: 12px;
+  border-radius: 6px;
+  background: var(--bg-tertiary);
+  animation: pulse 1.5s ease-in-out infinite;
+
+  &--short {
+    width: 60%;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 0.3; }
+}
+
+/* ── Empty state ─────────────────────────────────────────────────── */
+
+.insights-card__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px;
+  text-align: center;
+}
+
+.insights-card__empty-icon {
+  font-size: 36px;
+  margin-bottom: 12px;
+}
+
+.insights-card__empty-text {
+  font-size: 14px;
+  color: var(--text-tertiary);
+  margin: 0;
+  max-width: 280px;
+}
+
+/* ── Insight rows ────────────────────────────────────────────────── */
+
+.insights-card__list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.insight-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  border-left: 3px solid var(--accent-start);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  background: var(--bg-tertiary);
+  transition: background var(--duration-fast) var(--ease-out);
+
+  &:hover {
+    background: var(--bg-elevated);
+  }
+
+  &__icon {
+    font-size: 20px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  &__content {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  &__title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  &__desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.4;
+  }
+
+  &--blurred {
+    opacity: 0.5;
+  }
+}
+
+/* ── Responsive ──────────────────────────────────────────────────── */
+
+@media (max-width: 767px) {
+  .insights-card {
+    padding: 16px;
+  }
+
+  .insights-card__title {
+    font-size: 16px;
+  }
+}

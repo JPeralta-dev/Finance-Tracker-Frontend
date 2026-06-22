@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 
 import { authGuard } from './core/guards/auth.guard';
 import { redirectIfAuthGuard } from './core/guards/redirect-if-auth.guard';
+import { premiumGuard } from './core/guards/premium.guard';
 
 export const routes: Routes = [
   {
@@ -27,21 +28,6 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./features/dashboard/pages/dashboard.page').then(m => m.DashboardPage),
     canActivate: [authGuard],
-  },
-  {
-    path: 'dashboard',
-    redirectTo: 'home',
-    pathMatch: 'full',
-  },
-  {
-    path: 'dashboard',
-    redirectTo: 'home',
-    pathMatch: 'full',
-  },
-  {
-    path: 'dashboard',
-    redirectTo: 'home',
-    pathMatch: 'full',
   },
   {
     path: 'dashboard',
@@ -94,6 +80,25 @@ export const routes: Routes = [
     path: 'analytics',
     loadComponent: () =>
       import('./features/analytics/pages/analytics.page').then(m => m.AnalyticsPage),
+    canActivate: [authGuard],
+  },
+  // Premium routes
+  {
+    path: 'goals',
+    loadComponent: () =>
+      import('./features/goals/pages/goals.page').then(m => m.GoalsPage),
+    canActivate: [authGuard, premiumGuard],
+  },
+  {
+    path: 'ai-insights',
+    loadComponent: () =>
+      import('./features/ai-insights/pages/ai-insights.page').then(m => m.AiInsightsPage),
+    canActivate: [authGuard, premiumGuard],
+  },
+  {
+    path: 'subscription',
+    loadComponent: () =>
+      import('./features/subscription/pages/subscription.page').then(m => m.SubscriptionPage),
     canActivate: [authGuard],
   },
   { path: '**', redirectTo: '' }
