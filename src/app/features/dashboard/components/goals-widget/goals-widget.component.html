@@ -1,0 +1,106 @@
+<div class="goals-widget">
+  <!-- Header -->
+  <div class="goals-widget__header">
+    <h2 class="goals-widget__title">
+      <span class="goals-widget__icon"><ft-icon name="target" [size]="22" /></span>
+      Metas de Ahorro
+    </h2>
+    @if (isPremium()) {
+      <a routerLink="/goals" class="goals-widget__link">Ver todas</a>
+    }
+  </div>
+
+  <!-- Free user: upgrade prompt -->
+  @if (!isPremium()) {
+    <div class="goals-widget__upgrade">
+      <div class="goals-widget__blur">
+        <div class="goal-row goal-row--blurred">
+          <div class="goal-row__info">
+            <span class="goal-row__name">Meta de ejemplo</span>
+            <span class="goal-row__progress-text">45%</span>
+          </div>
+          <div class="goal-row__bar">
+            <div class="goal-row__bar-fill" style="width: 45%"></div>
+          </div>
+        </div>
+      </div>
+      <div class="goals-widget__cta-overlay">
+        <p class="goals-widget__cta-text">
+          Creá metas de ahorro y seguí tu progreso
+        </p>
+        <a routerLink="/subscription" [queryParams]="{ upgrade: 'true' }" class="goals-widget__cta-btn">
+          Activar Premium
+        </a>
+      </div>
+    </div>
+  }
+
+  <!-- Premium user: goals -->
+  @if (isPremium()) {
+    @switch (state()) {
+      @case ('loading') {
+        <div class="goals-widget__skeleton">
+          @for (_ of [1, 2]; track $index) {
+            <div class="skeleton-goal">
+              <div class="skeleton-goal__header">
+                <div class="skeleton-goal__name"></div>
+                <div class="skeleton-goal__percent"></div>
+              </div>
+              <div class="skeleton-goal__bar"></div>
+            </div>
+          }
+        </div>
+      }
+      @case ('empty') {
+        <div class="goals-widget__empty">
+          <span class="goals-widget__empty-icon"><ft-icon name="target" [size]="28" /></span>
+          <p class="goals-widget__empty-text">
+          Todavía no tenés metas. Creá tu primera meta de ahorro.
+          </p>
+          <a routerLink="/goals" class="goals-widget__empty-btn">
+            Crear primera meta
+          </a>
+        </div>
+      }
+      @case ('error') {
+        <div class="goals-widget__empty">
+          <span class="goals-widget__empty-icon"><ft-icon name="alert-triangle" [size]="28" /></span>
+          <p class="goals-widget__empty-text">
+          No pudimos cargar tus metas. Intentá de nuevo.
+          </p>
+        </div>
+      }
+      @case ('ready') {
+        <div class="goals-widget__list">
+          @for (goal of displayGoals(); track goal.id) {
+            <div class="goal-row">
+              <div class="goal-row__info">
+                <span class="goal-row__name">{{ goal.name }}</span>
+                <div class="goal-row__meta">
+                  <span class="goal-row__amounts">
+                    {{ formatCurrency(goal.currentAmount) }} / {{ formatCurrency(goal.targetAmount) }}
+                  </span>
+                  @if (estimatedMonths(goal); as months) {
+                    <span class="goal-row__projection">
+                      · Te faltan {{ months }} {{ months === 1 ? 'mes' : 'meses' }}
+                    </span>
+                  }
+                </div>
+              </div>
+              <div class="goal-row__right">
+                <span class="goal-row__percent">{{ progress(goal) }}%</span>
+                <div class="goal-row__bar">
+                  <div
+                    class="goal-row__bar-fill"
+                    [style.width.%]="progress(goal)"
+                    [class.goal-row__bar-fill--complete]="progress(goal) >= 100"
+                  ></div>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      }
+    }
+  }
+</div>

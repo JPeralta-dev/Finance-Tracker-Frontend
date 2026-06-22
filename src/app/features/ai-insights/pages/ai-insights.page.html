@@ -1,0 +1,72 @@
+<div class="insights-page">
+  <!-- Header -->
+  <div class="insights-page__header">
+    <div class="insights-page__title-group">
+      <h1 class="insights-page__title">Insights Financieros</h1>
+      <p class="insights-page__subtitle">Análisis inteligente de tus finanzas personales</p>
+    </div>
+  </div>
+
+  <!-- Loading state -->
+  @if (state() === 'loading') {
+    <div class="insights-list">
+      @for (_ of [1, 2, 3]; track $index) {
+        <div class="insight-card insight-card--skeleton">
+          <div class="insight-card__header">
+            <div class="skeleton-icon"></div>
+            <div class="skeleton-line skeleton-line--short"></div>
+          </div>
+          <div class="skeleton-line skeleton-line--wide"></div>
+          <div class="skeleton-line skeleton-line--short"></div>
+        </div>
+      }
+    </div>
+  }
+
+  <!-- Empty state -->
+  @if (state() === 'empty') {
+    <div class="empty-state">
+      <span class="empty-state__icon"><ft-icon name="search" [size]="32" /></span>
+      <h2 class="empty-state__title">Aún no hay insights</h2>
+      <p class="empty-state__text">
+        Seguí registrando transacciones para recibir análisis personalizados sobre tus finanzas.
+      </p>
+    </div>
+  }
+
+  <!-- Error state -->
+  @if (state() === 'error') {
+    <div class="error-state">
+      <span class="error-state__icon"><ft-icon name="alert-triangle" [size]="32" /></span>
+      <h2 class="error-state__title">No pudimos cargar los insights</h2>
+      <p class="error-state__text">Hubo un problema al conectar con el servidor. Intentá de nuevo.</p>
+      <button class="btn-secondary" (click)="retry()">Reintentar</button>
+    </div>
+  }
+
+  <!-- Insights list -->
+  @if (state() === 'ready') {
+    <div class="insights-list">
+      @for (insight of insights(); track insight.id) {
+        <div
+          class="insight-card"
+          [style.borderLeftColor]="insight.borderColor"
+        >
+          <div class="insight-card__header">
+            <ft-icon [name]="insight.icon" [size]="22" class="insight-card__icon" />
+            <div class="insight-card__type-group">
+              <span class="insight-card__type-label">{{ insight.typeLabel }}</span>
+              <h3 class="insight-card__title">{{ insight.title }}</h3>
+            </div>
+          </div>
+
+          <p class="insight-card__message">{{ insight.message }}</p>
+
+          @if (insight.timestamp) {
+            <span class="insight-card__timestamp">{{ insight.timestamp }}</span>
+          }
+        </div>
+      }
+    </div>
+  }
+</div>
