@@ -14,6 +14,10 @@ import { ToastService } from '../../../core/services/toast.service';
 import { EmptyStateComponent } from '../../../shared/components/empty-state.component';
 import { TranslatePipe } from '../../../core/pipes/translate.pipe';
 import { TranslationService } from '../../../core/services/translation.service';
+import { AuthService } from '../../../core/services/auth.service';
+import { AiInsightsCardComponent } from '../components/ai-insights-card/ai-insights-card.component';
+import { GoalsWidgetComponent } from '../components/goals-widget/goals-widget.component';
+import { IconComponent } from '../../../shared/icons/icon.component';
 import type { EChartsOption } from 'echarts';
 
 type DashboardState = 'loading' | 'ready' | 'error';
@@ -52,6 +56,9 @@ class ChartColorCache {
     HoverDepthDirective,
     EmptyStateComponent,
     TranslatePipe,
+    AiInsightsCardComponent,
+    GoalsWidgetComponent,
+    IconComponent,
   ],
   templateUrl: './dashboard.page.html',
   styleUrl: './dashboard.page.scss',
@@ -62,6 +69,7 @@ export class DashboardPage implements OnInit {
   readonly i18n = inject(TranslationService);
   private readonly themeMapper = inject(EchartsThemeMapper);
   private readonly chartColors = inject(ChartColorCache);
+  readonly authService = inject(AuthService);
 
   readonly stats = signal<StatCardData[]>([]);
   readonly activity = signal<ActivityItem[]>([]);

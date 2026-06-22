@@ -1,0 +1,90 @@
+<div class="insights-card">
+  <!-- Header -->
+  <div class="insights-card__header">
+    <h2 class="insights-card__title">
+      <span class="insights-card__icon"><ft-icon name="sparkles" [size]="22" /></span>
+      Insights Financieros
+    </h2>
+    @if (isPremium()) {
+      <a routerLink="/ai-insights" class="insights-card__link">Ver todos</a>
+    }
+  </div>
+
+  <!-- Free user: upgrade prompt -->
+  @if (!isPremium()) {
+    <div class="insights-card__upgrade">
+      <div class="insights-card__blur">
+        <div class="insight-row insight-row--blurred">
+          <span class="insight-row__icon"><ft-icon name="alert-triangle" [size]="18" /></span>
+          <div class="insight-row__content">
+            <span class="insight-row__title">Detectamos un patrón de gasto</span>
+            <span class="insight-row__desc">Tus gastos de los viernes subieron un 23%...</span>
+          </div>
+        </div>
+        <div class="insight-row insight-row--blurred">
+          <span class="insight-row__icon"><ft-icon name="circle-dollar" [size]="18" /></span>
+          <div class="insight-row__content">
+            <span class="insight-row__title">Oportunidad de ahorro</span>
+            <span class="insight-row__desc">Podrías ahorrar $45.000 cambiando tu plan de...</span>
+          </div>
+        </div>
+      </div>
+      <div class="insights-card__cta-overlay">
+        <p class="insights-card__cta-text">
+          Desbloqueá insights personalizados con IA
+        </p>
+        <a routerLink="/subscription" [queryParams]="{ upgrade: 'true' }" class="insights-card__cta-btn">
+          Activar Premium
+        </a>
+      </div>
+    </div>
+  }
+
+  <!-- Premium user: insights -->
+  @if (isPremium()) {
+    @switch (state()) {
+      @case ('loading') {
+        <div class="insights-card__skeleton">
+          @for (_ of [1, 2, 3]; track $index) {
+            <div class="skeleton-insight">
+              <div class="skeleton-insight__icon"></div>
+              <div class="skeleton-insight__lines">
+                <div class="skeleton-insight__line skeleton-insight__line--short"></div>
+                <div class="skeleton-insight__line"></div>
+              </div>
+            </div>
+          }
+        </div>
+      }
+      @case ('empty') {
+        <div class="insights-card__empty">
+          <span class="insights-card__empty-icon"><ft-icon name="search" [size]="28" /></span>
+          <p class="insights-card__empty-text">
+          Agregá más transacciones para recibir insights personalizados.
+          </p>
+        </div>
+      }
+      @case ('error') {
+        <div class="insights-card__empty">
+          <span class="insights-card__empty-icon"><ft-icon name="alert-triangle" [size]="28" /></span>
+          <p class="insights-card__empty-text">
+          No pudimos cargar los insights. Intentá de nuevo.
+          </p>
+        </div>
+      }
+      @case ('ready') {
+        <div class="insights-card__list">
+          @for (insight of displayInsights(); track insight.id) {
+            <div class="insight-row" [style.borderLeftColor]="severityColors[insight.severity] || 'var(--accent-start)'">
+              <span class="insight-row__icon"><ft-icon [name]="iconMap[insight.type] || 'chart'" [size]="18" /></span>
+              <div class="insight-row__content">
+                <span class="insight-row__title">{{ insight.titleKey }}</span>
+                <span class="insight-row__desc">{{ insight.messageKey }}</span>
+              </div>
+            </div>
+          }
+        </div>
+      }
+    }
+  }
+</div>

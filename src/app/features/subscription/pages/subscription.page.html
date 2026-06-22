@@ -1,0 +1,140 @@
+<div class="subscription-page">
+  <!-- Header -->
+  <div class="subscription-page__header">
+    <h1 class="subscription-page__title">Elegí tu plan</h1>
+    <p class="subscription-page__subtitle">
+      Prueba gratuita de 30 días en Premium
+    </p>
+
+    <!-- Annual toggle -->
+    <div class="billing-toggle">
+      <span class="billing-toggle__label" [class.billing-toggle__label--active]="!isAnnual()">Mensual</span>
+      <button
+        class="billing-toggle__switch"
+        [class.billing-toggle__switch--active]="isAnnual()"
+        (click)="isAnnual.set(!isAnnual())"
+        role="switch"
+        [attr.aria-checked]="isAnnual()"
+      >
+        <span class="billing-toggle__knob"></span>
+      </button>
+      <span class="billing-toggle__label" [class.billing-toggle__label--active]="isAnnual()">
+        Anual
+        <span class="billing-toggle__badge">-33%</span>
+      </span>
+    </div>
+  </div>
+
+  <!-- Loading state -->
+  @if (state() === 'loading') {
+    <div class="tiers-grid">
+      @for (_ of [1, 2, 3]; track $index) {
+        <div class="tier-card tier-card--skeleton">
+          <div class="skeleton-line skeleton-line--short"></div>
+          <div class="skeleton-line skeleton-line--wide"></div>
+          @for (_ of [1, 2, 3, 4]; track $index) {
+            <div class="skeleton-line skeleton-line--short"></div>
+          }
+          <div class="skeleton-line skeleton-line--wide"></div>
+        </div>
+      }
+    </div>
+  }
+
+  <!-- Tier cards -->
+  @if (state() === 'ready') {
+    <div class="tiers-grid">
+      @for (tier of tiers(); track tier.id) {
+        <div
+          class="tier-card"
+          [class.tier-card--popular]="tier.popular"
+          [class.tier-card--current]="tier.highlighted"
+        >
+          @if (tier.popular) {
+            <div class="tier-card__badge">
+              <span><ft-icon name="star" [size]="16" /></span> Más popular
+            </div>
+          }
+
+          <div class="tier-card__header">
+            <h2 class="tier-card__name">{{ tier.name }}</h2>
+            <div class="tier-card__price-group">
+              <span class="tier-card__price">{{ isAnnual() ? tier.priceAnnual : tier.price }}</span>
+              @if (isAnnual() && tier.annualSavings) {
+                <span class="tier-card__savings">{{ tier.annualSavings }}</span>
+              }
+            </div>
+          </div>
+
+          <ul class="tier-card__features">
+            @for (feature of tier.features; track feature) {
+              <li class="tier-card__feature">
+                <span class="tier-card__check"><ft-icon name="check" [size]="16" /></span>
+                {{ feature }}
+              </li>
+            }
+          </ul>
+
+          <div class="tier-card__footer">
+            @if (tier.ctaAction === 'none') {
+              <button class="btn-tier btn-tier--current" disabled>
+                {{ tier.ctaLabel }}
+              </button>
+            } @else if (tier.ctaAction === 'trial') {
+              <button
+                class="btn-tier btn-tier--primary"
+                (click)="handleCta(tier.id)"
+                [disabled]="actionLoading()"
+              >
+                {{ tier.ctaLabel }}
+              </button>
+            } @else {
+              <button
+                class="btn-tier btn-tier--secondary"
+                (click)="handleCta(tier.id)"
+                [disabled]="actionLoading()"
+              >
+                {{ tier.ctaLabel }}
+              </button>
+            }
+          </div>
+        </div>
+      }
+    </div>
+
+    <!-- Trial status info (if trial is active) -->
+    @if (trialStatus(); as trial) {
+      @if (trial.status === 'active_trial') {
+        <div class="trial-status">
+          <span class="trial-status__icon"><ft-icon name="party" [size]="24" /></span>
+          <div class="trial-status__info">
+            <h3 class="trial-status__title">Tu prueba gratuita está activa</h3>
+            <p class="trial-status__text">
+              Tu prueba vence el <strong>{{ trial.endDate }}</strong>. Te quedan <strong>{{ trial.daysLeft }}</strong> {{ trial.daysLeft === 1 ? 'día' : 'días' }}.
+            </p>
+          </div>
+        </div>
+      }
+      @if (trial.status === 'trial_expired') {
+        <div class="trial-status trial-status--expired">
+          <span class="trial-status__icon"><ft-icon name="clock" [size]="24" /></span>
+          <div class="trial-status__info">
+            <h3 class="trial-status__title">Tu prueba gratuita terminó</h3>
+            <p class="trial-status__text">
+              Activá Premium por $14.900/mes para seguir disfrutando de todas las funciones.
+            </p>
+          </div>
+        </div>
+      }
+    }
+  }
+
+  <!-- Error state -->
+  @if (state() === 'error') {
+    <div class="error-state">
+      <span class="error-state__icon"><ft-icon name="alert-triangle" [size]="32" /></span>
+      <h2 class="error-state__title">No pudimos cargar los planes</h2>
+      <p class="error-state__text">Intentá de nuevo más tarde.</p>
+    </div>
+  }
+</div>

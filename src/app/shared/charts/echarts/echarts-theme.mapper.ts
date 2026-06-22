@@ -234,7 +234,16 @@ export class EchartsThemeMapper {
       },
       yAxis: {
         type: 'value',
-        axisLabel: { color: css.textTertiary, fontFamily: "'Inter', sans-serif", fontSize: 11 },
+        axisLabel: {
+          color: css.textTertiary,
+          fontFamily: "'Inter', sans-serif",
+          fontSize: 11,
+          formatter: (value: number) => {
+            if (value >= 1_000_000) return `${(value / 1_000_000).toFixed(1)}M`;
+            if (value >= 1_000) return `${(value / 1_000).toFixed(0)}k`;
+            return `${value}`;
+          },
+        },
         splitLine: { lineStyle: { color: css.gridColor } },
       },
       series: datasets.map((ds) => ({
@@ -293,7 +302,16 @@ export class EchartsThemeMapper {
       },
       yAxis: {
         type: 'value',
-        axisLabel: { color: css.textTertiary, fontFamily: "'Inter', sans-serif", fontSize: 11 },
+        axisLabel: {
+          color: css.textTertiary,
+          fontFamily: "'Inter', sans-serif",
+          fontSize: 11,
+          formatter: (value: number) => {
+            if (value >= 1_000_000) return `${(value / 1_000_000).toFixed(1)}M`;
+            if (value >= 1_000) return `${(value / 1_000).toFixed(0)}k`;
+            return `${value}`;
+          },
+        },
         splitLine: { lineStyle: { color: css.gridColor } },
       },
       series: datasets.map((ds) => ({
