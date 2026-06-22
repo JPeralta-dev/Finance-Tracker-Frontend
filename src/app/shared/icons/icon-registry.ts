@@ -57,6 +57,10 @@ import {
   heroDocumentText,
   heroCodeBracket,
   heroBuildingOffice,
+  heroChevronDown,
+  heroStar,
+  heroBookOpen,
+  heroBriefcase,
 } from '@ng-icons/heroicons/outline';
 
 // ─── Icon Map ────────────────────────────────────────────────────────────────
@@ -106,6 +110,28 @@ export const ICONS = {
   // Trends
   trendUp: heroArrowTrendingUp,
   trendDown: heroArrowTrendingDown,
+
+  // Analytics
+  chart: heroChartBar,
+  trendingUp: heroArrowTrendingUp,
+  trendingDown: heroArrowTrendingDown,
+  percent: heroBanknotes,
+  chevronDown: heroChevronDown,
+
+  // Insights
+  star: heroStar,
+  alertTriangle: heroExclamationTriangle,
+  repeat: heroArrowPath,
+
+  // Category fallbacks
+  book: heroBookOpen,
+  briefcase: heroBriefcase,
+  circle: heroCircleStack,
+  car: heroBolt,
+  gamepad: heroStar,
+  bag: heroShoppingBag,
+  zap: heroBolt,
+  code: heroCodeBracket,
 
   // Profile
   user: heroUser,

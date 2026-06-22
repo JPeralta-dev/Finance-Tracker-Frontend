@@ -63,18 +63,8 @@
 
 /* ═══ KPIs Row ═══ */
 .analytics-kpis-row {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
-
-  @include at-md {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  @include at-lg {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-  }
+  /* Let the inner component handle its own grid layout */
+  display: block;
 }
 
 /* ═══ Charts Row ═══ */

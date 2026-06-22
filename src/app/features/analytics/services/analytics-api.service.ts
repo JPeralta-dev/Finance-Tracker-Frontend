@@ -52,7 +52,8 @@ export interface MonthlyTrend {
 /** Category breakdown response from /api/analytics/category-breakdown */
 export interface CategoryBreakdown {
   categories: {
-    name: string;
+    categoryId: string;
+    category: string;
     amount: number;
     percentage: number;
     color?: string;
@@ -73,6 +74,7 @@ export interface AnalyticsInsight {
   message: string;
   severity: 'low' | 'medium' | 'high';
   actionable: boolean;
+  data?: Record<string, unknown>;
 }
 
 /** Transaction response from /api/analytics/transactions */
@@ -80,6 +82,7 @@ export interface AnalyticsTransaction {
   id: string;
   merchant: string;
   amount: number;
+  type: 'income' | 'expense';
   date: string;
   bank: string;
   category: string;

@@ -5,7 +5,7 @@ import { Observable, tap, catchError, of, switchMap } from "rxjs";
 import { toObservable } from "@angular/core/rxjs-interop";
 
 import { environment } from "../../../environments/environment";
-import { User } from "../models/user.model";
+import { User, SubscriptionTier, SubscriptionStatus } from "../models/user.model";
 
 @Injectable({ providedIn: "root" })
 export class AuthService {
@@ -32,6 +32,21 @@ export class AuthService {
 
   // Observable para backward compatibility
   readonly user$: Observable<User | null> = toObservable(this._userSignal);
+
+  // ── Subscription signals ──────────────────────────────────────────
+
+  readonly currentSubscription = computed(() => this._userSignal()?.subscription ?? null);
+  readonly subscriptionTier = computed<SubscriptionTier>(() => this.currentSubscription()?.tier ?? 'free');
+  readonly isPremium = computed(() => this.subscriptionTier() !== 'free');
+  readonly isTrialActive = computed(() => this.currentSubscription()?.status === 'active_trial');
+
+  /** Check if a required tier is allowed for the current user */
+  isTierAllowed(requiredTier: SubscriptionTier): boolean {
+    const tierOrder: SubscriptionTier[] = ['free', 'premium', 'premium_plus'];
+    const currentIdx = tierOrder.indexOf(this.subscriptionTier());
+    const requiredIdx = tierOrder.indexOf(requiredTier);
+    return currentIdx >= requiredIdx;
+  }
 
   constructor() {
     // No automatic session check — triggered by route guards on demand
@@ -64,7 +79,9 @@ export class AuthService {
   private checkSession(): void {
     this.http
       .get<{
-        user: { id: string; email: string; name?: string; image?: string };
+        user: { id: string; email: string; name?: string; image?: string; subscription?: {
+          tier: string; trialStart?: string; trialEnd?: string; premiumStart?: string; premiumEnd?: string; status?: string;
+        }};
         session: { id: string; expiresAt: string };
       }>(`${this.base}/get-session?t=${Date.now()}`, { withCredentials: true })
       .pipe(
@@ -73,19 +90,16 @@ export class AuthService {
       .subscribe({
         next: (response) => {
           if (response?.user) {
-            this._userSignal.set({
-              id: response.user.id,
-              email: response.user.email,
-              displayName: response.user.name,
-              createdAt: new Date().toISOString(),
-            });
+            this._userSignal.set(this.mapUserFromSession(response.user));
             this.authReady.set(true);
           } else {
             // Retry once after 500ms in case of race condition with cookie setup
             setTimeout(() => {
               this.http
                 .get<{
-                  user: { id: string; email: string; name?: string; image?: string };
+                  user: { id: string; email: string; name?: string; image?: string; subscription?: {
+                    tier: string; trialStart?: string; trialEnd?: string; premiumStart?: string; premiumEnd?: string; status?: string;
+                  }};
                   session: { id: string; expiresAt: string };
                 }>(`${this.base}/get-session?t=${Date.now()}`, { withCredentials: true })
                 .pipe(
@@ -94,12 +108,7 @@ export class AuthService {
                 .subscribe({
                   next: (retryResponse) => {
                     if (retryResponse?.user) {
-                      this._userSignal.set({
-                        id: retryResponse.user.id,
-                        email: retryResponse.user.email,
-                        displayName: retryResponse.user.name,
-                        createdAt: new Date().toISOString(),
-                      });
+                      this._userSignal.set(this.mapUserFromSession(retryResponse.user));
                     } else {
                       this._userSignal.set(null);
                     }
@@ -118,6 +127,27 @@ export class AuthService {
           this.authReady.set(true);
         },
       });
+  }
+
+  /** Map session user response to User interface (handles optional subscription) */
+  private mapUserFromSession(raw: {
+    id: string; email: string; name?: string; image?: string;
+    subscription?: { tier: string; trialStart?: string; trialEnd?: string; premiumStart?: string; premiumEnd?: string; status?: string };
+  }): User {
+    return {
+      id: raw.id,
+      email: raw.email,
+      displayName: raw.name,
+      createdAt: new Date().toISOString(),
+      subscription: raw.subscription ? {
+        tier: raw.subscription.tier as SubscriptionTier,
+        trialStart: raw.subscription.trialStart ?? null,
+        trialEnd: raw.subscription.trialEnd ?? null,
+        premiumStart: raw.subscription.premiumStart ?? null,
+        premiumEnd: raw.subscription.premiumEnd ?? null,
+        status: (raw.subscription.status ?? 'no_trial') as SubscriptionStatus,
+      } : undefined,
+    };
   }
 
   login(
@@ -242,7 +272,9 @@ export class AuthService {
         // If no local state, try to refresh from session
         this.http
           .get<{
-            user: { id: string; email: string; name?: string; image?: string };
+            user: { id: string; email: string; name?: string; image?: string; subscription?: {
+              tier: string; trialStart?: string; trialEnd?: string; premiumStart?: string; premiumEnd?: string; status?: string;
+            }};
             session: { id: string; expiresAt: string };
           }>(`${this.base}/get-session`, { withCredentials: true })
           .pipe(
@@ -251,12 +283,7 @@ export class AuthService {
           .subscribe({
             next: (response) => {
               if (response?.user) {
-                const user: User = {
-                  id: response.user.id,
-                  email: response.user.email,
-                  displayName: response.user.name,
-                  createdAt: new Date().toISOString(),
-                };
+                const user = this.mapUserFromSession(response.user);
                 this._userSignal.set(user);
                 observer.next(user);
               } else {

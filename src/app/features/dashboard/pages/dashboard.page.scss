@@ -1,12 +1,16 @@
 /* ─── Dashboard Page ───────────────────────────────────────────────
-   Orchestrator component: greeting + stats + chart + activity.
-   60/40 split for chart/activity on desktop.
+   5-row responsive layout:
+   Row 1: [ Balance Total ]    [ Tasa de Ahorro ]
+   Row 2: [ Ingreso Mensual ]  [ Gastos Mensuales ]
+   Row 3: AI Insights Card (premium gated)
+   Row 4: Goals Widget (premium gated)
+   Row 5: Chart + Recent Activity
    ─────────────────────────────────────────────────────────────────── */
 
 .dashboard-page {
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 28px;
   position: relative;
 }
 
@@ -14,7 +18,7 @@
 .dashboard-content-layer {
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 28px;
 }
 
 .dashboard-content-layer--ready {
@@ -49,7 +53,137 @@
   }
 }
 
-/* Greeting */
+/* ── Rows ────────────────────────────────────────────────────────── */
+
+.dashboard-row {
+  width: 100%;
+}
+
+/* ── Stats grid (2-column) ───────────────────────────────────────── */
+
+.stats-grid--2col {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ── Large stat cards ────────────────────────────────────────────── */
+
+.stat-card-large {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px 24px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(12px);
+  transition:
+    border-color var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out);
+
+  &:hover {
+    border-color: var(--glass-border-hover);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+  }
+
+  &--skeleton {
+    pointer-events: none;
+  }
+
+  &__icon {
+    font-size: 28px;
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-md);
+  }
+
+  &__body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+  }
+
+  &__label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  &__value {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    font-variant-numeric: tabular-nums;
+
+    &--accent {
+      background: linear-gradient(135deg, var(--accent-start), var(--accent-mid));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+  }
+
+  &__insight {
+    font-size: 12px;
+    color: var(--success);
+    font-weight: 500;
+  }
+}
+
+/* ── Skeleton lines ──────────────────────────────────────────────── */
+
+.skeleton-line {
+  height: 14px;
+  border-radius: 7px;
+  background: var(--bg-tertiary);
+  animation: pulse 1.5s ease-in-out infinite;
+
+  &--short {
+    width: 40%;
+  }
+
+  &--wide {
+    width: 70%;
+    height: 24px;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 0.3; }
+}
+
+/* ── Premium rows (insights + goals) ─────────────────────────────── */
+
+.dashboard-row--premium {
+  width: 100%;
+}
+
+/* ── Content row (chart + activity) ──────────────────────────────── */
+
+.dashboard-row--content {
+  width: 100%;
+}
+
+/* ── Greeting ────────────────────────────────────────────────────── */
+
 .dashboard-greeting {
   display: flex;
   align-items: flex-start;
@@ -70,6 +204,7 @@
     font-size: 14px;
     color: var(--text-tertiary);
     margin: 6px 0 0;
+    text-transform: capitalize;
   }
 
   &__cta {
@@ -98,45 +233,8 @@
   }
 }
 
-/* Date Range Selector */
-.dashboard-daterange {
-  display: flex;
-  gap: 4px;
-  padding: 4px;
-  background: var(--bg-tertiary);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-sm);
-  width: fit-content;
-}
+/* ── Content split: chart + sidebar (activity) ───────────────────── */
 
-.daterange-btn {
-  padding: 6px 14px;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--text-tertiary);
-  background: transparent;
-  border: none;
-  border-radius: calc(var(--radius-sm) - 2px);
-  cursor: pointer;
-  transition: all var(--duration-fast) var(--ease-out);
-
-  &:hover {
-    color: var(--text-secondary);
-    background: var(--bg-elevated);
-  }
-
-  &--active {
-    color: var(--text-inverse);
-    background: linear-gradient(135deg, var(--accent-start), var(--accent-mid));
-    box-shadow: var(--glow-accent);
-
-    &:hover {
-      color: var(--text-inverse);
-    }
-  }
-}
-
-/* Content split: chart + sidebar (activity + donut) */
 .dashboard-content {
   display: grid;
   grid-template-columns: 1fr;
@@ -149,6 +247,11 @@
 
   &__chart {
     min-width: 0;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    padding: 20px 24px;
+    backdrop-filter: blur(12px);
   }
 
   &__sidebar {
@@ -157,25 +260,10 @@
     flex-direction: column;
     gap: 24px;
   }
-
-  &__donut {
-    min-width: 0;
-  }
 }
 
-/* AI Insights section */
-.dashboard-insights {
-  &__title {
-    font-family: var(--font-display);
-    font-size: 18px;
-    font-weight: 600;
-    color: var(--text-primary);
-    margin: 0 0 12px;
-    letter-spacing: -0.01em;
-  }
-}
+/* ── Chart states ────────────────────────────────────────────────── */
 
-/* Chart placeholder states */
 .chart-skeleton {
   display: flex;
   align-items: center;
@@ -198,11 +286,6 @@
     background-size: 200% 100%;
     animation: shimmer 1.5s ease-in-out infinite;
   }
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 0.6; }
-  50% { opacity: 0.3; }
 }
 
 @keyframes shimmer {
@@ -245,6 +328,18 @@
   }
 }
 
+.chart-header {
+  margin-bottom: 16px;
+
+  &__title {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+  }
+}
+
 /* ═══ Welcome Banner ═══ */
 .dashboard-welcome-banner {
   display: flex;
@@ -283,5 +378,86 @@
       box-shadow: 0 0 24px rgba(157, 80, 187, 0.35);
       transform: translateY(-1px);
     }
+  }
+}
+
+/* ── Quick Actions (preserved from original) ─────────────────────── */
+
+.dashboard-actions {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+}
+
+.action-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 12px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  transition: border-color var(--duration-fast) var(--ease-out), background var(--duration-fast) var(--ease-out);
+
+  &:hover {
+    border-color: var(--accent-primary, #9D50BB);
+    background: var(--bg-elevated);
+  }
+
+  &__icon {
+    font-size: 18px;
+    color: var(--accent-start, #9D50BB);
+  }
+
+  &__label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-align: center;
+  }
+}
+
+/* ── Responsive: single column mobile ────────────────────────────── */
+
+@media (max-width: 767px) {
+  .dashboard-page {
+    gap: 20px;
+  }
+
+  .dashboard-content-layer {
+    gap: 20px;
+  }
+
+  .dashboard-greeting__title {
+    font-size: 24px;
+  }
+
+  .stat-card-large {
+    padding: 16px;
+  }
+
+  .stat-card-large__value {
+    font-size: 24px;
+  }
+
+  .stat-card-large__icon {
+    width: 40px;
+    height: 40px;
+    font-size: 22px;
+  }
+
+  .dashboard-content {
+    gap: 16px;
+  }
+
+  .dashboard-content__chart {
+    padding: 16px;
   }
 }

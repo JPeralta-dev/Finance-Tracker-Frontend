@@ -13,7 +13,7 @@ import { AuthService } from '../../../core/services/auth.service';
 import { filter } from 'rxjs';
 
 const NAV_ITEMS: NavItem[] = [
-  { label: 'Dashboard', path: '/dashboard', icon: 'dashboard' },
+  { label: 'Home', path: '/home', icon: 'dashboard' },
   { label: 'Transactions', path: '/transactions', icon: 'transactions' },
   { label: 'Categories', path: '/categories', icon: 'categories' },
   { label: 'Analytics', path: '/analytics', icon: 'analytics' },
@@ -22,7 +22,8 @@ const NAV_ITEMS: NavItem[] = [
 const NAV_ITEM_LABELS = NAV_ITEMS.map((item) => item.label);
 
 const ROUTE_TITLES: Record<string, string> = {
-  '/dashboard': 'Dashboard',
+  '/home': 'Home',
+  '/dashboard': 'Home',
   '/transactions': 'Transactions',
   '/transactions/new': 'New Transaction',
   '/categories': 'Categories',
@@ -90,6 +91,6 @@ export class TopbarComponent {
   }
 
   getLogoLink(): string {
-    return this.isAuthenticated() ? '/dashboard' : '/';
+    return this.isAuthenticated() ? '/home' : '/';
   }
 }

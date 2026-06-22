@@ -1,133 +1,145 @@
 <div class="dashboard-page" [class.dashboard-page--loading]="state() === 'loading'">
   @if (state() === 'error') {
-    <!-- Error state -->
     <ft-empty-state
       icon="warning"
-      [title]="'dashboard.errorTitle' | translate"
-      [description]="'dashboard.errorDesc' | translate"
-      [actionLabel]="'dashboard.retry' | translate"
+      [title]="'home.errorTitle' | translate"
+      [description]="'home.errorDesc' | translate"
+      [actionLabel]="'home.retry' | translate"
       (action)="retry()"
     />
   } @else if (state() === 'ready') {
-    <!-- Ready content (always rendered — even with zero data) -->
     <div class="dashboard-content-layer dashboard-content-layer--ready">
       <!-- Greeting -->
       <div class="dashboard-greeting" ftSubtleReveal="fade-up">
-        <h1 class="dashboard-greeting__title">{{ greeting() | translate }}</h1>
+        <div>
+          <h1 class="dashboard-greeting__title">{{ greeting() | translate }}</h1>
+          <p class="dashboard-greeting__subtitle">{{ today() }}</p>
+        </div>
         <a routerLink="/transactions/new" class="dashboard-greeting__cta" [ftHoverDepth]="8">
-          {{ 'dashboard.newTransaction' | translate }}
+          {{ 'home.newTransaction' | translate }}
         </a>
       </div>
 
-      <!-- Welcome banner for new users -->
+      <!-- Welcome banner -->
       @if (!hasData()) {
         <div class="dashboard-welcome-banner" ftSubtleReveal="fade-up" [delay]="25">
-          <span>{{ 'dashboard.welcomeBanner' | translate }}</span>
+          <span>{{ 'home.welcomeBanner' | translate }}</span>
           <a routerLink="/transactions/new" class="dashboard-welcome-banner__cta">
-            {{ 'dashboard.addTransaction' | translate }}
+            {{ 'home.addTransaction' | translate }}
           </a>
         </div>
       }
 
-      <!-- Date Range Selector -->
-      <div class="dashboard-daterange" ftSubtleReveal="fade-up" [delay]="50">
-        @for (range of dateRanges; track range.value) {
-          <button
-            class="daterange-btn"
-            [class.daterange-btn--active]="selectedRange() === range.value"
-            (click)="setRange(range.value)"
-          >
-            {{ range.label }}
-          </button>
-        }
-      </div>
-
-      <!-- Stats Grid (always visible — shows zeros when empty) -->
-      <div ftSubtleReveal="fade-up" [delay]="100">
-        <ft-stats-grid [stats]="stats()" [loading]="false" />
-      </div>
-
-      <!-- AI Insights Panel -->
-      @if (insights().length > 0) {
-        <div ftSubtleReveal="fade-up" [delay]="150" class="dashboard-insights">
-          <h2 class="dashboard-insights__title">{{ 'insights.title' | translate }}</h2>
-          <ft-insights-panel [insights]="insights()" />
-        </div>
-      }
-
-      <!-- Main content: Chart + Activity + Donut -->
-      <div class="dashboard-content">
-        <div class="dashboard-content__chart" ftSubtleReveal="fade-up" [delay]="200">
-          <ft-echart
-            [options]="areaChartOptions()"
-            [loading]="false"
-            height="250px"
-          >
-            <ng-container loading><div class="chart-skeleton"></div></ng-container>
-            <ng-container empty><div class="chart-empty">{{ 'dashboard.noChartData' | translate }}</div></ng-container>
-            <ng-container error>
-              <div class="chart-error">
-                {{ 'dashboard.chartError' | translate }}
-                <button class="chart-retry-btn" (click)="retry()" type="button">{{ 'dashboard.retry' | translate }}</button>
+      <!-- ROW 1: Balance Total + Ingreso Mensual -->
+      <div class="dashboard-row dashboard-row--stats" ftSubtleReveal="fade-up" [delay]="75">
+        <div class="stats-grid stats-grid--2col">
+          @for (stat of stats().slice(0, 2); track stat.id) {
+            <div class="stat-card-large">
+              <div class="stat-card-large__icon">
+                @if (stat.icon === 'wallet') { <ft-icon name="wallet" [size]="22" /> }
+                @if (stat.icon === 'income') { <ft-icon name="arrow-up" [size]="22" /> }
               </div>
-            </ng-container>
-          </ft-echart>
+              <div class="stat-card-large__body">
+                <span class="stat-card-large__label">{{ stat.label | translate }}</span>
+                <span class="stat-card-large__value" [class.stat-card-large__value--accent]="stat.id === 'balance'">
+                  @if (stat.id === 'savings') {
+                    {{ stat.value }}%
+                  } @else {
+                    {{ stat.value | number: '1.0-0' }}
+                  }
+                </span>
+                @if (stat.insight) {
+                  <span class="stat-card-large__insight">{{ stat.insight | translate }}</span>
+                }
+              </div>
+            </div>
+          }
         </div>
-        <div class="dashboard-content__sidebar" ftSubtleReveal="fade-up" [delay]="300">
-          <ft-recent-activity
-            [items]="activity()"
-            [maxItems]="4"
-          />
-          <div class="dashboard-content__donut">
-            <ft-echart
-              [options]="donutChartOptions()"
-              [loading]="false"
-              height="200px"
-            >
+      </div>
+
+      <!-- ROW 2: Gastos Mensuales + Tasa de Ahorro -->
+      <div class="dashboard-row dashboard-row--stats" ftSubtleReveal="fade-up" [delay]="100">
+        <div class="stats-grid stats-grid--2col">
+          @for (stat of stats().slice(2, 4); track stat.id) {
+            <div class="stat-card-large">
+              <div class="stat-card-large__icon">
+                @if (stat.icon === 'expense') { <ft-icon name="arrow-down" [size]="22" /> }
+                @if (stat.icon === 'subscription') { <ft-icon name="chart" [size]="22" /> }
+              </div>
+              <div class="stat-card-large__body">
+                <span class="stat-card-large__label">{{ stat.label | translate }}</span>
+                <span class="stat-card-large__value">
+                  @if (stat.id === 'savings') {
+                    {{ stat.value }}%
+                  } @else {
+                    {{ stat.value | number: '1.0-0' }}
+                  }
+                </span>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- ROW 3: AI Insights Card (premium gated) -->
+      <div class="dashboard-row dashboard-row--premium" ftSubtleReveal="fade-up" [delay]="125">
+        <ft-ai-insights-card />
+      </div>
+
+      <!-- ROW 4: Goals Widget (premium gated) -->
+      <div class="dashboard-row dashboard-row--premium" ftSubtleReveal="fade-up" [delay]="150">
+        <ft-goals-widget />
+      </div>
+
+      <!-- ROW 5: Chart + Recent Activity -->
+      <div class="dashboard-row dashboard-row--content" ftSubtleReveal="fade-up" [delay]="175">
+        <div class="dashboard-content">
+          <div class="dashboard-content__chart">
+            <div class="chart-header">
+              <h2 class="chart-header__title">{{ 'home.monthlyOverview' | translate }}</h2>
+            </div>
+            <ft-echart [options]="areaChartOptions()" [loading]="false" height="280px">
               <ng-container loading><div class="chart-skeleton"></div></ng-container>
-              <ng-container empty><div class="chart-empty">{{ 'dashboard.noCategoryData' | translate }}</div></ng-container>
+              <ng-container empty><div class="chart-empty">{{ 'home.noChartData' | translate }}</div></ng-container>
               <ng-container error>
-                <div class="chart-error">
-                  {{ 'dashboard.chartError' | translate }}
-                  <button class="chart-retry-btn" (click)="retry()" type="button">{{ 'dashboard.retry' | translate }}</button>
-                </div>
+                <div class="chart-error">{{ 'home.chartError' | translate }}<button class="chart-retry-btn" (click)="retry()" type="button">{{ 'home.retry' | translate }}</button></div>
               </ng-container>
             </ft-echart>
+          </div>
+          <div class="dashboard-content__sidebar">
+            <ft-recent-activity [items]="activity()" [maxItems]="5" />
           </div>
         </div>
       </div>
     </div>
   }
 
-  <!-- Loading overlay -->
+  <!-- Loading -->
   @if (state() === 'loading') {
     <div class="dashboard-content-layer dashboard-content-layer--loading">
       <div class="dashboard-greeting" ftSubtleReveal="fade-up">
         <div>
-          <h1 class="dashboard-greeting__title">{{ 'dashboard.loading' | translate }}</h1>
-          <p class="dashboard-greeting__subtitle">{{ 'dashboard.fetchingData' | translate }}</p>
+          <h1 class="dashboard-greeting__title">{{ 'home.loading' | translate }}</h1>
+          <p class="dashboard-greeting__subtitle">{{ 'home.fetchingData' | translate }}</p>
         </div>
       </div>
-      <div ftSubtleReveal="fade-up" [delay]="100">
-        <ft-stats-grid [stats]="[]" [loading]="true" />
-      </div>
-      <div ftSubtleReveal="fade-up" [delay]="150" class="dashboard-insights">
-        <h2 class="dashboard-insights__title">{{ 'insights.title' | translate }}</h2>
-        <ft-insights-panel [loading]="true" />
+      <div class="stats-grid stats-grid--2col" ftSubtleReveal="fade-up" [delay]="100">
+        @for (_ of [1, 2, 3, 4]; track $index) {
+          <div class="stat-card-large stat-card-large--skeleton">
+            <div class="stat-card-large__icon"></div>
+            <div class="stat-card-large__body">
+              <div class="skeleton-line skeleton-line--short"></div>
+              <div class="skeleton-line skeleton-line--wide"></div>
+            </div>
+          </div>
+        }
       </div>
       <div class="dashboard-content">
         <div class="dashboard-content__chart" ftSubtleReveal="fade-up" [delay]="200">
-          <div class="chart-placeholder chart-placeholder--loading">
-            <div class="skeleton-bar"></div>
-          </div>
+          <div class="chart-placeholder chart-placeholder--loading"><div class="skeleton-bar"></div></div>
         </div>
         <div class="dashboard-content__sidebar" ftSubtleReveal="fade-up" [delay]="300">
           <ft-recent-activity [loading]="true" [items]="[]" />
-          <div class="dashboard-content__donut">
-            <div class="chart-placeholder chart-placeholder--loading">
-              <div class="skeleton-bar"></div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
