@@ -45,6 +45,17 @@ import type { KpiData, MonthStory, CategoryAnalysis, ComparisonData, InsightData
 
 // ─── Pure helpers ───────────────────────────────────────────────────────────
 
+/** Map backend day abbreviations (Mon–Sun) to i18n keys */
+const DAY_KEY_MAP: Record<string, string> = {
+  Mon: 'analytics.days.mon',
+  Tue: 'analytics.days.tue',
+  Wed: 'analytics.days.wed',
+  Thu: 'analytics.days.thu',
+  Fri: 'analytics.days.fri',
+  Sat: 'analytics.days.sat',
+  Sun: 'analytics.days.sun',
+};
+
 /** Map API summary + trend to KpiData array */
 export function mapToKpis(
   summary: AnalyticsSummary | null,
@@ -393,7 +404,7 @@ export class AnalyticsPage implements OnInit {
 
     const colors = this.themeMapper.categoryColors();
     return this.themeMapper.buildBarOption(
-      daily.days.map(d => d.label),
+      daily.days.map(d => this.i18n.translate(DAY_KEY_MAP[d.label] ?? d.label)),
       [{ label: this.i18n.translate('analytics.dailySpending'), data: daily.days.map(d => d.amount), color: colors[2] }],
     );
   });

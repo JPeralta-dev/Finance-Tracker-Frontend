@@ -382,6 +382,15 @@
     "expenseBreakdown": "Expense Breakdown",
     "dailySpending": "Daily Spending",
     "thisWeek": "This week",
+    "days": {
+      "mon": "Mon",
+      "tue": "Tue",
+      "wed": "Wed",
+      "thu": "Thu",
+      "fri": "Fri",
+      "sat": "Sat",
+      "sun": "Sun"
+    },
     "summary": "Summary",
     "totalIncome": "Total Income",
     "totalExpenses": "Total Expenses",

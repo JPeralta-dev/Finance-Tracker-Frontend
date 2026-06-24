@@ -382,6 +382,15 @@
     "expenseBreakdown": "Desglose de Gastos",
     "dailySpending": "Gastos por Día",
     "thisWeek": "Esta semana",
+    "days": {
+      "mon": "Lun",
+      "tue": "Mar",
+      "wed": "Mié",
+      "thu": "Jue",
+      "fri": "Vie",
+      "sat": "Sáb",
+      "sun": "Dom"
+    },
     "summary": "Resumen",
     "totalIncome": "Ingreso Total",
     "totalExpenses": "Gastos Totales",
