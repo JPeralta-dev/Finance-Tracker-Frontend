@@ -10,26 +10,27 @@ import { ICONS } from '../../../shared/icons/icon-registry';
 import { ProfileDropdownComponent } from '../../layout/profile-dropdown/profile-dropdown.component';
 import { NotificationsDropdownComponent } from '../../layout/notifications-dropdown/notifications-dropdown.component';
 import { AuthService } from '../../../core/services/auth.service';
+import { TranslatePipe } from '../../../core/pipes/translate.pipe';
 import { filter } from 'rxjs';
 
 const NAV_ITEMS: NavItem[] = [
-  { label: 'Home', path: '/home', icon: 'dashboard' },
-  { label: 'Transactions', path: '/transactions', icon: 'transactions' },
-  { label: 'Categories', path: '/categories', icon: 'categories' },
-  { label: 'Analytics', path: '/analytics', icon: 'analytics' },
+  { label: 'nav.home', path: '/home', icon: 'dashboard' },
+  { label: 'nav.transactions', path: '/transactions', icon: 'transactions' },
+  { label: 'nav.categories', path: '/categories', icon: 'categories' },
+  { label: 'nav.analytics', path: '/analytics', icon: 'analytics' },
 ];
 
 const NAV_ITEM_LABELS = NAV_ITEMS.map((item) => item.label);
 
 const ROUTE_TITLES: Record<string, string> = {
-  '/home': 'Home',
-  '/dashboard': 'Home',
-  '/transactions': 'Transactions',
-  '/transactions/new': 'New Transaction',
-  '/categories': 'Categories',
-  '/analytics': 'Analytics',
-  '/settings': 'Settings',
-  '/profile': 'Profile',
+  '/home': 'nav.home',
+  '/dashboard': 'nav.home',
+  '/transactions': 'nav.transactions',
+  '/transactions/new': 'nav.newTransaction',
+  '/categories': 'nav.categories',
+  '/analytics': 'nav.analytics',
+  '/settings': 'nav.settings',
+  '/profile': 'nav.profile',
 };
 
 const PRIVATE_PATHS = Object.keys(ROUTE_TITLES);
@@ -37,7 +38,7 @@ const PRIVATE_PATHS = Object.keys(ROUTE_TITLES);
 @Component({
   selector: 'ft-topbar',
   standalone: true,
-  imports: [CommonModule, RouterLink, NgIcon, NavItemComponent, MobileMenuComponent, ProfileDropdownComponent, NotificationsDropdownComponent],
+  imports: [CommonModule, RouterLink, NgIcon, NavItemComponent, MobileMenuComponent, ProfileDropdownComponent, NotificationsDropdownComponent, TranslatePipe],
   templateUrl: './topbar.component.html',
   styleUrl: './topbar.component.scss',
 })
