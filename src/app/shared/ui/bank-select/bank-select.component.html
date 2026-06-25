@@ -1,0 +1,96 @@
+<div
+  class="bank-select"
+  [class.is-open]="isOpen()"
+  [class.has-value]="selectedBank()"
+  (keydown)="onKeyDown($event)"
+  tabindex="0"
+  role="listbox"
+  [attr.aria-expanded]="isOpen()"
+  [attr.aria-label]="'transactions.form.bank' | translate"
+>
+  <!-- Trigger Button -->
+  <button
+    type="button"
+    class="select-trigger"
+    (click)="toggle()"
+    [class.has-selection]="selectedBank()"
+  >
+    @if (selectedBank(); as bank) {
+      @if (bank.logoUrl) {
+        <img class="bank-logo bank-logo--trigger" [src]="bank.logoUrl" [alt]="bank.name" />
+      } @else {
+        <span class="bank-logo-placeholder bank-logo--trigger">
+          <ng-icon name="building" size="0.875rem" />
+        </span>
+      }
+      <span class="selected-name">{{ bank.name }}</span>
+    } @else {
+      <span class="placeholder">{{ placeholder() }}</span>
+    }
+    <ng-icon name="chevronRight" size="0.875rem" class="chevron" />
+  </button>
+
+  <!-- Dropdown Panel -->
+  @if (isOpen()) {
+    <div class="dropdown-panel" ftSubtleReveal="fade-up">
+      <!-- Search Input -->
+      <div class="search-wrap">
+        <ng-icon name="search" size="0.875rem" class="search-icon" />
+        <input
+          type="text"
+          class="search-input"
+          [placeholder]="'common.search' | translate"
+          (input)="onSearchInput($event)"
+          [value]="searchQuery()"
+        />
+      </div>
+
+      <!-- Bank List -->
+      <div class="bank-list" role="listbox">
+        @if (filteredBanks().length === 0) {
+          <div class="empty-state">
+            <ng-icon name="search" size="1.25rem" />
+            <span>{{ ('banks.empty.search' | translate) || 'No banks match your search' }}</span>
+          </div>
+        } @else {
+          @for (bank of filteredBanks(); track trackByBank($index, bank); let idx = $index) {
+            <button
+              type="button"
+              class="bank-item"
+              [class.is-selected]="selectedBank()?.id === bank.id"
+              [class.is-highlighted]="idx === highlightedIndex()"
+              (click)="selectBank(bank.id)"
+              role="option"
+              [attr.aria-selected]="selectedBank()?.id === bank.id"
+            >
+              @if (bank.logoUrl) {
+                <img class="bank-logo" [src]="bank.logoUrl" [alt]="bank.name" />
+              } @else {
+                <span class="bank-logo-placeholder">
+                  <ng-icon name="building" size="0.75rem" />
+                </span>
+              }
+              <span class="bank-name">{{ bank.name }}</span>
+              <span class="bank-country">{{ bank.countryCode }}</span>
+              @if (selectedBank()?.id === bank.id) {
+                <ng-icon name="check" size="0.875rem" class="check-icon" />
+              }
+            </button>
+          }
+        }
+      </div>
+
+      <!-- Add New Bank Button -->
+      <div class="dropdown-footer">
+        <button
+          type="button"
+          class="btn-add-bank"
+          (click)="onAddBank()"
+        >
+          <ng-icon name="plus" size="0.875rem" />
+          {{ 'banks.new' | translate }}
+        </button>
+      </div>
+    </div>
+  }
+</div>

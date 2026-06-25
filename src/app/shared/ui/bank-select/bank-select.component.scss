@@ -1,0 +1,169 @@
+:host {
+  display: block;
+  position: relative;
+  font-family: var(--font-body);
+}
+
+.bank-select {
+  position: relative;
+  outline: none;
+
+  &:focus-visible {
+    .select-trigger {
+      border-color: var(--accent-start);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+  }
+}
+
+.select-trigger {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 11px 14px;
+  border: 1.5px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-secondary);
+  cursor: pointer;
+  font-size: 15px;
+  color: var(--text-primary);
+  transition: border-color var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out);
+
+  &:hover { border-color: var(--glass-border-hover); }
+
+  .placeholder { color: var(--text-muted); }
+  .selected-name { flex: 1; text-align: left; }
+  .chevron {
+    margin-left: auto;
+    transition: transform var(--duration-fast) var(--ease-out);
+  }
+}
+
+.bank-select.is-open .chevron { transform: rotate(90deg); }
+
+.bank-logo {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  object-fit: contain;
+  flex-shrink: 0;
+
+  &--trigger { width: 22px; height: 22px; }
+}
+
+.bank-logo-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  background: var(--glass-border);
+  color: var(--text-muted);
+  flex-shrink: 0;
+
+  &--trigger { width: 22px; height: 22px; font-size: 12px; }
+}
+
+/* Dropdown Panel */
+.dropdown-panel {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  z-index: 50;
+  background: var(--bg-primary);
+  border: 1.5px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+
+.search-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--glass-border);
+
+  .search-icon { color: var(--text-muted); flex-shrink: 0; }
+
+  .search-input {
+    flex: 1;
+    border: none;
+    background: none;
+    color: var(--text-primary);
+    font-size: 14px;
+    outline: none;
+    &::placeholder { color: var(--text-muted); }
+  }
+}
+
+.bank-list {
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.bank-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 14px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: var(--text-primary);
+  font-size: 14px;
+  text-align: left;
+  transition: background var(--duration-fast);
+
+  &:hover, &.is-highlighted { background: var(--bg-hover); }
+  &.is-selected { background: var(--accent-glow); }
+
+  .bank-name { flex: 1; }
+  .bank-country {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+  .check-icon { color: var(--accent-start); }
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 32px 16px;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.dropdown-footer {
+  border-top: 1px solid var(--glass-border);
+  padding: 8px;
+}
+
+.btn-add-bank {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  padding: 10px;
+  border: 1.5px dashed var(--glass-border);
+  border-radius: var(--radius-sm);
+  background: none;
+  color: var(--accent-start);
+  font-size: 13px;
+  cursor: pointer;
+  transition: background var(--duration-fast), border-color var(--duration-fast);
+
+  &:hover {
+    background: var(--accent-glow);
+    border-color: var(--accent-start);
+  }
+}
