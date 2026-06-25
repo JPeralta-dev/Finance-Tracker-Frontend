@@ -30,6 +30,8 @@ export interface AnalyticsFilterState {
   dateRange: DateRange | null;
   bankId: string | null;
   period: '7d' | '30d' | '6m' | '1y' | 'custom';
+  type: 'all' | 'income' | 'expense';
+  category: string | null;
 }
 
 // ─── Store ──────────────────────────────────────────────────────────────────
@@ -42,6 +44,8 @@ export class AnalyticsStore {
     dateRange: null,
     bankId: null,
     period: '6m',
+    type: 'all',
+    category: null,
   });
 
   readonly filters = this._filters.asReadonly();
@@ -52,6 +56,8 @@ export class AnalyticsStore {
     return {
       range: f.dateRange ?? undefined,
       bankId: f.bankId ?? undefined,
+      type: f.type !== 'all' ? f.type : undefined,
+      category: f.category ?? undefined,
     };
   });
 
@@ -130,12 +136,24 @@ export class AnalyticsStore {
     this._filters.update(f => ({ ...f, bankId }));
   }
 
+  /** Set the type filter */
+  setType(type: 'all' | 'income' | 'expense'): void {
+    this._filters.update(f => ({ ...f, type }));
+  }
+
+  /** Set the category filter */
+  setCategory(category: string | null): void {
+    this._filters.update(f => ({ ...f, category }));
+  }
+
   /** Clear all filters to defaults */
   clearFilters(): void {
     this._filters.set({
       dateRange: null,
       bankId: null,
       period: '6m',
+      type: 'all',
+      category: null,
     });
   }
 
