@@ -51,7 +51,13 @@
           <div class="activity-row__info">
             <span class="activity-row__desc">{{ item.description }}</span>
             <span class="activity-row__meta">
+              <span class="activity-row__type-badge" [class]="item.type === 'income' ? 'type-badge--income' : 'type-badge--expense'">
+                {{ item.type === 'income' ? ('transactions.form.income' | translate) : ('transactions.form.expense' | translate) }}
+              </span>
               {{ item.category | categoryTranslate }}
+              @if (item.bankName) {
+                · {{ item.bankName }}
+              }
               @if (item.date) {
                 · {{ item.date | date: 'MMM d' }}
               }

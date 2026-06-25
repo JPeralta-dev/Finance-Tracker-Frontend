@@ -189,6 +189,8 @@ export class DashboardPage implements OnInit {
             amount: t.amount,
             type: t.type,
             date: t.date,
+            bankName: t.bank?.name,
+            origin: (t as any).origin,
           })));
         }
 

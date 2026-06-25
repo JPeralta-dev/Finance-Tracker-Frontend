@@ -16,6 +16,8 @@ export interface ActivityItem {
   amount: number;
   type: 'income' | 'expense';
   date: string;
+  bankName?: string;
+  origin?: string;
 }
 
 @Component({
