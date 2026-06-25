@@ -149,7 +149,9 @@ export class DashboardPage implements OnInit {
     const months = this.rangeToMonths(currentRange);
 
     forkJoin({
-      summary: this.financeService.getSummary().pipe(catchError(() => of(null))),
+      summary: this.financeService.getSummary(
+        dateRange ? { startDate: dateRange.startDate, endDate: dateRange.endDate } : undefined
+      ).pipe(catchError(() => of(null))),
       chart: this.financeService.getMonthlyChart(months).pipe(catchError(() => of(null))),
       transactions: this.financeService.getTransactions({
         limit: 5,
