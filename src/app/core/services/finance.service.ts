@@ -101,4 +101,16 @@ export class FinanceService {
   getBankBreakdown(): Observable<BankBreakdownItem[]> {
     return this.http.get<BankBreakdownItem[]>(`${this.base}/analytics/bank-breakdown`);
   }
+
+  // ── Preferences ───────────────────────────────────────────────────────────
+
+  getDefaultCategory(): Observable<{ defaultCategoryId: string | null }> {
+    return this.http.get<{ defaultCategoryId: string | null }>(`${this.base}/users/me/preferences`);
+  }
+
+  setDefaultCategory(categoryId: string | null): Observable<{ defaultCategoryId: string | null }> {
+    return this.http.patch<{ defaultCategoryId: string | null }>(`${this.base}/users/me/preferences`, {
+      defaultCategoryId: categoryId,
+    });
+  }
 }
