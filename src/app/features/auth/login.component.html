@@ -1,6 +1,6 @@
 <div class="auth-container">
-  <a routerLink="/" class="back-home">
-    <span>←</span> Back to Home
+  <a routerLink="/" class="back-home" [attr.aria-label]="'auth.backToHome' | translate">
+    {{ 'auth.backToHome' | translate }}
   </a>
   <div class="auth-card">
     <h1 class="auth-title">{{ 'auth.login' | translate }}</h1>

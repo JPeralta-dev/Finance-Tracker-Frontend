@@ -217,6 +217,7 @@ export class EchartsThemeMapper {
       title: title ? { text: title, left: 'center' } : undefined,
       tooltip: {
         trigger: 'axis',
+        confine: true,
         axisPointer: { type: 'line' },
         backgroundColor: css.bgTertiary,
         borderColor: css.borderColor,
@@ -286,6 +287,7 @@ export class EchartsThemeMapper {
       title: title ? { text: title, left: 'center' } : undefined,
       tooltip: {
         trigger: 'axis',
+        confine: true,
         backgroundColor: css.bgTertiary,
         borderColor: css.borderColor,
         borderWidth: 1,
@@ -344,6 +346,7 @@ export class EchartsThemeMapper {
       title: title ? { text: title, left: 'center', top: 'center' } : undefined,
       tooltip: {
         trigger: 'item',
+        confine: true,
         backgroundColor: css.bgTertiary,
         borderColor: css.borderColor,
         borderWidth: 1,
