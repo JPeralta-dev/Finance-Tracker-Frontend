@@ -100,4 +100,16 @@ export class FinanceService {
   getInsights(): Observable<Insight[]> {
     return this.http.get<Insight[]>(`${this.base}/insights`);
   }
+
+  // ── Preferences ───────────────────────────────────────────────────────────
+
+  getDefaultCategory(): Observable<{ defaultCategoryId: string | null }> {
+    return this.http.get<{ defaultCategoryId: string | null }>(`${this.base}/users/me/preferences`);
+  }
+
+  setDefaultCategory(categoryId: string | null): Observable<{ defaultCategoryId: string | null }> {
+    return this.http.patch<{ defaultCategoryId: string | null }>(`${this.base}/users/me/preferences`, {
+      defaultCategoryId: categoryId,
+    });
+  }
 }
