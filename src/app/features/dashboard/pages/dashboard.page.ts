@@ -1,4 +1,4 @@
-import { Component, signal, inject, OnInit, computed, Injectable } from '@angular/core';
+import { Component, signal, inject, OnInit, computed, Injectable, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { catchError, forkJoin, of } from 'rxjs';
@@ -62,6 +62,7 @@ class ChartColorCache {
   ],
   templateUrl: './dashboard.page.html',
   styleUrl: './dashboard.page.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DashboardPage implements OnInit {
   private readonly financeService = inject(FinanceService);

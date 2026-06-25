@@ -1,4 +1,4 @@
-import { Component, signal, inject, OnInit } from '@angular/core';
+import { Component, signal, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, Router } from '@angular/router';
 import { catchError, forkJoin, of } from 'rxjs';
@@ -19,6 +19,7 @@ type TransactionsState = 'loading' | 'ready' | 'empty' | 'error';
   imports: [CommonModule, RouterLink, TransactionTableComponent, EmptyStateComponent, TranslatePipe],
   templateUrl: './transactions.page.html',
   styleUrl: './transactions.page.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TransactionsPage implements OnInit {
   private readonly financeService = inject(FinanceService);

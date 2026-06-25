@@ -1,13 +1,22 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform, ChangeDetectorRef, inject, effect } from '@angular/core';
 import { TranslationService } from '../services/translation.service';
 
 @Pipe({
   name: 'translate',
   standalone: true,
-  pure: false, // Non-pure to react to language changes without explicit change detection triggers
+  pure: true,
 })
 export class TranslatePipe implements PipeTransform {
-  constructor(private translationService: TranslationService) {}
+  private translationService = inject(TranslationService);
+  private cdr = inject(ChangeDetectorRef);
+
+  constructor() {
+    // When language changes, trigger change detection so pure pipe re-evaluates
+    effect(() => {
+      this.translationService.currentLang();
+      this.cdr.markForCheck();
+    });
+  }
 
   transform(key: string, params?: Record<string, number | string>): string {
     if (key == null) return '';
