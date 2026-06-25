@@ -1,4 +1,5 @@
-import { Component, HostListener, inject, AfterViewInit, signal } from '@angular/core';
+import { Component, HostListener, inject, AfterViewInit, signal, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs';
 import { TopbarComponent } from './shared/layout/topbar/topbar.component';
@@ -20,6 +21,7 @@ export class AppComponent implements AfterViewInit {
   private commandService = inject(CommandService);
   private router = inject(Router);
   private authService = inject(AuthService);
+  private destroyRef = inject(DestroyRef);
 
   // Rutas públicas donde no se muestra el topbar privado
   private readonly publicRoutes = ['', 'login', 'register'];
@@ -39,7 +41,8 @@ export class AppComponent implements AfterViewInit {
 
     // Listen to route changes to update topbar visibility
     this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
+      filter(event => event instanceof NavigationEnd),
+      takeUntilDestroyed(this.destroyRef),
     ).subscribe(() => {
       this.updateShellVisibility();
     });

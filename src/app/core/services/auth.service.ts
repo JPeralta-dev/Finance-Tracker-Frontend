@@ -1,7 +1,7 @@
 import { Injectable, inject, signal, computed } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
-import { Observable, tap, catchError, of, switchMap } from "rxjs";
+import { Observable, tap, catchError, of, switchMap, delay } from "rxjs";
 import { toObservable } from "@angular/core/rxjs-interop";
 
 import { environment } from "../../../environments/environment";
@@ -75,6 +75,7 @@ export class AuthService {
   /**
    * Check if there's an active Better Auth session via cookie.
    * Called by initAuthCheck() when navigating to protected routes.
+   * Uses RxJS delay + retry(1) instead of nested setTimeout to prevent timer leaks.
    */
   private checkSession(): void {
     this.http
@@ -85,42 +86,30 @@ export class AuthService {
         session: { id: string; expiresAt: string };
       }>(`${this.base}/get-session?t=${Date.now()}`, { withCredentials: true })
       .pipe(
-        catchError(() => of(null)),
+        catchError((err) => {
+          // If first attempt fails, retry once after 500ms delay
+          return of(null).pipe(
+            delay(500),
+            switchMap(() =>
+              this.http.get<{
+                user: { id: string; email: string; name?: string; image?: string; subscription?: {
+                  tier: string; trialStart?: string; trialEnd?: string; premiumStart?: string; premiumEnd?: string; status?: string;
+                }};
+                session: { id: string; expiresAt: string };
+              }>(`${this.base}/get-session?t=${Date.now()}`, { withCredentials: true })
+                .pipe(catchError(() => of(null)))
+            ),
+          );
+        }),
       )
       .subscribe({
         next: (response) => {
           if (response?.user) {
             this._userSignal.set(this.mapUserFromSession(response.user));
-            this.authReady.set(true);
           } else {
-            // Retry once after 500ms in case of race condition with cookie setup
-            setTimeout(() => {
-              this.http
-                .get<{
-                  user: { id: string; email: string; name?: string; image?: string; subscription?: {
-                    tier: string; trialStart?: string; trialEnd?: string; premiumStart?: string; premiumEnd?: string; status?: string;
-                  }};
-                  session: { id: string; expiresAt: string };
-                }>(`${this.base}/get-session?t=${Date.now()}`, { withCredentials: true })
-                .pipe(
-                  catchError(() => of(null)),
-                )
-                .subscribe({
-                  next: (retryResponse) => {
-                    if (retryResponse?.user) {
-                      this._userSignal.set(this.mapUserFromSession(retryResponse.user));
-                    } else {
-                      this._userSignal.set(null);
-                    }
-                    this.authReady.set(true);
-                  },
-                  error: () => {
-                    this._userSignal.set(null);
-                    this.authReady.set(true);
-                  },
-                });
-            }, 500);
+            this._userSignal.set(null);
           }
+          this.authReady.set(true);
         },
         error: () => {
           this._userSignal.set(null);

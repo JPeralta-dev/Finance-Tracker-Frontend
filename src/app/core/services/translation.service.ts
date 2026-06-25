@@ -4,6 +4,9 @@ import { firstValueFrom } from 'rxjs';
 
 export type Language = 'es' | 'en' | 'fr';
 
+// Pre-compiled regex for {{ paramName }} interpolation — avoids re-compilation on every call
+const PARAM_REGEX = /\{\{\s*(\w+)\s*\}\}/g;
+
 @Injectable({ providedIn: 'root' })
 export class TranslationService {
   private readonly STORAGE_KEY = 'flowr_language';
@@ -90,10 +93,11 @@ export class TranslationService {
 
     let result = typeof value === 'string' ? value : key;
 
-    // Interpolate params: {{ paramName }}
+    // Interpolate params: {{ paramName }} — use pre-compiled regex (single pass)
     if (params && typeof result === 'string') {
-      Object.entries(params).forEach(([k, v]) => {
-        result = result.replace(new RegExp(`\\{\\{\\s*${k}\\s*\\}\\}`, 'g'), String(v));
+      result = result.replace(PARAM_REGEX, (match, key: string) => {
+        const trimmed = key.trim();
+        return trimmed in params ? String(params[trimmed]) : match;
       });
     }
 

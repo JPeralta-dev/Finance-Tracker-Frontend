@@ -1,9 +1,9 @@
-import { Component, OnInit, signal, inject, computed, OnDestroy } from '@angular/core';
+import { Component, OnInit, signal, inject, computed, ChangeDetectionStrategy, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { NgIcon } from '@ng-icons/core';
-import { Subscription } from 'rxjs';
 import { ICONS } from '../../shared/icons/icon-registry';
 import { FinanceService } from '../../core/services/finance.service';
 import { Category } from '../../core/models/category.model';
@@ -36,12 +36,14 @@ import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog.c
   ],
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CategoriesComponent implements OnInit, OnDestroy {
+export class CategoriesComponent implements OnInit {
   private financeService = inject(FinanceService);
   private toast = inject(ToastService);
   private i18n = inject(TranslationService);
   private modalService = inject(ModalService);
+  private destroyRef = inject(DestroyRef);
 
   categories = signal<Category[]>([]);
   loading = signal(true);
@@ -49,8 +51,6 @@ export class CategoriesComponent implements OnInit, OnDestroy {
   // Confirm dialog state
   confirmVisible = signal(false);
   private pendingDeleteCategory: Category | null = null;
-
-  private categorySavedSub?: Subscription;
 
   // Computed
   topCategory = computed(() => {
@@ -64,21 +64,17 @@ export class CategoriesComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loadCategories();
-    this.categorySavedSub = this.modalService.categorySaved$.subscribe(() => {
+    this.modalService.categorySaved$.pipe(
+      takeUntilDestroyed(this.destroyRef),
+    ).subscribe(() => {
       this.loadCategories();
     });
-  }
-
-  ngOnDestroy(): void {
-    this.categorySavedSub?.unsubscribe();
   }
 
   private loadCategories(): void {
     this.loading.set(true);
     this.financeService.getCategories().subscribe({
       next: (data) => {
-        console.log(data);
-        
         this.categories.set(data);
         this.loading.set(false);
       },
@@ -159,4 +155,3 @@ export class CategoriesComponent implements OnInit, OnDestroy {
     this.pendingDeleteCategory = null;
   }
 }
-

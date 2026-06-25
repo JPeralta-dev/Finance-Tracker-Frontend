@@ -1,4 +1,5 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, NavigationEnd } from '@angular/router';
 import { NgIcon } from '@ng-icons/core';
@@ -46,6 +47,7 @@ export class TopbarComponent {
   private readonly layoutService = inject(LayoutService);
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
+  private readonly destroyRef = inject(DestroyRef);
 
   readonly navItems = NAV_ITEMS;
   readonly mobileItems: MobileMenuItem[] = NAV_ITEMS;
@@ -60,7 +62,10 @@ export class TopbarComponent {
 
   constructor() {
     this.router.events
-      .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
+      .pipe(
+        filter((event): event is NavigationEnd => event instanceof NavigationEnd),
+        takeUntilDestroyed(this.destroyRef),
+      )
       .subscribe((event: NavigationEnd) => {
         const url = event.urlAfterRedirects.split('?')[0].split('#')[0];
         const title = ROUTE_TITLES[url] ?? '';

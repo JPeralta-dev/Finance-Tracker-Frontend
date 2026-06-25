@@ -1,6 +1,19 @@
-import { TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { Component } from '@angular/core';
 import { FtCurrencyPipe } from './ft-currency.pipe';
 import { CurrencyService } from '../services/currency.service';
+import { TranslationService } from '../services/translation.service';
+
+// Test host to verify pure pipe re-evaluation on service signal changes
+@Component({
+  standalone: true,
+  imports: [FtCurrencyPipe],
+  template: `<span>{{ value | ftCurrency: format }}</span>`,
+})
+class TestHostComponent {
+  value = 1234.5;
+  format: 'full' | 'short' = 'full';
+}
 
 describe('FtCurrencyPipe', () => {
   let pipe: FtCurrencyPipe;
@@ -30,9 +43,25 @@ describe('FtCurrencyPipe', () => {
     expect(pipe.transform(2500, 'short')).toBe('$2.5k');
   });
 
-  it('should react to currency changes (pure: false)', () => {
-    expect(pipe.transform(99.9)).toBe('$99.90');
+  it('should re-render when currency config changes via effect + markForCheck', fakeAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [TestHostComponent, FtCurrencyPipe],
+      providers: [CurrencyService],
+    });
+
+    const fixture = TestBed.createComponent(TestHostComponent);
+    fixture.detectChanges();
+
+    // Initial format in USD
+    expect(fixture.nativeElement.querySelector('span').textContent).toBe('$1,234.50');
+
+    // Change currency — the effect should trigger markForCheck
     currencyService.setCurrency({ symbol: '€', locale: 'de-DE' });
-    expect(pipe.transform(99.9)).toBe('€99,90');
-  });
+
+    tick();
+    fixture.detectChanges();
+
+    // After currency change, pipe should re-evaluate with new config
+    expect(fixture.nativeElement.querySelector('span').textContent).toBe('€1.234,50');
+  }));
 });
