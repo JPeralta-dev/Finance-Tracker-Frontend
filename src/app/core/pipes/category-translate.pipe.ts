@@ -1,4 +1,4 @@
-import { Pipe, PipeTransform, inject } from '@angular/core';
+import { Pipe, PipeTransform, inject, ChangeDetectorRef, effect } from '@angular/core';
 import { TranslationService } from '../services/translation.service';
 
 const CATEGORY_I18N_MAP: Record<string, Record<string, string>> = {
@@ -29,10 +29,19 @@ const CATEGORY_I18N_MAP: Record<string, Record<string, string>> = {
 @Pipe({
   name: 'categoryTranslate',
   standalone: true,
-  pure: false,
+  pure: true,
 })
 export class CategoryTranslatePipe implements PipeTransform {
   private translationService = inject(TranslationService);
+  private cdr = inject(ChangeDetectorRef);
+
+  constructor() {
+    // Re-evaluate when language changes
+    effect(() => {
+      this.translationService.currentLang();
+      this.cdr.markForCheck();
+    });
+  }
 
   transform(categoryName: string | undefined | null): string {
     if (!categoryName) return '';

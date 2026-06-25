@@ -221,7 +221,6 @@ export class FtEChartComponent implements OnInit, OnDestroy, OnChanges, AfterCon
     // Sync internal state to output
     effect(() => {
       const newState = this._state();
-      console.log('[FtEChartComponent] state transition:', newState);
       this.state.emit(newState);
     });
   }
@@ -235,11 +234,9 @@ export class FtEChartComponent implements OnInit, OnDestroy, OnChanges, AfterCon
   }
 
   ngAfterViewInit(): void {
-    console.log('[FtEChartComponent] ngAfterViewInit - platformBrowser:', isPlatformBrowser(this.platformId), 'loading:', this.loading());
     if (!isPlatformBrowser(this.platformId)) return;
     if (this.loading()) return;
 
-    console.log('[FtEChartComponent] ngAfterViewInit -> calling initChart()');
     this.initChart();
   }
 
@@ -294,20 +291,14 @@ export class FtEChartComponent implements OnInit, OnDestroy, OnChanges, AfterCon
   // ─── Private ─────────────────────────────────────────────────────────────
 
   private async initChart(): Promise<void> {
-    console.log('[FtEChartComponent] initChart() START');
     try {
-      console.log('[FtEChartComponent] initChart: awaiting registerECharts()...');
       await registerECharts();
-      console.log('[FtEChartComponent] initChart: registerECharts() OK, importing echarts/core...');
       const { init } = await import('echarts/core');
-      console.log('[FtEChartComponent] initChart: echarts/core imported OK, init =', typeof init);
 
       const opts = this.options();
-      console.log('[FtEChartComponent] initChart: options =', opts ? 'present' : 'undefined');
 
       // Check for empty data
       if (!opts || this.isEmptyOptions(opts)) {
-        console.log('[FtEChartComponent] initChart: empty options -> state=empty');
         this._state.set('empty');
         return;
       }
@@ -318,21 +309,16 @@ export class FtEChartComponent implements OnInit, OnDestroy, OnChanges, AfterCon
         return;
       }
 
-      console.log('[FtEChartComponent] initChart: calling echarts init() with element:', this.containerRef.nativeElement?.tagName);
       // Initialize chart
       this.chartInstance = init(this.containerRef.nativeElement);
-      console.log('[FtEChartComponent] initChart: echarts instance created:', !!this.chartInstance);
 
-      console.log('[FtEChartComponent] initChart: calling setOption()');
       this.chartInstance.setOption(opts);
 
       // Setup resize observer
       this.setupResizeObserver();
-      console.log('[FtEChartComponent] initChart: ResizeObserver set up');
 
       this._state.set('ready');
       this.chartReady.emit(this.chartInstance);
-      console.log('[FtEChartComponent] initChart: SUCCESS - state=ready');
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error('[FtEChartComponent] initChart: CATCH BLOCK - error type:', error?.constructor?.name);

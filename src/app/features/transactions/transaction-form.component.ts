@@ -1,9 +1,10 @@
-import { Component, OnInit, OnDestroy, signal, computed, inject } from '@angular/core';
+import { Component, OnInit, signal, computed, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Subscription, catchError, of } from 'rxjs';
+import { catchError, of } from 'rxjs';
 import { NgIcon } from '@ng-icons/core';
 import { ICONS, getCategoryIcon } from '../../shared/icons/icon-registry';
 import { FinanceService } from '../../core/services/finance.service';
@@ -41,16 +42,15 @@ interface CategoryOption extends Category {
   templateUrl: './transaction-form.component.html',
   styleUrl: './transaction-form.component.scss',
 })
-export class TransactionFormComponent implements OnInit, OnDestroy {
+export class TransactionFormComponent implements OnInit {
   private fb = inject(FormBuilder);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   private financeService = inject(FinanceService);
   private bankService = inject(BankService);
   private modalService = inject(ModalService);
+  private destroyRef = inject(DestroyRef);
   readonly currencySymbol = inject(CurrencyService).currencyConfig().symbol;
-
-  private categorySavedSub?: Subscription;
 
   // State
   readonly isEdit = signal(false);
@@ -86,13 +86,11 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
     this.loadCategories();
     this.loadBanks();
     this.checkEditMode();
-    this.categorySavedSub = this.modalService.categorySaved$.subscribe(() => {
+    this.modalService.categorySaved$.pipe(
+      takeUntilDestroyed(this.destroyRef),
+    ).subscribe(() => {
       this.loadCategories();
     });
-  }
-
-  ngOnDestroy(): void {
-    this.categorySavedSub?.unsubscribe();
   }
 
   private loadCategories(): void {
