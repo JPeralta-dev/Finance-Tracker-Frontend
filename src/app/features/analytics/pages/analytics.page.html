@@ -145,55 +145,6 @@
         </div>
       </div>
 
-      <!-- 3b. Origin Charts Row -->
-      <div class="analytics-charts-row">
-        <!-- Origin Distribution Donut -->
-        <div class="analytics-charts-row__category" ftSubtleReveal="fade-up" [delay]="220">
-          <ft-analytics-chart-card
-            title="Distribución por Origen"
-            height="320px"
-          >
-            <ft-echart
-              [options]="originDonutOptions()"
-              [loading]="isLoading()"
-              height="280px"
-            >
-              <ng-container loading><div class="chart-skeleton"></div></ng-container>
-              <ng-container empty><div class="chart-empty">{{ 'analytics.noChartData' | translate }}</div></ng-container>
-              <ng-container error>
-                <div class="chart-error">
-                  {{ 'analytics.chartError' | translate }}
-                  <button class="chart-retry-btn" (click)="retry()" type="button">{{ 'analytics.retry' | translate }}</button>
-                </div>
-              </ng-container>
-            </ft-echart>
-          </ft-analytics-chart-card>
-        </div>
-
-        <!-- Origin Income vs Expenses Bar -->
-        <div class="analytics-charts-row__daily" ftSubtleReveal="fade-up" [delay]="240">
-          <ft-analytics-chart-card
-            title="Ingresos y Gastos por Origen"
-            height="320px"
-          >
-            <ft-echart
-              [options]="originBarOptions()"
-              [loading]="isLoading()"
-              height="280px"
-            >
-              <ng-container loading><div class="chart-skeleton"></div></ng-container>
-              <ng-container empty><div class="chart-empty">{{ 'analytics.noChartData' | translate }}</div></ng-container>
-              <ng-container error>
-                <div class="chart-error">
-                  {{ 'analytics.chartError' | translate }}
-                  <button class="chart-retry-btn" (click)="retry()" type="button">{{ 'analytics.retry' | translate }}</button>
-                </div>
-              </ng-container>
-            </ft-echart>
-          </ft-analytics-chart-card>
-        </div>
-      </div>
-
       <!-- 4. Bottom Row: Insights + Transactions + Summary -->
       <div class="analytics-bottom-row">
         <!-- Insights Panel (wide) -->
