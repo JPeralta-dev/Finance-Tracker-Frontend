@@ -58,10 +58,20 @@
       "generic": "Algo salió mal. Intenta nuevamente."
     },
     "or": "o",
-    "signInWithGoogle": "Ingresar con Google"
+    "signInWithGoogle": "Ingresar con Google",
+    "backToHome": "← Volver al Inicio",
+    "passwordStrength": {
+      "weak": "Débil",
+      "fair": "Regular",
+      "good": "Buena",
+      "strong": "Fuerte"
+    },
+    "showPassword": "Mostrar contraseña",
+    "hidePassword": "Ocultar contraseña"
   },
   "nav": {
-    "dashboard": "Dashboard",
+    "home": "Inicio",
+    "dashboard": "Inicio",
     "transactions": "Transacciones",
     "categories": "Categorías",
     "analytics": "Análisis",
@@ -158,10 +168,52 @@
     "retry": "Reintentar",
     "welcomeTitle": "¡Bienvenido!",
     "welcomeSubtitle": "Comienza a rastrear tus finanzas agregando tu primera transacción.",
+    "welcomeBanner": "Comienza tu viaje financiero",
     "emptyOverview": "Sin transacciones aún",
     "emptyOverviewDesc": "Tu resumen financiero aparecerá aquí una vez que comiences a agregar transacciones.",
     "expenseBreakdown": "Desglose de Gastos",
-    "byCategory": "Por categoría"
+    "byCategory": "Por categoría",
+    "noChartData": "Sin datos de gráfico aún",
+    "noCategoryData": "Sin datos de categorías aún",
+    "chartError": "Error al cargar gráfico"
+  },
+  "home": {
+    "greeting_morning": "Buenos días",
+    "greeting_afternoon": "Buenas tardes",
+    "greeting_evening": "Buenas noches",
+    "greetingSubtitle": "Aquí tienes tu resumen financiero de este mes.",
+    "newTransaction": "+ Nueva Transacción",
+    "totalBalance": "Balance Total",
+    "monthlyIncome": "Ingreso Mensual",
+    "monthlyExpenses": "Gastos Mensuales",
+    "savingsRate": "Tasa de Ahorro",
+    "positiveBalance": "Balance positivo",
+    "noBalance": "Sin balance",
+    "onTrack": "En camino",
+    "couldImprove": "Podría mejorar",
+    "monthlyOverview": "Resumen Mensual",
+    "addExpense": "Agregar Gasto",
+    "addIncome": "Agregar Ingreso",
+    "manageCategories": "Categorías",
+    "viewAnalytics": "Ver Analytics",
+    "recentActivity": "Actividad Reciente",
+    "latestTransactions": "Tus últimas transacciones",
+    "viewAll": "Ver todo →",
+    "noTransactions": "Aún no hay transacciones",
+    "noTransactionsDesc": "Comienza a rastrear tus finanzas agregando tu primera transacción.",
+    "addTransaction": "Agregar transacción",
+    "loading": "Cargando...",
+    "fetchingData": "Obteniendo tus datos financieros.",
+    "errorTitle": "Algo salió mal",
+    "errorDesc": "No pudimos cargar los datos del dashboard. Intenta nuevamente.",
+    "retry": "Reintentar",
+    "welcomeTitle": "¡Bienvenido!",
+    "welcomeSubtitle": "Comienza a rastrear tus finanzas agregando tu primera transacción.",
+    "welcomeBanner": "Comienza tu viaje financiero",
+    "emptyOverview": "Sin transacciones aún",
+    "emptyOverviewDesc": "Tu resumen financiero aparecerá aquí una vez que comiences a agregar transacciones.",
+    "noChartData": "Sin datos de gráfico aún",
+    "chartError": "Error al cargar gráfico"
   },
   "insights": {
     "title": "Insights IA",
@@ -208,7 +260,7 @@
     "addFirstTransaction": "Agregar Transacción",
     "newTransaction": "+ Nueva Transacción",
     "form": {
-      "back": "← Volver a transacciones",
+      "back": "Volver a transacciones",
       "new_title": "Nueva Transacción",
       "edit_title": "Editar Transacción",
       "new_subtitle": "Completa los detalles para registrar una transacción",
@@ -237,7 +289,9 @@
         "invalid_data": "Datos inválidos. Revisa todos los campos",
         "not_found": "Transacción no encontrada",
         "server_error": "Error del servidor. Intenta nuevamente"
-      }
+      },
+      "bank": "Banco",
+      "bank_placeholder": "Seleccioná un banco"
     },
     "filters": {
       "search": "Buscar transacciones...",
@@ -252,7 +306,7 @@
   "categories": {
     "title": "Categorías",
     "subtitle": "Desglose de gastos por categoría",
-    "new": "+ Nueva Categoría",
+    "new": "Nueva Categoría",
     "add": "Agregar",
     "edit": "Editar",
     "delete": "Eliminar",
@@ -269,7 +323,8 @@
     "empty": {
       "title": "No hay categorías aún",
       "desc": "Agrega transacciones para ver las categorías aquí.",
-      "action": "+ Nueva Transacción"
+      "action": "+ Nueva Transacción",
+      "search": "Ninguna categoría coincide con tu búsqueda"
     },
     "form": {
       "name": "Nombre",
@@ -346,13 +401,26 @@
     "title": "Análisis",
     "subtitle": "Visualizá tus tendencias financieras y desgloses.",
     "monthlyTrends": "Tendencias Mensuales",
+    "incomeVsExpenses": "Ingresos vs Gastos",
     "last6Months": "Últimos 6 meses",
     "byCategory": "Por Categoría",
     "expenseBreakdown": "Desglose de Gastos",
+    "dailySpending": "Gastos por Día",
+    "thisWeek": "Esta semana",
+    "days": {
+      "mon": "Lun",
+      "tue": "Mar",
+      "wed": "Mié",
+      "thu": "Jue",
+      "fri": "Vie",
+      "sat": "Sáb",
+      "sun": "Dom"
+    },
     "summary": "Resumen",
     "totalIncome": "Ingreso Total",
     "totalExpenses": "Gastos Totales",
     "netSavings": "Ahorro Neto",
+    "savingsRate": "Tasa de Ahorro",
     "emptyTitle": "Sin datos aún",
     "emptyDesc": "Empezá a registrar transacciones para ver tu análisis financiero.",
     "loading": "Cargando análisis...",
@@ -362,7 +430,59 @@
     "retry": "Reintentar",
     "addTransaction": "Agregar transacción",
     "noCategoryData": "Sin datos de categorías aún",
-    "noChartData": "Sin datos mensuales aún"
+    "noChartData": "Sin datos mensuales aún",
+    "noDailyData": "Sin datos de gastos diarios",
+    "chartError": "Error al cargar gráfico",
+    "welcomeTitle": "Bienvenido a Análisis",
+    "welcomeDesc": "Empezá agregando tu primera transacción para ver insights.",
+    "addFirstTransaction": "Agregar Primera Transacción",
+    "noDataTitle": "Sin Datos para Este Período",
+    "noDataDesc": "Intentá ajustar los filtros para ver resultados.",
+    "clearFilters": "Limpiar Filtros",
+    "welcomeBanner": "¿Listo para empezar? Agregá tu primera transacción para desbloquear insights.",
+    "period": {
+      "1m": "1M",
+      "3m": "3M",
+      "6m": "6M",
+      "1y": "1A"
+    },
+    "vsLastMonth": "vs mes anterior",
+    "filter": {
+      "all": "Todos",
+      "income": "Ingresos",
+      "expense": "Gastos",
+      "more": "Más filtros",
+      "category": "Categoría",
+      "allCats": "Todas las categorías",
+      "reset": "Resetear"
+    },
+    "insight": {
+      "spending": "Alerta de Gastos",
+      "savings": "Insight de Ahorro",
+      "anomaly": "Anomalía Detectada",
+      "positive": "¡Buen Trabajo!",
+      "subscription": "Alerta de Suscripción",
+      "info": "Info",
+      "warning": "Advertencia",
+      "success": "Éxito",
+      "trend": "Tendencia",
+      "low": "bajo",
+      "medium": "medio",
+      "high": "alto"
+    },
+    "story": {
+      "greatSavings": "¡Buen trabajo! Tasa de ahorro del {{rate}}% está por encima del objetivo.",
+      "negativeSavings": "Estás gastando {{rate}}% más de lo que ganás.",
+      "spendingSpike": "Pico de gastos detectado: {{amount}} este mes.",
+      "noNotableEvents": "Sin eventos notables este período.",
+      "noData": "No hay suficientes datos para generar historias."
+    },
+    "comparison": {
+      "income": "Ingresos",
+      "expenses": "Gastos",
+      "current": "Actual",
+      "previous": "Anterior"
+    }
   },
   "profile": {
     "title": "Perfil",
@@ -416,6 +536,12 @@
     "budget": {
       "title": "Alerta de presupuesto",
       "message": "Tu presupuesto mensual está casi agotado. Revisa tus gastos."
+    }
+  },
+  "banks": {
+    "new": "Agregar nuevo banco",
+    "empty": {
+      "search": "Ningún banco coincide con tu búsqueda"
     }
   }
 }

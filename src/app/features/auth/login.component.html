@@ -60,7 +60,7 @@
             [placeholder]="'auth.password_placeholder' | translate"
             autocomplete="current-password"
           />
-          <button type="button" class="password-toggle" (click)="showPassword = !showPassword" [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'">
+          <button type="button" class="password-toggle" (click)="showPassword = !showPassword" [attr.aria-label]="(showPassword ? 'auth.hidePassword' : 'auth.showPassword') | translate">
             <ng-icon [name]="showPassword ? 'check' : 'lockClosed'" size="1rem" />
           </button>
         </div>

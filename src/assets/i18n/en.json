@@ -58,9 +58,19 @@
       "generic": "Something went wrong. Try again."
     },
     "or": "or",
-    "signInWithGoogle": "Sign in with Google"
+    "signInWithGoogle": "Sign in with Google",
+    "backToHome": "← Back to Home",
+    "passwordStrength": {
+      "weak": "Weak",
+      "fair": "Fair",
+      "good": "Good",
+      "strong": "Strong"
+    },
+    "showPassword": "Show password",
+    "hidePassword": "Hide password"
   },
   "nav": {
+    "home": "Home",
     "dashboard": "Dashboard",
     "transactions": "Transactions",
     "categories": "Categories",
@@ -158,10 +168,52 @@
     "retry": "Retry",
     "welcomeTitle": "Welcome!",
     "welcomeSubtitle": "Start tracking your finances by adding your first transaction.",
+    "welcomeBanner": "Start your financial journey",
     "emptyOverview": "No transactions yet",
     "emptyOverviewDesc": "Your financial overview will appear here once you start adding transactions.",
     "expenseBreakdown": "Expense Breakdown",
-    "byCategory": "By category"
+    "byCategory": "By category",
+    "noChartData": "No chart data yet",
+    "noCategoryData": "No category data yet",
+    "chartError": "Error loading chart"
+  },
+  "home": {
+    "greeting_morning": "Good morning",
+    "greeting_afternoon": "Good afternoon",
+    "greeting_evening": "Good evening",
+    "greetingSubtitle": "Here's your financial overview for this month.",
+    "newTransaction": "+ New Transaction",
+    "totalBalance": "Total Balance",
+    "monthlyIncome": "Monthly Income",
+    "monthlyExpenses": "Monthly Expenses",
+    "savingsRate": "Savings Rate",
+    "positiveBalance": "Positive balance",
+    "noBalance": "No balance",
+    "onTrack": "On track",
+    "couldImprove": "Could improve",
+    "monthlyOverview": "Monthly Overview",
+    "addExpense": "Add Expense",
+    "addIncome": "Add Income",
+    "manageCategories": "Manage Categories",
+    "viewAnalytics": "View Analytics",
+    "recentActivity": "Recent Activity",
+    "latestTransactions": "Your latest transactions",
+    "viewAll": "View all →",
+    "noTransactions": "No transactions yet",
+    "noTransactionsDesc": "Start tracking your finances by adding your first transaction.",
+    "addTransaction": "Add transaction",
+    "loading": "Loading...",
+    "fetchingData": "Fetching your financial data.",
+    "errorTitle": "Something went wrong",
+    "errorDesc": "We couldn't load your dashboard data. Please try again.",
+    "retry": "Retry",
+    "welcomeTitle": "Welcome!",
+    "welcomeSubtitle": "Start tracking your finances by adding your first transaction.",
+    "welcomeBanner": "Start your financial journey",
+    "emptyOverview": "No transactions yet",
+    "emptyOverviewDesc": "Your financial overview will appear here once you start adding transactions.",
+    "noChartData": "No chart data yet",
+    "chartError": "Error loading chart"
   },
   "insights": {
     "title": "AI Insights",
@@ -208,7 +260,7 @@
     "addFirstTransaction": "Add Transaction",
     "newTransaction": "+ New Transaction",
     "form": {
-      "back": "← Back to transactions",
+      "back": "Back to transactions",
       "new_title": "New Transaction",
       "edit_title": "Edit Transaction",
       "new_subtitle": "Fill in the details to record a transaction",
@@ -237,7 +289,9 @@
         "invalid_data": "Invalid data. Check all fields",
         "not_found": "Transaction not found",
         "server_error": "Server error. Please try again"
-      }
+      },
+      "bank": "Bank",
+      "bank_placeholder": "Select a bank"
     },
     "filters": {
       "search": "Search transactions...",
@@ -252,7 +306,7 @@
   "categories": {
     "title": "Categories",
     "subtitle": "Spending breakdown by category",
-    "new": "+ New Category",
+    "new": "New Category",
     "add": "Add",
     "edit": "Edit",
     "delete": "Delete",
@@ -269,7 +323,8 @@
     "empty": {
       "title": "No categories yet",
       "desc": "Add some transactions to see categories appear here.",
-      "action": "+ New Transaction"
+      "action": "+ New Transaction",
+      "search": "No categories match your search"
     },
     "form": {
       "name": "Name",
@@ -346,13 +401,26 @@
     "title": "Analytics",
     "subtitle": "Visualize your financial trends and breakdowns.",
     "monthlyTrends": "Monthly Trends",
+    "incomeVsExpenses": "Income vs Expenses",
     "last6Months": "Last 6 months",
     "byCategory": "By Category",
     "expenseBreakdown": "Expense Breakdown",
+    "dailySpending": "Daily Spending",
+    "thisWeek": "This week",
+    "days": {
+      "mon": "Mon",
+      "tue": "Tue",
+      "wed": "Wed",
+      "thu": "Thu",
+      "fri": "Fri",
+      "sat": "Sat",
+      "sun": "Sun"
+    },
     "summary": "Summary",
     "totalIncome": "Total Income",
     "totalExpenses": "Total Expenses",
     "netSavings": "Net Savings",
+    "savingsRate": "Savings Rate",
     "emptyTitle": "No data yet",
     "emptyDesc": "Start logging transactions to see your financial analytics.",
     "loading": "Loading analytics...",
@@ -362,7 +430,59 @@
     "retry": "Retry",
     "addTransaction": "Add transaction",
     "noCategoryData": "No category data yet",
-    "noChartData": "No monthly data yet"
+    "noChartData": "No monthly data yet",
+    "noDailyData": "No daily spending data",
+    "chartError": "Error loading chart",
+    "welcomeTitle": "Welcome to Analytics",
+    "welcomeDesc": "Start by adding your first transaction to see insights.",
+    "addFirstTransaction": "Add First Transaction",
+    "noDataTitle": "No Data for This Period",
+    "noDataDesc": "Try adjusting your filters to see results.",
+    "clearFilters": "Clear Filters",
+    "welcomeBanner": "Ready to start? Add your first transaction to unlock insights.",
+    "period": {
+      "1m": "1M",
+      "3m": "3M",
+      "6m": "6M",
+      "1y": "1Y"
+    },
+    "vsLastMonth": "vs last month",
+    "filter": {
+      "all": "All",
+      "income": "Income",
+      "expense": "Expense",
+      "more": "More filters",
+      "category": "Category",
+      "allCats": "All categories",
+      "reset": "Reset"
+    },
+    "insight": {
+      "spending": "Spending Alert",
+      "savings": "Savings Insight",
+      "anomaly": "Anomaly Detected",
+      "positive": "Great Job!",
+      "subscription": "Subscription Alert",
+      "info": "Info",
+      "warning": "Warning",
+      "success": "Success",
+      "trend": "Trend",
+      "low": "low",
+      "medium": "medium",
+      "high": "high"
+    },
+    "story": {
+      "greatSavings": "Great job! Savings rate of {{rate}}% is above target.",
+      "negativeSavings": "You're spending {{rate}}% more than you earn.",
+      "spendingSpike": "Spending spike detected: {{amount}} this month.",
+      "noNotableEvents": "No notable events this period.",
+      "noData": "Not enough data to generate stories."
+    },
+    "comparison": {
+      "income": "Income",
+      "expenses": "Expenses",
+      "current": "Current",
+      "previous": "Previous"
+    }
   },
   "profile": {
     "title": "Profile",
@@ -416,6 +536,12 @@
     "budget": {
       "title": "Budget alert",
       "message": "Your monthly budget is almost exceeded. Review your spending."
+    }
+  },
+  "banks": {
+    "new": "Add new bank",
+    "empty": {
+      "search": "No banks match your search"
     }
   }
 }
