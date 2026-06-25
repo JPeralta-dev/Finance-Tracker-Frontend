@@ -98,6 +98,21 @@ export interface BankInfo {
   logo: string;
 }
 
+/** Origin breakdown item from /api/analytics/origin-breakdown */
+export interface OriginBreakdownItem {
+  origin: string;
+  label: string;
+  income: number;
+  expenses: number;
+  total: number;
+  count: number;
+}
+
+/** Origin breakdown response */
+export interface OriginBreakdown {
+  origins: OriginBreakdownItem[];
+}
+
 // ─── Service ────────────────────────────────────────────────────────────────
 
 @Injectable({ providedIn: 'root' })
@@ -233,6 +248,19 @@ export class AnalyticsApiService {
   getBanks(): Observable<{ banks: BankInfo[] }> {
     return this.http
       .get<{ banks: BankInfo[] }>(`${this.base}/banks`)
+      .pipe(
+        retry(this.retryConfig),
+        catchError(this.handleError),
+      );
+  }
+
+  /**
+   * GET /api/analytics/origin-breakdown
+   * Income and expenses grouped by origin
+   */
+  getOriginBreakdown(range?: DateRange, bankId?: string, type?: string, category?: string): Observable<OriginBreakdown> {
+    return this.http
+      .get<OriginBreakdown>(`${this.base}/origin-breakdown`, { params: this.buildParams(range, bankId, type, category) })
       .pipe(
         retry(this.retryConfig),
         catchError(this.handleError),

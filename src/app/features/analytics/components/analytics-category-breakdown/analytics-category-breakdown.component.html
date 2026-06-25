@@ -7,7 +7,10 @@
 } @else {
   <div class="category-breakdown">
     @for (cat of categories().slice(0, max()); track cat.name) {
-      <div class="category-breakdown__row" ftSubtleReveal="fade-up" [delay]="$index * 50">
+      <div class="category-breakdown__row"
+           [class.category-breakdown__row--active]="store.crossFilter().category === cat.name"
+           (click)="onCategoryClick(cat.name)"
+           ftSubtleReveal="fade-up" [delay]="$index * 50">
         <div class="category-breakdown__info">
           <span class="category-breakdown__icon" [style.background]="cat.color + '20'" [style.color]="cat.color">
             <ng-icon [name]="cat.icon" size="0.9rem" />

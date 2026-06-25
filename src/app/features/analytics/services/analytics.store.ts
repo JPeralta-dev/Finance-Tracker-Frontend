@@ -20,6 +20,7 @@ import type {
   AnalyticsTransaction,
   BankInfo,
   DateRange,
+  OriginBreakdown,
 } from './analytics-api.service';
 
 // ─── State Types ────────────────────────────────────────────────────────────
@@ -53,13 +54,22 @@ export class AnalyticsStore {
   /** Computed API params from current filters */
   readonly apiParams = computed(() => {
     const f = this._filters();
+    const cf = this._crossFilter();
     return {
       range: f.dateRange ?? undefined,
       bankId: f.bankId ?? undefined,
       type: f.type !== 'all' ? f.type : undefined,
-      category: f.category ?? undefined,
+      category: cf.category ?? f.category ?? undefined, // crossFilter takes precedence
     };
   });
+
+  // ─── Cross-Filter State (drill-down selection from charts) ──────────────
+
+  private readonly _crossFilter = signal<{ category?: string }>({});
+  readonly crossFilter = this._crossFilter.asReadonly();
+
+  /** Whether cross-filter is active */
+  readonly hasCrossFilter = computed(() => !!this._crossFilter().category);
 
   // ─── Load State ─────────────────────────────────────────────────────────
 
@@ -91,6 +101,11 @@ export class AnalyticsStore {
 
   private readonly _banks = signal<BankInfo[]>([]);
   readonly banks = this._banks.asReadonly();
+
+  // ─── Origin Breakdown Data ──────────────────────────────────────────────
+
+  private readonly _originBreakdown = signal<OriginBreakdown | null>(null);
+  readonly originBreakdown = this._originBreakdown.asReadonly();
 
   // ─── Computed Derived State ─────────────────────────────────────────────
 
@@ -144,6 +159,16 @@ export class AnalyticsStore {
   /** Set the category filter */
   setCategory(category: string | null): void {
     this._filters.update(f => ({ ...f, category }));
+  }
+
+  /** Set cross-filter category (drill-down from chart click) */
+  setCrossFilterCategory(category: string): void {
+    this._crossFilter.set({ category });
+  }
+
+  /** Clear cross-filter */
+  clearCrossFilter(): void {
+    this._crossFilter.set({});
   }
 
   /** Clear all filters to defaults */
@@ -209,6 +234,11 @@ export class AnalyticsStore {
     this._banks.set(data);
   }
 
+  /** Update origin breakdown data */
+  setOriginBreakdown(data: OriginBreakdown): void {
+    this._originBreakdown.set(data);
+  }
+
   /** Reset all data to initial state */
   reset(): void {
     this._summary.set(null);
@@ -217,6 +247,7 @@ export class AnalyticsStore {
     this._dailySpending.set(null);
     this._insights.set([]);
     this._transactions.set([]);
+    this._originBreakdown.set(null);
     this._loadState.set('idle');
     this._error.set(null);
   }

@@ -36,7 +36,7 @@ import { TranslatePipe } from '../../../core/pipes/translate.pipe';
 import { TranslationService } from '../../../core/services/translation.service';
 import { CurrencyService } from '../../../core/services/currency.service';
 import { ToastService } from '../../../core/services/toast.service';
-import { AnalyticsApiService, AnalyticsSummary, MonthlyTrend, CategoryBreakdown, DailySpending, AnalyticsInsight, AnalyticsTransaction, BankInfo, DateRange } from '../services/analytics-api.service';
+import { AnalyticsApiService, AnalyticsSummary, MonthlyTrend, CategoryBreakdown, DailySpending, AnalyticsInsight, AnalyticsTransaction, BankInfo, DateRange, OriginBreakdown } from '../services/analytics-api.service';
 import { AnalyticsStore } from '../services/analytics.store';
 import { ICONS } from '../../../shared/icons/icon-registry';
 
@@ -409,6 +409,28 @@ export class AnalyticsPage implements OnInit {
     );
   });
 
+  readonly originDonutOptions = computed<EChartsOption | undefined>(() => {
+    const breakdown = this.store.originBreakdown();
+    if (!breakdown?.origins || breakdown.origins.length === 0) return undefined;
+    return this.themeMapper.buildDonutOption(
+      breakdown.origins.map(o => o.label),
+      breakdown.origins.map(o => o.total),
+    );
+  });
+
+  readonly originBarOptions = computed<EChartsOption | undefined>(() => {
+    const breakdown = this.store.originBreakdown();
+    if (!breakdown?.origins || breakdown.origins.length === 0) return undefined;
+    const colors = this.themeMapper.categoryColors();
+    return this.themeMapper.buildBarOption(
+      breakdown.origins.map(o => o.label),
+      [
+        { label: this.i18n.translate('transactions.form.income'), data: breakdown.origins.map(o => o.income), color: colors[7] },
+        { label: this.i18n.translate('transactions.form.expense'), data: breakdown.origins.map(o => o.expenses), color: colors[4] },
+      ],
+    );
+  });
+
   // ─── State helpers ──────────────────────────────────────────────────────
 
   readonly isLoading = computed(() => this.store.loadState() === 'loading');
@@ -500,14 +522,16 @@ export class AnalyticsPage implements OnInit {
       transactions: this.api.getRecentTransactions(range, bankId, type, category).pipe(
         catchError(() => of({ transactions: [] })),
       ),
+      originBreakdown: this.api.getOriginBreakdown(range, bankId, type, category).pipe(catchError(() => of(null))),
     }).subscribe({
-      next: ({ summary, trend, categoryBreakdown, dailySpending, insights, transactions }) => {
+      next: ({ summary, trend, categoryBreakdown, dailySpending, insights, transactions, originBreakdown }) => {
         if (summary) this.store.setSummary(summary);
         if (trend) this.store.setMonthlyTrend(trend);
         if (categoryBreakdown) this.store.setCategoryBreakdown(categoryBreakdown);
         if (dailySpending) this.store.setDailySpending(dailySpending);
         if (insights?.insights) this.store.setInsights(insights.insights);
         if (transactions?.transactions) this.store.setTransactions(transactions.transactions);
+        if (originBreakdown) this.store.setOriginBreakdown(originBreakdown);
 
         // Insights come from the backend API only (Spanish, rule-based)
         // No frontend merge — avoids duplicate English messages
