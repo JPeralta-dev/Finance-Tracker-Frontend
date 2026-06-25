@@ -58,10 +58,18 @@
       "generic": "Algo salió mal. Intenta nuevamente."
     },
     "or": "o",
-    "signInWithGoogle": "Ingresar con Google"
+    "signInWithGoogle": "Ingresar con Google",
+    "backToHome": "\u2190 Volver al Inicio",
+    "passwordStrength": {
+      "weak": "D\u00e9bil",
+      "fair": "Regular",
+      "good": "Buena",
+      "strong": "Fuerte"
+    }
   },
   "nav": {
     "home": "Inicio",
+    "dashboard": "Inicio",
     "transactions": "Transacciones",
     "categories": "Categorías",
     "analytics": "Análisis",
@@ -110,6 +118,44 @@
       "subtitle": "Gratis para siempre. Sin tarjeta de crédito. Solo registrate y tomá el control.",
       "button": "Comenzar Gratis"
     }
+  },
+  "dashboard": {
+    "greeting_morning": "Buenos días",
+    "greeting_afternoon": "Buenas tardes",
+    "greeting_evening": "Buenas noches",
+    "greetingSubtitle": "Aquí tienes tu resumen financiero de este mes.",
+    "newTransaction": "+ Nueva Transacción",
+    "totalBalance": "Balance Total",
+    "monthlyIncome": "Ingreso Mensual",
+    "monthlyExpenses": "Gastos Mensuales",
+    "savingsRate": "Tasa de Ahorro",
+    "positiveBalance": "Balance positivo",
+    "noBalance": "Sin balance",
+    "onTrack": "En camino",
+    "couldImprove": "Podría mejorar",
+    "monthlyOverview": "Resumen Mensual",
+    "last6Months": "Últimos 6 meses",
+    "recentActivity": "Actividad Reciente",
+    "latestTransactions": "Tus últimas transacciones",
+    "viewAll": "Ver todo →",
+    "noTransactions": "Aún no hay transacciones",
+    "noTransactionsDesc": "Comienza a rastrear tus finanzas agregando tu primera transacción.",
+    "addTransaction": "Agregar transacción",
+    "loading": "Cargando...",
+    "fetchingData": "Obteniendo tus datos financieros.",
+    "errorTitle": "Algo salió mal",
+    "errorDesc": "No pudimos cargar los datos del dashboard. Intenta nuevamente.",
+    "retry": "Reintentar",
+    "welcomeTitle": "¡Bienvenido!",
+    "welcomeSubtitle": "Comienza a rastrear tus finanzas agregando tu primera transacción.",
+    "welcomeBanner": "Comienza tu viaje financiero",
+    "emptyOverview": "Sin transacciones aún",
+    "emptyOverviewDesc": "Tu resumen financiero aparecerá aquí una vez que comiences a agregar transacciones.",
+    "expenseBreakdown": "Desglose de Gastos",
+    "byCategory": "Por categoría",
+    "noChartData": "Sin datos de gráfico aún",
+    "noCategoryData": "Sin datos de categorías aún",
+    "chartError": "Error al cargar gráfico"
   },
   "home": {
     "greeting_morning": "Buenos días",
@@ -336,6 +382,15 @@
     "expenseBreakdown": "Desglose de Gastos",
     "dailySpending": "Gastos por Día",
     "thisWeek": "Esta semana",
+    "days": {
+      "mon": "Lun",
+      "tue": "Mar",
+      "wed": "Mié",
+      "thu": "Jue",
+      "fri": "Vie",
+      "sat": "Sáb",
+      "sun": "Dom"
+    },
     "summary": "Resumen",
     "totalIncome": "Ingreso Total",
     "totalExpenses": "Gastos Totales",
@@ -359,6 +414,7 @@
     "noDataTitle": "Sin Datos para Este Período",
     "noDataDesc": "Intentá ajustar los filtros para ver resultados.",
     "clearFilters": "Limpiar Filtros",
+    "welcomeBanner": "¿Listo para empezar? Agregá tu primera transacción para desbloquear insights.",
     "period": {
       "1m": "1M",
       "3m": "3M",
@@ -381,6 +437,10 @@
       "anomaly": "Anomalía Detectada",
       "positive": "¡Buen Trabajo!",
       "subscription": "Alerta de Suscripción",
+      "info": "Info",
+      "warning": "Advertencia",
+      "success": "Éxito",
+      "trend": "Tendencia",
       "low": "bajo",
       "medium": "medio",
       "high": "alto"
@@ -389,7 +449,8 @@
       "greatSavings": "¡Buen trabajo! Tasa de ahorro del {{rate}}% está por encima del objetivo.",
       "negativeSavings": "Estás gastando {{rate}}% más de lo que ganás.",
       "spendingSpike": "Pico de gastos detectado: {{amount}} este mes.",
-      "noNotableEvents": "Sin eventos notables este período."
+      "noNotableEvents": "Sin eventos notables este período.",
+      "noData": "No hay suficientes datos para generar historias."
     },
     "comparison": {
       "income": "Ingresos",
