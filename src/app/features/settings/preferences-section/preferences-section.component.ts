@@ -7,6 +7,7 @@ import { FtSubtleRevealDirective } from '../../../shared/directives/ft-subtle-re
 import { ThemeService } from '../../../core/services/theme.service';
 import { TranslationService } from '../../../core/services/translation.service';
 import { CurrencyService } from '../../../core/services/currency.service';
+import { CategoryDefaultSelectorComponent } from './category-default-selector/category-default-selector.component';
 
 interface LanguageOption {
   code: 'es' | 'en' | 'fr';
@@ -24,7 +25,7 @@ interface CurrencyOption {
 @Component({
   selector: 'app-preferences-section',
   standalone: true,
-  imports: [CommonModule, NgIcon, TranslatePipe, FtSubtleRevealDirective],
+  imports: [CommonModule, NgIcon, TranslatePipe, FtSubtleRevealDirective, CategoryDefaultSelectorComponent],
   providers: [provideIcons(ICONS)],
   templateUrl: './preferences-section.component.html',
   styleUrl: './preferences-section.component.scss',
