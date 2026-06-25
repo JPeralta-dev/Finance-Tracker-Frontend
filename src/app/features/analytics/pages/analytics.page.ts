@@ -134,6 +134,7 @@ export function mapToCategoryAnalysis(
   return breakdown.categories
     .filter(cat => cat.category) // Skip categories with null/undefined names
     .map((cat, i) => ({
+      id: cat.categoryId,
       name: i18n.translate(cat.category),
       icon: icons[cat.category.toLowerCase()] ?? 'other',
       color: colors[i % colors.length],

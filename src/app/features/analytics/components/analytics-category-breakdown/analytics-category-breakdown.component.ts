@@ -22,12 +22,12 @@ export class AnalyticsCategoryBreakdownComponent {
   loading = input(false);
   max = input(7);
 
-  onCategoryClick(categoryName: string): void {
-    const current = this.store.crossFilter().category;
-    if (current === categoryName) {
+  onCategoryClick(categoryId: string, categoryName: string): void {
+    const current = this.store.crossFilter().categoryId;
+    if (current === categoryId) {
       this.store.clearCrossFilter();
     } else {
-      this.store.setCrossFilterCategory(categoryName);
+      this.store.setCrossFilterCategory(categoryId, categoryName);
     }
   }
 }

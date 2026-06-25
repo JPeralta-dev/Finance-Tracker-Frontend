@@ -59,17 +59,17 @@ export class AnalyticsStore {
       range: f.dateRange ?? undefined,
       bankId: f.bankId ?? undefined,
       type: f.type !== 'all' ? f.type : undefined,
-      category: cf.category ?? f.category ?? undefined, // crossFilter takes precedence
+      category: cf.categoryId ?? f.category ?? undefined, // crossFilter takes precedence
     };
   });
 
   // ─── Cross-Filter State (drill-down selection from charts) ──────────────
 
-  private readonly _crossFilter = signal<{ category?: string }>({});
+  private readonly _crossFilter = signal<{ categoryId?: string; categoryName?: string }>({});
   readonly crossFilter = this._crossFilter.asReadonly();
 
   /** Whether cross-filter is active */
-  readonly hasCrossFilter = computed(() => !!this._crossFilter().category);
+  readonly hasCrossFilter = computed(() => !!this._crossFilter().categoryId);
 
   // ─── Load State ─────────────────────────────────────────────────────────
 
@@ -162,8 +162,8 @@ export class AnalyticsStore {
   }
 
   /** Set cross-filter category (drill-down from chart click) */
-  setCrossFilterCategory(category: string): void {
-    this._crossFilter.set({ category });
+  setCrossFilterCategory(categoryId: string, categoryName?: string): void {
+    this._crossFilter.set({ categoryId, categoryName });
   }
 
   /** Clear cross-filter */
