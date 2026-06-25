@@ -82,12 +82,30 @@
     "features": {
       "title": "Tout ce dont vous avez besoin",
       "view_all": "Voir toutes les fonctionnalités",
-      "dashboard": { "title": "Votre situation en 3 secondes", "description": "Visualisez votre solde exact, vos revenus et vos dépenses dès l'ouverture. Sans naviguer dans les menus." },
-      "transactions": { "title": "Chaque transaction, parfaitement organisée", "description": "Enregistrez vos dépenses en quelques secondes. Filtrez par date, type ou catégorie." },
-      "analytics": { "title": "Comprenez où va votre argent", "description": "Des graphiques interactifs révèlent vos habitudes de dépenses. Repérez les tendances avant qu'elles ne deviennent problématiques." },
-      "ai_insights": { "title": "Des décisions financières plus intelligentes", "description": "Des recommandations personnalisées vous aident à économiser davantage. Sans conseiller financier." },
-      "categories": { "title": "Organisation automatique", "description": "Les catégories se trient automatiquement. Créez les vôtres pour un contrôle total." },
-      "telegram": { "title": "Enregistrez sans ouvrir l'application", "description": "Envoyez 'Café 5€' à notre bot. C'est suivi instantanément. Zéro friction." }
+      "dashboard": {
+        "title": "Votre situation en 3 secondes",
+        "description": "Visualisez votre solde exact, vos revenus et vos dépenses dès l'ouverture. Sans naviguer dans les menus."
+      },
+      "transactions": {
+        "title": "Chaque transaction, parfaitement organisée",
+        "description": "Enregistrez vos dépenses en quelques secondes. Filtrez par date, type ou catégorie."
+      },
+      "analytics": {
+        "title": "Comprenez où va votre argent",
+        "description": "Des graphiques interactifs révèlent vos habitudes de dépenses. Repérez les tendances avant qu'elles ne deviennent problématiques."
+      },
+      "ai_insights": {
+        "title": "Des décisions financières plus intelligentes",
+        "description": "Des recommandations personnalisées vous aident à économiser davantage. Sans conseiller financier."
+      },
+      "categories": {
+        "title": "Organisation automatique",
+        "description": "Les catégories se trient automatiquement. Créez les vôtres pour un contrôle total."
+      },
+      "telegram": {
+        "title": "Enregistrez sans ouvrir l'application",
+        "description": "Envoyez 'Café 5€' à notre bot. C'est suivi instantanément. Zéro friction."
+      }
     },
     "telegram": {
       "title": "Intégration Telegram",
@@ -318,7 +336,10 @@
       "dark": "Sombre",
       "light": "Clair",
       "language": "Langue",
-      "currency": "Devise"
+      "currency": "Devise",
+      "default_category": "Catégorie par défaut",
+      "select_category": "Sélectionner une catégorie...",
+      "saved": "Préférence enregistrée"
     }
   },
   "analytics": {
