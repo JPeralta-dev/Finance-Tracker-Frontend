@@ -59,9 +59,9 @@
     },
     "or": "o",
     "signInWithGoogle": "Ingresar con Google",
-    "backToHome": "\u2190 Volver al Inicio",
+    "backToHome": "← Volver al Inicio",
     "passwordStrength": {
-      "weak": "D\u00e9bil",
+      "weak": "Débil",
       "fair": "Regular",
       "good": "Buena",
       "strong": "Fuerte"
@@ -90,12 +90,30 @@
     "features": {
       "title": "Todo lo que necesitas",
       "view_all": "Ver todas las funciones",
-      "dashboard": { "title": "Conocé tu posición en 3 segundos", "description": "Ves tu balance exacto, ingresos y gastos apenas abrís la app. Sin navegar por menús." },
-      "transactions": { "title": "Cada transacción, perfectamente organizada", "description": "Registrá gastos en segundos. Filtra por fecha, tipo o categoría para encontrar justo lo que necesitás." },
-      "analytics": { "title": "Entendé a dónde va tu plata", "description": "Gráficos interactivos muestran tus patrones de gasto. Detectá tendencias antes de que sean problemas." },
-      "ai_insights": { "title": "Tomá decisiones más inteligentes", "description": "Recomendaciones personalizadas te ayudan a ahorrar más. Sin necesidad de un asesor financiero." },
-      "categories": { "title": "Organización automática", "description": "Las categorías se ordenan solas. Creá categorías personalizadas para tener control total." },
-      "telegram": { "title": "Registrá gastos sin abrir la app", "description": "Mandá un mensaje como 'Café $5' a nuestro bot. Se registra al instante. Cero fricción." }
+      "dashboard": {
+        "title": "Conocé tu posición en 3 segundos",
+        "description": "Ves tu balance exacto, ingresos y gastos apenas abrís la app. Sin navegar por menús."
+      },
+      "transactions": {
+        "title": "Cada transacción, perfectamente organizada",
+        "description": "Registrá gastos en segundos. Filtra por fecha, tipo o categoría para encontrar justo lo que necesitás."
+      },
+      "analytics": {
+        "title": "Entendé a dónde va tu plata",
+        "description": "Gráficos interactivos muestran tus patrones de gasto. Detectá tendencias antes de que sean problemas."
+      },
+      "ai_insights": {
+        "title": "Tomá decisiones más inteligentes",
+        "description": "Recomendaciones personalizadas te ayudan a ahorrar más. Sin necesidad de un asesor financiero."
+      },
+      "categories": {
+        "title": "Organización automática",
+        "description": "Las categorías se ordenan solas. Creá categorías personalizadas para tener control total."
+      },
+      "telegram": {
+        "title": "Registrá gastos sin abrir la app",
+        "description": "Mandá un mensaje como 'Café $5' a nuestro bot. Se registra al instante. Cero fricción."
+      }
     },
     "telegram": {
       "title": "Integración con Telegram",
@@ -269,7 +287,9 @@
         "invalid_data": "Datos inválidos. Revisa todos los campos",
         "not_found": "Transacción no encontrada",
         "server_error": "Error del servidor. Intenta nuevamente"
-      }
+      },
+      "bank": "Banco",
+      "bank_placeholder": "Seleccioná un banco"
     },
     "filters": {
       "search": "Buscar transacciones...",
@@ -511,6 +531,12 @@
     "budget": {
       "title": "Alerta de presupuesto",
       "message": "Tu presupuesto mensual está casi agotado. Revisa tus gastos."
+    }
+  },
+  "banks": {
+    "new": "Agregar nuevo banco",
+    "empty": {
+      "search": "Ningún banco coincide con tu búsqueda"
     }
   }
 }

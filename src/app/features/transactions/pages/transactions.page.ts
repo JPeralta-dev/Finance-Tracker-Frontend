@@ -57,6 +57,8 @@ export class TransactionsPage implements OnInit {
             amount: t.amount,
             type: t.type,
             date: t.date,
+            bankName: t.bank?.name,
+            bankLogoUrl: t.bank?.logoUrl,
           })));
           this.state.set('ready');
         },
