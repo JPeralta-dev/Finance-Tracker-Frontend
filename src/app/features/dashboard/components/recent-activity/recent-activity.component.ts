@@ -1,4 +1,4 @@
-import { Component, input, computed, inject } from '@angular/core';
+import { Component, input, computed, signal, inject } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { NgIcon } from '@ng-icons/core';
@@ -20,6 +20,11 @@ export interface ActivityItem {
   origin?: string;
 }
 
+interface ActivityGroup {
+  label: string;
+  items: ActivityItem[];
+}
+
 @Component({
   selector: 'ft-recent-activity',
   standalone: true,
@@ -32,15 +37,59 @@ export class RecentActivityComponent {
 
   items = input.required<ActivityItem[]>();
   loading = input<boolean>(false);
-  maxItems = input<number>(5);
+  pageSize = input<number>(8);
 
-  readonly visibleItems = computed<ActivityItem[]>(() =>
-    this.items().slice(0, this.maxItems())
-  );
+  /** Number of items currently shown */
+  readonly visibleCount = signal<number>(5);
 
   readonly isEmpty = computed<boolean>(() =>
     !this.loading() && this.items().length === 0
   );
+
+  readonly hasMore = computed<boolean>(() =>
+    this.visibleCount() < this.items().length
+  );
+
+  /** Group items by date: Today, Yesterday, This Week, Earlier */
+  readonly groups = computed<ActivityGroup[]>(() => {
+    const visible = this.items().slice(0, this.visibleCount());
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const yesterday = new Date(today.getTime() - 86400000);
+    const weekAgo = new Date(today.getTime() - 7 * 86400000);
+
+    const groups = new Map<string, ActivityItem[]>();
+
+    for (const item of visible) {
+      const itemDate = new Date(item.date);
+      const itemDay = new Date(itemDate.getFullYear(), itemDate.getMonth(), itemDate.getDate());
+
+      let label: string;
+      if (itemDay.getTime() === today.getTime()) {
+        label = 'Hoy';
+      } else if (itemDay.getTime() === yesterday.getTime()) {
+        label = 'Ayer';
+      } else if (itemDay.getTime() >= weekAgo.getTime()) {
+        label = 'Esta semana';
+      } else {
+        label = 'Anterior';
+      }
+
+      const existing = groups.get(label) ?? [];
+      existing.push(item);
+      groups.set(label, existing);
+    }
+
+    // Preserve order: Today, Yesterday, This Week, Earlier
+    const order = ['Hoy', 'Ayer', 'Esta semana', 'Anterior'];
+    return order
+      .filter(label => groups.has(label))
+      .map(label => ({ label, items: groups.get(label)! }));
+  });
+
+  loadMore(): void {
+    this.visibleCount.update(c => Math.min(c + this.pageSize(), this.items().length));
+  }
 
   getItemIcon(category: string): string {
     return getCategoryIcon(category);

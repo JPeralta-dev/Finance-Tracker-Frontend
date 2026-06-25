@@ -154,7 +154,7 @@ export class DashboardPage implements OnInit {
       ).pipe(catchError(() => of(null))),
       chart: this.financeService.getMonthlyChart(months).pipe(catchError(() => of(null))),
       transactions: this.financeService.getTransactions({
-        limit: 5,
+        limit: 10,
         sortBy: 'date',
         sortDir: 'desc',
         ...(dateRange ? { startDate: dateRange.startDate, endDate: dateRange.endDate } : {}),
