@@ -1,20 +1,21 @@
-import { Component, inject, input, signal } from '@angular/core';
+import { Component, OnInit, inject, input, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgIcon } from '@ng-icons/core';
 import { firstValueFrom } from 'rxjs';
 import { TranslatePipe } from '../../../../core/pipes/translate.pipe';
+import { FtSubtleRevealDirective } from '../../../../shared/directives/ft-subtle-reveal.directive';
 import { FinanceService } from '../../../../core/services/finance.service';
 import type { Category } from '../../../../core/models/category.model';
 
 @Component({
   selector: 'app-category-default-selector',
   standalone: true,
-  imports: [CommonModule, FormsModule, NgIcon, TranslatePipe],
+  imports: [CommonModule, FormsModule, NgIcon, TranslatePipe, FtSubtleRevealDirective],
   templateUrl: './category-default-selector.component.html',
   styleUrl: './category-default-selector.component.scss',
 })
-export class CategoryDefaultSelectorComponent {
+export class CategoryDefaultSelectorComponent implements OnInit {
   private readonly financeService = inject(FinanceService);
 
   delay = input<number>(0);
