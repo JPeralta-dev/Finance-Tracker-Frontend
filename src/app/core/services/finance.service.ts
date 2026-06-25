@@ -8,6 +8,7 @@ import { Transaction, TransactionFilters } from "../models/transaction.model";
 import { Category } from "../models/category.model";
 import { ChartData } from "../models/chart.model";
 import { Insight } from "../models/insight.model";
+import type { BankBreakdownItem } from './bank.service';
 
 @Injectable({ providedIn: "root" })
 export class FinanceService {
@@ -29,7 +30,12 @@ export class FinanceService {
       Object.entries(filters).forEach(([k, v]) => {
         if (v !== undefined && v !== null) params = params.set(k, String(v));
       });
-    }
+  // ── Bank Breakdown ───────────────────────────────────────────────────────
+
+  getBankBreakdown(): Observable<BankBreakdownItem[]> {
+    return this.http.get<BankBreakdownItem[]>(`${this.base}/analytics/bank-breakdown`);
+  }
+}
     return this.http.get<Transaction[]>(`${this.base}/transactions`, {
       params,
     });

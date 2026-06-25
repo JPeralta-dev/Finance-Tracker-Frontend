@@ -11,6 +11,8 @@ export interface TransactionRowData {
   date: string;
   icon?: string;
   status?: 'completed' | 'pending' | 'failed';
+  bankName?: string;
+  bankLogoUrl?: string | null;
 }
 
 export type TransactionFilter = 'all' | 'income' | 'expense';

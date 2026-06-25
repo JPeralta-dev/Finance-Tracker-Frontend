@@ -6,6 +6,12 @@ export interface Transaction {
   description: string;
   date: string; // ISO
   createdAt: string;
+  bank?: {
+    id: string;
+    name: string;
+    logoUrl: string | null;
+  };
+  bankId?: string;
 }
 
 export interface TransactionFilters {
