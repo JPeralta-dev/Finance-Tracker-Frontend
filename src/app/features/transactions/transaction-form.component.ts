@@ -7,13 +7,16 @@ import { Subscription, catchError, of } from 'rxjs';
 import { NgIcon } from '@ng-icons/core';
 import { ICONS, getCategoryIcon } from '../../shared/icons/icon-registry';
 import { FinanceService } from '../../core/services/finance.service';
+import { BankService } from '../../core/services/bank.service';
 import { ModalService } from '../../core/services/modal.service';
 import { Category } from '../../core/models/category.model';
+import type { BankSummary } from '../../core/models/bank.model';
 import { TranslatePipe } from '../../core/pipes/translate.pipe';
 import { CategoryTranslatePipe } from '../../core/pipes/category-translate.pipe';
 import { FtSubtleRevealDirective } from '../../shared/directives/ft-subtle-reveal.directive';
 import { CurrencyService } from '../../core/services/currency.service';
 import { CategorySelectComponent } from '../../shared/ui/category-select/category-select.component';
+import { BankSelectComponent } from '../../shared/ui/bank-select/bank-select.component';
 import { FtNumberFormatDirective } from '../../shared/directives/ft-number-format.directive';
 
 interface CategoryOption extends Category {
@@ -32,6 +35,7 @@ interface CategoryOption extends Category {
     CategoryTranslatePipe,
     FtSubtleRevealDirective,
     CategorySelectComponent,
+    BankSelectComponent,
     FtNumberFormatDirective,
   ],
   templateUrl: './transaction-form.component.html',
@@ -42,6 +46,7 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   private financeService = inject(FinanceService);
+  private bankService = inject(BankService);
   private modalService = inject(ModalService);
   readonly currencySymbol = inject(CurrencyService).currencyConfig().symbol;
 
@@ -54,6 +59,7 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
   readonly successMsg = signal('');
   readonly errorMsg = signal('');
   readonly categories = signal<CategoryOption[]>([]);
+  readonly banks = signal<BankSummary[]>([]);
   readonly selectedType = signal<'income' | 'expense'>('expense');
 
   // Filtered categories based on selected type
@@ -72,11 +78,13 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
     amount: [null as number | null, [Validators.required, Validators.min(0.01)]],
     description: ['', [Validators.required, Validators.maxLength(140)]],
     category: ['', Validators.required],
+    bank: [''], // optional
     date: [new Date().toISOString().split('T')[0], Validators.required],
   });
 
   ngOnInit(): void {
     this.loadCategories();
+    this.loadBanks();
     this.checkEditMode();
     this.categorySavedSub = this.modalService.categorySaved$.subscribe(() => {
       this.loadCategories();
@@ -104,6 +112,17 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
     });
   }
 
+  private loadBanks(): void {
+    this.bankService.getBanks().pipe(
+      catchError(() => {
+        this.banks.set([]);
+        return of([]);
+      })
+    ).subscribe({
+      next: (banks) => this.banks.set(banks),
+    });
+  }
+
   private checkEditMode(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (id && id !== 'new') {
@@ -126,6 +145,7 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
             amount: tx.amount,
             description: tx.description,
             category: tx.category,
+            bank: tx.bank?.id ?? '',
             date: tx.date.split('T')[0],
           });
           this.loadingEdit.set(false);
@@ -163,13 +183,14 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
     this.errorMsg.set('');
 
     const raw = this.form.value;
-    const payload = {
+    const payload: any = {
       type: raw.type as 'income' | 'expense',
       amount: Number(raw.amount),
       description: raw.description!,
       category: raw.category!,
       date: new Date(raw.date!).toISOString(),
     };
+    if (raw.bank) payload.bank = raw.bank;
 
     const request = this.isEdit()
       ? this.financeService.updateTransaction(this.txId!, payload)
@@ -219,5 +240,10 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
       color: '#9D50BB',
       kind: this.selectedType(),
     });
+  }
+
+  onAddBankFromForm(): void {
+    // Open bank creation flow — for now, just reload banks
+    this.loadBanks();
   }
 }

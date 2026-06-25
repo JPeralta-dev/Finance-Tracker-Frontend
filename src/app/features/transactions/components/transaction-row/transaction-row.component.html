@@ -26,7 +26,15 @@
   <div class="tx-row__info">
     <span class="tx-row__desc">{{ data().description }}</span>
     <span class="tx-row__meta">
-      {{ data().category | categoryTranslate }} · {{ formatDate(data().date) }}
+      {{ data().category | categoryTranslate }}
+      @if (data().bankName) {
+        · 
+        @if (data().bankLogoUrl) {
+          <img class="tx-row__bank-logo" [src]="data().bankLogoUrl" [alt]="data().bankName" />
+        }
+        {{ data().bankName }}
+      }
+      · {{ formatDate(data().date) }}
     </span>
   </div>
 

@@ -58,17 +58,9 @@
       "generic": "Quelque chose s'est mal passé. Réessayez."
     },
     "or": "ou",
-    "signInWithGoogle": "Se connecter avec Google",
-    "backToHome": "\u2190 Retour \u00e0 l'Accueil",
-    "passwordStrength": {
-      "weak": "Faible",
-      "fair": "Moyen",
-      "good": "Bon",
-      "strong": "Fort"
-    }
+    "signInWithGoogle": "Se connecter avec Google"
   },
   "nav": {
-    "home": "Accueil",
     "dashboard": "Tableau de bord",
     "transactions": "Transactions",
     "categories": "Catégories",
@@ -90,12 +82,30 @@
     "features": {
       "title": "Tout ce dont vous avez besoin",
       "view_all": "Voir toutes les fonctionnalités",
-      "dashboard": { "title": "Votre situation en 3 secondes", "description": "Visualisez votre solde exact, vos revenus et vos dépenses dès l'ouverture. Sans naviguer dans les menus." },
-      "transactions": { "title": "Chaque transaction, parfaitement organisée", "description": "Enregistrez vos dépenses en quelques secondes. Filtrez par date, type ou catégorie." },
-      "analytics": { "title": "Comprenez où va votre argent", "description": "Des graphiques interactifs révèlent vos habitudes de dépenses. Repérez les tendances avant qu'elles ne deviennent problématiques." },
-      "ai_insights": { "title": "Des décisions financières plus intelligentes", "description": "Des recommandations personnalisées vous aident à économiser davantage. Sans conseiller financier." },
-      "categories": { "title": "Organisation automatique", "description": "Les catégories se trient automatiquement. Créez les vôtres pour un contrôle total." },
-      "telegram": { "title": "Enregistrez sans ouvrir l'application", "description": "Envoyez 'Café 5€' à notre bot. C'est suivi instantanément. Zéro friction." }
+      "dashboard": {
+        "title": "Votre situation en 3 secondes",
+        "description": "Visualisez votre solde exact, vos revenus et vos dépenses dès l'ouverture. Sans naviguer dans les menus."
+      },
+      "transactions": {
+        "title": "Chaque transaction, parfaitement organisée",
+        "description": "Enregistrez vos dépenses en quelques secondes. Filtrez par date, type ou catégorie."
+      },
+      "analytics": {
+        "title": "Comprenez où va votre argent",
+        "description": "Des graphiques interactifs révèlent vos habitudes de dépenses. Repérez les tendances avant qu'elles ne deviennent problématiques."
+      },
+      "ai_insights": {
+        "title": "Des décisions financières plus intelligentes",
+        "description": "Des recommandations personnalisées vous aident à économiser davantage. Sans conseiller financier."
+      },
+      "categories": {
+        "title": "Organisation automatique",
+        "description": "Les catégories se trient automatiquement. Créez les vôtres pour un contrôle total."
+      },
+      "telegram": {
+        "title": "Enregistrez sans ouvrir l'application",
+        "description": "Envoyez 'Café 5€' à notre bot. C'est suivi instantanément. Zéro friction."
+      }
     },
     "telegram": {
       "title": "Intégration Telegram",
@@ -151,49 +161,7 @@
     "emptyOverview": "Pas encore de transactions",
     "emptyOverviewDesc": "Votre aperçu financier apparaîtra ici une fois que vous commencerez à ajouter des transactions.",
     "expenseBreakdown": "Répartition des Dépenses",
-    "byCategory": "Par catégorie",
-    "noChartData": "Pas de données de graphique",
-    "noCategoryData": "Pas de données de catégories",
-    "chartError": "Erreur lors du chargement du graphique",
-    "welcomeBanner": "Commencez votre parcours financier"
-  },
-  "home": {
-    "greeting_morning": "Bonjour",
-    "greeting_afternoon": "Bon après-midi",
-    "greeting_evening": "Bonsoir",
-    "greetingSubtitle": "Voici votre aperçu financier pour ce mois-ci.",
-    "newTransaction": "+ Nouvelle Transaction",
-    "totalBalance": "Solde Total",
-    "monthlyIncome": "Revenu Mensuel",
-    "monthlyExpenses": "Dépenses Mensuelles",
-    "savingsRate": "Taux d'Épargne",
-    "positiveBalance": "Solde positif",
-    "noBalance": "Pas de solde",
-    "onTrack": "Sur la bonne voie",
-    "couldImprove": "Pourrait s'améliorer",
-    "monthlyOverview": "Aperçu Mensuel",
-    "addExpense": "Ajouter une Dépense",
-    "addIncome": "Ajouter un Revenu",
-    "manageCategories": "Gérer les Catégories",
-    "viewAnalytics": "Voir Analytique",
-    "recentActivity": "Activité Récente",
-    "latestTransactions": "Vos dernières transactions",
-    "viewAll": "Voir tout →",
-    "noTransactions": "Pas encore de transactions",
-    "noTransactionsDesc": "Commencez à suivre vos finances en ajoutant votre première transaction.",
-    "addTransaction": "Ajouter une transaction",
-    "loading": "Chargement...",
-    "fetchingData": "Récupération de vos données financières.",
-    "errorTitle": "Quelque chose s'est mal passé",
-    "errorDesc": "Nous n'avons pas pu charger les données du tableau de bord. Veuillez réessayer.",
-    "retry": "Réessayer",
-    "welcomeTitle": "Bienvenue !",
-    "welcomeSubtitle": "Commencez à suivre vos finances en ajoutant votre première transaction.",
-    "welcomeBanner": "Commencez votre parcours financier",
-    "emptyOverview": "Pas encore de transactions",
-    "emptyOverviewDesc": "Votre aperçu financier apparaîtra ici une fois que vous commencerez à ajouter des transactions.",
-    "noChartData": "Pas de données de graphique",
-    "chartError": "Erreur lors du chargement du graphique"
+    "byCategory": "Par catégorie"
   },
   "insights": {
     "title": "Insights IA",
@@ -240,7 +208,7 @@
     "addFirstTransaction": "Ajouter Transaction",
     "newTransaction": "+ Nouvelle Transaction",
     "form": {
-      "back": "Retour aux transactions",
+      "back": "← Retour aux transactions",
       "new_title": "Nouvelle Transaction",
       "edit_title": "Modifier la Transaction",
       "new_subtitle": "Remplissez les détails pour enregistrer une transaction",
@@ -284,7 +252,7 @@
   "categories": {
     "title": "Catégories",
     "subtitle": "Répartition des dépenses par catégorie",
-    "new": "Nouvelle Catégorie",
+    "new": "+ Nouvelle Catégorie",
     "add": "Ajouter",
     "edit": "Modifier",
     "delete": "Supprimer",
@@ -301,8 +269,7 @@
     "empty": {
       "title": "Pas encore de catégories",
       "desc": "Ajoutez des transactions pour voir les catégories apparaître ici.",
-      "action": "+ Nouvelle Transaction",
-      "search": "Aucune catégorie ne correspond à votre recherche"
+      "action": "+ Nouvelle Transaction"
     },
     "form": {
       "name": "Nom",
@@ -369,14 +336,16 @@
       "dark": "Sombre",
       "light": "Clair",
       "language": "Langue",
-      "currency": "Devise"
+      "currency": "Devise",
+      "default_category": "Catégorie par défaut",
+      "select_category": "Sélectionner une catégorie...",
+      "saved": "Préférence enregistrée"
     }
   },
   "analytics": {
     "title": "Analytique",
     "subtitle": "Visualisez vos tendances financières et desgloses.",
     "monthlyTrends": "Tendances Mensuelles",
-    "incomeVsExpenses": "Revenus vs Dépenses",
     "last6Months": "6 derniers mois",
     "byCategory": "Par Catégorie",
     "expenseBreakdown": "Répartition des Dépenses",
@@ -393,71 +362,7 @@
     "retry": "Réessayer",
     "addTransaction": "Ajouter une transaction",
     "noCategoryData": "Pas de données de catégories",
-    "noChartData": "Pas de données mensuelles",
-    "noDailyData": "Pas de données de dépenses quotidiennes",
-    "chartError": "Erreur lors du chargement du graphique",
-    "welcomeTitle": "Bienvenue dans Analytique",
-    "welcomeDesc": "Commencez par ajouter votre première transaction pour voir les insights.",
-    "welcomeBanner": "Prêt à commencer ? Ajoutez votre première transaction pour débloquer les insights.",
-    "addFirstTransaction": "Ajouter une Première Transaction",
-    "noDataTitle": "Pas de Données pour Cette Période",
-    "noDataDesc": "Essayez d'ajuster vos filtres pour voir les résultats.",
-    "clearFilters": "Effacer les Filtres",
-    "period": {
-      "1m": "1M",
-      "3m": "3M",
-      "6m": "6M",
-      "1y": "1A"
-    },
-    "vsLastMonth": "vs mois dernier",
-    "filter": {
-      "all": "Tout",
-      "income": "Revenus",
-      "expense": "Dépenses",
-      "more": "Plus de filtres",
-      "category": "Catégorie",
-      "allCats": "Toutes les catégories",
-      "reset": "Réinitialiser"
-    },
-    "insight": {
-      "spending": "Alerte de Dépenses",
-      "savings": "Insight d'Épargne",
-      "anomaly": "Anomalie Détectée",
-      "positive": "Excellent !",
-      "subscription": "Alerte d'Abonnement",
-      "info": "Info",
-      "warning": "Avertissement",
-      "success": "Succès",
-      "trend": "Tendance",
-      "low": "faible",
-      "medium": "moyen",
-      "high": "élevé"
-    },
-    "story": {
-      "greatSavings": "Excellent ! Taux d'épargne de {{rate}}% au-dessus de l'objectif.",
-      "negativeSavings": "Vous dépensez {{rate}}% de plus que ce que vous gagnez.",
-      "spendingSpike": "Pic de dépenses détecté : {{amount}} ce mois-ci.",
-      "noNotableEvents": "Aucun événement notable cette période.",
-      "noData": "Pas assez de données pour générer des histoires."
-    },
-    "comparison": {
-      "income": "Revenus",
-      "expenses": "Dépenses",
-      "current": "Actuel",
-      "previous": "Précédent"
-    },
-    "savingsRate": "Taux d'Épargne",
-    "dailySpending": "Dépenses Quotidiennes",
-    "thisWeek": "Cette semaine",
-    "days": {
-      "mon": "Lun",
-      "tue": "Mar",
-      "wed": "Mer",
-      "thu": "Jeu",
-      "fri": "Ven",
-      "sat": "Sam",
-      "sun": "Dim"
-    }
+    "noChartData": "Pas de données mensuelles"
   },
   "profile": {
     "title": "Profil",
