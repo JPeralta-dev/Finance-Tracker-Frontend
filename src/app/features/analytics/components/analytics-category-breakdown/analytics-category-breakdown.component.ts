@@ -16,7 +16,7 @@ import { AnalyticsStore } from '../../services/analytics.store';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AnalyticsCategoryBreakdownComponent {
-  private readonly store = inject(AnalyticsStore);
+  readonly store = inject(AnalyticsStore);
 
   categories = input.required<CategoryAnalysis[]>();
   loading = input(false);

@@ -312,7 +312,7 @@ export function generateMonthStories(
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AnalyticsPage implements OnInit {
-  private readonly store = inject(AnalyticsStore);
+  readonly store = inject(AnalyticsStore);
   private readonly api = inject(AnalyticsApiService);
   private readonly themeMapper = inject(EchartsThemeMapper);
   private readonly currencyService = inject(CurrencyService);

@@ -218,7 +218,14 @@
       "good_savings": "Excellent! Your savings rate is {{rate}}%",
       "negative_savings": "You're spending {{rate}}% more than you earn this month",
       "high_concentration": "{{percentage}}% of your expenses are concentrated in {{count}} categories",
-      "period_trend": "Compared to the previous period, your expenses {{direction}} by {{percentage}}%"
+      "period_trend": "Compared to the previous period, your expenses {{direction}} by {{percentage}}%",
+      "monthly_projection": "If you keep this pace you'll end the month with ${{projectedIncome}} in income and ${{projectedExpenses}} in expenses",
+      "new_category_expense": "New expense in {{category}} this month: ${{amount}}",
+      "category_spike": "Your spending on {{category}} spiked {{percentage}}% compared to last month",
+      "category_increase": "Your spending on {{category}} increased {{percentage}}% compared to last month",
+      "category_decrease": "Your spending on {{category}} decreased {{percentage}}% compared to last month",
+      "anomaly_detected": "We detected a {{ratio}}x higher than average expense in {{category}}",
+      "weekly_pattern": "On {{dayName}}s you tend to spend more on {{category}}"
     }
   },
   "transactions": {
