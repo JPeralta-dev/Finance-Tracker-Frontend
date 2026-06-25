@@ -53,7 +53,7 @@
             <span>{{ ('banks.empty.search' | translate) || 'No banks match your search' }}</span>
           </div>
         } @else {
-          @for (bank of filteredBanks(); track trackByBank($index, bank); let idx = $index) {
+          @for (bank of filteredBanks(); track bank.id; let idx = $index) {
             <button
               type="button"
               class="bank-item"

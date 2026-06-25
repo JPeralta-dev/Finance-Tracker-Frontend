@@ -183,14 +183,14 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
     this.errorMsg.set('');
 
     const raw = this.form.value;
-    const payload: Record<string, unknown> = {
+    const payload: any = {
       type: raw.type as 'income' | 'expense',
       amount: Number(raw.amount),
       description: raw.description!,
       category: raw.category!,
       date: new Date(raw.date!).toISOString(),
     };
-    if (raw.bank) payload['bank'] = raw.bank;
+    if (raw.bank) payload.bank = raw.bank;
 
     const request = this.isEdit()
       ? this.financeService.updateTransaction(this.txId!, payload)
