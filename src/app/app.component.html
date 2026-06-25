@@ -12,6 +12,11 @@
     <router-outlet />
   </main>
 
+  <!-- Public footer (landing only) — lives outside .app-main to escape the max-width container -->
+  @if (showFooter()) {
+    <ft-footer />
+  }
+
   <!-- Global overlays -->
   <ft-command-palette />
   <ft-toast-container />
