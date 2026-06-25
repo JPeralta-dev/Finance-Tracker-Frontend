@@ -59,7 +59,7 @@
     },
     "or": "ou",
     "signInWithGoogle": "Se connecter avec Google",
-    "backToHome": "\u2190 Retour \u00e0 l'Accueil",
+    "backToHome": "← Retour à l'Accueil",
     "passwordStrength": {
       "weak": "Faible",
       "fair": "Moyen",
@@ -90,12 +90,30 @@
     "features": {
       "title": "Tout ce dont vous avez besoin",
       "view_all": "Voir toutes les fonctionnalités",
-      "dashboard": { "title": "Votre situation en 3 secondes", "description": "Visualisez votre solde exact, vos revenus et vos dépenses dès l'ouverture. Sans naviguer dans les menus." },
-      "transactions": { "title": "Chaque transaction, parfaitement organisée", "description": "Enregistrez vos dépenses en quelques secondes. Filtrez par date, type ou catégorie." },
-      "analytics": { "title": "Comprenez où va votre argent", "description": "Des graphiques interactifs révèlent vos habitudes de dépenses. Repérez les tendances avant qu'elles ne deviennent problématiques." },
-      "ai_insights": { "title": "Des décisions financières plus intelligentes", "description": "Des recommandations personnalisées vous aident à économiser davantage. Sans conseiller financier." },
-      "categories": { "title": "Organisation automatique", "description": "Les catégories se trient automatiquement. Créez les vôtres pour un contrôle total." },
-      "telegram": { "title": "Enregistrez sans ouvrir l'application", "description": "Envoyez 'Café 5€' à notre bot. C'est suivi instantanément. Zéro friction." }
+      "dashboard": {
+        "title": "Votre situation en 3 secondes",
+        "description": "Visualisez votre solde exact, vos revenus et vos dépenses dès l'ouverture. Sans naviguer dans les menus."
+      },
+      "transactions": {
+        "title": "Chaque transaction, parfaitement organisée",
+        "description": "Enregistrez vos dépenses en quelques secondes. Filtrez par date, type ou catégorie."
+      },
+      "analytics": {
+        "title": "Comprenez où va votre argent",
+        "description": "Des graphiques interactifs révèlent vos habitudes de dépenses. Repérez les tendances avant qu'elles ne deviennent problématiques."
+      },
+      "ai_insights": {
+        "title": "Des décisions financières plus intelligentes",
+        "description": "Des recommandations personnalisées vous aident à économiser davantage. Sans conseiller financier."
+      },
+      "categories": {
+        "title": "Organisation automatique",
+        "description": "Les catégories se trient automatiquement. Créez les vôtres pour un contrôle total."
+      },
+      "telegram": {
+        "title": "Enregistrez sans ouvrir l'application",
+        "description": "Envoyez 'Café 5€' à notre bot. C'est suivi instantanément. Zéro friction."
+      }
     },
     "telegram": {
       "title": "Intégration Telegram",
@@ -269,7 +287,9 @@
         "invalid_data": "Données invalides. Vérifiez tous les champs",
         "not_found": "Transaction non trouvée",
         "server_error": "Erreur serveur. Veuillez réessayer"
-      }
+      },
+      "bank": "Banque",
+      "bank_placeholder": "Sélectionnez une banque"
     },
     "filters": {
       "search": "Rechercher des transactions...",
@@ -511,6 +531,12 @@
     "budget": {
       "title": "Alerte budget",
       "message": "Votre budget mensuel est presque atteint. Révisez vos dépenses."
+    }
+  },
+  "banks": {
+    "new": "Ajouter une banque",
+    "empty": {
+      "search": "Aucune banque ne correspond à votre recherche"
     }
   }
 }
