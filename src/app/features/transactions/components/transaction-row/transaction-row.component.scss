@@ -60,7 +60,19 @@
 
   &__meta {
     font-size: 12px;
-    color: var(--text-tertiary);
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+
+  &__bank-logo {
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    object-fit: contain;
+    vertical-align: middle;
   }
 
   &__amount {

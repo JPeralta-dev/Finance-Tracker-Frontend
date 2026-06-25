@@ -111,6 +111,17 @@
             }
           </div>
 
+          <!-- Bank -->
+          <div class="form-group">
+            <label class="form-label">{{ 'transactions.form.bank' | translate }}</label>
+            <ft-bank-select
+              [banks]="banks()"
+              [placeholder]="'transactions.form.bank_placeholder' | translate"
+              formControlName="bank"
+              (addBank)="onAddBankFromForm()"
+            />
+          </div>
+
           <!-- Date -->
           <div class="form-group">
             <label class="form-label" for="date">{{ 'transactions.form.date' | translate }}</label>
