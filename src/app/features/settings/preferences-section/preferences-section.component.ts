@@ -1,12 +1,13 @@
 import { Component, inject, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgIcon } from '@ng-icons/core';
+import { NgIcon, provideIcons } from '@ng-icons/core';
 import { ICONS } from '../../../shared/icons/icon-registry';
 import { TranslatePipe } from '../../../core/pipes/translate.pipe';
 import { FtSubtleRevealDirective } from '../../../shared/directives/ft-subtle-reveal.directive';
 import { ThemeService } from '../../../core/services/theme.service';
 import { TranslationService } from '../../../core/services/translation.service';
 import { CurrencyService } from '../../../core/services/currency.service';
+import { CategoryDefaultSelectorComponent } from './category-default-selector/category-default-selector.component';
 
 interface LanguageOption {
   code: 'es' | 'en' | 'fr';
@@ -24,7 +25,8 @@ interface CurrencyOption {
 @Component({
   selector: 'app-preferences-section',
   standalone: true,
-  imports: [CommonModule, NgIcon, TranslatePipe, FtSubtleRevealDirective],
+  imports: [CommonModule, NgIcon, TranslatePipe, FtSubtleRevealDirective, CategoryDefaultSelectorComponent],
+  providers: [provideIcons(ICONS)],
   templateUrl: './preferences-section.component.html',
   styleUrl: './preferences-section.component.scss',
 })
