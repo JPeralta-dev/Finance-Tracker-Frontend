@@ -20,7 +20,9 @@
       "category_deleted": "Catégorie supprimée.",
       "transactions_load_failed": "Échec du chargement des transactions. Veuillez réessayer.",
       "dashboard_load_failed": "Échec du chargement des données du tableau de bord. Veuillez réessayer.",
-      "dashboard_load_failed_short": "Échec du chargement des données du tableau de bord."
+      "dashboard_load_failed_short": "Échec du chargement des données du tableau de bord.",
+      "deleted_single": "Transaction supprimée",
+      "deleted_multiple": "{{count}} transactions supprimées"
     }
   },
   "auth": {
@@ -175,45 +177,11 @@
     "noChartData": "Pas de données de graphique",
     "noCategoryData": "Pas de données de catégories",
     "chartError": "Erreur lors du chargement du graphique",
-    "welcomeBanner": "Commencez votre parcours financier"
-  },
-  "home": {
-    "greeting_morning": "Bonjour",
-    "greeting_afternoon": "Bon après-midi",
-    "greeting_evening": "Bonsoir",
-    "greetingSubtitle": "Voici votre aperçu financier pour ce mois-ci.",
-    "newTransaction": "+ Nouvelle Transaction",
-    "totalBalance": "Solde Total",
-    "monthlyIncome": "Revenu Mensuel",
-    "monthlyExpenses": "Dépenses Mensuelles",
-    "savingsRate": "Taux d'Épargne",
-    "positiveBalance": "Solde positif",
-    "noBalance": "Pas de solde",
-    "onTrack": "Sur la bonne voie",
-    "couldImprove": "Pourrait s'améliorer",
-    "monthlyOverview": "Aperçu Mensuel",
+    "welcomeBanner": "Commencez votre parcours financier",
     "addExpense": "Ajouter une Dépense",
     "addIncome": "Ajouter un Revenu",
     "manageCategories": "Gérer les Catégories",
-    "viewAnalytics": "Voir Analytique",
-    "recentActivity": "Activité Récente",
-    "latestTransactions": "Vos dernières transactions",
-    "viewAll": "Voir tout →",
-    "noTransactions": "Pas encore de transactions",
-    "noTransactionsDesc": "Commencez à suivre vos finances en ajoutant votre première transaction.",
-    "addTransaction": "Ajouter une transaction",
-    "loading": "Chargement...",
-    "fetchingData": "Récupération de vos données financières.",
-    "errorTitle": "Quelque chose s'est mal passé",
-    "errorDesc": "Nous n'avons pas pu charger les données du tableau de bord. Veuillez réessayer.",
-    "retry": "Réessayer",
-    "welcomeTitle": "Bienvenue !",
-    "welcomeSubtitle": "Commencez à suivre vos finances en ajoutant votre première transaction.",
-    "welcomeBanner": "Commencez votre parcours financier",
-    "emptyOverview": "Pas encore de transactions",
-    "emptyOverviewDesc": "Votre aperçu financier apparaîtra ici une fois que vous commencerez à ajouter des transactions.",
-    "noChartData": "Pas de données de graphique",
-    "chartError": "Erreur lors du chargement du graphique"
+    "viewAnalytics": "Voir Analytique"
   },
   "insights": {
     "title": "Insights IA",
@@ -241,6 +209,16 @@
     "negative_savings": {
       "title": "Dépenses supérieures aux revenus",
       "message": "Vos dépenses dépassent vos revenus ce mois-ci. Revoyez vos dépenses pour revenir sur la bonne voie."
+    },
+    "messages": {
+      "mom_increase": "Vos dépenses ont augmenté de {{percentage}}% par rapport au mois dernier",
+      "mom_decrease": "Vos dépenses ont diminué de {{percentage}}% par rapport au mois dernier",
+      "top_category": "{{name}} représente {{percentage}}% de vos dépenses ce mois-ci",
+      "no_income": "Aucun revenu n'a été enregistré ce mois-ci. Vérifiez vos sources de revenus.",
+      "good_savings": "Excellent ! Votre taux d'épargne est de {{rate}}%",
+      "negative_savings": "Vous dépensez {{rate}}% plus que ce que vous gagnez ce mois-ci",
+      "high_concentration": "{{percentage}}% de vos dépenses sont concentrées dans {{count}} catégories",
+      "period_trend": "Comparé à la période précédente, vos dépenses {{direction}} de {{percentage}}%"
     }
   },
   "transactions": {
@@ -288,7 +266,8 @@
         "connection_error": "Impossible de se connecter au serveur",
         "invalid_data": "Données invalides. Vérifiez tous les champs",
         "not_found": "Transaction non trouvée",
-        "server_error": "Erreur serveur. Veuillez réessayer"
+        "invalid_id": "ID de transaction invalide",
+        "server_error": "Erreur serveur. Réessayez."
       },
       "bank": "Banque",
       "bank_placeholder": "Sélectionnez une banque"

@@ -20,7 +20,9 @@
       "category_deleted": "Category deleted.",
       "transactions_load_failed": "Failed to load transactions. Please try again.",
       "dashboard_load_failed": "Failed to load dashboard data. Please try again.",
-      "dashboard_load_failed_short": "Failed to load dashboard data."
+      "dashboard_load_failed_short": "Failed to load dashboard data.",
+      "deleted_single": "Transaction deleted",
+      "deleted_multiple": "{{count}} transactions deleted"
     }
   },
   "auth": {
@@ -175,45 +177,11 @@
     "byCategory": "By category",
     "noChartData": "No chart data yet",
     "noCategoryData": "No category data yet",
-    "chartError": "Error loading chart"
-  },
-  "home": {
-    "greeting_morning": "Good morning",
-    "greeting_afternoon": "Good afternoon",
-    "greeting_evening": "Good evening",
-    "greetingSubtitle": "Here's your financial overview for this month.",
-    "newTransaction": "+ New Transaction",
-    "totalBalance": "Total Balance",
-    "monthlyIncome": "Monthly Income",
-    "monthlyExpenses": "Monthly Expenses",
-    "savingsRate": "Savings Rate",
-    "positiveBalance": "Positive balance",
-    "noBalance": "No balance",
-    "onTrack": "On track",
-    "couldImprove": "Could improve",
-    "monthlyOverview": "Monthly Overview",
+    "chartError": "Error loading chart",
     "addExpense": "Add Expense",
     "addIncome": "Add Income",
     "manageCategories": "Manage Categories",
-    "viewAnalytics": "View Analytics",
-    "recentActivity": "Recent Activity",
-    "latestTransactions": "Your latest transactions",
-    "viewAll": "View all →",
-    "noTransactions": "No transactions yet",
-    "noTransactionsDesc": "Start tracking your finances by adding your first transaction.",
-    "addTransaction": "Add transaction",
-    "loading": "Loading...",
-    "fetchingData": "Fetching your financial data.",
-    "errorTitle": "Something went wrong",
-    "errorDesc": "We couldn't load your dashboard data. Please try again.",
-    "retry": "Retry",
-    "welcomeTitle": "Welcome!",
-    "welcomeSubtitle": "Start tracking your finances by adding your first transaction.",
-    "welcomeBanner": "Start your financial journey",
-    "emptyOverview": "No transactions yet",
-    "emptyOverviewDesc": "Your financial overview will appear here once you start adding transactions.",
-    "noChartData": "No chart data yet",
-    "chartError": "Error loading chart"
+    "viewAnalytics": "View Analytics"
   },
   "insights": {
     "title": "AI Insights",
@@ -241,6 +209,16 @@
     "negative_savings": {
       "title": "Spending more than earning",
       "message": "Your expenses exceed your income this month. Review your spending to get back on track."
+    },
+    "messages": {
+      "mom_increase": "Your expenses went up {{percentage}}% compared to last month",
+      "mom_decrease": "Your expenses went down {{percentage}}% compared to last month",
+      "top_category": "{{name}} represents {{percentage}}% of your expenses this month",
+      "no_income": "No income was registered this month. Check your income sources.",
+      "good_savings": "Excellent! Your savings rate is {{rate}}%",
+      "negative_savings": "You're spending {{rate}}% more than you earn this month",
+      "high_concentration": "{{percentage}}% of your expenses are concentrated in {{count}} categories",
+      "period_trend": "Compared to the previous period, your expenses {{direction}} by {{percentage}}%"
     }
   },
   "transactions": {
@@ -288,7 +266,8 @@
         "connection_error": "Cannot connect to server",
         "invalid_data": "Invalid data. Check all fields",
         "not_found": "Transaction not found",
-        "server_error": "Server error. Please try again"
+        "invalid_id": "Invalid transaction ID",
+        "server_error": "Server error. Try again."
       },
       "bank": "Bank",
       "bank_placeholder": "Select a bank"

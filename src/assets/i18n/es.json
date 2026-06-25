@@ -20,7 +20,9 @@
       "category_deleted": "Categoría eliminada.",
       "transactions_load_failed": "Error al cargar las transacciones. Intentá de nuevo.",
       "dashboard_load_failed": "Error al cargar los datos del dashboard. Intentá de nuevo.",
-      "dashboard_load_failed_short": "Error al cargar los datos del dashboard."
+      "dashboard_load_failed_short": "Error al cargar los datos del dashboard.",
+      "deleted_single": "Transacción eliminada",
+      "deleted_multiple": "{{count}} transacciones eliminadas"
     }
   },
   "auth": {
@@ -175,45 +177,11 @@
     "byCategory": "Por categoría",
     "noChartData": "Sin datos de gráfico aún",
     "noCategoryData": "Sin datos de categorías aún",
-    "chartError": "Error al cargar gráfico"
-  },
-  "home": {
-    "greeting_morning": "Buenos días",
-    "greeting_afternoon": "Buenas tardes",
-    "greeting_evening": "Buenas noches",
-    "greetingSubtitle": "Aquí tienes tu resumen financiero de este mes.",
-    "newTransaction": "+ Nueva Transacción",
-    "totalBalance": "Balance Total",
-    "monthlyIncome": "Ingreso Mensual",
-    "monthlyExpenses": "Gastos Mensuales",
-    "savingsRate": "Tasa de Ahorro",
-    "positiveBalance": "Balance positivo",
-    "noBalance": "Sin balance",
-    "onTrack": "En camino",
-    "couldImprove": "Podría mejorar",
-    "monthlyOverview": "Resumen Mensual",
+    "chartError": "Error al cargar gráfico",
     "addExpense": "Agregar Gasto",
     "addIncome": "Agregar Ingreso",
     "manageCategories": "Categorías",
-    "viewAnalytics": "Ver Analytics",
-    "recentActivity": "Actividad Reciente",
-    "latestTransactions": "Tus últimas transacciones",
-    "viewAll": "Ver todo →",
-    "noTransactions": "Aún no hay transacciones",
-    "noTransactionsDesc": "Comienza a rastrear tus finanzas agregando tu primera transacción.",
-    "addTransaction": "Agregar transacción",
-    "loading": "Cargando...",
-    "fetchingData": "Obteniendo tus datos financieros.",
-    "errorTitle": "Algo salió mal",
-    "errorDesc": "No pudimos cargar los datos del dashboard. Intenta nuevamente.",
-    "retry": "Reintentar",
-    "welcomeTitle": "¡Bienvenido!",
-    "welcomeSubtitle": "Comienza a rastrear tus finanzas agregando tu primera transacción.",
-    "welcomeBanner": "Comienza tu viaje financiero",
-    "emptyOverview": "Sin transacciones aún",
-    "emptyOverviewDesc": "Tu resumen financiero aparecerá aquí una vez que comiences a agregar transacciones.",
-    "noChartData": "Sin datos de gráfico aún",
-    "chartError": "Error al cargar gráfico"
+    "viewAnalytics": "Ver Analytics"
   },
   "insights": {
     "title": "Insights IA",
@@ -241,6 +209,16 @@
     "negative_savings": {
       "title": "Gastando más de lo que ganas",
       "message": "Tus gastos superan tus ingresos este mes. Revisa tus gastos para volver al camino."
+    },
+    "messages": {
+      "mom_increase": "Tus gastos subieron {{percentage}}% respecto al mes pasado",
+      "mom_decrease": "Tus gastos bajaron {{percentage}}% respecto al mes pasado",
+      "top_category": "{{name}} representa el {{percentage}}% de tus gastos este mes",
+      "no_income": "No se registraron ingresos este mes. Revisá tus fuentes de ingreso.",
+      "good_savings": "¡Excelente! Tu tasa de ahorro es del {{rate}}%",
+      "negative_savings": "Estás gastando {{rate}}% más de lo que ganás este mes",
+      "high_concentration": "El {{percentage}}% de tus gastos se concentra en {{count}} categorías",
+      "period_trend": "Comparado con el período anterior, tus gastos {{direction}} un {{percentage}}%"
     }
   },
   "transactions": {
@@ -288,7 +266,8 @@
         "connection_error": "No se puede conectar al servidor",
         "invalid_data": "Datos inválidos. Revisa todos los campos",
         "not_found": "Transacción no encontrada",
-        "server_error": "Error del servidor. Intenta nuevamente"
+        "invalid_id": "ID de transacción inválido",
+        "server_error": "Error del servidor. Intentá de nuevo."
       },
       "bank": "Banco",
       "bank_placeholder": "Seleccioná un banco"

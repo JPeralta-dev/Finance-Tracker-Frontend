@@ -72,6 +72,8 @@ export interface DailySpending {
 export interface AnalyticsInsight {
   type: string;
   message: string;
+  messageKey: string;
+  params?: Record<string, string | number>;
   severity: 'low' | 'medium' | 'high';
   actionable: boolean;
   data?: Record<string, unknown>;

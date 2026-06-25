@@ -218,8 +218,8 @@ export function mapToUiInsights(
   return insights.map(ins => ({
     icon: iconMap[ins.type] ?? 'info',
     titleKey: `analytics.insight.${ins.type}`,
-    messageKey: ins.message,
-    params: ins.data as Record<string, number | string> | undefined,
+    messageKey: ins.messageKey,
+    params: ins.params || (ins.data as Record<string, number | string> | undefined),
     type: typeMap[ins.severity] ?? typeMap[ins.type] ?? 'info',
     severity: ins.severity,
   }));
