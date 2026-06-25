@@ -58,9 +58,17 @@
       "generic": "Something went wrong. Try again."
     },
     "or": "or",
-    "signInWithGoogle": "Sign in with Google"
+    "signInWithGoogle": "Sign in with Google",
+    "backToHome": "\u2190 Back to Home",
+    "passwordStrength": {
+      "weak": "Weak",
+      "fair": "Fair",
+      "good": "Good",
+      "strong": "Strong"
+    }
   },
   "nav": {
+    "home": "Home",
     "dashboard": "Dashboard",
     "transactions": "Transactions",
     "categories": "Categories",
@@ -140,12 +148,51 @@
     "retry": "Retry",
     "welcomeTitle": "Welcome!",
     "welcomeSubtitle": "Start tracking your finances by adding your first transaction.",
+    "welcomeBanner": "Start your financial journey",
     "emptyOverview": "No transactions yet",
     "emptyOverviewDesc": "Your financial overview will appear here once you start adding transactions.",
     "expenseBreakdown": "Expense Breakdown",
     "byCategory": "By category",
     "noChartData": "No chart data yet",
     "noCategoryData": "No category data yet",
+    "chartError": "Error loading chart"
+  },
+  "home": {
+    "greeting_morning": "Good morning",
+    "greeting_afternoon": "Good afternoon",
+    "greeting_evening": "Good evening",
+    "greetingSubtitle": "Here's your financial overview for this month.",
+    "newTransaction": "+ New Transaction",
+    "totalBalance": "Total Balance",
+    "monthlyIncome": "Monthly Income",
+    "monthlyExpenses": "Monthly Expenses",
+    "savingsRate": "Savings Rate",
+    "positiveBalance": "Positive balance",
+    "noBalance": "No balance",
+    "onTrack": "On track",
+    "couldImprove": "Could improve",
+    "monthlyOverview": "Monthly Overview",
+    "addExpense": "Add Expense",
+    "addIncome": "Add Income",
+    "manageCategories": "Manage Categories",
+    "viewAnalytics": "View Analytics",
+    "recentActivity": "Recent Activity",
+    "latestTransactions": "Your latest transactions",
+    "viewAll": "View all →",
+    "noTransactions": "No transactions yet",
+    "noTransactionsDesc": "Start tracking your finances by adding your first transaction.",
+    "addTransaction": "Add transaction",
+    "loading": "Loading...",
+    "fetchingData": "Fetching your financial data.",
+    "errorTitle": "Something went wrong",
+    "errorDesc": "We couldn't load your dashboard data. Please try again.",
+    "retry": "Retry",
+    "welcomeTitle": "Welcome!",
+    "welcomeSubtitle": "Start tracking your finances by adding your first transaction.",
+    "welcomeBanner": "Start your financial journey",
+    "emptyOverview": "No transactions yet",
+    "emptyOverviewDesc": "Your financial overview will appear here once you start adding transactions.",
+    "noChartData": "No chart data yet",
     "chartError": "Error loading chart"
   },
   "insights": {
@@ -335,6 +382,15 @@
     "expenseBreakdown": "Expense Breakdown",
     "dailySpending": "Daily Spending",
     "thisWeek": "This week",
+    "days": {
+      "mon": "Mon",
+      "tue": "Tue",
+      "wed": "Wed",
+      "thu": "Thu",
+      "fri": "Fri",
+      "sat": "Sat",
+      "sun": "Sun"
+    },
     "summary": "Summary",
     "totalIncome": "Total Income",
     "totalExpenses": "Total Expenses",
@@ -358,6 +414,7 @@
     "noDataTitle": "No Data for This Period",
     "noDataDesc": "Try adjusting your filters to see results.",
     "clearFilters": "Clear Filters",
+    "welcomeBanner": "Ready to start? Add your first transaction to unlock insights.",
     "period": {
       "1m": "1M",
       "3m": "3M",
@@ -380,6 +437,10 @@
       "anomaly": "Anomaly Detected",
       "positive": "Great Job!",
       "subscription": "Subscription Alert",
+      "info": "Info",
+      "warning": "Warning",
+      "success": "Success",
+      "trend": "Trend",
       "low": "low",
       "medium": "medium",
       "high": "high"
@@ -388,11 +449,14 @@
       "greatSavings": "Great job! Savings rate of {{rate}}% is above target.",
       "negativeSavings": "You're spending {{rate}}% more than you earn.",
       "spendingSpike": "Spending spike detected: {{amount}} this month.",
-      "noNotableEvents": "No notable events this period."
+      "noNotableEvents": "No notable events this period.",
+      "noData": "Not enough data to generate stories."
     },
     "comparison": {
       "income": "Income",
-      "expenses": "Expenses"
+      "expenses": "Expenses",
+      "current": "Current",
+      "previous": "Previous"
     }
   },
   "profile": {

@@ -22,7 +22,7 @@
 
       <!-- Dynamic page title -->
       @if (pageTitle()) {
-        <span class="topbar__title">{{ pageTitle() }}</span>
+        <span class="topbar__title">{{ pageTitle() | translate }}</span>
       }
 
       <nav class="topbar__nav" aria-label="Main navigation">

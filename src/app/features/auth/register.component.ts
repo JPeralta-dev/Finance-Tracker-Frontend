@@ -6,6 +6,7 @@ import { finalize } from 'rxjs';
 import { NgIcon } from '@ng-icons/core';
 import { ICONS } from '../../shared/icons/icon-registry';
 import { AuthService } from '../../core/services/auth.service';
+import { TranslationService } from '../../core/services/translation.service';
 import { TranslatePipe } from '../../core/pipes/translate.pipe';
 import { UiButtonComponent } from '../../shared/ui/ui-button/ui-button.component';
 
@@ -20,6 +21,7 @@ export class RegisterComponent {
   private readonly fb = inject(FormBuilder);
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
+  private readonly i18n = inject(TranslationService);
 
   loading = false;
   error = '';
@@ -37,8 +39,10 @@ export class RegisterComponent {
   });
 
   readonly strengthLabel = computed(() => {
-    const labels = ['Weak', 'Fair', 'Good', 'Strong'];
-    return labels[Math.max(0, this.strengthScore() - 1)] ?? '';
+    const score = this.strengthScore();
+    if (score === 0) return '';
+    const keys = ['auth.passwordStrength.weak', 'auth.passwordStrength.fair', 'auth.passwordStrength.good', 'auth.passwordStrength.strong'];
+    return this.i18n.translate(keys[score - 1]);
   });
 
   form = this.fb.group({
