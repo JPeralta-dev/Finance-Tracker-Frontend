@@ -10,6 +10,12 @@ import { ChartData } from "../models/chart.model";
 import { Insight } from "../models/insight.model";
 import type { BankBreakdownItem } from './bank.service';
 
+export interface SummaryParams {
+  startDate?: string;
+  endDate?: string;
+  bankId?: string;
+}
+
 @Injectable({ providedIn: "root" })
 export class FinanceService {
   private readonly http = inject(HttpClient);
@@ -17,8 +23,17 @@ export class FinanceService {
 
   // ── Summary ──────────────────────────────────────────────────────────────
 
-  getSummary(): Observable<Summary> {
-    return this.http.get<Summary>(`${this.base}/summary`);
+  getSummary(params?: SummaryParams): Observable<Summary> {
+    let queryParams = '';
+    if (params) {
+      const qs = new URLSearchParams();
+      if (params.startDate) qs.set('startDate', params.startDate);
+      if (params.endDate) qs.set('endDate', params.endDate);
+      if (params.bankId) qs.set('bankId', params.bankId);
+      const qsStr = qs.toString();
+      if (qsStr) queryParams = '?' + qsStr;
+    }
+    return this.http.get<Summary>(`${this.base}/summary${queryParams}`);
   }
 
   // ── Transactions ─────────────────────────────────────────────────────────

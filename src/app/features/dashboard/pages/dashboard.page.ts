@@ -96,9 +96,9 @@ export class DashboardPage implements OnInit {
 
   readonly greeting = computed(() => {
     const hour = new Date().getHours();
-    if (hour < 12) return 'home.greeting_morning';
-    if (hour < 18) return 'home.greeting_afternoon';
-    return 'home.greeting_evening';
+    if (hour < 12) return 'dashboard.greeting_morning';
+    if (hour < 18) return 'dashboard.greeting_afternoon';
+    return 'dashboard.greeting_evening';
   });
 
   readonly today = computed(() => {
@@ -149,10 +149,12 @@ export class DashboardPage implements OnInit {
     const months = this.rangeToMonths(currentRange);
 
     forkJoin({
-      summary: this.financeService.getSummary().pipe(catchError(() => of(null))),
+      summary: this.financeService.getSummary(
+        dateRange ? { startDate: dateRange.startDate, endDate: dateRange.endDate } : undefined
+      ).pipe(catchError(() => of(null))),
       chart: this.financeService.getMonthlyChart(months).pipe(catchError(() => of(null))),
       transactions: this.financeService.getTransactions({
-        limit: 5,
+        limit: 10,
         sortBy: 'date',
         sortDir: 'desc',
         ...(dateRange ? { startDate: dateRange.startDate, endDate: dateRange.endDate } : {}),
@@ -187,6 +189,8 @@ export class DashboardPage implements OnInit {
             amount: t.amount,
             type: t.type,
             date: t.date,
+            bankName: t.bank?.name,
+            origin: (t as any).origin,
           })));
         }
 
@@ -201,10 +205,10 @@ export class DashboardPage implements OnInit {
 
   private mapSummary(summary: { totalBalance: number; totalIncome: number; totalExpenses: number; savingsRate: number }): StatCardData[] {
     return [
-      { id: 'balance', label: 'home.totalBalance', value: summary.totalBalance, icon: 'wallet', insight: summary.totalBalance > 0 ? 'home.positiveBalance' : 'home.noBalance' },
-      { id: 'income', label: 'home.monthlyIncome', value: summary.totalIncome, icon: 'income', sign: '+' },
-      { id: 'expenses', label: 'home.monthlyExpenses', value: summary.totalExpenses, icon: 'expense', sign: '-' },
-      { id: 'savings', label: 'home.savingsRate', value: summary.savingsRate, suffix: '%', icon: 'subscription', insight: summary.savingsRate > 20 ? 'home.onTrack' : summary.savingsRate > 0 ? 'home.couldImprove' : undefined },
+      { id: 'balance', label: 'dashboard.totalBalance', value: summary.totalBalance, icon: 'wallet', insight: summary.totalBalance > 0 ? 'dashboard.positiveBalance' : 'dashboard.noBalance' },
+      { id: 'income', label: 'dashboard.monthlyIncome', value: summary.totalIncome, icon: 'income', sign: '+' },
+      { id: 'expenses', label: 'dashboard.monthlyExpenses', value: summary.totalExpenses, icon: 'expense', sign: '-' },
+      { id: 'savings', label: 'dashboard.savingsRate', value: summary.savingsRate, suffix: '%', icon: 'subscription', insight: summary.savingsRate > 20 ? 'dashboard.onTrack' : summary.savingsRate > 0 ? 'dashboard.couldImprove' : undefined },
     ];
   }
 

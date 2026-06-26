@@ -56,6 +56,14 @@
         </div>
       </div>
 
+      <!-- Cross-filter badge (shown when drill-down is active) -->
+      @if (store.hasCrossFilter()) {
+        <div class="cross-filter-badge" (click)="store.clearCrossFilter()" ftSubtleReveal="fade-up">
+          <span>Filtrado: {{ store.crossFilter().categoryName || store.crossFilter().categoryId }}</span>
+          <ng-icon name="x" size="0.8rem" />
+        </div>
+      }
+
       <!-- 2. KPI Cards Row (always visible) -->
       <div class="analytics-kpis-row" ftSubtleReveal="fade-up" [delay]="50">
         <ft-analytics-kpis [kpis]="kpis()" [loading]="false" />

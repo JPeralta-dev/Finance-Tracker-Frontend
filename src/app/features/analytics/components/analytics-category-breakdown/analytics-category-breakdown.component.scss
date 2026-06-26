@@ -11,9 +11,15 @@
     padding: 10px 12px;
     border-radius: var(--radius-sm);
     transition: background var(--duration-fast) var(--ease-out);
+    cursor: pointer;
 
     &:hover {
       background: var(--bg-tertiary);
+    }
+
+    &--active {
+      background: var(--accent-glow);
+      border: 1px solid rgba(157, 80, 187, 0.2);
     }
   }
 

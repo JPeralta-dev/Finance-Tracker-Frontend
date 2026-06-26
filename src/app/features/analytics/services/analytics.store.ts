@@ -20,6 +20,7 @@ import type {
   AnalyticsTransaction,
   BankInfo,
   DateRange,
+  OriginBreakdown,
 } from './analytics-api.service';
 
 // ─── State Types ────────────────────────────────────────────────────────────
@@ -30,6 +31,8 @@ export interface AnalyticsFilterState {
   dateRange: DateRange | null;
   bankId: string | null;
   period: '7d' | '30d' | '6m' | '1y' | 'custom';
+  type: 'all' | 'income' | 'expense';
+  category: string | null;
 }
 
 // ─── Store ──────────────────────────────────────────────────────────────────
@@ -42,6 +45,8 @@ export class AnalyticsStore {
     dateRange: null,
     bankId: null,
     period: '6m',
+    type: 'all',
+    category: null,
   });
 
   readonly filters = this._filters.asReadonly();
@@ -49,11 +54,22 @@ export class AnalyticsStore {
   /** Computed API params from current filters */
   readonly apiParams = computed(() => {
     const f = this._filters();
+    const cf = this._crossFilter();
     return {
       range: f.dateRange ?? undefined,
       bankId: f.bankId ?? undefined,
+      type: f.type !== 'all' ? f.type : undefined,
+      category: cf.categoryId ?? f.category ?? undefined, // crossFilter takes precedence
     };
   });
+
+  // ─── Cross-Filter State (drill-down selection from charts) ──────────────
+
+  private readonly _crossFilter = signal<{ categoryId?: string; categoryName?: string }>({});
+  readonly crossFilter = this._crossFilter.asReadonly();
+
+  /** Whether cross-filter is active */
+  readonly hasCrossFilter = computed(() => !!this._crossFilter().categoryId);
 
   // ─── Load State ─────────────────────────────────────────────────────────
 
@@ -85,6 +101,11 @@ export class AnalyticsStore {
 
   private readonly _banks = signal<BankInfo[]>([]);
   readonly banks = this._banks.asReadonly();
+
+  // ─── Origin Breakdown Data ──────────────────────────────────────────────
+
+  private readonly _originBreakdown = signal<OriginBreakdown | null>(null);
+  readonly originBreakdown = this._originBreakdown.asReadonly();
 
   // ─── Computed Derived State ─────────────────────────────────────────────
 
@@ -130,12 +151,34 @@ export class AnalyticsStore {
     this._filters.update(f => ({ ...f, bankId }));
   }
 
+  /** Set the type filter */
+  setType(type: 'all' | 'income' | 'expense'): void {
+    this._filters.update(f => ({ ...f, type }));
+  }
+
+  /** Set the category filter */
+  setCategory(category: string | null): void {
+    this._filters.update(f => ({ ...f, category }));
+  }
+
+  /** Set cross-filter category (drill-down from chart click) */
+  setCrossFilterCategory(categoryId: string, categoryName?: string): void {
+    this._crossFilter.set({ categoryId, categoryName });
+  }
+
+  /** Clear cross-filter */
+  clearCrossFilter(): void {
+    this._crossFilter.set({});
+  }
+
   /** Clear all filters to defaults */
   clearFilters(): void {
     this._filters.set({
       dateRange: null,
       bankId: null,
       period: '6m',
+      type: 'all',
+      category: null,
     });
   }
 
@@ -191,6 +234,11 @@ export class AnalyticsStore {
     this._banks.set(data);
   }
 
+  /** Update origin breakdown data */
+  setOriginBreakdown(data: OriginBreakdown): void {
+    this._originBreakdown.set(data);
+  }
+
   /** Reset all data to initial state */
   reset(): void {
     this._summary.set(null);
@@ -199,6 +247,7 @@ export class AnalyticsStore {
     this._dailySpending.set(null);
     this._insights.set([]);
     this._transactions.set([]);
+    this._originBreakdown.set(null);
     this._loadState.set('idle');
     this._error.set(null);
   }

@@ -129,9 +129,17 @@ export class TransactionFormComponent implements OnInit {
       this.loadingEdit.set(true);
 
       this.financeService.getTransactionById(id).pipe(
-        catchError(() => {
+        catchError((err: HttpErrorResponse) => {
           this.loadingEdit.set(false);
-          this.errorMsg.set('Failed to load transaction.');
+          if (err.status === 0) {
+            this.errorMsg.set('connection_error');
+          } else if (err.status === 400) {
+            this.errorMsg.set('invalid_id');
+          } else if (err.status === 404) {
+            this.errorMsg.set('not_found');
+          } else {
+            this.errorMsg.set('server_error');
+          }
           return of(null);
         })
       ).subscribe({
