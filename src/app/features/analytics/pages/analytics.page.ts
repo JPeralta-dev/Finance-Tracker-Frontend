@@ -134,6 +134,7 @@ export function mapToCategoryAnalysis(
   return breakdown.categories
     .filter(cat => cat.category) // Skip categories with null/undefined names
     .map((cat, i) => ({
+      id: cat.categoryId,
       name: i18n.translate(cat.category),
       icon: icons[cat.category.toLowerCase()] ?? 'other',
       color: colors[i % colors.length],
@@ -218,8 +219,8 @@ export function mapToUiInsights(
   return insights.map(ins => ({
     icon: iconMap[ins.type] ?? 'info',
     titleKey: `analytics.insight.${ins.type}`,
-    messageKey: ins.message,
-    params: ins.data as Record<string, number | string> | undefined,
+    messageKey: ins.messageKey,
+    params: ins.params || (ins.data as Record<string, number | string> | undefined),
     type: typeMap[ins.severity] ?? typeMap[ins.type] ?? 'info',
     severity: ins.severity,
   }));
@@ -312,7 +313,7 @@ export function generateMonthStories(
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AnalyticsPage implements OnInit {
-  private readonly store = inject(AnalyticsStore);
+  readonly store = inject(AnalyticsStore);
   private readonly api = inject(AnalyticsApiService);
   private readonly themeMapper = inject(EchartsThemeMapper);
   private readonly currencyService = inject(CurrencyService);
@@ -444,7 +445,7 @@ export class AnalyticsPage implements OnInit {
     // React to filter changes and reload data
     effect(() => {
       const params = this.store.apiParams();
-      this.loadData(params.range, params.bankId);
+      this.loadData(params.range, params.bankId, params.type, params.category);
     }, { allowSignalWrites: true });
   }
 
@@ -473,7 +474,7 @@ export class AnalyticsPage implements OnInit {
 
   retry(): void {
     const params = this.store.apiParams();
-    this.loadData(params.range, params.bankId);
+    this.loadData(params.range, params.bankId, params.type, params.category);
   }
 
   // ─── Private ────────────────────────────────────────────────────────────
@@ -486,18 +487,18 @@ export class AnalyticsPage implements OnInit {
     });
   }
 
-  private loadData(range?: DateRange, bankId?: string): void {
+  private loadData(range?: DateRange, bankId?: string, type?: string, category?: string): void {
     this.store.setLoading();
 
     forkJoin({
-      summary: this.api.getSummary(range, bankId).pipe(catchError(() => of(null))),
-      trend: this.api.getMonthlyTrend(range, bankId).pipe(catchError(() => of(null))),
-      categoryBreakdown: this.api.getCategoryBreakdown(range, bankId).pipe(catchError(() => of(null))),
-      dailySpending: this.api.getDailySpending(range, bankId).pipe(catchError(() => of(null))),
-      insights: this.api.getInsights(range, bankId).pipe(
+      summary: this.api.getSummary(range, bankId, type, category).pipe(catchError(() => of(null))),
+      trend: this.api.getMonthlyTrend(range, bankId, type, category).pipe(catchError(() => of(null))),
+      categoryBreakdown: this.api.getCategoryBreakdown(range, bankId, type, category).pipe(catchError(() => of(null))),
+      dailySpending: this.api.getDailySpending(range, bankId, type, category).pipe(catchError(() => of(null))),
+      insights: this.api.getInsights(range, bankId, type, category).pipe(
         catchError(() => of({ insights: [] })),
       ),
-      transactions: this.api.getRecentTransactions(range, bankId).pipe(
+      transactions: this.api.getRecentTransactions(range, bankId, type, category).pipe(
         catchError(() => of({ transactions: [] })),
       ),
     }).subscribe({

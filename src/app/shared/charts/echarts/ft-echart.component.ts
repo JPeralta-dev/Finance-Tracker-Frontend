@@ -218,10 +218,14 @@ export class FtEChartComponent implements OnInit, OnDestroy, OnChanges, AfterCon
   readonly _hasErrorContent = signal(false);
 
   constructor() {
-    // Sync internal state to output
+    // Sync internal state to output (guarded against destroyed view)
     effect(() => {
       const newState = this._state();
-      this.state.emit(newState);
+      try {
+        this.state.emit(newState);
+      } catch {
+        // Suppress emit on destroyed view
+      }
     });
   }
 
@@ -290,43 +294,46 @@ export class FtEChartComponent implements OnInit, OnDestroy, OnChanges, AfterCon
 
   // ─── Private ─────────────────────────────────────────────────────────────
 
-  private async initChart(): Promise<void> {
-    try {
-      await registerECharts();
-      const { init } = await import('echarts/core');
-
-      const opts = this.options();
-
-      // Check for empty data
-      if (!opts || this.isEmptyOptions(opts)) {
-        this._state.set('empty');
-        return;
-      }
-
-      if (!this.containerRef) {
-        console.error('[FtEChartComponent] initChart: containerRef is undefined!');
-        this._state.set('error');
-        return;
-      }
-
-      // Initialize chart
-      this.chartInstance = init(this.containerRef.nativeElement);
-
-      this.chartInstance.setOption(opts);
-
-      // Setup resize observer
-      this.setupResizeObserver();
-
-      this._state.set('ready');
-      this.chartReady.emit(this.chartInstance);
-    } catch (error) {
+  private initChart(): void {
+    this._initChartAsync().catch((error) => {
+      // If component was destroyed during async init, suppress the error
+      if (error instanceof Error && error.message?.includes('NG0911')) return;
       // eslint-disable-next-line no-console
       console.error('[FtEChartComponent] initChart: CATCH BLOCK - error type:', error?.constructor?.name);
       console.error('[FtEChartComponent] initChart: error message:', (error as Error)?.message || String(error));
-      console.error('[FtEChartComponent] initChart: error stack:', (error as Error)?.stack?.substring(0, 500));
       this._state.set('error');
-      this.chartError.emit(error instanceof Error ? error : new Error(String(error)));
+    });
+  }
+
+  private async _initChartAsync(): Promise<void> {
+    await registerECharts();
+    const { init } = await import('echarts/core');
+
+    const opts = this.options();
+
+    // Check for empty data
+    if (!opts || this.isEmptyOptions(opts)) {
+      this._state.set('empty');
+      return;
     }
+
+    if (!this.containerRef) {
+      this._state.set('error');
+      return;
+    }
+
+    // Guard: don't init if container was removed during async load
+    if (!this.containerRef.nativeElement?.isConnected) return;
+
+    // Initialize chart
+    this.chartInstance = init(this.containerRef.nativeElement);
+
+    this.chartInstance.setOption(opts);
+
+    // Setup resize observer (guarded)
+    this.setupResizeObserver();
+
+    this._state.set('ready');
   }
 
   private updateChart(opts: EChartsOption): void {
@@ -355,14 +362,20 @@ export class FtEChartComponent implements OnInit, OnDestroy, OnChanges, AfterCon
   }
 
   private setupResizeObserver(): void {
-    if (!this.containerRef || typeof ResizeObserver === 'undefined') return;
+    if (!this.containerRef?.nativeElement || typeof ResizeObserver === 'undefined') return;
 
     this.resizeObserver = new ResizeObserver(() => {
-      this.chartInstance?.resize();
+      // Guard: only resize if chart and container are still alive
+      if (this.chartInstance && !this.chartInstance.isDisposed() && this.containerRef?.nativeElement?.isConnected) {
+        this.chartInstance.resize();
+      }
     });
 
     this.resizeObserver.observe(this.containerRef.nativeElement);
-    this.destroyRef.onDestroy(() => this.resizeObserver?.disconnect());
+    this.destroyRef.onDestroy(() => {
+      this.resizeObserver?.disconnect();
+      this.resizeObserver = null;
+    });
   }
 
   private disposeChart(): void {

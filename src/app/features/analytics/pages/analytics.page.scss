@@ -61,6 +61,25 @@
   }
 }
 
+/* ═══ Cross-Filter Badge ═══ */
+.cross-filter-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: var(--accent-glow);
+  border: 1px solid rgba(157, 80, 187, 0.3);
+  border-radius: var(--radius-full);
+  font-size: 13px;
+  color: var(--accent-start);
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--ease-out);
+
+  &:hover {
+    background: rgba(157, 80, 187, 0.2);
+  }
+}
+
 /* ═══ KPIs Row ═══ */
 .analytics-kpis-row {
   /* Let the inner component handle its own grid layout */

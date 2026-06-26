@@ -2,9 +2,9 @@
   @if (state() === 'error') {
     <ft-empty-state
       icon="warning"
-      [title]="'home.errorTitle' | translate"
-      [description]="'home.errorDesc' | translate"
-      [actionLabel]="'home.retry' | translate"
+      [title]="'dashboard.errorTitle' | translate"
+      [description]="'dashboard.errorDesc' | translate"
+      [actionLabel]="'dashboard.retry' | translate"
       (action)="retry()"
     />
   } @else if (state() === 'ready') {
@@ -16,16 +16,16 @@
           <p class="dashboard-greeting__subtitle">{{ today() }}</p>
         </div>
         <a routerLink="/transactions/new" class="dashboard-greeting__cta" [ftHoverDepth]="8">
-          {{ 'home.newTransaction' | translate }}
+          {{ 'dashboard.newTransaction' | translate }}
         </a>
       </div>
 
       <!-- Welcome banner -->
       @if (!hasData()) {
         <div class="dashboard-welcome-banner" ftSubtleReveal="fade-up" [delay]="25">
-          <span>{{ 'home.welcomeBanner' | translate }}</span>
+          <span>{{ 'dashboard.welcomeBanner' | translate }}</span>
           <a routerLink="/transactions/new" class="dashboard-welcome-banner__cta">
-            {{ 'home.addTransaction' | translate }}
+            {{ 'dashboard.addTransaction' | translate }}
           </a>
         </div>
       }
@@ -96,18 +96,18 @@
         <div class="dashboard-content">
           <div class="dashboard-content__chart">
             <div class="chart-header">
-              <h2 class="chart-header__title">{{ 'home.monthlyOverview' | translate }}</h2>
+              <h2 class="chart-header__title">{{ 'dashboard.monthlyOverview' | translate }}</h2>
             </div>
             <ft-echart [options]="areaChartOptions()" [loading]="false" height="280px">
               <ng-container loading><div class="chart-skeleton"></div></ng-container>
-              <ng-container empty><div class="chart-empty">{{ 'home.noChartData' | translate }}</div></ng-container>
+              <ng-container empty><div class="chart-empty">{{ 'dashboard.noChartData' | translate }}</div></ng-container>
               <ng-container error>
-                <div class="chart-error">{{ 'home.chartError' | translate }}<button class="chart-retry-btn" (click)="retry()" type="button">{{ 'home.retry' | translate }}</button></div>
+                <div class="chart-error">{{ 'dashboard.chartError' | translate }}<button class="chart-retry-btn" (click)="retry()" type="button">{{ 'dashboard.retry' | translate }}</button></div>
               </ng-container>
             </ft-echart>
           </div>
           <div class="dashboard-content__sidebar">
-            <ft-recent-activity [items]="activity()" [maxItems]="5" />
+            <ft-recent-activity [items]="activity()" [pageSize]="5" />
           </div>
         </div>
       </div>
@@ -119,8 +119,8 @@
     <div class="dashboard-content-layer dashboard-content-layer--loading">
       <div class="dashboard-greeting" ftSubtleReveal="fade-up">
         <div>
-          <h1 class="dashboard-greeting__title">{{ 'home.loading' | translate }}</h1>
-          <p class="dashboard-greeting__subtitle">{{ 'home.fetchingData' | translate }}</p>
+          <h1 class="dashboard-greeting__title">{{ 'dashboard.loading' | translate }}</h1>
+          <p class="dashboard-greeting__subtitle">{{ 'dashboard.fetchingData' | translate }}</p>
         </div>
       </div>
       <div class="stats-grid stats-grid--2col" ftSubtleReveal="fade-up" [delay]="100">

@@ -26,6 +26,7 @@ export interface MonthStory {
 }
 
 export interface CategoryAnalysis {
+  id: string;
   name: string;
   icon: string;
   color: string;

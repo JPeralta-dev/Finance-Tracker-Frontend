@@ -40,27 +40,50 @@
     </div>
   }
 
-  <!-- Activity list -->
+  <!-- Activity list grouped by date -->
   @if (!loading() && !isEmpty()) {
     <div class="recent-activity__list">
-      @for (item of visibleItems(); track item.id) {
-        <div class="activity-row">
-          <div class="activity-row__icon">
-            <ng-icon [name]="getItemIcon(item.category)" size="1.1rem" />
+      @for (group of groups(); track group.label) {
+        <div class="activity-group">
+          <div class="activity-group__header">
+            <span class="activity-group__label">{{ group.label }}</span>
+            <span class="activity-group__count">{{ group.items.length }}</span>
           </div>
-          <div class="activity-row__info">
-            <span class="activity-row__desc">{{ item.description }}</span>
-            <span class="activity-row__meta">
-              {{ item.category | categoryTranslate }}
-              @if (item.date) {
-                · {{ item.date | date: 'MMM d' }}
-              }
-            </span>
-          </div>
-          <span class="activity-row__amount" [class]="amountClass(item)">
-            {{ formatAmount(item) }}
-          </span>
+          @for (item of group.items; track item.id) {
+            <div class="activity-row">
+              <div class="activity-row__icon">
+                <ng-icon [name]="getItemIcon(item.category)" size="1.1rem" />
+              </div>
+              <div class="activity-row__info">
+                <span class="activity-row__desc">{{ item.description }}</span>
+                <span class="activity-row__meta">
+                  <span class="activity-row__type-badge" [class]="item.type === 'income' ? 'type-badge--income' : 'type-badge--expense'">
+                    {{ item.type === 'income' ? ('transactions.form.income' | translate) : ('transactions.form.expense' | translate) }}
+                  </span>
+                  {{ item.category | categoryTranslate }}
+                  @if (item.bankName) {
+                    · {{ item.bankName }}
+                  }
+                  @if (item.date) {
+                    · {{ item.date | date: 'MMM d' }}
+                  }
+                </span>
+              </div>
+              <span class="activity-row__amount" [class]="amountClass(item)">
+                {{ formatAmount(item) }}
+              </span>
+            </div>
+          }
         </div>
+      }
+
+      <!-- Load More button -->
+      @if (hasMore()) {
+        <button class="activity-load-more" (click)="loadMore()" type="button">
+          <ng-icon name="arrowDown" size="0.9rem" />
+          <span>{{ 'dashboard.viewAll' | translate }}</span>
+          <span class="activity-load-more__remaining">({{ items().length - visibleCount() }} más)</span>
+        </button>
       }
     </div>
   }

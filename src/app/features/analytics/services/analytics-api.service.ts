@@ -72,6 +72,8 @@ export interface DailySpending {
 export interface AnalyticsInsight {
   type: string;
   message: string;
+  messageKey: string;
+  params?: Record<string, string | number>;
   severity: 'low' | 'medium' | 'high';
   actionable: boolean;
   data?: Record<string, unknown>;
@@ -96,6 +98,21 @@ export interface BankInfo {
   logo: string;
 }
 
+/** Origin breakdown item from /api/analytics/origin-breakdown */
+export interface OriginBreakdownItem {
+  origin: string;
+  label: string;
+  income: number;
+  expenses: number;
+  total: number;
+  count: number;
+}
+
+/** Origin breakdown response */
+export interface OriginBreakdown {
+  origins: OriginBreakdownItem[];
+}
+
 // ─── Service ────────────────────────────────────────────────────────────────
 
 @Injectable({ providedIn: 'root' })
@@ -110,15 +127,21 @@ export class AnalyticsApiService {
   };
 
   /**
-   * Build HttpParams from DateRange and optional bankId.
+   * Build HttpParams from DateRange and optional bankId, type, category.
    */
-  private buildParams(range?: DateRange, bankId?: string): HttpParams {
+  private buildParams(range?: DateRange, bankId?: string, type?: string, category?: string): HttpParams {
     let params = new HttpParams();
     if (range) {
       params = params.set('startDate', range.startDate).set('endDate', range.endDate);
     }
     if (bankId) {
       params = params.set('bankId', bankId);
+    }
+    if (type) {
+      params = params.set('type', type);
+    }
+    if (category) {
+      params = params.set('category', category);
     }
     return params;
   }
@@ -142,9 +165,9 @@ export class AnalyticsApiService {
    * GET /api/analytics/summary
    * KPI data: income, expenses, savings, rate
    */
-  getSummary(range?: DateRange, bankId?: string): Observable<AnalyticsSummary> {
+  getSummary(range?: DateRange, bankId?: string, type?: string, category?: string): Observable<AnalyticsSummary> {
     return this.http
-      .get<AnalyticsSummary>(`${this.base}/summary`, { params: this.buildParams(range, bankId) })
+      .get<AnalyticsSummary>(`${this.base}/summary`, { params: this.buildParams(range, bankId, type, category) })
       .pipe(
         retry(this.retryConfig),
         catchError(this.handleError),
@@ -155,8 +178,8 @@ export class AnalyticsApiService {
    * GET /api/analytics/monthly-trend
    * Monthly income vs expenses
    */
-  getMonthlyTrend(range?: DateRange, bankId?: string, months: number = 6): Observable<MonthlyTrend> {
-    let params = this.buildParams(range, bankId).set('months', months);
+  getMonthlyTrend(range?: DateRange, bankId?: string, type?: string, category?: string, months: number = 6): Observable<MonthlyTrend> {
+    let params = this.buildParams(range, bankId, type, category).set('months', months);
     return this.http
       .get<MonthlyTrend>(`${this.base}/monthly-trend`, { params })
       .pipe(
@@ -169,9 +192,9 @@ export class AnalyticsApiService {
    * GET /api/analytics/category-breakdown
    * Spending by category
    */
-  getCategoryBreakdown(range?: DateRange, bankId?: string): Observable<CategoryBreakdown> {
+  getCategoryBreakdown(range?: DateRange, bankId?: string, type?: string, category?: string): Observable<CategoryBreakdown> {
     return this.http
-      .get<CategoryBreakdown>(`${this.base}/category-breakdown`, { params: this.buildParams(range, bankId) })
+      .get<CategoryBreakdown>(`${this.base}/category-breakdown`, { params: this.buildParams(range, bankId, type, category) })
       .pipe(
         retry(this.retryConfig),
         catchError(this.handleError),
@@ -182,9 +205,9 @@ export class AnalyticsApiService {
    * GET /api/analytics/daily-spending
    * Daily spending for current week
    */
-  getDailySpending(range?: DateRange, bankId?: string): Observable<DailySpending> {
+  getDailySpending(range?: DateRange, bankId?: string, type?: string, category?: string): Observable<DailySpending> {
     return this.http
-      .get<DailySpending>(`${this.base}/daily-spending`, { params: this.buildParams(range, bankId) })
+      .get<DailySpending>(`${this.base}/daily-spending`, { params: this.buildParams(range, bankId, type, category) })
       .pipe(
         retry(this.retryConfig),
         catchError(this.handleError),
@@ -195,9 +218,9 @@ export class AnalyticsApiService {
    * GET /api/analytics/insights
    * Rule-based insights (or AI later)
    */
-  getInsights(range?: DateRange, bankId?: string): Observable<{ insights: AnalyticsInsight[] }> {
+  getInsights(range?: DateRange, bankId?: string, type?: string, category?: string): Observable<{ insights: AnalyticsInsight[] }> {
     return this.http
-      .get<{ insights: AnalyticsInsight[] }>(`${this.base}/insights`, { params: this.buildParams(range, bankId) })
+      .get<{ insights: AnalyticsInsight[] }>(`${this.base}/insights`, { params: this.buildParams(range, bankId, type, category) })
       .pipe(
         retry(this.retryConfig),
         catchError(this.handleError),
@@ -208,8 +231,8 @@ export class AnalyticsApiService {
    * GET /api/analytics/transactions
    * Recent transactions for sidebar
    */
-  getRecentTransactions(range?: DateRange, bankId?: string, limit: number = 10): Observable<{ transactions: AnalyticsTransaction[] }> {
-    let params = this.buildParams(range, bankId).set('limit', limit);
+  getRecentTransactions(range?: DateRange, bankId?: string, type?: string, category?: string, limit: number = 10): Observable<{ transactions: AnalyticsTransaction[] }> {
+    let params = this.buildParams(range, bankId, type, category).set('limit', limit);
     return this.http
       .get<{ transactions: AnalyticsTransaction[] }>(`${this.base}/transactions`, { params })
       .pipe(
@@ -225,6 +248,19 @@ export class AnalyticsApiService {
   getBanks(): Observable<{ banks: BankInfo[] }> {
     return this.http
       .get<{ banks: BankInfo[] }>(`${this.base}/banks`)
+      .pipe(
+        retry(this.retryConfig),
+        catchError(this.handleError),
+      );
+  }
+
+  /**
+   * GET /api/analytics/origin-breakdown
+   * Income and expenses grouped by origin
+   */
+  getOriginBreakdown(range?: DateRange, bankId?: string, type?: string, category?: string): Observable<OriginBreakdown> {
+    return this.http
+      .get<OriginBreakdown>(`${this.base}/origin-breakdown`, { params: this.buildParams(range, bankId, type, category) })
       .pipe(
         retry(this.retryConfig),
         catchError(this.handleError),
