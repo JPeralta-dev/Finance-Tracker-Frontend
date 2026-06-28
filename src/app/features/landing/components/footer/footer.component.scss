@@ -1,3 +1,13 @@
+ft-footer {
+  display: block;
+  animation: footerReveal 0.4s var(--ease-out) both;
+}
+
+@keyframes footerReveal {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 .footer {
   padding: 64px 0 24px;
   background: var(--bg-secondary);
