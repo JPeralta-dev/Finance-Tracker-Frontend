@@ -17,6 +17,7 @@ import { TranslationService } from '../../../core/services/translation.service';
 import { AuthService } from '../../../core/services/auth.service';
 import { AiInsightsCardComponent } from '../components/ai-insights-card/ai-insights-card.component';
 import { GoalsWidgetComponent } from '../components/goals-widget/goals-widget.component';
+import { PocketProgressWidget } from '../widgets/pocket-progress.widget';
 import { IconComponent } from '../../../shared/icons/icon.component';
 import type { EChartsOption } from 'echarts';
 
@@ -58,6 +59,7 @@ class ChartColorCache {
     TranslatePipe,
     AiInsightsCardComponent,
     GoalsWidgetComponent,
+    PocketProgressWidget,
     IconComponent,
   ],
   templateUrl: './dashboard.page.html',
