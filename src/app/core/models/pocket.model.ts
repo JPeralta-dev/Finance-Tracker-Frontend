@@ -22,3 +22,10 @@ export interface UpdatePocketDto {
   percentage?: number;
   monthlyLimit?: number | null;
 }
+
+export interface PocketSpending {
+  pocketId: string;
+  totalSpending: number;
+  monthlyLimit: number | null;
+  percentageConsumed: number;
+}

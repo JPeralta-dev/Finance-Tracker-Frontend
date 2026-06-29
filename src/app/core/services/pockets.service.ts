@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
-import { PocketResponse, CreatePocketDto, UpdatePocketDto } from '../models/pocket.model';
+import { PocketResponse, CreatePocketDto, UpdatePocketDto, PocketSpending } from '../models/pocket.model';
 
 @Injectable({ providedIn: 'root' })
 export class PocketsService {
@@ -24,5 +24,9 @@ export class PocketsService {
 
   delete(id: string): Observable<void> {
     return this.http.delete<void>(`${this.base}/${id}`);
+  }
+
+  getSpending(pocketId: string): Observable<PocketSpending> {
+    return this.http.get<PocketSpending>(`${this.base}/${pocketId}/spending`);
   }
 }
