@@ -27,7 +27,7 @@ export class AppComponent implements AfterViewInit {
   private readonly publicRoutes = ['', 'login', 'register'];
 
   readonly showTopbar = signal(false);
-  readonly showFooter = signal(true);
+  readonly showFooter = signal(false);
 
   ngAfterViewInit(): void {
     // Register global commands
