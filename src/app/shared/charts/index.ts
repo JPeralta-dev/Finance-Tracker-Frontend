@@ -6,7 +6,7 @@
  */
 
 // ECharts components
-export { FtEChartComponent, EChartState } from './echarts/ft-echart.component';
+export { FtEChartComponent, EChartState, ChartClickEvent } from './echarts/ft-echart.component';
 export { EchartsThemeMapper } from './echarts/echarts-theme.mapper';
 export { registerECharts } from './echarts/echarts-module';
 
