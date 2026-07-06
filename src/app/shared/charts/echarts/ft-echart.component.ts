@@ -41,6 +41,16 @@ import { registerECharts } from './echarts-module';
 /** ECharts state machine */
 export type EChartState = 'loading' | 'empty' | 'error' | 'ready';
 
+/** Data emitted when a chart data point is clicked */
+export interface ChartClickEvent {
+  seriesName?: string;
+  dataIndex?: number;
+  value?: unknown;
+  name?: string;      // Category name (for pie/donut/bar)
+  hour?: number;      // Hour value (for hourly charts)
+  date?: string;      // Date string (for time-based charts)
+}
+
 @Component({
   selector: 'ft-echart',
   standalone: true,
@@ -186,6 +196,9 @@ export class FtEChartComponent implements OnInit, OnDestroy, OnChanges, AfterCon
   /** Emits when an error occurs */
   chartError = output<Error>();
 
+  /** Emits when a chart data point is clicked (for drill-down filtering) */
+  chartClick = output<ChartClickEvent>();
+
   // ─── State ───────────────────────────────────────────────────────────────
 
   /** Current chart state */
@@ -329,6 +342,36 @@ export class FtEChartComponent implements OnInit, OnDestroy, OnChanges, AfterCon
     this.chartInstance = init(this.containerRef.nativeElement);
 
     this.chartInstance.setOption(opts);
+
+    // Bind click event for drill-down filtering
+    this.chartInstance.on('click', (params: unknown) => {
+      const p = params as Record<string, unknown>;
+      const event: ChartClickEvent = {
+        seriesName: p['seriesName'] as string | undefined,
+        dataIndex: p['dataIndex'] as number | undefined,
+        value: p['value'],
+        name: p['name'] as string | undefined,
+      };
+
+      // Extract hour from x-axis data (for hourly charts)
+      const optsRecord = opts as Record<string, unknown>;
+      const xAxisData = optsRecord['xAxis'] as Record<string, unknown> | undefined;
+      const data = (xAxisData?.['data'] as string[] | undefined);
+      if (data && typeof p['dataIndex'] === 'number') {
+        const xValue = data[p['dataIndex'] as number];
+        if (typeof xValue === 'string') {
+          // Check if it looks like an hour label (e.g., "0", "12", "18:00")
+          const hourMatch = xValue.match(/^(\d{1,2})(?::\d{2})?$/);
+          if (hourMatch) {
+            event.hour = parseInt(hourMatch[1], 10);
+          } else {
+            event.date = xValue;
+          }
+        }
+      }
+
+      this.chartClick.emit(event);
+    });
 
     // Setup resize observer (guarded)
     this.setupResizeObserver();
