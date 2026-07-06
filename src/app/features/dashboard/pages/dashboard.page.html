@@ -15,9 +15,32 @@
           <h1 class="dashboard-greeting__title">{{ greeting() | translate }}</h1>
           <p class="dashboard-greeting__subtitle">{{ today() }}</p>
         </div>
-        <a routerLink="/transactions/new" class="dashboard-greeting__cta" [ftHoverDepth]="8">
-          {{ 'dashboard.newTransaction' | translate }}
-        </a>
+        <div class="dashboard-greeting__actions">
+          <div class="month-selector">
+            <button class="month-selector__btn" (click)="toggleMonthDropdown()" type="button">
+              <ng-icon name="calendar" size="1rem" />
+              <span>{{ dateRange.currentMonthLabel() }}</span>
+              <ng-icon name="chevronDown" size="0.75rem" />
+            </button>
+            @if (monthOpen()) {
+              <div class="month-selector__dropdown" (clickOutside)="monthOpen.set(false)">
+                @for (month of dateRange.availableMonths(); track month.start) {
+                  <button
+                    class="month-selector__option"
+                    [class.month-selector__option--active]="dateRange.startDate() === month.start"
+                    (click)="onMonthSelect(month)"
+                    type="button"
+                  >
+                    {{ month.label }}
+                  </button>
+                }
+              </div>
+            }
+          </div>
+          <a routerLink="/transactions/new" class="dashboard-greeting__cta" [ftHoverDepth]="8">
+            {{ 'dashboard.newTransaction' | translate }}
+          </a>
+        </div>
       </div>
 
       <!-- Welcome banner -->
@@ -89,6 +112,11 @@
       <!-- ROW 4: Goals Widget (premium gated) -->
       <div class="dashboard-row dashboard-row--premium" ftSubtleReveal="fade-up" [delay]="150">
         <ft-goals-widget />
+      </div>
+
+      <!-- ROW 4b: Pocket Progress Widget (premium gated) -->
+      <div class="dashboard-row dashboard-row--premium" ftSubtleReveal="fade-up" [delay]="160">
+        <ft-pocket-progress-widget />
       </div>
 
       <!-- ROW 5: Chart + Recent Activity -->

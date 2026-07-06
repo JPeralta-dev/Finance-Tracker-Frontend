@@ -48,7 +48,28 @@
           <h1 class="analytics-header-row__heading">{{ 'analytics.title' | translate }}</h1>
           <p class="analytics-header-row__subtitle">{{ 'analytics.subtitle' | translate }}</p>
         </div>
-        <div class="analytics-header-row__filters">
+        <div class="analytics-header-row__actions">
+          <div class="month-selector">
+            <button class="month-selector__btn" (click)="toggleMonthDropdown()" type="button">
+              <ng-icon name="calendar" size="1rem" />
+              <span>{{ dateRange.currentMonthLabel() }}</span>
+              <ng-icon name="chevronDown" size="0.75rem" />
+            </button>
+            @if (monthOpen()) {
+              <div class="month-selector__dropdown" (clickOutside)="monthOpen.set(false)">
+                @for (month of dateRange.availableMonths(); track month.start) {
+                  <button
+                    class="month-selector__option"
+                    [class.month-selector__option--active]="dateRange.startDate() === month.start"
+                    (click)="onMonthSelect(month)"
+                    type="button"
+                  >
+                    {{ month.label }}
+                  </button>
+                }
+              </div>
+            }
+          </div>
           <ft-analytics-filters
             [categories]="categoryNames()"
             (reset)="onFiltersReset()"

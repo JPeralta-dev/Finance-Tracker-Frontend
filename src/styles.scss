@@ -320,7 +320,7 @@ input, select, textarea { font-family: var(--font-body); }
   padding: 32px 24px 32px;
 }
 
-@media (max-width: 768px) {
+@include below-md {
   .app-main {
     padding: 20px 16px 20px;
   }

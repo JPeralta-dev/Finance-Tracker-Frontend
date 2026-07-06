@@ -1,0 +1,292 @@
+/* ─── Pocket Progress Widget ──────────────────────────────────────── */
+
+.pocket-progress-widget {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  backdrop-filter: blur(12px);
+}
+
+.pocket-progress-widget__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.pocket-progress-widget__title {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+  letter-spacing: -0.01em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pocket-progress-widget__icon {
+  font-size: 20px;
+}
+
+.pocket-progress-widget__link {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--accent-start);
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-out);
+
+  &:hover {
+    color: var(--accent-mid);
+  }
+}
+
+/* ── Upgrade prompt (free users) ─────────────────────────────────── */
+
+.pocket-progress-widget__upgrade {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+}
+
+.pocket-progress-widget__blur {
+  filter: blur(4px);
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.pocket-progress-widget__cta-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: linear-gradient(135deg, rgba(18, 11, 26, 0.6), rgba(29, 20, 38, 0.8));
+  border-radius: var(--radius-md);
+}
+
+.pocket-progress-widget__cta-text {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+  text-align: center;
+}
+
+.pocket-progress-widget__cta-btn {
+  padding: 10px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-inverse);
+  background: linear-gradient(135deg, var(--accent-start), var(--accent-mid));
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  box-shadow: var(--glow-accent);
+  transition:
+    box-shadow var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+
+  &:hover {
+    box-shadow: 0 0 40px rgba(217, 70, 239, 0.4);
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: scale(0.97);
+  }
+}
+
+/* ── Skeleton ────────────────────────────────────────────────────── */
+
+.pocket-progress-widget__skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.skeleton-pocket {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.skeleton-pocket__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.skeleton-pocket__name,
+.skeleton-pocket__percent {
+  height: 14px;
+  border-radius: 7px;
+  background: var(--bg-tertiary);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.skeleton-pocket__name {
+  width: 40%;
+}
+
+.skeleton-pocket__percent {
+  width: 36px;
+}
+
+.skeleton-pocket__bar {
+  height: 8px;
+  border-radius: 4px;
+  background: var(--bg-tertiary);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 0.3; }
+}
+
+/* ── Empty state ─────────────────────────────────────────────────── */
+
+.pocket-progress-widget__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px;
+  text-align: center;
+  gap: 12px;
+}
+
+.pocket-progress-widget__empty-icon {
+  font-size: 36px;
+}
+
+.pocket-progress-widget__empty-text {
+  font-size: 14px;
+  color: var(--text-tertiary);
+  margin: 0;
+  max-width: 280px;
+}
+
+.pocket-progress-widget__empty-btn {
+  padding: 10px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-inverse);
+  background: linear-gradient(135deg, var(--accent-start), var(--accent-mid));
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  box-shadow: var(--glow-accent);
+  transition:
+    box-shadow var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+
+  &:hover {
+    box-shadow: 0 0 40px rgba(217, 70, 239, 0.4);
+    transform: translateY(-1px);
+  }
+}
+
+/* ── Pocket rows ─────────────────────────────────────────────────── */
+
+.pocket-progress-widget__list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pocket-row {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px 16px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-tertiary);
+  transition: background var(--duration-fast) var(--ease-out);
+
+  &:hover {
+    background: var(--bg-elevated);
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  &__name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  &__meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--text-tertiary);
+  }
+
+  &__amounts {
+    font-variant-numeric: tabular-nums;
+  }
+
+  &__right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  &__percent {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--accent-start);
+    font-variant-numeric: tabular-nums;
+    min-width: 40px;
+    text-align: right;
+  }
+
+  &__bar {
+    flex: 1;
+    height: 8px;
+    border-radius: 4px;
+    background: var(--bg-primary);
+    overflow: hidden;
+  }
+
+  &__bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    background: linear-gradient(90deg, var(--success), #34d399);
+    transition: width 600ms cubic-bezier(0.22, 1, 0.36, 1);
+
+    &--complete {
+      background: linear-gradient(90deg, var(--danger), #e55555);
+    }
+
+    &--warning {
+      background: linear-gradient(90deg, var(--warning), #fbbf24);
+    }
+  }
+
+  &--blurred {
+    opacity: 0.5;
+  }
+}
+
+/* ── Responsive ──────────────────────────────────────────────────── */
+
+@media (max-width: 767px) {
+  .pocket-progress-widget {
+    padding: 16px;
+  }
+
+  .pocket-progress-widget__title {
+    font-size: 16px;
+  }
+}

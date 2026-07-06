@@ -13,6 +13,7 @@ import {
   heroTag,
   heroChartBar,
   heroBell,
+  heroCalendar,
   heroMagnifyingGlass,
   heroPlus,
   heroArrowTrendingUp,
@@ -116,6 +117,7 @@ export const ICONS = {
   trendingUp: heroArrowTrendingUp,
   trendingDown: heroArrowTrendingDown,
   percent: heroBanknotes,
+  calendar: heroCalendar,
   chevronDown: heroChevronDown,
 
   // Insights

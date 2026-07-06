@@ -2,6 +2,8 @@ import { Component, signal, inject, OnInit, computed, Injectable, ChangeDetectio
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { catchError, forkJoin, of } from 'rxjs';
+import { NgIcon } from '@ng-icons/core';
+import { ICONS } from '../../../shared/icons/icon-registry';
 
 import { StatsGridComponent } from '../components/stats-grid/stats-grid.component';
 import { FtEChartComponent, EchartsThemeMapper } from '../../../shared/charts';
@@ -9,14 +11,17 @@ import { RecentActivityComponent, ActivityItem } from '../components/recent-acti
 import { StatCardData } from '../components/stat-card/stat-card.types';
 import { FtSubtleRevealDirective } from '../../../shared/directives/ft-subtle-reveal.directive';
 import { HoverDepthDirective } from '../../../shared/directives/hover-depth.directive';
+import { ClickOutsideDirective } from '../../../shared/directives/click-outside.directive';
 import { FinanceService } from '../../../core/services/finance.service';
 import { ToastService } from '../../../core/services/toast.service';
 import { EmptyStateComponent } from '../../../shared/components/empty-state.component';
 import { TranslatePipe } from '../../../core/pipes/translate.pipe';
 import { TranslationService } from '../../../core/services/translation.service';
 import { AuthService } from '../../../core/services/auth.service';
+import { DateRangeService } from '../../../core/services/date-range.service';
 import { AiInsightsCardComponent } from '../components/ai-insights-card/ai-insights-card.component';
 import { GoalsWidgetComponent } from '../components/goals-widget/goals-widget.component';
+import { PocketProgressWidget } from '../widgets/pocket-progress.widget';
 import { IconComponent } from '../../../shared/icons/icon.component';
 import type { EChartsOption } from 'echarts';
 
@@ -54,11 +59,14 @@ class ChartColorCache {
     RecentActivityComponent,
     FtSubtleRevealDirective,
     HoverDepthDirective,
+    ClickOutsideDirective,
     EmptyStateComponent,
     TranslatePipe,
     AiInsightsCardComponent,
     GoalsWidgetComponent,
+    PocketProgressWidget,
     IconComponent,
+    NgIcon,
   ],
   templateUrl: './dashboard.page.html',
   styleUrl: './dashboard.page.scss',
@@ -71,21 +79,24 @@ export class DashboardPage implements OnInit {
   private readonly themeMapper = inject(EchartsThemeMapper);
   private readonly chartColors = inject(ChartColorCache);
   readonly authService = inject(AuthService);
+  readonly dateRange = inject(DateRangeService);
 
   readonly stats = signal<StatCardData[]>([]);
   readonly activity = signal<ActivityItem[]>([]);
   readonly state = signal<DashboardState>('loading');
-
-  readonly selectedRange = signal<string>('30d');
-  readonly dateRanges = [
-    { label: '7D', value: '7d' },
-    { label: '30D', value: '30d' },
-    { label: '6M', value: '6m' },
-    { label: '1Y', value: '1y' },
-  ];
+  readonly monthOpen = signal(false);
 
   readonly chartLabels = signal<string[]>([]);
   readonly chartDatasets = signal<AreaDataset[]>([]);
+
+  readonly chartMonths = computed(() => {
+    const start = this.dateRange.startDate();
+    if (!start) return 6;
+    const today = new Date();
+    const startDate = new Date(start + 'T12:00:00');
+    const monthsDiff = (today.getFullYear() - startDate.getFullYear()) * 12 + (today.getMonth() - startDate.getMonth()) + 1;
+    return Math.max(6, monthsDiff);
+  });
 
   readonly areaChartOptions = computed<EChartsOption | undefined>(() => {
     const labels = this.chartLabels();
@@ -116,48 +127,21 @@ export class DashboardPage implements OnInit {
   });
 
   ngOnInit(): void {
-    this.loadData(this.selectedRange());
+    this.loadData();
   }
 
-  private computeDateRange(range: string): { startDate: string; endDate: string } | null {
-    const now = new Date();
-    let startDate: Date;
-    switch (range) {
-      case '7d': startDate = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000); break;
-      case '30d': startDate = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000); break;
-      case '6m': startDate = new Date(now.getTime() - 180 * 24 * 60 * 60 * 1000); break;
-      case '1y': startDate = new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000); break;
-      default: return null;
-    }
-    return { startDate: startDate.toISOString(), endDate: new Date().toISOString() };
-  }
-
-  private rangeToMonths(range: string): number {
-    switch (range) {
-      case '7d': return 1;
-      case '30d': return 3;
-      case '6m': return 6;
-      case '1y': return 12;
-      default: return 6;
-    }
-  }
-
-  private loadData(range?: string): void {
+  private loadData(): void {
     this.state.set('loading');
-    const currentRange = range ?? this.selectedRange();
-    const dateRange = currentRange ? this.computeDateRange(currentRange) : null;
-    const months = this.rangeToMonths(currentRange);
+    const dateParams = this.dateRange.getApiParams();
 
     forkJoin({
-      summary: this.financeService.getSummary(
-        dateRange ? { startDate: dateRange.startDate, endDate: dateRange.endDate } : undefined
-      ).pipe(catchError(() => of(null))),
-      chart: this.financeService.getMonthlyChart(months).pipe(catchError(() => of(null))),
+      summary: this.financeService.getSummary(dateParams).pipe(catchError(() => of(null))),
+      chart: this.financeService.getMonthlyChart(this.chartMonths()).pipe(catchError(() => of(null))),
       transactions: this.financeService.getTransactions({
         limit: 10,
         sortBy: 'date',
         sortDir: 'desc',
-        ...(dateRange ? { startDate: dateRange.startDate, endDate: dateRange.endDate } : {}),
+        ...this.dateRange.getFilters(),
       }).pipe(catchError(() => of(null))),
     }).subscribe({
       next: ({ summary, chart, transactions }) => {
@@ -203,6 +187,16 @@ export class DashboardPage implements OnInit {
     });
   }
 
+  onMonthSelect(month: { start: string; end: string }): void {
+    this.dateRange.setMonth(month.start, month.end);
+    this.monthOpen.set(false);
+    this.loadData();
+  }
+
+  toggleMonthDropdown(): void {
+    this.monthOpen.update(v => !v);
+  }
+
   private mapSummary(summary: { totalBalance: number; totalIncome: number; totalExpenses: number; savingsRate: number }): StatCardData[] {
     return [
       { id: 'balance', label: 'dashboard.totalBalance', value: summary.totalBalance, icon: 'wallet', insight: summary.totalBalance > 0 ? 'dashboard.positiveBalance' : 'dashboard.noBalance' },
@@ -213,11 +207,6 @@ export class DashboardPage implements OnInit {
   }
 
   retry(): void {
-    this.loadData(this.selectedRange());
-  }
-
-  setRange(range: string): void {
-    this.selectedRange.set(range);
-    this.loadData(range);
+    this.loadData();
   }
 }

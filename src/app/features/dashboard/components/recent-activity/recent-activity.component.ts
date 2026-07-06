@@ -50,11 +50,12 @@ export class RecentActivityComponent {
     this.visibleCount() < this.items().length
   );
 
-  /** Group items by date: Today, Yesterday, This Week, Earlier */
+  /** Group items by date: Today, Yesterday, This Week, Earlier.
+   *  Uses UTC methods to avoid timezone mismatches between server and client. */
   readonly groups = computed<ActivityGroup[]>(() => {
     const visible = this.items().slice(0, this.visibleCount());
     const now = new Date();
-    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const today = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
     const yesterday = new Date(today.getTime() - 86400000);
     const weekAgo = new Date(today.getTime() - 7 * 86400000);
 
@@ -62,7 +63,7 @@ export class RecentActivityComponent {
 
     for (const item of visible) {
       const itemDate = new Date(item.date);
-      const itemDay = new Date(itemDate.getFullYear(), itemDate.getMonth(), itemDate.getDate());
+      const itemDay = new Date(Date.UTC(itemDate.getUTCFullYear(), itemDate.getUTCMonth(), itemDate.getUTCDate()));
 
       let label: string;
       if (itemDay.getTime() === today.getTime()) {

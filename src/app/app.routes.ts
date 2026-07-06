@@ -96,6 +96,12 @@ export const routes: Routes = [
     canActivate: [authGuard, premiumGuard],
   },
   {
+    path: 'pockets',
+    loadComponent: () =>
+      import('./features/pockets/pages/pockets.page').then(m => m.PocketsPage),
+    canActivate: [authGuard, premiumGuard],
+  },
+  {
     path: 'subscription',
     loadComponent: () =>
       import('./features/subscription/pages/subscription.page').then(m => m.SubscriptionPage),

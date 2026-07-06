@@ -56,6 +56,93 @@
   }
 }
 
+/* ── Actions row (month selector + CTA) ────────────────────────── */
+
+.transactions-page__actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* ── Month Selector Dropdown ────────────────────────────────────── */
+
+.month-selector {
+  position: relative;
+
+  &__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: var(--font-body);
+    color: var(--text-primary);
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition:
+      background var(--duration-fast) var(--ease-out),
+      border-color var(--duration-fast) var(--ease-out);
+    white-space: nowrap;
+
+    &:hover {
+      background: var(--bg-tertiary);
+      border-color: var(--glass-border);
+    }
+
+    ng-icon {
+      color: var(--accent-start);
+    }
+  }
+
+  &__dropdown {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    z-index: 50;
+    min-width: 200px;
+    max-height: 280px;
+    overflow-y: auto;
+    background: var(--bg-secondary);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    display: flex;
+    flex-direction: column;
+    padding: 4px;
+  }
+
+  &__option {
+    padding: 10px 14px;
+    font-size: 13px;
+    font-family: var(--font-body);
+    color: var(--text-secondary);
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    text-align: left;
+    text-transform: capitalize;
+    transition:
+      background var(--duration-fast) var(--ease-out),
+      color var(--duration-fast) var(--ease-out);
+
+    &:hover {
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+    }
+
+    &--active {
+      background: var(--accent-glow);
+      color: var(--accent-start);
+      font-weight: 600;
+    }
+  }
+}
+
 /* Scrollable wrapper for transaction table on mobile (<768px) */
 .tx-scroll-wrapper {
   overflow-x: auto;
