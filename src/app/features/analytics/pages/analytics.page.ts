@@ -639,6 +639,7 @@ export class AnalyticsPage implements OnInit {
   private loadData(range?: DateRange, bankId?: string, type?: string, category?: string): void {
     this.store.setLoading();
 
+    // Core analytics only — new endpoints load separately
     forkJoin({
       summary: this.api.getSummary(range, bankId, type, category).pipe(catchError(() => of(null))),
       trend: this.api.getMonthlyTrend(range, bankId, type, category).pipe(catchError(() => of(null))),
@@ -650,32 +651,37 @@ export class AnalyticsPage implements OnInit {
       transactions: this.api.getRecentTransactions(range, bankId, type, category).pipe(
         catchError(() => of({ transactions: [] })),
       ),
-      hourlyActivity: this.api.getHourlyActivity(range, bankId, type).pipe(
-        catchError(() => of(null)),
-      ),
-      weeklyPatterns: this.api.getWeeklyPatterns(range, bankId, type, category).pipe(
-        catchError(() => of(null)),
-      ),
     }).subscribe({
-      next: ({ summary, trend, categoryBreakdown, dailySpending, insights, transactions, hourlyActivity, weeklyPatterns }) => {
+      next: ({ summary, trend, categoryBreakdown, dailySpending, insights, transactions }) => {
         if (summary) this.store.setSummary(summary);
         if (trend) this.store.setMonthlyTrend(trend);
         if (categoryBreakdown) this.store.setCategoryBreakdown(categoryBreakdown);
         if (dailySpending) this.store.setDailySpending(dailySpending);
         if (insights?.insights) this.store.setInsights(insights.insights);
         if (transactions?.transactions) this.store.setTransactions(transactions.transactions);
-        if (hourlyActivity) this._hourlyData.set(hourlyActivity);
-        if (weeklyPatterns) this._weeklyPatterns.set(weeklyPatterns);
-
-        // Insights come from the backend API only (Spanish, rule-based)
-        // No frontend merge — avoids duplicate English messages
 
         this.store.setReady();
+
+        // Load optional charts separately — do not block core analytics
+        this.loadOptionalCharts(range, bankId, type, category);
       },
       error: (err) => {
         const msg = err?.message || this.i18n.translate('analytics.errorDesc');
         this.store.setError(msg);
         this.toast.error(msg);
+      },
+    });
+  }
+
+  /** Load new chart endpoints separately — safe to fail without breaking the page */
+  private loadOptionalCharts(range?: DateRange, bankId?: string, type?: string, category?: string): void {
+    forkJoin({
+      hourlyActivity: this.api.getHourlyActivity(range, bankId, type).pipe(catchError(() => of(null))),
+      weeklyPatterns: this.api.getWeeklyPatterns(range, bankId, type, category).pipe(catchError(() => of(null))),
+    }).subscribe({
+      next: ({ hourlyActivity, weeklyPatterns }) => {
+        if (hourlyActivity) this._hourlyData.set(hourlyActivity);
+        if (weeklyPatterns) this._weeklyPatterns.set(weeklyPatterns);
       },
     });
   }
