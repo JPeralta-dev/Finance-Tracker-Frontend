@@ -28,10 +28,34 @@
           {{ 'transactions.startTracking' | translate }}
         </p>
       </div>
-      <a routerLink="/transactions/new" class="transactions-page__cta">
-        {{ 'transactions.newTransaction' | translate }}
-      </a>
+      <div class="transactions-page__actions">
+        <div class="month-selector">
+          <button class="month-selector__btn" (click)="toggleMonthDropdown()" type="button">
+            <ng-icon name="calendar" size="1rem" />
+            <span>{{ dateRange.currentMonthLabel() }}</span>
+            <ng-icon name="chevronDown" size="0.75rem" />
+          </button>
+          @if (monthOpen()) {
+            <div class="month-selector__dropdown" (clickOutside)="monthOpen.set(false)">
+              @for (month of dateRange.availableMonths(); track month.start) {
+                <button
+                  class="month-selector__option"
+                  [class.month-selector__option--active]="dateRange.startDate() === month.start"
+                  (click)="onMonthSelect(month)"
+                  type="button"
+                >
+                  {{ month.label }}
+                </button>
+              }
+            </div>
+          }
+        </div>
+        <a routerLink="/transactions/new" class="transactions-page__cta">
+          {{ 'transactions.newTransaction' | translate }}
+        </a>
+      </div>
     </div>
+
     <ft-empty-state
       icon="list"
       [title]="'transactions.emptyTitle' | translate"
@@ -49,9 +73,33 @@
           {{ 'transactions.subtitle' | translate }}
         </p>
       </div>
-      <a routerLink="/transactions/new" class="transactions-page__cta">
-        {{ 'transactions.newTransaction' | translate }}
-      </a>
+      <div class="transactions-page__actions">
+        <!-- Month/year dropdown -->
+        <div class="month-selector">
+          <button class="month-selector__btn" (click)="toggleMonthDropdown()" type="button">
+            <ng-icon name="calendar" size="1rem" />
+            <span>{{ dateRange.currentMonthLabel() }}</span>
+            <ng-icon name="chevronDown" size="0.75rem" />
+          </button>
+          @if (monthOpen()) {
+            <div class="month-selector__dropdown" (clickOutside)="monthOpen.set(false)">
+              @for (month of dateRange.availableMonths(); track month.start) {
+                <button
+                  class="month-selector__option"
+                  [class.month-selector__option--active]="dateRange.startDate() === month.start"
+                  (click)="onMonthSelect(month)"
+                  type="button"
+                >
+                  {{ month.label }}
+                </button>
+              }
+            </div>
+          }
+        </div>
+        <a routerLink="/transactions/new" class="transactions-page__cta">
+          {{ 'transactions.newTransaction' | translate }}
+        </a>
+      </div>
     </div>
 
     <!-- Transaction table -->

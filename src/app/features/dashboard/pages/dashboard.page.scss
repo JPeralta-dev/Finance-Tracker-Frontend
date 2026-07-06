@@ -28,9 +28,7 @@
 
 .dashboard-content-layer--loading {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
+  inset: 0;
   z-index: 10;
   animation: skeleton-fade-out var(--duration-slow, 400ms) var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1)) forwards;
 }
@@ -207,6 +205,13 @@
     text-transform: capitalize;
   }
 
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
   &__cta {
     display: inline-flex;
     align-items: center;
@@ -229,6 +234,84 @@
 
     &:active {
       transform: scale(0.97);
+    }
+  }
+}
+
+/* ── Month Selector ──────────────────────────────────────────────── */
+
+.month-selector {
+  position: relative;
+
+  &__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: var(--font-body);
+    color: var(--text-primary);
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition:
+      background var(--duration-fast) var(--ease-out),
+      border-color var(--duration-fast) var(--ease-out);
+    white-space: nowrap;
+
+    &:hover {
+      background: var(--bg-tertiary);
+      border-color: var(--glass-border);
+    }
+
+    ng-icon {
+      color: var(--accent-start);
+    }
+  }
+
+  &__dropdown {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    z-index: 50;
+    min-width: 200px;
+    max-height: 280px;
+    overflow-y: auto;
+    background: var(--bg-secondary);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    display: flex;
+    flex-direction: column;
+    padding: 4px;
+  }
+
+  &__option {
+    padding: 10px 14px;
+    font-size: 13px;
+    font-family: var(--font-body);
+    color: var(--text-secondary);
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    text-align: left;
+    text-transform: capitalize;
+    transition:
+      background var(--duration-fast) var(--ease-out),
+      color var(--duration-fast) var(--ease-out);
+
+    &:hover {
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+    }
+
+    &--active {
+      background: var(--accent-glow);
+      color: var(--accent-start);
+      font-weight: 600;
     }
   }
 }

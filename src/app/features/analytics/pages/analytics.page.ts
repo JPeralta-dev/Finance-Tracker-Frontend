@@ -30,6 +30,7 @@ import { AnalyticsCategoryBreakdownComponent } from '../components/analytics-cat
 import { AnalyticsChartCardComponent } from '../components/analytics-chart-card/analytics-chart-card.component';
 import { EmptyStateComponent } from '../../../shared/components/empty-state.component';
 import { FtSubtleRevealDirective } from '../../../shared/directives/ft-subtle-reveal.directive';
+import { ClickOutsideDirective } from '../../../shared/directives/click-outside.directive';
 
 // ─── Services ───────────────────────────────────────────────────────────────
 import { TranslatePipe } from '../../../core/pipes/translate.pipe';
@@ -39,6 +40,7 @@ import { ToastService } from '../../../core/services/toast.service';
 import { AnalyticsApiService, AnalyticsSummary, MonthlyTrend, CategoryBreakdown, DailySpending, AnalyticsInsight, AnalyticsTransaction, BankInfo, DateRange } from '../services/analytics-api.service';
 import { AnalyticsStore } from '../services/analytics.store';
 import { ICONS } from '../../../shared/icons/icon-registry';
+import { DateRangeService } from '../../../core/services/date-range.service';
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 import type { KpiData, MonthStory, CategoryAnalysis, ComparisonData, InsightData as UiInsightData, RelevantTransaction } from '../analytics.types';
@@ -297,6 +299,7 @@ export function generateMonthStories(
     FtEChartComponent,
     FtSubtleRevealDirective,
     EmptyStateComponent,
+    ClickOutsideDirective,
     TranslatePipe,
     AnalyticsHeaderComponent,
     AnalyticsKpisComponent,
@@ -320,6 +323,7 @@ export class AnalyticsPage implements OnInit {
   private readonly i18n = inject(TranslationService);
   private readonly toast = inject(ToastService);
   private readonly destroyRef = inject(DestroyRef);
+  readonly dateRange = inject(DateRangeService);
 
   // ─── Derived signals from store ─────────────────────────────────────────
 
@@ -416,6 +420,8 @@ export class AnalyticsPage implements OnInit {
   readonly isError = computed(() => this.store.loadState() === 'error');
   readonly isNewUser = computed(() => this.store.isNewUser());
 
+  readonly monthOpen = signal(false);
+
   /** Show content layout whenever data is loaded — even with zero values */
   readonly showContent = computed(() => this.store.loadState() === 'ready');
 
@@ -470,6 +476,16 @@ export class AnalyticsPage implements OnInit {
 
   onFiltersReset(): void {
     this.store.clearFilters();
+  }
+
+  toggleMonthDropdown(): void {
+    this.monthOpen.update(v => !v);
+  }
+
+  onMonthSelect(month: { start: string; end: string }): void {
+    this.dateRange.setMonth(month.start, month.end);
+    this.store.setDateRange(month.start, month.end);
+    this.monthOpen.set(false);
   }
 
   retry(): void {
