@@ -30,9 +30,47 @@ export type AnalyticsLoadState = 'idle' | 'loading' | 'ready' | 'error';
 export interface AnalyticsFilterState {
   dateRange: DateRange | null;
   bankId: string | null;
-  period: '7d' | '30d' | '6m' | '1y' | 'custom';
+  period: '7d' | '30d' | '90d' | '6m' | '1y' | 'custom';
   type: 'all' | 'income' | 'expense';
   category: string | null;
+}
+
+/** Cross-filter state from chart click interactions */
+export interface ChartFilter {
+  type: 'category' | 'hour';
+  value: string | number;
+  label?: string;
+}
+
+// ─── Pure helpers ───────────────────────────────────────────────────────────
+
+/**
+ * Derive a UTC DateRange from a period string.
+ * Uses UTC methods to avoid timezone boundary shifts.
+ */
+function deriveDateRangeFromPeriod(period: AnalyticsFilterState['period']): DateRange {
+  const now = new Date();
+  const endUTC = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 23, 59, 59);
+
+  let daysBack: number;
+  switch (period) {
+    case '7d': daysBack = 7; break;
+    case '30d': daysBack = 30; break;
+    case '90d': daysBack = 90; break;
+    case '6m': daysBack = 180; break;
+    case '1y': daysBack = 365; break;
+    default: daysBack = 30;
+  }
+
+  const startMs = endUTC - (daysBack * 24 * 60 * 60 * 1000);
+  // Round start to UTC midnight
+  const startDate = new Date(startMs);
+  const startUTC = Date.UTC(startDate.getUTCFullYear(), startDate.getUTCMonth(), startDate.getUTCDate(), 0, 0, 0);
+
+  return {
+    startDate: new Date(startUTC).toISOString(),
+    endDate: new Date(endUTC).toISOString(),
+  };
 }
 
 // ─── Store ──────────────────────────────────────────────────────────────────
@@ -44,24 +82,12 @@ export class AnalyticsStore {
   private readonly _filters = signal<AnalyticsFilterState>({
     dateRange: null,
     bankId: null,
-    period: '6m',
+    period: '30d',  // Default to 1m (30 days) on page load
     type: 'all',
     category: null,
   });
 
   readonly filters = this._filters.asReadonly();
-
-  /** Computed API params from current filters */
-  readonly apiParams = computed(() => {
-    const f = this._filters();
-    const cf = this._crossFilter();
-    return {
-      range: f.dateRange ?? undefined,
-      bankId: f.bankId ?? undefined,
-      type: f.type !== 'all' ? f.type : undefined,
-      category: cf.categoryId ?? f.category ?? undefined, // crossFilter takes precedence
-    };
-  });
 
   // ─── Cross-Filter State (drill-down selection from charts) ──────────────
 
@@ -70,6 +96,33 @@ export class AnalyticsStore {
 
   /** Whether cross-filter is active */
   readonly hasCrossFilter = computed(() => !!this._crossFilter().categoryId);
+
+  // ─── Chart Filter State (click-to-filter from chart data points) ────────
+
+  private readonly _chartFilter = signal<ChartFilter | null>(null);
+  readonly chartFilter = this._chartFilter.asReadonly();
+
+  /** Whether a chart-based filter is active */
+  readonly hasChartFilter = computed(() => this._chartFilter() !== null);
+
+  /** Computed API params from current filters */
+  readonly apiParams = computed(() => {
+    const f = this._filters();
+    const cf = this._crossFilter();
+    const chF = this._chartFilter();
+
+    // Derive dateRange from period when not explicitly set
+    const dateRange = f.dateRange ?? deriveDateRangeFromPeriod(f.period);
+
+    return {
+      range: dateRange,
+      bankId: f.bankId ?? undefined,
+      type: f.type !== 'all' ? f.type : undefined,
+      category: cf.categoryId ?? f.category ?? undefined, // crossFilter takes precedence
+      chartFilterType: chF?.type,
+      chartFilterValue: chF?.value,
+    };
+  });
 
   // ─── Load State ─────────────────────────────────────────────────────────
 
@@ -132,7 +185,7 @@ export class AnalyticsStore {
 
   // ─── Actions ────────────────────────────────────────────────────────────
 
-  /** Set the date period (7d, 30d, 6m, 1y) */
+  /** Set the date period (7d, 30d, 90d, 6m, 1y) */
   setPeriod(period: AnalyticsFilterState['period']): void {
     this._filters.update(f => ({ ...f, period, dateRange: null }));
   }
@@ -171,15 +224,34 @@ export class AnalyticsStore {
     this._crossFilter.set({});
   }
 
+  /** Set chart filter (click-to-filter from bar/area/hourly charts). Toggle behavior: clicking same point clears. */
+  setChartFilter(chartFilter: ChartFilter): void {
+    const current = this._chartFilter();
+    if (current && current.type === chartFilter.type && current.value === chartFilter.value) {
+      // Toggle off — clicking same point clears filter
+      this._chartFilter.set(null);
+    } else {
+      // Replace filter (no stacking)
+      this._chartFilter.set(chartFilter);
+    }
+  }
+
+  /** Clear chart filter */
+  clearChartFilter(): void {
+    this._chartFilter.set(null);
+  }
+
   /** Clear all filters to defaults */
   clearFilters(): void {
     this._filters.set({
       dateRange: null,
       bankId: null,
-      period: '6m',
+      period: '30d',
       type: 'all',
       category: null,
     });
+    this._chartFilter.set(null);
+    this._crossFilter.set({});
   }
 
   /** Set loading state */
