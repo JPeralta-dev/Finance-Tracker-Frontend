@@ -16,6 +16,11 @@ import { retry, catchError } from 'rxjs/operators';
 
 import { environment } from '../../../../environments/environment';
 
+/** Error type guard for HTTP errors with a status code */
+function isHttpError(error: unknown): error is { status: number } {
+  return typeof error === 'object' && error !== null && 'status' in error;
+}
+
 // ─── Interfaces ─────────────────────────────────────────────────────────────
 
 /** Date range filter for API calls */
@@ -149,10 +154,16 @@ export class AnalyticsApiService {
   private readonly http = inject(HttpClient);
   private readonly base = `${environment.apiUrl}/api/analytics`;
 
-  /** Retry config: 2 attempts with exponential backoff (1s, 2s) */
+  /** Retry config: 2 attempts with exponential backoff (1s, 2s). Only retries 5xx and network errors — 4xx (auth, premium, validation) are NOT retried. */
   private readonly retryConfig = {
     count: 2,
-    delay: (_error: unknown, retryCount: number) => timer(Math.pow(2, retryCount - 1) * 1000),
+    delay: (error: unknown, retryCount: number) => {
+      // Do NOT retry client errors (4xx) — they won't succeed on retry
+      if (isHttpError(error) && error.status >= 400 && error.status < 500) {
+        return throwError(() => error);
+      }
+      return timer(Math.pow(2, retryCount - 1) * 1000);
+    },
   };
 
   /**

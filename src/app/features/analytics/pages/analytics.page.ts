@@ -429,7 +429,7 @@ export class AnalyticsPage implements OnInit {
 
   readonly hourlyChartOptions = computed<EChartsOption | undefined>(() => {
     const data = this._hourlyData();
-    if (!data || data.data.length === 0) return undefined;
+    if (!data || !data.data || data.data.length === 0) return undefined;
 
     const hours = data.data.map(h => h.hour);
     const incomeData = data.data.map(h => h.income);
@@ -446,7 +446,7 @@ export class AnalyticsPage implements OnInit {
 
   readonly weeklyPatternsChartOptions = computed<EChartsOption | undefined>(() => {
     const data = this._weeklyPatterns();
-    if (!data || data.patterns.length === 0) return undefined;
+    if (!data || !data.patterns || data.patterns.length === 0) return undefined;
 
     // Group by weekday label, sum averages across categories
     const dayOrder = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
@@ -529,7 +529,7 @@ export class AnalyticsPage implements OnInit {
     // React to filter changes and reload data
     effect(() => {
       const params = this.store.apiParams();
-      this.loadData(params.range, params.bankId, params.type, params.category);
+      this.loadData(params.range, params.bankId, params.type, params.category, params.chartFilterType, params.chartFilterValue);
     }, { allowSignalWrites: true });
   }
 
@@ -623,7 +623,7 @@ export class AnalyticsPage implements OnInit {
 
   retry(): void {
     const params = this.store.apiParams();
-    this.loadData(params.range, params.bankId, params.type, params.category);
+    this.loadData(params.range, params.bankId, params.type, params.category, params.chartFilterType, params.chartFilterValue);
   }
 
   // ─── Private ────────────────────────────────────────────────────────────
@@ -636,15 +636,33 @@ export class AnalyticsPage implements OnInit {
     });
   }
 
-  private loadData(range?: DateRange, bankId?: string, type?: string, category?: string): void {
+  /** Compute the current week's date range (Mon 00:00 – Sun 23:59 UTC) for the daily-spending chart */
+  private getCurrentWeekRange(): DateRange {
+    const now = new Date();
+    const dayOfWeek = now.getUTCDay(); // 0=Sun, 1=Mon, ..., 6=Sat
+    const daysSinceMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+
+    const monday = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() - daysSinceMonday, 0, 0, 0));
+    const sunday = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + (6 - daysSinceMonday), 23, 59, 59));
+
+    return {
+      startDate: monday.toISOString(),
+      endDate: sunday.toISOString(),
+    };
+  }
+
+  private loadData(range?: DateRange, bankId?: string, type?: string, category?: string, chartFilterType?: string, chartFilterValue?: string | number): void {
     this.store.setLoading();
+
+    // Daily spending always uses the current week, not the filter date range
+    const weekRange = this.getCurrentWeekRange();
 
     // Core analytics only — new endpoints load separately
     forkJoin({
       summary: this.api.getSummary(range, bankId, type, category).pipe(catchError(() => of(null))),
       trend: this.api.getMonthlyTrend(range, bankId, type, category).pipe(catchError(() => of(null))),
       categoryBreakdown: this.api.getCategoryBreakdown(range, bankId, type, category).pipe(catchError(() => of(null))),
-      dailySpending: this.api.getDailySpending(range, bankId, type, category).pipe(catchError(() => of(null))),
+      dailySpending: this.api.getDailySpending(weekRange, bankId, 'expense', category).pipe(catchError(() => of(null))),
       insights: this.api.getInsights(range, bankId, type, category).pipe(
         catchError(() => of({ insights: [] })),
       ),
@@ -680,8 +698,17 @@ export class AnalyticsPage implements OnInit {
       weeklyPatterns: this.api.getWeeklyPatterns(range, bankId, type, category).pipe(catchError(() => of(null))),
     }).subscribe({
       next: ({ hourlyActivity, weeklyPatterns }) => {
-        if (hourlyActivity) this._hourlyData.set(hourlyActivity);
-        if (weeklyPatterns) this._weeklyPatterns.set(weeklyPatterns);
+        // Validate response shape before setting signals (defense against malformed responses)
+        if (hourlyActivity && Array.isArray(hourlyActivity.data)) {
+          this._hourlyData.set(hourlyActivity);
+        } else {
+          this._hourlyData.set(null);
+        }
+        if (weeklyPatterns && Array.isArray(weeklyPatterns.patterns)) {
+          this._weeklyPatterns.set(weeklyPatterns);
+        } else {
+          this._weeklyPatterns.set(null);
+        }
       },
     });
   }
