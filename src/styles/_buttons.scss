@@ -1,0 +1,93 @@
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-inverse);
+  background: linear-gradient(135deg, var(--accent-start), var(--accent-mid));
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  box-shadow: var(--glow-accent);
+  transition:
+    box-shadow var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+
+  &:hover {
+    box-shadow: 0 0 40px rgba(217, 70, 239, 0.4);
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: scale(0.97);
+  }
+
+  &__icon {
+    font-size: 18px;
+    font-weight: 400;
+  }
+
+  &--danger {
+    background: linear-gradient(135deg, var(--danger), #e55555);
+    box-shadow: var(--glow-danger);
+
+    &:hover {
+      box-shadow: 0 0 40px rgba(255, 107, 107, 0.4);
+    }
+  }
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition:
+    border-color var(--duration-fast) var(--ease-out),
+    background var(--duration-fast) var(--ease-out);
+
+  &:hover {
+    border-color: var(--glass-border-hover);
+    background: var(--bg-elevated);
+  }
+
+  &:active {
+    transform: scale(0.97);
+  }
+}
+
+.btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  font-size: 14px;
+  color: var(--text-tertiary);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-xs);
+  cursor: pointer;
+  transition:
+    color var(--duration-fast) var(--ease-out),
+    background var(--duration-fast) var(--ease-out);
+
+  &:hover {
+    color: var(--text-primary);
+    background: var(--bg-tertiary);
+    border-color: var(--glass-border);
+  }
+
+  &--danger:hover {
+    color: var(--danger);
+    background: var(--danger-bg);
+  }
+}

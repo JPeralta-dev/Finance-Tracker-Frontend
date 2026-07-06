@@ -16,6 +16,11 @@ import { retry, catchError } from 'rxjs/operators';
 
 import { environment } from '../../../../environments/environment';
 
+/** Error type guard for HTTP errors with a status code */
+function isHttpError(error: unknown): error is { status: number } {
+  return typeof error === 'object' && error !== null && 'status' in error;
+}
+
 // ─── Interfaces ─────────────────────────────────────────────────────────────
 
 /** Date range filter for API calls */
@@ -113,6 +118,35 @@ export interface OriginBreakdown {
   origins: OriginBreakdownItem[];
 }
 
+/** Hourly activity entry (0-23 hours) */
+export interface HourlyActivityEntry {
+  hour: number;
+  income: number;
+  expenses: number;
+}
+
+/** Hourly activity response */
+export interface HourlyActivityResponse {
+  data: HourlyActivityEntry[];
+  period: string;
+}
+
+/** Weekly pattern entry */
+export interface WeeklyPatternEntry {
+  weekday: number;
+  weekdayLabel: string;
+  category: string;
+  averageAmount: number;
+  count: number;
+}
+
+/** Weekly patterns response */
+export interface WeeklyPatternsResponse {
+  patterns: WeeklyPatternEntry[];
+  period: string;
+  weeksInRange: number;
+}
+
 // ─── Service ────────────────────────────────────────────────────────────────
 
 @Injectable({ providedIn: 'root' })
@@ -120,10 +154,16 @@ export class AnalyticsApiService {
   private readonly http = inject(HttpClient);
   private readonly base = `${environment.apiUrl}/api/analytics`;
 
-  /** Retry config: 2 attempts with exponential backoff (1s, 2s) */
+  /** Retry config: 2 attempts with exponential backoff (1s, 2s). Only retries 5xx and network errors — 4xx (auth, premium, validation) are NOT retried. */
   private readonly retryConfig = {
     count: 2,
-    delay: (_error: unknown, retryCount: number) => timer(Math.pow(2, retryCount - 1) * 1000),
+    delay: (error: unknown, retryCount: number) => {
+      // Do NOT retry client errors (4xx) — they won't succeed on retry
+      if (isHttpError(error) && error.status >= 400 && error.status < 500) {
+        return throwError(() => error);
+      }
+      return timer(Math.pow(2, retryCount - 1) * 1000);
+    },
   };
 
   /**
@@ -261,6 +301,32 @@ export class AnalyticsApiService {
   getOriginBreakdown(range?: DateRange, bankId?: string, type?: string, category?: string): Observable<OriginBreakdown> {
     return this.http
       .get<OriginBreakdown>(`${this.base}/origin-breakdown`, { params: this.buildParams(range, bankId, type, category) })
+      .pipe(
+        retry(this.retryConfig),
+        catchError(this.handleError),
+      );
+  }
+
+  /**
+   * GET /api/analytics/hourly-activity
+   * Hourly income/expense aggregation (0-23 hours)
+   */
+  getHourlyActivity(range?: DateRange, bankId?: string, type?: string): Observable<HourlyActivityResponse> {
+    return this.http
+      .get<HourlyActivityResponse>(`${this.base}/hourly-activity`, { params: this.buildParams(range, bankId, type) })
+      .pipe(
+        retry(this.retryConfig),
+        catchError(this.handleError),
+      );
+  }
+
+  /**
+   * GET /api/analytics/weekly-patterns
+   * Weekly transaction patterns with averages
+   */
+  getWeeklyPatterns(range?: DateRange, bankId?: string, type?: string, category?: string): Observable<WeeklyPatternsResponse> {
+    return this.http
+      .get<WeeklyPatternsResponse>(`${this.base}/weekly-patterns`, { params: this.buildParams(range, bankId, type, category) })
       .pipe(
         retry(this.retryConfig),
         catchError(this.handleError),

@@ -1,6 +1,6 @@
-/* ─── Goals Page ─────────────────────────────────────────────────── */
+/* ─── Pockets Page ─────────────────────────────────────────────────── */
 
-.goals-page {
+.pockets-page {
   display: flex;
   flex-direction: column;
   gap: 28px;
@@ -10,7 +10,7 @@
 
 /* ─── Header ────────────────────────────────────────────────────── */
 
-.goals-page__header {
+.pockets-page__header {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -18,13 +18,13 @@
   flex-wrap: wrap;
 }
 
-.goals-page__title-group {
+.pockets-page__title-group {
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
 
-.goals-page__title {
+.pockets-page__title {
   font-family: var(--font-display);
   font-size: 28px;
   font-weight: 700;
@@ -32,24 +32,24 @@
   letter-spacing: -0.02em;
 }
 
-.goals-page__subtitle {
+.pockets-page__subtitle {
   font-size: 14px;
   color: var(--text-tertiary);
 }
 
 @import 'buttons';
 
-/* ─── Goals List ────────────────────────────────────────────────── */
+/* ─── Pockets List ──────────────────────────────────────────────── */
 
-.goals-list {
+.pockets-list {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
-/* ─── Goal Card ─────────────────────────────────────────────────── */
+/* ─── Pocket Card ───────────────────────────────────────────────── */
 
-.goal-card {
+.pocket-card {
   padding: 20px 24px;
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
@@ -81,16 +81,23 @@
     gap: 10px;
   }
 
-  &__emoji {
-    font-size: 22px;
-  }
-
   &__name {
     font-family: var(--font-display);
     font-size: 16px;
     font-weight: 600;
     color: var(--text-primary);
     letter-spacing: -0.01em;
+  }
+
+  &__badge {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--accent-start);
+    background: var(--accent-glow);
+    padding: 2px 8px;
+    border-radius: var(--radius-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
   }
 
   &__percent {
@@ -128,6 +135,12 @@
     color: var(--text-secondary);
   }
 
+  &__no-limit {
+    font-size: 13px;
+    color: var(--text-tertiary);
+    font-style: italic;
+  }
+
   &__bar {
     height: 10px;
     border-radius: 5px;
@@ -143,7 +156,11 @@
     transition: width 600ms var(--ease-out);
 
     &--complete {
-      background: linear-gradient(90deg, var(--success), #34d399);
+      background: linear-gradient(90deg, var(--danger), #e55555);
+    }
+
+    &--warning {
+      background: linear-gradient(90deg, var(--warning), #fbbf24);
     }
   }
 
@@ -154,19 +171,10 @@
     gap: 12px;
   }
 
-  &__projection {
+  &__allocation {
     font-size: 13px;
     color: var(--text-tertiary);
     font-weight: 500;
-
-    &--complete {
-      color: var(--success);
-      font-weight: 600;
-    }
-
-    &--insufficient {
-      color: var(--warning);
-    }
   }
 
   &__actions {
@@ -247,6 +255,11 @@
   font-size: 13px;
   font-weight: 500;
   color: var(--text-secondary);
+
+  &__hint {
+    font-weight: 400;
+    color: var(--text-tertiary);
+  }
 }
 
 .form-input {
@@ -277,32 +290,26 @@
   font-weight: 500;
 }
 
-.add-amount__current {
-  font-size: 13px;
-  color: var(--text-tertiary);
-  font-variant-numeric: tabular-nums;
-}
-
 /* ─── Responsive ────────────────────────────────────────────────── */
 
 @media (max-width: 767px) {
-  .goals-page {
+  .pockets-page {
     gap: 20px;
   }
 
-  .goals-page__title {
+  .pockets-page__title {
     font-size: 24px;
   }
 
-  .goal-card {
+  .pocket-card {
     padding: 16px;
   }
 
-  .goal-card__name {
+  .pocket-card__name {
     font-size: 15px;
   }
 
-  .goal-card__current {
+  .pocket-card__current {
     font-size: 16px;
   }
 
@@ -317,7 +324,7 @@
 @media (prefers-reduced-motion: reduce) {
   .modal-overlay,
   .modal,
-  .goal-card__bar-fill {
+  .pocket-card__bar-fill {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }

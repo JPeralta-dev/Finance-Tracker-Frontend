@@ -1,0 +1,215 @@
+<div class="pockets-page">
+  <!-- Header -->
+  <div class="pockets-page__header">
+    <div class="pockets-page__title-group">
+      <h1 class="pockets-page__title">Pockets</h1>
+      <p class="pockets-page__subtitle">Organizá tu presupuesto por categorías y seguí tu gasto mensual</p>
+    </div>
+    @if (state() === 'ready' || state() === 'empty') {
+      <button class="btn-primary" (click)="openCreateModal()">
+        <span class="btn-primary__icon">+</span>
+        Nuevo Pocket
+      </button>
+    }
+  </div>
+
+  <!-- Loading state -->
+  @if (state() === 'loading') {
+    <div class="pockets-list">
+      @for (_ of [1, 2, 3]; track $index) {
+        <div class="pocket-card pocket-card--skeleton">
+          <div class="pocket-card__header">
+            <div class="skeleton-line skeleton-line--short"></div>
+            <div class="skeleton-line skeleton-line--short"></div>
+          </div>
+          <div class="pocket-card__amounts">
+            <div class="skeleton-line skeleton-line--wide"></div>
+          </div>
+          <div class="pocket-card__bar">
+            <div class="pocket-card__bar-fill" style="width: 0%"></div>
+          </div>
+          <div class="pocket-card__footer">
+            <div class="skeleton-line skeleton-line--short"></div>
+          </div>
+        </div>
+      }
+    </div>
+  }
+
+  <!-- Empty state -->
+  @if (state() === 'empty') {
+    <div class="empty-state">
+      <span class="empty-state__icon"><ft-icon name="wallet" [size]="40" /></span>
+      <h2 class="empty-state__title">No tenés pockets todavía</h2>
+      <p class="empty-state__text">
+        Creá tu primer pocket para organizar tu presupuesto mensual por categorías.
+      </p>
+      <button class="btn-primary" (click)="openCreateModal()">
+        Crear mi primer pocket
+      </button>
+    </div>
+  }
+
+  <!-- Error state -->
+  @if (state() === 'error') {
+    <div class="error-state">
+      <span class="error-state__icon"><ft-icon name="alert-triangle" [size]="40" /></span>
+      <h2 class="error-state__title">No pudimos cargar tus pockets</h2>
+      <p class="error-state__text">Hubo un problema al conectar con el servidor. Intentá de nuevo.</p>
+      <button class="btn-secondary" (click)="retry()">Reintentar</button>
+    </div>
+  }
+
+  <!-- Pockets list -->
+  @if (state() === 'ready') {
+    <div class="pockets-list">
+      @for (pocket of pockets(); track pocket.id) {
+        <div class="pocket-card">
+          <div class="pocket-card__header">
+            <div class="pocket-card__title-row">
+              <h3 class="pocket-card__name">{{ pocket.name }}</h3>
+              @if (pocket.isBotOriginated) {
+                <span class="pocket-card__badge">Bot</span>
+              }
+            </div>
+            <span class="pocket-card__percent" [class.pocket-card__percent--complete]="progress(pocket) >= 100">
+              {{ progress(pocket) }}%
+            </span>
+          </div>
+
+          <div class="pocket-card__amounts">
+            <span class="pocket-card__current">{{ formatCurrency(pocket.currentSpending) }}</span>
+            @if (pocket.monthlyLimit) {
+              <span class="pocket-card__separator">/</span>
+              <span class="pocket-card__target">{{ formatCurrency(pocket.monthlyLimit) }}</span>
+            } @else {
+              <span class="pocket-card__no-limit">Sin límite</span>
+            }
+          </div>
+
+          @if (pocket.monthlyLimit) {
+            <div class="pocket-card__bar">
+              <div
+                class="pocket-card__bar-fill"
+                [style.width.%]="progress(pocket)"
+                [class.pocket-card__bar-fill--complete]="progress(pocket) >= 100"
+                [class.pocket-card__bar-fill--warning]="progress(pocket) >= 80 && progress(pocket) < 100"
+              ></div>
+            </div>
+          }
+
+          <div class="pocket-card__footer">
+            <span class="pocket-card__allocation">
+              {{ pocket.percentage }}% del presupuesto
+            </span>
+
+            <div class="pocket-card__actions">
+              <button class="btn-icon" (click)="openEditModal(pocket)" title="Editar">
+                <ft-icon name="pencil" [size]="16" />
+              </button>
+              @if (!pocket.isBotOriginated) {
+                <button class="btn-icon btn-icon--danger" (click)="confirmDelete(pocket)" title="Eliminar">
+                  <ft-icon name="x" [size]="16" />
+                </button>
+              }
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>
+
+<!-- Modal: Create / Edit Pocket -->
+@if (modalMode() === 'create' || modalMode() === 'edit') {
+  <div class="modal-overlay" (click)="closeModal()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <div class="modal__header">
+        <h2 class="modal__title">
+          {{ modalMode() === 'create' ? 'Nuevo Pocket' : 'Editar Pocket' }}
+        </h2>
+        <button class="modal__close" (click)="closeModal()"><ft-icon name="x" [size]="18" /></button>
+      </div>
+
+      <form class="modal__form" (ngSubmit)="modalMode() === 'create' ? onSubmitCreate() : onSubmitEdit()">
+        <div class="form-group">
+          <label class="form-label" for="pocket-name">Nombre</label>
+          <input
+            id="pocket-name"
+            class="form-input"
+            type="text"
+            [(ngModel)]="formName"
+            name="name"
+            placeholder="Ej: Supermercado, Transporte"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="pocket-percentage">
+            Porcentaje (%)
+            @if (modalMode() === 'create') {
+              <span class="form-label__hint"> · Disponible: {{ remainingPercentage() }}%</span>
+            }
+          </label>
+          <input
+            id="pocket-percentage"
+            class="form-input"
+            type="number"
+            [(ngModel)]="formPercentage"
+            name="percentage"
+            placeholder="25"
+            min="1"
+            max="100"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="pocket-limit">Límite mensual (opcional)</label>
+          <input
+            id="pocket-limit"
+            class="form-input"
+            type="number"
+            [(ngModel)]="formMonthlyLimit"
+            name="monthlyLimit"
+            placeholder="500000"
+            min="0"
+          />
+        </div>
+
+        @if (formError()) {
+          <div class="form-error">{{ formError() }}</div>
+        }
+
+        <div class="modal__actions">
+          <button type="button" class="btn-secondary" (click)="closeModal()">Cancelar</button>
+          <button type="submit" class="btn-primary">
+            {{ modalMode() === 'create' ? 'Crear Pocket' : 'Guardar Cambios' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+}
+
+<!-- Delete Confirmation -->
+@if (showDeleteConfirm() && pocketToDelete()) {
+  <div class="modal-overlay" (click)="cancelDelete()">
+    <div class="modal modal--small" (click)="$event.stopPropagation()">
+      <div class="modal__header">
+        <h2 class="modal__title">Eliminar pocket</h2>
+        <button class="modal__close" (click)="cancelDelete()"><ft-icon name="x" [size]="18" /></button>
+      </div>
+
+      <div class="modal__body">
+        <p>¿Estás seguro de que querés eliminar <strong>"{{ pocketToDelete()?.name }}"</strong>? Esta acción no se puede deshacer.</p>
+      </div>
+
+      <div class="modal__actions">
+        <button class="btn-secondary" (click)="cancelDelete()">Cancelar</button>
+        <button class="btn-primary btn-primary--danger" (click)="executeDelete()">Eliminar</button>
+      </div>
+    </div>
+  </div>
+}

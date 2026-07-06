@@ -14,7 +14,7 @@ import { NgIcon } from '@ng-icons/core';
 import { catchError, forkJoin, of, tap } from 'rxjs';
 
 // ─── ECharts ────────────────────────────────────────────────────────────────
-import { FtEChartComponent } from '../../../shared/charts';
+import { FtEChartComponent, ChartClickEvent } from '../../../shared/charts';
 import { EchartsThemeMapper } from '../../../shared/charts/echarts/echarts-theme.mapper';
 import type { EChartsOption } from 'echarts';
 
@@ -30,6 +30,7 @@ import { AnalyticsCategoryBreakdownComponent } from '../components/analytics-cat
 import { AnalyticsChartCardComponent } from '../components/analytics-chart-card/analytics-chart-card.component';
 import { EmptyStateComponent } from '../../../shared/components/empty-state.component';
 import { FtSubtleRevealDirective } from '../../../shared/directives/ft-subtle-reveal.directive';
+import { ClickOutsideDirective } from '../../../shared/directives/click-outside.directive';
 
 // ─── Services ───────────────────────────────────────────────────────────────
 import { TranslatePipe } from '../../../core/pipes/translate.pipe';
@@ -39,6 +40,7 @@ import { ToastService } from '../../../core/services/toast.service';
 import { AnalyticsApiService, AnalyticsSummary, MonthlyTrend, CategoryBreakdown, DailySpending, AnalyticsInsight, AnalyticsTransaction, BankInfo, DateRange } from '../services/analytics-api.service';
 import { AnalyticsStore } from '../services/analytics.store';
 import { ICONS } from '../../../shared/icons/icon-registry';
+import { DateRangeService } from '../../../core/services/date-range.service';
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 import type { KpiData, MonthStory, CategoryAnalysis, ComparisonData, InsightData as UiInsightData, RelevantTransaction } from '../analytics.types';
@@ -297,6 +299,7 @@ export function generateMonthStories(
     FtEChartComponent,
     FtSubtleRevealDirective,
     EmptyStateComponent,
+    ClickOutsideDirective,
     TranslatePipe,
     AnalyticsHeaderComponent,
     AnalyticsKpisComponent,
@@ -320,6 +323,15 @@ export class AnalyticsPage implements OnInit {
   private readonly i18n = inject(TranslationService);
   private readonly toast = inject(ToastService);
   private readonly destroyRef = inject(DestroyRef);
+  readonly dateRange = inject(DateRangeService);
+
+  /** Period options for the header buttons */
+  readonly periodOptions: { value: PeriodOption; labelKey: string }[] = [
+    { value: '1m', labelKey: 'analytics.period.1m' },
+    { value: '3m', labelKey: 'analytics.period.3m' },
+    { value: '6m', labelKey: 'analytics.period.6m' },
+    { value: '1y', labelKey: 'analytics.period.1y' },
+  ];
 
   // ─── Derived signals from store ─────────────────────────────────────────
 
@@ -410,11 +422,58 @@ export class AnalyticsPage implements OnInit {
     );
   });
 
+  // ─── Hourly Activity Chart ──────────────────────────────────────────────
+
+  private readonly _hourlyData = signal<{ data: { hour: number; income: number; expenses: number }[] } | null>(null);
+  readonly hourlyData = this._hourlyData.asReadonly();
+
+  readonly hourlyChartOptions = computed<EChartsOption | undefined>(() => {
+    const data = this._hourlyData();
+    if (!data || !data.data || data.data.length === 0) return undefined;
+
+    const hours = data.data.map(h => h.hour);
+    const incomeData = data.data.map(h => h.income);
+    const expenseData = data.data.map(h => h.expenses);
+    const currencySymbol = this.currencyService.currencyConfig().symbol;
+
+    return this.themeMapper.buildHourlyBarOption(hours, incomeData, expenseData, currencySymbol);
+  });
+
+  // ─── Weekly Patterns Chart (with averages) ──────────────────────────────
+
+  private readonly _weeklyPatterns = signal<{ patterns: { weekday: number; weekdayLabel: string; category: string; averageAmount: number; count: number }[] } | null>(null);
+  readonly weeklyPatterns = this._weeklyPatterns.asReadonly();
+
+  readonly weeklyPatternsChartOptions = computed<EChartsOption | undefined>(() => {
+    const data = this._weeklyPatterns();
+    if (!data || !data.patterns || data.patterns.length === 0) return undefined;
+
+    // Group by weekday label, sum averages across categories
+    const dayOrder = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    const dayMap = new Map<string, number>();
+    for (const p of data.patterns) {
+      const current = dayMap.get(p.weekdayLabel) ?? 0;
+      dayMap.set(p.weekdayLabel, current + p.averageAmount);
+    }
+
+    const labels = dayOrder.map(d => this.i18n.translate(DAY_KEY_MAP[d] ?? d));
+    const values = dayOrder.map(d => dayMap.get(d) ?? 0);
+
+    const colors = this.themeMapper.categoryColors();
+    return this.themeMapper.buildWeeklyPatternsOption(
+      labels,
+      [{ label: this.i18n.translate('analytics.weeklyAverage'), data: values, color: colors[3] }],
+      this.i18n.translate('analytics.weeklyAverage'),
+    );
+  });
+
   // ─── State helpers ──────────────────────────────────────────────────────
 
   readonly isLoading = computed(() => this.store.loadState() === 'loading');
   readonly isError = computed(() => this.store.loadState() === 'error');
   readonly isNewUser = computed(() => this.store.isNewUser());
+
+  readonly monthOpen = signal(false);
 
   /** Show content layout whenever data is loaded — even with zero values */
   readonly showContent = computed(() => this.store.loadState() === 'ready');
@@ -432,12 +491,37 @@ export class AnalyticsPage implements OnInit {
   /** Map store period to header PeriodOption */
   readonly headerPeriod = computed<PeriodOption>(() => {
     const p = this.store.filters().period;
-    if (p === '7d' || p === '30d') return '1m'; // Map short periods to 1m
+    if (p === '7d' || p === '30d') return '1m';
+    if (p === '90d') return '3m';
     if (p === '1y') return '1y';
     return '6m'; // default
   });
 
   readonly filterBankId = computed(() => this.store.filters().bankId);
+
+  /** Human-readable date range display */
+  readonly dateRangeDisplay = computed<string>(() => {
+    const params = this.store.apiParams();
+    const range = params.range;
+    if (!range) return '';
+
+    const start = new Date(range.startDate);
+    const end = new Date(range.endDate);
+    const startStr = start.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    const endStr = end.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    return `${startStr} — ${endStr}`;
+  });
+
+  /** Custom date inputs (derived from store) */
+  readonly customStartDate = computed<string>(() => {
+    const range = this.store.filters().dateRange;
+    return range?.startDate?.split('T')[0] ?? '';
+  });
+
+  readonly customEndDate = computed<string>(() => {
+    const range = this.store.filters().dateRange;
+    return range?.endDate?.split('T')[0] ?? '';
+  });
 
   // ─── Lifecycle ──────────────────────────────────────────────────────────
 
@@ -445,7 +529,7 @@ export class AnalyticsPage implements OnInit {
     // React to filter changes and reload data
     effect(() => {
       const params = this.store.apiParams();
-      this.loadData(params.range, params.bankId, params.type, params.category);
+      this.loadData(params.range, params.bankId, params.type, params.category, params.chartFilterType, params.chartFilterValue);
     }, { allowSignalWrites: true });
   }
 
@@ -457,11 +541,13 @@ export class AnalyticsPage implements OnInit {
 
   onPeriodChange(period: PeriodOption): void {
     // Map header period to store period
-    const storePeriod: '7d' | '30d' | '6m' | '1y' =
+    const storePeriod: '7d' | '30d' | '90d' | '6m' | '1y' =
       period === '1m' ? '30d' :
-      period === '3m' ? '30d' :
+      period === '3m' ? '90d' :
       period === '1y' ? '1y' : '6m';
     this.store.setPeriod(storePeriod);
+    // Clear chart filters when changing period
+    this.onClearChartFilters();
   }
 
   onBankChange(bankId: string | null): void {
@@ -472,9 +558,72 @@ export class AnalyticsPage implements OnInit {
     this.store.clearFilters();
   }
 
+  toggleMonthDropdown(): void {
+    this.monthOpen.update(v => !v);
+  }
+
+  onMonthSelect(month: { start: string; end: string }): void {
+    this.dateRange.setMonth(month.start, month.end);
+    this.store.setDateRange(month.start, month.end);
+    this.monthOpen.set(false);
+  }
+
+  /** Handle custom date range from header inputs */
+  onCustomDateChange({ start, end }: { start: string; end: string }): void {
+    if (start && end) {
+      // Convert to UTC ISO strings with proper boundaries
+      const startDate = new Date(start + 'T00:00:00Z').toISOString();
+      const endDate = new Date(end + 'T23:59:59Z').toISOString();
+      this.store.setDateRange(startDate, endDate);
+    }
+  }
+
+  /** Handle chart click events for drill-down filtering */
+  onChartClick(event: ChartClickEvent, chartType: 'category' | 'hourly' | 'weekly'): void {
+    if (chartType === 'category' && event.name) {
+      // Donut/bar click → filter by category name
+      // Map display name back to category ID
+      const analysis = this.categoryAnalysis();
+      const matched = analysis.find(c => c.name === event.name);
+      if (matched) {
+        this.store.setCrossFilterCategory(matched.id, matched.name);
+      }
+    } else if (chartType === 'hourly' && event.hour !== undefined) {
+      // Hourly chart click → filter by hour
+      this.store.setChartFilter({
+        type: 'hour',
+        value: event.hour,
+        label: `${event.hour}:00`,
+      });
+    } else if (chartType === 'weekly' && event.name) {
+      // Weekly patterns click → filter by day
+      const dayKeyMapReverse: Record<string, string> = {
+        'analytics.days.mon': 'Mon',
+        'analytics.days.tue': 'Tue',
+        'analytics.days.wed': 'Wed',
+        'analytics.days.thu': 'Thu',
+        'analytics.days.fri': 'Fri',
+        'analytics.days.sat': 'Sat',
+        'analytics.days.sun': 'Sun',
+      };
+      const dayLabel = dayKeyMapReverse[event.name] ?? event.name;
+      this.store.setChartFilter({
+        type: 'category',
+        value: dayLabel,
+        label: event.name,
+      });
+    }
+  }
+
+  /** Clear all chart filters */
+  onClearChartFilters(): void {
+    this.store.clearChartFilter();
+    this.store.clearCrossFilter();
+  }
+
   retry(): void {
     const params = this.store.apiParams();
-    this.loadData(params.range, params.bankId, params.type, params.category);
+    this.loadData(params.range, params.bankId, params.type, params.category, params.chartFilterType, params.chartFilterValue);
   }
 
   // ─── Private ────────────────────────────────────────────────────────────
@@ -487,14 +636,33 @@ export class AnalyticsPage implements OnInit {
     });
   }
 
-  private loadData(range?: DateRange, bankId?: string, type?: string, category?: string): void {
+  /** Compute the current week's date range (Mon 00:00 – Sun 23:59 UTC) for the daily-spending chart */
+  private getCurrentWeekRange(): DateRange {
+    const now = new Date();
+    const dayOfWeek = now.getUTCDay(); // 0=Sun, 1=Mon, ..., 6=Sat
+    const daysSinceMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+
+    const monday = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() - daysSinceMonday, 0, 0, 0));
+    const sunday = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + (6 - daysSinceMonday), 23, 59, 59));
+
+    return {
+      startDate: monday.toISOString(),
+      endDate: sunday.toISOString(),
+    };
+  }
+
+  private loadData(range?: DateRange, bankId?: string, type?: string, category?: string, chartFilterType?: string, chartFilterValue?: string | number): void {
     this.store.setLoading();
 
+    // Daily spending always uses the current week, not the filter date range
+    const weekRange = this.getCurrentWeekRange();
+
+    // Core analytics only — new endpoints load separately
     forkJoin({
       summary: this.api.getSummary(range, bankId, type, category).pipe(catchError(() => of(null))),
       trend: this.api.getMonthlyTrend(range, bankId, type, category).pipe(catchError(() => of(null))),
       categoryBreakdown: this.api.getCategoryBreakdown(range, bankId, type, category).pipe(catchError(() => of(null))),
-      dailySpending: this.api.getDailySpending(range, bankId, type, category).pipe(catchError(() => of(null))),
+      dailySpending: this.api.getDailySpending(weekRange, bankId, 'expense', category).pipe(catchError(() => of(null))),
       insights: this.api.getInsights(range, bankId, type, category).pipe(
         catchError(() => of({ insights: [] })),
       ),
@@ -510,15 +678,37 @@ export class AnalyticsPage implements OnInit {
         if (insights?.insights) this.store.setInsights(insights.insights);
         if (transactions?.transactions) this.store.setTransactions(transactions.transactions);
 
-        // Insights come from the backend API only (Spanish, rule-based)
-        // No frontend merge — avoids duplicate English messages
-
         this.store.setReady();
+
+        // Load optional charts separately — do not block core analytics
+        this.loadOptionalCharts(range, bankId, type, category);
       },
       error: (err) => {
         const msg = err?.message || this.i18n.translate('analytics.errorDesc');
         this.store.setError(msg);
         this.toast.error(msg);
+      },
+    });
+  }
+
+  /** Load new chart endpoints separately — safe to fail without breaking the page */
+  private loadOptionalCharts(range?: DateRange, bankId?: string, type?: string, category?: string): void {
+    forkJoin({
+      hourlyActivity: this.api.getHourlyActivity(range, bankId, type).pipe(catchError(() => of(null))),
+      weeklyPatterns: this.api.getWeeklyPatterns(range, bankId, type, category).pipe(catchError(() => of(null))),
+    }).subscribe({
+      next: ({ hourlyActivity, weeklyPatterns }) => {
+        // Validate response shape before setting signals (defense against malformed responses)
+        if (hourlyActivity && Array.isArray(hourlyActivity.data)) {
+          this._hourlyData.set(hourlyActivity);
+        } else {
+          this._hourlyData.set(null);
+        }
+        if (weeklyPatterns && Array.isArray(weeklyPatterns.patterns)) {
+          this._weeklyPatterns.set(weeklyPatterns);
+        } else {
+          this._weeklyPatterns.set(null);
+        }
       },
     });
   }

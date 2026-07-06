@@ -56,8 +56,172 @@
     margin: 4px 0 0;
   }
 
-  &__filters {
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
     flex-shrink: 0;
+    flex-wrap: wrap;
+  }
+
+  &__date-range {
+    display: block;
+    font-size: 12px;
+    color: var(--text-tertiary);
+    margin-top: 2px;
+    font-family: var(--font-body);
+  }
+
+  /* ── Period Buttons ──────────────────────────────────────────────── */
+  &__periods {
+    display: flex;
+    gap: 4px;
+    background: var(--bg-tertiary, #2A1E35);
+    border-radius: var(--radius-sm);
+    padding: 3px;
+  }
+
+  &__period-btn {
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 500;
+    font-family: var(--font-body);
+    color: var(--text-tertiary);
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-xs, 6px);
+    cursor: pointer;
+    transition:
+      background var(--duration-fast) var(--ease-out),
+      color var(--duration-fast) var(--ease-out);
+    white-space: nowrap;
+
+    &:hover {
+      color: var(--text-primary);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    &.active {
+      color: var(--text-inverse, #fff);
+      background: linear-gradient(135deg, var(--accent-start), var(--accent-mid));
+      box-shadow: 0 2px 8px rgba(157, 80, 187, 0.25);
+    }
+  }
+
+  /* ── Custom Date Inputs ──────────────────────────────────────────── */
+  &__custom-dates {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  &__date-separator {
+    color: var(--text-tertiary);
+    font-size: 13px;
+  }
+
+  &__date-input {
+    padding: 6px 10px;
+    font-size: 12px;
+    font-family: var(--font-body);
+    color: var(--text-primary, #F3E8FF);
+    background: var(--bg-tertiary, #2A1E35);
+    border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.08));
+    border-radius: var(--radius-xs, 6px);
+    color-scheme: dark;
+    outline: none;
+    transition: border-color var(--duration-fast) var(--ease-out);
+    max-width: 140px;
+
+    &:focus {
+      border-color: var(--accent-start, #9D50BB);
+      box-shadow: 0 0 0 2px rgba(157, 80, 187, 0.15);
+    }
+
+    &::-webkit-calendar-picker-indicator {
+      filter: invert(0.8);
+      cursor: pointer;
+    }
+  }
+}
+
+/* ═══ Cross-Filter Badge ═══ */
+
+/* ── Month Selector ──────────────────────────────────────────────── */
+
+.month-selector {
+  position: relative;
+
+  &__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: var(--font-body);
+    color: var(--text-primary);
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition:
+      background var(--duration-fast) var(--ease-out),
+      border-color var(--duration-fast) var(--ease-out);
+    white-space: nowrap;
+
+    &:hover {
+      background: var(--bg-tertiary);
+      border-color: var(--glass-border);
+    }
+
+    ng-icon {
+      color: var(--accent-start);
+    }
+  }
+
+  &__dropdown {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    z-index: 50;
+    min-width: 200px;
+    max-height: 280px;
+    overflow-y: auto;
+    background: var(--bg-secondary);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    display: flex;
+    flex-direction: column;
+    padding: 4px;
+  }
+
+  &__option {
+    padding: 10px 14px;
+    font-size: 13px;
+    font-family: var(--font-body);
+    color: var(--text-secondary);
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    text-align: left;
+    text-transform: capitalize;
+    transition:
+      background var(--duration-fast) var(--ease-out),
+      color var(--duration-fast) var(--ease-out);
+
+    &:hover {
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+    }
+
+    &--active {
+      background: var(--accent-glow);
+      color: var(--accent-start);
+      font-weight: 600;
+    }
   }
 }
 
@@ -114,6 +278,20 @@
 
   &__category,
   &__daily {
+    min-height: 320px;
+  }
+
+  &__hourly {
+    @include at-md {
+      grid-column: 1 / -1;
+    }
+
+    @include at-lg {
+      grid-column: auto;
+    }
+  }
+
+  &__weekly {
     min-height: 320px;
   }
 }

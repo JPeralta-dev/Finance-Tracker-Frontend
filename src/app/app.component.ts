@@ -6,14 +6,13 @@ import { TopbarComponent } from './shared/layout/topbar/topbar.component';
 import { CommandPaletteComponent } from './shared/ui/command-palette/command-palette.component';
 import { ToastContainerComponent } from './shared/ui/toast/toast.component';
 import { CategoryModalComponent } from './shared/ui/category-modal/category-modal.component';
-import { FooterComponent } from './features/landing/components/footer/footer.component';
 import { CommandService } from './core/services/command.service';
 import { AuthService } from './core/services/auth.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, TopbarComponent, CommandPaletteComponent, ToastContainerComponent, CategoryModalComponent, FooterComponent],
+  imports: [RouterOutlet, TopbarComponent, CommandPaletteComponent, ToastContainerComponent, CategoryModalComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
@@ -27,7 +26,6 @@ export class AppComponent implements AfterViewInit {
   private readonly publicRoutes = ['', 'login', 'register'];
 
   readonly showTopbar = signal(false);
-  readonly showFooter = signal(false);
 
   ngAfterViewInit(): void {
     // Register global commands
@@ -54,10 +52,7 @@ export class AppComponent implements AfterViewInit {
   private updateShellVisibility(): void {
     const currentUrl = this.router.url.split('?')[0].split('#')[0];
     const isPublicRoute = this.publicRoutes.includes(currentUrl);
-    // Only show topbar if user is authenticated AND NOT on a public route
     this.showTopbar.set(!isPublicRoute && this.authService.isAuthenticated());
-    // Footer only on the landing route (currentUrl is '/' on the landing route, '' never matches in practice)
-    this.showFooter.set(currentUrl === '/' || currentUrl === '');
   }
 
   @HostListener('document:keydown', ['$event'])

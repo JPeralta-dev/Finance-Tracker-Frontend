@@ -1,0 +1,105 @@
+<div class="pocket-progress-widget">
+  <!-- Header -->
+  <div class="pocket-progress-widget__header">
+    <h2 class="pocket-progress-widget__title">
+      <span class="pocket-progress-widget__icon"><ft-icon name="wallet" [size]="22" /></span>
+      Pockets
+    </h2>
+    @if (isPremium()) {
+      <a routerLink="/pockets" class="pocket-progress-widget__link">Ver todos</a>
+    }
+  </div>
+
+  <!-- Free user: upgrade prompt -->
+  @if (!isPremium()) {
+    <div class="pocket-progress-widget__upgrade">
+      <div class="pocket-progress-widget__blur">
+        <div class="pocket-row pocket-row--blurred">
+          <div class="pocket-row__info">
+            <span class="pocket-row__name">Pocket de ejemplo</span>
+            <span class="pocket-row__progress-text">45%</span>
+          </div>
+          <div class="pocket-row__bar">
+            <div class="pocket-row__bar-fill" style="width: 45%"></div>
+          </div>
+        </div>
+      </div>
+      <div class="pocket-progress-widget__cta-overlay">
+        <p class="pocket-progress-widget__cta-text">
+          Organizá tu presupuesto por categorías con Pockets
+        </p>
+        <a routerLink="/subscription" [queryParams]="{ upgrade: 'true' }" class="pocket-progress-widget__cta-btn">
+          Activar Premium
+        </a>
+      </div>
+    </div>
+  }
+
+  <!-- Premium user: pockets -->
+  @if (isPremium()) {
+    @switch (state()) {
+      @case ('loading') {
+        <div class="pocket-progress-widget__skeleton">
+          @for (_ of [1, 2]; track $index) {
+            <div class="skeleton-pocket">
+              <div class="skeleton-pocket__header">
+                <div class="skeleton-pocket__name"></div>
+                <div class="skeleton-pocket__percent"></div>
+              </div>
+              <div class="skeleton-pocket__bar"></div>
+            </div>
+          }
+        </div>
+      }
+      @case ('empty') {
+        <div class="pocket-progress-widget__empty">
+          <span class="pocket-progress-widget__empty-icon"><ft-icon name="wallet" [size]="28" /></span>
+          <p class="pocket-progress-widget__empty-text">
+            Todavía no tenés pockets. Creá tu primer pocket para organizar tu presupuesto.
+          </p>
+          <a routerLink="/pockets" class="pocket-progress-widget__empty-btn">
+            Crear primer pocket
+          </a>
+        </div>
+      }
+      @case ('error') {
+        <div class="pocket-progress-widget__empty">
+          <span class="pocket-progress-widget__empty-icon"><ft-icon name="alert-triangle" [size]="28" /></span>
+          <p class="pocket-progress-widget__empty-text">
+            No pudimos cargar tus pockets. Intentá de nuevo.
+          </p>
+        </div>
+      }
+      @case ('ready') {
+        <div class="pocket-progress-widget__list">
+          @for (pocket of displayPockets(); track pocket.id) {
+            <div class="pocket-row">
+              <div class="pocket-row__info">
+                <span class="pocket-row__name">{{ pocket.name }}</span>
+                <div class="pocket-row__meta">
+                  <span class="pocket-row__amounts">
+                    {{ formatCurrency(pocket.currentSpending) }}
+                    @if (pocket.monthlyLimit) {
+                      / {{ formatCurrency(pocket.monthlyLimit) }}
+                    }
+                  </span>
+                </div>
+              </div>
+              <div class="pocket-row__right">
+                <span class="pocket-row__percent">{{ progress(pocket) }}%</span>
+                <div class="pocket-row__bar">
+                  <div
+                    class="pocket-row__bar-fill"
+                    [style.width.%]="progress(pocket)"
+                    [class.pocket-row__bar-fill--complete]="progress(pocket) >= 100"
+                    [class.pocket-row__bar-fill--warning]="progress(pocket) >= 80 && progress(pocket) < 100"
+                  ></div>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      }
+    }
+  }
+</div>
