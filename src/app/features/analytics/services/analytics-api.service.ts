@@ -113,6 +113,35 @@ export interface OriginBreakdown {
   origins: OriginBreakdownItem[];
 }
 
+/** Hourly activity entry (0-23 hours) */
+export interface HourlyActivityEntry {
+  hour: number;
+  income: number;
+  expenses: number;
+}
+
+/** Hourly activity response */
+export interface HourlyActivityResponse {
+  data: HourlyActivityEntry[];
+  period: string;
+}
+
+/** Weekly pattern entry */
+export interface WeeklyPatternEntry {
+  weekday: number;
+  weekdayLabel: string;
+  category: string;
+  averageAmount: number;
+  count: number;
+}
+
+/** Weekly patterns response */
+export interface WeeklyPatternsResponse {
+  patterns: WeeklyPatternEntry[];
+  period: string;
+  weeksInRange: number;
+}
+
 // ─── Service ────────────────────────────────────────────────────────────────
 
 @Injectable({ providedIn: 'root' })
@@ -261,6 +290,32 @@ export class AnalyticsApiService {
   getOriginBreakdown(range?: DateRange, bankId?: string, type?: string, category?: string): Observable<OriginBreakdown> {
     return this.http
       .get<OriginBreakdown>(`${this.base}/origin-breakdown`, { params: this.buildParams(range, bankId, type, category) })
+      .pipe(
+        retry(this.retryConfig),
+        catchError(this.handleError),
+      );
+  }
+
+  /**
+   * GET /api/analytics/hourly-activity
+   * Hourly income/expense aggregation (0-23 hours)
+   */
+  getHourlyActivity(range?: DateRange, bankId?: string, type?: string): Observable<HourlyActivityResponse> {
+    return this.http
+      .get<HourlyActivityResponse>(`${this.base}/hourly-activity`, { params: this.buildParams(range, bankId, type) })
+      .pipe(
+        retry(this.retryConfig),
+        catchError(this.handleError),
+      );
+  }
+
+  /**
+   * GET /api/analytics/weekly-patterns
+   * Weekly transaction patterns with averages
+   */
+  getWeeklyPatterns(range?: DateRange, bankId?: string, type?: string, category?: string): Observable<WeeklyPatternsResponse> {
+    return this.http
+      .get<WeeklyPatternsResponse>(`${this.base}/weekly-patterns`, { params: this.buildParams(range, bankId, type, category) })
       .pipe(
         retry(this.retryConfig),
         catchError(this.handleError),
