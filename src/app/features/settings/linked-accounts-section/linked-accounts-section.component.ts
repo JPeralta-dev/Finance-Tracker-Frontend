@@ -34,7 +34,7 @@ const FIRST_GMAIL_CONNECT_FLAG = 'ft.gmail.firstConnected';
 export class LinkedAccountsSectionComponent implements OnInit {
   readonly svc = inject(TelegramLinkService);
   private readonly auth = inject(AuthService);
-  private readonly gmail = inject(GmailLinkService);
+  protected readonly gmail = inject(GmailLinkService);
 
   delay = input<number>(0);
 
