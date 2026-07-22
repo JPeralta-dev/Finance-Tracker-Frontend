@@ -183,11 +183,11 @@ export class RuleBasedInsightsService implements InsightProvider {
       if (category.percentage >= this.config.categoryAnomalyThreshold) {
         insights.push({
           type: 'anomaly' as InsightType,
-          message: `${category.name} accounts for ${Math.round(category.percentage)}% of expenses`,
+          message: `${category.category} accounts for ${Math.round(category.percentage)}% of expenses`,
           severity: category.percentage >= 60 ? 'high' : 'medium',
           actionable: true,
           metadata: {
-            categoryName: category.name,
+            categoryName: category.category,
             percentage: Math.round(category.percentage),
             amount: category.amount,
             threshold: this.config.categoryAnomalyThreshold,
