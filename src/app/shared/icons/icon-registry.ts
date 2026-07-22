@@ -62,6 +62,7 @@ import {
   heroStar,
   heroBookOpen,
   heroBriefcase,
+  heroLink,
 } from '@ng-icons/heroicons/outline';
 
 // ─── Icon Map ────────────────────────────────────────────────────────────────
@@ -167,6 +168,7 @@ export const ICONS = {
   documentText: heroDocumentText,
   codeBracket: heroCodeBracket,
   buildingOffice: heroBuildingOffice,
+  link: heroLink,
 };
 
 // ─── Category Icon Mapping ───────────────────────────────────────────────────
