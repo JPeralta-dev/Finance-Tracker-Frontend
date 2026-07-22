@@ -3,14 +3,12 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgIcon } from '@ng-icons/core';
-import { ICONS } from '../../../shared/icons/icon-registry';
 import { TranslatePipe } from '../../../core/pipes/translate.pipe';
 import { FtSubtleRevealDirective } from '../../../shared/directives/ft-subtle-reveal.directive';
 import { TelegramLinkService } from '../../../core/services/telegram-link.service';
 import { AuthService } from '../../../core/services/auth.service';
-import { GmailLinkService, GmailTransaction } from '../../../core/services/gmail-link.service';
+import { GmailLinkService } from '../../../core/services/gmail-link.service';
 import { TranslationService } from '../../../core/services/translation.service';
-import { environment } from '../../../../environments/environment';
 import {
   LinkedChannelCardComponent,
   LinkedChannelState,
@@ -43,9 +41,6 @@ export class LinkedAccountsSectionComponent implements OnInit {
   // ── State signals ───────────────────────────────────────────────
   /** Gmail pre-OAuth state — 'connecting' shows the spinner button. */
   readonly gmailConnecting = signal(false);
-  /** Flag used to play the "first connect" flash exactly once. */
-  readonly gmailFirstConnect = signal(false);
-  /** Read from the service, written here so the template can mark this. */
 
   /** Derived state for the Gmail card. */
   readonly gmailState = computed<LinkedChannelState>(() => {
@@ -80,10 +75,10 @@ export class LinkedAccountsSectionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // The "first connect" flash only plays for Gmail: when the user
-    // is brand new and hasn't been through the OAuth round-trip yet.
-    // We plant a flag in localStorage and clear it once the success
-    // state is first observed.
+    // The "first connect" flash is gated by a localStorage flag read
+    // by GmailLinkService. Plant the flag eagerly so the FIRST
+    // successful connection the user makes (after the OAuth round
+    // trip) will trigger the celebration animation.
     this.plantFirstConnectFlagIfMissing();
   }
 

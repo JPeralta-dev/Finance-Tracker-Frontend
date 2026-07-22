@@ -101,15 +101,6 @@ describe('GmailLinkService', () => {
     flush();
   }));
 
-  it('should clear first-connect flag after markConnected', () => {
-    localStorage.setItem('ft.gmail.firstConnected', 'pending');
-    svc = TestBed.inject(GmailLinkService);
-    expect(svc.isFirstConnect()).toBeTrue();
-    svc.markConnected();
-    expect(svc.isFirstConnect()).toBeFalse();
-    expect(localStorage.getItem('ft.gmail.firstConnected')).toBeNull();
-  });
-
   it('markDisconnected should reset all signals', () => {
     svc.state.set('connected');
     svc.email.set('me@example.com');

@@ -42,6 +42,11 @@ export class GmailLinkService implements OnDestroy {
    * True when the user is viewing the connected state but has not yet
    * seen the celebratory "first connect" flash. Cleared from localStorage
    * after the flash plays once.
+   *
+   * Re-read on every status refresh so that flags planted AFTER the
+   * service was constructed (e.g. when the user navigates to the
+   * settings page for the first time) are still honored on the next
+   * connect.
    */
   readonly isFirstConnect = signal(this.readFirstConnectFlag());
 
@@ -89,19 +94,9 @@ export class GmailLinkService implements OnDestroy {
   }
 
   /**
-   * Mark Gmail as connected (called by the section after OAuth success).
-   * Triggers the "first connect" flash animation only the first time.
+   * Reset to "not connected" — used after the user disconnects.
+   * The next successful status refresh will re-establish the state.
    */
-  markConnected(): void {
-    this.state.set('connected');
-    if (this.isFirstConnect()) {
-      this.clearFirstConnectFlag();
-      this.isFirstConnect.set(false);
-    }
-    this.refreshStatus();
-  }
-
-  /** Reset to "not connected" — used after the user disconnects. */
   markDisconnected(): void {
     this.state.set('idle');
     this.email.set(null);
@@ -116,14 +111,22 @@ export class GmailLinkService implements OnDestroy {
     this.lastTransactions.set(status.lastTransactions ?? []);
 
     if (status.connected) {
-      // First time we observe a successful connection from the server
-      // (page reload, fresh session) — only flash the celebration if the
-      // localStorage flag is still set.
-      if (this.state() !== 'connected' && this.isFirstConnect()) {
-        this.clearFirstConnectFlag();
-        this.isFirstConnect.set(false);
-      }
+      const wasConnected = this.state() === 'connected';
       this.state.set('connected');
+
+      if (!wasConnected) {
+        // Re-read the flag: it may have been planted AFTER this
+        // service was instantiated (the settings section plants it
+        // on init so a brand-new user sees the celebration).
+        const flag = this.readFirstConnectFlag();
+        this.isFirstConnect.set(flag);
+        if (flag) {
+          // One-shot: clear the localStorage flag so the flash
+          // never replays (even on hard reload of a connected
+          // state).
+          this.clearFirstConnectFlag();
+        }
+      }
     } else {
       this.state.set('idle');
     }
