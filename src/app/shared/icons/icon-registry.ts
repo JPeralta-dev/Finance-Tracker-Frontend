@@ -140,6 +140,7 @@ export const ICONS = {
   help: heroQuestionMarkCircle,
   list: heroClipboardDocumentList,
   telegram: heroPaperAirplane,
+  gmail: heroEnvelope,
 
   // Theme
   sun: heroSun,

@@ -49,6 +49,11 @@
       background: rgba(45, 212, 191, 0.15);
       color: var(--success);
     }
+
+    &--gmail {
+      background: rgba(234, 67, 53, 0.15);
+      color: #ea4335;
+    }
   }
 
   &__info {
@@ -213,4 +218,35 @@
   font-family: var(--font-body);
   cursor: not-allowed;
   opacity: 0.5;
+}
+
+/* Gmail connect button */
+.btn-gmail {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #ea4335, #c5221f);
+  border: none;
+  border-radius: var(--radius-md);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: var(--font-body);
+  cursor: pointer;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+
+  &:hover:not(:disabled) {
+    opacity: 0.92;
+    transform: translateY(-1px);
+  }
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
 }

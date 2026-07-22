@@ -100,5 +100,33 @@
         </button>
       </div>
     </div>
+
+    <!-- Gmail Card -->
+    <div class="account-card">
+      <div class="account-card__header">
+        <div class="account-card__icon account-card__icon--gmail">
+          <ng-icon name="gmail" size="1.25rem" />
+        </div>
+        <div class="account-card__info">
+          <h3 class="account-card__title">{{ 'settings.gmail.title' | translate }}</h3>
+          <p class="account-card__desc">{{ 'settings.gmail.desc' | translate }}</p>
+        </div>
+      </div>
+      <div class="link-action">
+        <button
+          class="btn-gmail"
+          (click)="connectGmail()"
+          [disabled]="gmailState() === 'connecting'"
+        >
+          @if (gmailState() === 'connecting') {
+            <span class="spinner-sm"></span>
+            {{ 'settings.gmail.connecting' | translate }}
+          } @else {
+            <ng-icon name="gmail" size="1rem" />
+            {{ 'settings.gmail.connect' | translate }}
+          }
+        </button>
+      </div>
+    </div>
   </div>
 </div>

@@ -369,6 +369,13 @@
       "coming_soon": "Bientôt disponible",
       "link_whatsapp": "Lier WhatsApp"
     },
+    "gmail": {
+      "title": "Connecter Gmail",
+      "desc": "Connectez votre Gmail pour importer automatiquement les notifications bancaires comme transactions.",
+      "connect": "Connecter Gmail",
+      "connecting": "Connexion...",
+      "connect_failed": "Impossible de démarrer la connexion Gmail. Veuillez réessayer."
+    },
     "preferences": {
       "title": "Préférences",
       "desc": "Personnalisez votre expérience.",
