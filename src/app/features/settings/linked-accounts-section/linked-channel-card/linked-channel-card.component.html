@@ -106,18 +106,22 @@
       }
       @default {
         <div class="channel-card__state channel-card__state--disconnected">
-          <button
-            type="button"
-            class="channel-card__btn channel-card__btn--primary"
-            (click)="onConnect()"
-            [disabled]="showComingSoon()"
-          >
-            <ng-icon name="link" size="0.875rem" />
-            <span class="channel-card__btn-text">{{ connectLabel() | translate }}</span>
-            <span class="channel-card__btn-spinner" aria-hidden="true">
-              <span class="spinner-sm"></span>
-            </span>
-          </button>
+          @if (hasCustomDisconnected()) {
+            <ng-content select="[slot=disconnected]"></ng-content>
+          } @else {
+            <button
+              type="button"
+              class="channel-card__btn channel-card__btn--primary"
+              (click)="onConnect()"
+              [disabled]="showComingSoon()"
+            >
+              <ng-icon name="link" size="0.875rem" />
+              <span class="channel-card__btn-text">{{ connectLabel() | translate }}</span>
+              <span class="channel-card__btn-spinner" aria-hidden="true">
+                <span class="spinner-sm"></span>
+              </span>
+            </button>
+          }
         </div>
       }
     }

@@ -59,6 +59,15 @@ export class LinkedChannelCardComponent {
   readonly recent = input<LinkedChannelRecentItem[]>([]);
   readonly recentTitle = input<string>('Recent imports');
 
+  /**
+   * Optional override for the disconnected-state body. When projected
+   * via `<ng-content select="[slot=disconnected]">`, the card's own
+   * "Connect" button is hidden and the consumer's content is rendered
+   * instead. Useful for flows that need richer UI than a single CTA
+   * (e.g. Telegram's code-generation flow).
+   */
+  readonly hasCustomDisconnected = input<boolean>(false);
+
   // ── Outputs ───────────────────────────────────────────────────────
   readonly connect = output<void>();
   readonly sync = output<void>();

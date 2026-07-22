@@ -1,6 +1,55 @@
 @import 'responsive';
 
-/* Accounts grid: 1 col mobile, 2 col desktop */
+/* ─────────────────────────────────────────────────────────────────
+   Section header
+   ─────────────────────────────────────────────────────────────── */
+.settings-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.section-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.section-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background: var(--accent-glow);
+  color: var(--accent-start);
+  flex-shrink: 0;
+}
+
+.section-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.section-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin: 2px 0 0;
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   Grid — 1 col mobile, 2 col tablet+
+   ─────────────────────────────────────────────────────────────── */
 .accounts-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -12,241 +61,103 @@
   }
 }
 
-/* Individual account card */
-.account-card {
-  padding: 20px;
-  background: var(--bg-elevated);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-md);
-  transition: border-color var(--duration-normal) var(--ease-smooth);
-
-  &--coming-soon {
-    opacity: 0.7;
-  }
-
-  &__header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 16px;
-  }
-
-  &__icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    border-radius: var(--radius-sm);
-    flex-shrink: 0;
-
-    &--telegram {
-      background: rgba(139, 92, 246, 0.15);
-      color: var(--accent-start);
-    }
-
-    &--whatsapp {
-      background: rgba(45, 212, 191, 0.15);
-      color: var(--success);
-    }
-
-    &--gmail {
-      background: rgba(234, 67, 53, 0.15);
-      color: #ea4335;
-    }
-  }
-
-  &__info {
-    flex: 1;
-    min-width: 0;
-  }
-
-  &__title {
-    font-family: var(--font-display);
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--text-primary);
-    margin: 0;
-  }
-
-  &__desc {
-    font-size: 13px;
-    color: var(--text-secondary);
-    margin: 2px 0 0;
-  }
-}
-
-/* Loading */
-.link-loading {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  padding: 24px;
-  color: var(--text-secondary);
-  font-size: 14px;
-}
-
-/* Link action */
-.link-action {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-}
-
-.btn-generate {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 32px;
-  background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
-  border: none;
-  border-radius: var(--radius-md);
-  color: #fff;
-  font-size: 15px;
-  font-weight: 600;
-  font-family: var(--font-body);
-  cursor: pointer;
-  transition: opacity 0.15s ease;
-  &:hover:not(:disabled) { opacity: 0.9; }
-  &:disabled { opacity: 0.5; cursor: not-allowed; }
-}
-
+/* ─────────────────────────────────────────────────────────────────
+   Telegram code-generation flow (projected into the card)
+   ─────────────────────────────────────────────────────────────── */
 .code-display {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  padding: 24px;
+  padding: 16px 12px;
   background: var(--accent-glow);
   border: 1px solid rgba(157, 80, 187, 0.2);
   border-radius: var(--radius-lg);
   width: 100%;
-  max-width: 320px;
-  margin: 0 auto;
 }
 
-.code-label { font-size: 13px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; }
-.code-value { font-family: var(--font-display); font-size: 42px; font-weight: 800; letter-spacing: 0.1em; color: var(--accent-start); line-height: 1; }
-.code-timer { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--text-tertiary); font-variant-numeric: tabular-nums; }
-.code-instructions { font-size: 13px; color: var(--text-secondary); text-align: center; margin: 4px 0 0; }
-.link-error { font-size: 13px; color: var(--danger); text-align: center; margin: 0; }
-
-/* Linked state */
-.linked-state { display: flex; flex-direction: column; align-items: center; gap: 12px; }
-.just-linked { animation: linkedPop 0.4s ease-out; }
-
-.linked-flash {
-  display: flex; flex-direction: column; align-items: center; gap: 8px;
-  color: #48bb78; font-size: 16px; font-weight: 700;
-  animation: flashFade 3s ease-out forwards;
-  ng-icon { animation: checkBounce 0.4s ease-out; }
+.code-label {
+  font-size: 11px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 600;
 }
 
-@keyframes linkedPop { 0% { transform: scale(0.95); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
-@keyframes flashFade { 0%, 60% { opacity: 1; } 100% { opacity: 0; } }
-@keyframes checkBounce { 0% { transform: scale(0); } 50% { transform: scale(1.3); } 100% { transform: scale(1); } }
-
-.linked-badge {
-  display: inline-flex; align-items: center; gap: 8px; padding: 8px 20px;
-  background: rgba(72, 187, 120, 0.1); border: 1px solid rgba(72, 187, 120, 0.3);
-  border-radius: 999px; color: #48bb78; font-size: 14px; font-weight: 600;
-  animation: linkedPulse 3s ease-in-out infinite;
+.code-value {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: var(--accent-start);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
 }
 
-@keyframes linkedPulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(72, 187, 120, 0.2); }
-  50% { box-shadow: 0 0 0 6px rgba(72, 187, 120, 0); }
+.code-timer {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-tertiary);
+  font-variant-numeric: tabular-nums;
 }
 
-.linked-desc { font-size: 14px; color: var(--text-secondary); text-align: center; margin: 0; }
+.code-instructions {
+  font-size: 12px;
+  color: var(--text-secondary);
+  text-align: center;
+  margin: 4px 0 0;
+  line-height: 1.4;
+}
 
-.btn-telegram {
-  display: inline-flex; align-items: center; gap: 8px; padding: 10px 24px;
-  background: var(--glass-bg); border: 1px solid var(--glass-border);
-  border-radius: var(--radius-md); color: var(--text-primary);
-  font-size: 14px; font-weight: 600; font-family: var(--font-body);
-  cursor: pointer; transition: all 0.15s ease;
-  &:hover:not(:disabled) { background: var(--accent-glow); border-color: rgba(157, 80, 187, 0.3); color: var(--accent-start); }
-  &:disabled { opacity: 0.4; cursor: not-allowed; }
+.link-error {
+  font-size: 12px;
+  color: var(--danger);
+  text-align: center;
+  margin: 0;
 }
 
 .btn-telegram-auto {
-  display: inline-flex; align-items: center; gap: 8px; padding: 12px 28px;
-  background: linear-gradient(135deg, #8B5CF6, #A855F7); border: none;
-  border-radius: var(--radius-md); color: #fff; font-size: 14px; font-weight: 600;
-  font-family: var(--font-body); cursor: pointer; transition: all 0.15s ease;
-  box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
-  &:hover { opacity: 0.9; box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4); transform: translateY(-1px); }
-  &:active { transform: translateY(0); }
-}
-
-/* WhatsApp coming soon */
-.coming-soon-state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-  padding: 24px 16px;
-}
-
-.coming-soon-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  background: var(--bg-tertiary);
-  border: 1px solid var(--border-subtle);
-  border-radius: 999px;
-  color: var(--text-secondary);
-  font-size: 13px;
-  font-weight: 500;
-}
-
-.btn-whatsapp {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 24px;
-  background: var(--bg-tertiary);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-md);
-  color: var(--text-tertiary);
-  font-size: 14px;
-  font-weight: 600;
-  font-family: var(--font-body);
-  cursor: not-allowed;
-  opacity: 0.5;
-}
-
-/* Gmail connect button */
-.btn-gmail {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
   width: 100%;
-  padding: 12px 24px;
-  background: linear-gradient(135deg, #ea4335, #c5221f);
+  padding: 10px 16px;
+  background: linear-gradient(135deg, #8B5CF6, #A855F7);
   border: none;
   border-radius: var(--radius-md);
   color: #fff;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
   font-family: var(--font-body);
   cursor: pointer;
-  transition: opacity 0.15s ease, transform 0.15s ease;
+  transition: all 0.15s ease;
+  box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
+  margin-top: 4px;
 
-  &:hover:not(:disabled) {
+  &:hover {
     opacity: 0.92;
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
     transform: translateY(-1px);
   }
-  &:active:not(:disabled) {
+  &:active {
     transform: translateY(0);
   }
-  &:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
 }
+
+/* ─────────────────────────────────────────────────────────────────
+   Spinner (used inside the Telegram custom slot while generating)
+   ─────────────────────────────────────────────────────────────── */
+.spinner-sm {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
