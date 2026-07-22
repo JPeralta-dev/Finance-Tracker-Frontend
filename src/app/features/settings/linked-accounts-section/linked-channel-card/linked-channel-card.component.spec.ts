@@ -109,4 +109,11 @@ describe('LinkedChannelCardComponent', () => {
     const items = fixture.debugElement.queryAll(By.css('.channel-card__recent-item'));
     expect(items.length).toBe(1);
   });
+
+  it('hasCustomDisconnected hides the default primary button', () => {
+    fixture.componentRef.setInput('hasCustomDisconnected', true);
+    fixture.detectChanges();
+    const btn = fixture.debugElement.query(By.css('.channel-card__state--disconnected .channel-card__btn--primary'));
+    expect(btn).toBeNull();
+  });
 });
