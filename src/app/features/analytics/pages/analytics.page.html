@@ -47,8 +47,42 @@
         <div class="analytics-header-row__title">
           <h1 class="analytics-header-row__heading">{{ 'analytics.title' | translate }}</h1>
           <p class="analytics-header-row__subtitle">{{ 'analytics.subtitle' | translate }}</p>
+          @if (dateRangeDisplay()) {
+            <span class="analytics-header-row__date-range">{{ dateRangeDisplay() }}</span>
+          }
         </div>
         <div class="analytics-header-row__actions">
+          <!-- Period buttons -->
+          <div class="analytics-header-row__periods">
+            @for (p of periodOptions; track p.value) {
+              <button
+                class="analytics-header-row__period-btn"
+                [class.active]="headerPeriod() === p.value"
+                (click)="onPeriodChange(p.value)"
+                type="button"
+              >
+                {{ p.labelKey | translate }}
+              </button>
+            }
+          </div>
+          <!-- Custom date inputs -->
+          <div class="analytics-header-row__custom-dates">
+            <input
+              type="date"
+              [value]="customStartDate()"
+              (change)="onCustomDateChange({ start: $any($event.target).value, end: customEndDate() })"
+              class="analytics-header-row__date-input"
+              aria-label="Start date"
+            />
+            <span class="analytics-header-row__date-separator">—</span>
+            <input
+              type="date"
+              [value]="customEndDate()"
+              (change)="onCustomDateChange({ start: customStartDate(), end: $any($event.target).value })"
+              class="analytics-header-row__date-input"
+              aria-label="End date"
+            />
+          </div>
           <div class="month-selector">
             <button class="month-selector__btn" (click)="toggleMonthDropdown()" type="button">
               <ng-icon name="calendar" size="1rem" />
@@ -78,9 +112,9 @@
       </div>
 
       <!-- Cross-filter badge (shown when drill-down is active) -->
-      @if (store.hasCrossFilter()) {
-        <div class="cross-filter-badge" (click)="store.clearCrossFilter()" ftSubtleReveal="fade-up">
-          <span>Filtrado: {{ store.crossFilter().categoryName || store.crossFilter().categoryId }}</span>
+      @if (store.hasCrossFilter() || store.hasChartFilter()) {
+        <div class="cross-filter-badge" (click)="onClearChartFilters()" ftSubtleReveal="fade-up">
+          <span>Filtrado: {{ store.crossFilter().categoryName || store.chartFilter()?.label || store.crossFilter().categoryId }}</span>
           <ng-icon name="x" size="0.8rem" />
         </div>
       }
@@ -128,6 +162,7 @@
               [options]="donutChartOptions()"
               [loading]="isLoading()"
               height="280px"
+              (chartClick)="onChartClick($event, 'category')"
             >
               <ng-container loading><div class="chart-skeleton"></div></ng-container>
               <ng-container empty><div class="chart-empty">{{ 'analytics.noCategoryData' | translate }}</div></ng-container>
@@ -152,9 +187,64 @@
               [options]="dailyChartOptions()"
               [loading]="isLoading()"
               height="280px"
+              (chartClick)="onChartClick($event, 'category')"
             >
               <ng-container loading><div class="chart-skeleton"></div></ng-container>
               <ng-container empty><div class="chart-empty">{{ 'analytics.noDailyData' | translate }}</div></ng-container>
+              <ng-container error>
+                <div class="chart-error">
+                  {{ 'analytics.chartError' | translate }}
+                  <button class="chart-retry-btn" (click)="retry()" type="button">{{ 'analytics.retry' | translate }}</button>
+                </div>
+              </ng-container>
+            </ft-echart>
+          </ft-analytics-chart-card>
+        </div>
+      </div>
+
+      <!-- 3b. Hourly Activity + Weekly Patterns Row -->
+      <div class="analytics-charts-row">
+        <!-- Hourly Activity (wide) -->
+        <div class="analytics-charts-row__hourly" ftSubtleReveal="fade-up" [delay]="250">
+          <ft-analytics-chart-card
+            [title]="'analytics.hourlyActivity' | translate"
+            [subtitle]="'analytics.hourlySubtitle' | translate"
+            [fullWidth]="true"
+            height="320px"
+          >
+            <ft-echart
+              [options]="hourlyChartOptions()"
+              [loading]="isLoading()"
+              height="280px"
+              (chartClick)="onChartClick($event, 'hourly')"
+            >
+              <ng-container loading><div class="chart-skeleton"></div></ng-container>
+              <ng-container empty><div class="chart-empty">{{ 'analytics.noHourlyData' | translate }}</div></ng-container>
+              <ng-container error>
+                <div class="chart-error">
+                  {{ 'analytics.chartError' | translate }}
+                  <button class="chart-retry-btn" (click)="retry()" type="button">{{ 'analytics.retry' | translate }}</button>
+                </div>
+              </ng-container>
+            </ft-echart>
+          </ft-analytics-chart-card>
+        </div>
+
+        <!-- Weekly Patterns (narrow) -->
+        <div class="analytics-charts-row__weekly" ftSubtleReveal="fade-up" [delay]="300">
+          <ft-analytics-chart-card
+            [title]="'analytics.weeklyPatterns' | translate"
+            [subtitle]="'analytics.weeklyAverage' | translate"
+            height="320px"
+          >
+            <ft-echart
+              [options]="weeklyPatternsChartOptions()"
+              [loading]="isLoading()"
+              height="280px"
+              (chartClick)="onChartClick($event, 'weekly')"
+            >
+              <ng-container loading><div class="chart-skeleton"></div></ng-container>
+              <ng-container empty><div class="chart-empty">{{ 'analytics.noWeeklyData' | translate }}</div></ng-container>
               <ng-container error>
                 <div class="chart-error">
                   {{ 'analytics.chartError' | translate }}

@@ -13,16 +13,38 @@
         </div>
       }
     </div>
-    <div class="analytics-header__periods">
-      @for (p of periods; track p.value) {
-        <button
-          class="analytics-header__period-btn"
-          [class.active]="period() === p.value"
-          (click)="periodChange.emit(p.value)"
-        >
-          {{ p.labelKey | translate }}
-        </button>
+    <div class="analytics-header__controls">
+      <div class="analytics-header__periods">
+        @for (p of periods; track p.value) {
+          <button
+            class="analytics-header__period-btn"
+            [class.active]="period() === p.value"
+            (click)="periodChange.emit(p.value)"
+          >
+            {{ p.labelKey | translate }}
+          </button>
+        }
+      </div>
+      @if (dateRangeDisplay()) {
+        <span class="analytics-header__date-range">{{ dateRangeDisplay() }}</span>
       }
+      <div class="analytics-header__custom-dates">
+        <input
+          type="date"
+          [value]="customStartDate()"
+          (change)="onCustomDateStart($event)"
+          class="analytics-header__date-input"
+          aria-label="Start date"
+        />
+        <span class="analytics-header__date-separator">—</span>
+        <input
+          type="date"
+          [value]="customEndDate()"
+          (change)="onCustomDateEnd($event)"
+          class="analytics-header__date-input"
+          aria-label="End date"
+        />
+      </div>
     </div>
   </div>
 </div>
