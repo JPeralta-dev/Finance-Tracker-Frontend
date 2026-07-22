@@ -130,4 +130,39 @@ describe('AuthService', () => {
     // but we verify the method exists and doesn't throw
     expect(typeof service.signInWithGoogle).toBe('function');
   });
+
+  it('signInWithGoogle should forward scopes when provided', () => {
+    // Act
+    service.signInWithGoogle(['gmail.readonly', 'gmail.modify']);
+
+    const req = httpMock.expectOne(r => r.url.endsWith('/api/auth/sign-in/social'));
+    expect(req.request.method).toBe('POST');
+    expect(req.request.withCredentials).toBeTrue();
+    expect(req.request.body).toEqual({
+      provider: 'google',
+      callbackURL: jasmine.any(String),
+      scopes: ['gmail.readonly', 'gmail.modify'],
+    });
+  });
+
+  it('signInWithGoogle should omit scopes when not provided (backward compat)', () => {
+    // Act
+    service.signInWithGoogle();
+
+    const req = httpMock.expectOne(r => r.url.endsWith('/api/auth/sign-in/social'));
+    expect(req.request.method).toBe('POST');
+    expect(req.request.body).toEqual({
+      provider: 'google',
+      callbackURL: jasmine.any(String),
+    });
+    expect((req.request.body as { scopes?: unknown }).scopes).toBeUndefined();
+  });
+
+  it('signInWithGoogle should omit scopes when an empty array is provided', () => {
+    // Act
+    service.signInWithGoogle([]);
+
+    const req = httpMock.expectOne(r => r.url.endsWith('/api/auth/sign-in/social'));
+    expect((req.request.body as { scopes?: unknown }).scopes).toBeUndefined();
+  });
 });

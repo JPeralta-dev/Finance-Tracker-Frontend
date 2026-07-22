@@ -1,7 +1,7 @@
 <div class="settings-section" ftSubtleReveal="fade-up" [delay]="delay()">
   <div class="section-header">
     <div class="section-icon">
-      <ng-icon name="heroUserGroup" size="1.5rem" />
+      <ng-icon name="userGroup" size="1.5rem" />
     </div>
     <div class="section-info">
       <h2 class="section-title">{{ 'settings.accounts.title' | translate }}</h2>
@@ -10,95 +10,106 @@
   </div>
 
   <div class="accounts-grid">
-    <!-- Telegram Card -->
-    <div class="account-card">
-      <div class="account-card__header">
-        <div class="account-card__icon account-card__icon--telegram">
-          <ng-icon name="telegram" size="1.25rem" />
-        </div>
-        <div class="account-card__info">
-          <h3 class="account-card__title">{{ 'settings.telegram.title' | translate }}</h3>
-          <p class="account-card__desc">{{ 'settings.telegram.desc' | translate }}</p>
-        </div>
-      </div>
-
-      @if (svc.state() === 'loading') {
-        <div class="link-loading">
-          <span class="spinner-sm"></span>
-          <span>{{ 'settings.telegram.loading' | translate }}</span>
-        </div>
-      } @else if (svc.state() === 'linked') {
-        <div class="linked-state" [class.just-linked]="svc.justLinked()">
-          @if (svc.justLinked()) {
-            <div class="linked-flash">
-              <ng-icon name="check" size="2rem" />
-              <span>{{ 'settings.telegram.linked_success' | translate }}</span>
+    <!-- ── Telegram ──────────────────────────────────────────────── -->
+    <app-linked-channel-card
+      [state]="telegramState()"
+      [iconKey]="'telegram'"
+      [iconBgClass]="'telegram'"
+      [title]="'settings.telegram.title'"
+      [description]="'settings.telegram.desc'"
+      [connectingLabel]="'settings.telegram.generating'"
+      [syncLabel]="'settings.linked.open'"
+      [disconnectLabel]="'settings.linked.disconnect'"
+      [connectedStatus]="telegramConnectedStatus()"
+      [connectedMeta]="'settings.telegram.last_sync'"
+      [isFirstConnect]="telegramFirstConnect()"
+      [hasCustomDisconnected]="true"
+      (connect)="onTelegramConnect()"
+      (sync)="svc.openTelegram()"
+      (disconnect)="onTelegramDisconnect()"
+    >
+      <!-- Telegram has its own rich code-generation UI for the disconnected
+           state. Slot it into the card via the projection hook. -->
+      <div slot="disconnected">
+        @if (svc.linkCode(); as code) {
+          <div class="code-display">
+            <span class="code-label">{{ 'settings.telegram.code_label' | translate }}</span>
+            <div class="code-value">{{ code }}</div>
+            <div class="code-timer">
+              <ng-icon name="clock" size="0.875rem" />
+              {{ 'settings.telegram.code_expires' | translate }}:
+              {{ countdownMinutes }}:{{ countdownSeconds.toString().padStart(2, '0') }}
             </div>
-          }
-          <div class="linked-badge">
-            <ng-icon name="heroLockClosed" size="1rem" />
-            <span>{{ 'settings.telegram.already_linked' | translate }}</span>
+            <p class="code-instructions">{{ 'settings.telegram.code_instructions' | translate }}</p>
+            <button class="btn-telegram-auto" (click)="svc.openTelegramWithCode(code)">
+              <ng-icon name="telegram" size="1rem" />
+              {{ 'settings.telegram.open_with_code' | translate }}
+            </button>
           </div>
-          <p class="linked-desc">{{ 'settings.telegram.linked_desc' | translate }}</p>
-          <button class="btn-telegram" (click)="svc.openTelegram()" disabled>
-            <ng-icon name="telegram" size="1rem" />
-            {{ 'settings.telegram.link_telegram' | translate }}
-          </button>
-        </div>
-      } @else {
-        <div class="link-action">
-          @if (svc.linkCode(); as code) {
-            <div class="code-display">
-              <span class="code-label">{{ 'settings.telegram.code_label' | translate }}</span>
-              <div class="code-value">{{ code }}</div>
-              <div class="code-timer">
-                <ng-icon name="clock" size="0.875rem" />
-                {{ 'settings.telegram.code_expires' | translate }}:
-                {{ countdownMinutes }}:{{ countdownSeconds.toString().padStart(2, '0') }}
-              </div>
-              <p class="code-instructions">{{ 'settings.telegram.code_instructions' | translate }}</p>
-              <button class="btn-telegram-auto" (click)="svc.openTelegramWithCode(code)">
-                <ng-icon name="telegram" size="1rem" />
-                {{ 'settings.telegram.open_with_code' | translate }}
-              </button>
-            </div>
-          } @else {
-            <button class="btn-generate" (click)="svc.generateCode()" [disabled]="svc.state() === 'generating'">
+        } @else {
+          <button
+            class="channel-card__btn channel-card__btn--primary"
+            (click)="onTelegramConnect()"
+            [disabled]="svc.state() === 'generating'"
+          >
+            <ng-icon name="telegram" size="0.875rem" />
+            <span class="channel-card__btn-text">
               @if (svc.state() === 'generating') {
                 <span class="spinner-sm"></span>
                 {{ 'settings.telegram.generating' | translate }}
               } @else {
                 {{ 'settings.telegram.generate_code' | translate }}
               }
-            </button>
-          }
-          @if (svc.error(); as err) {
-            <p class="link-error">{{ err | translate }}</p>
-          }
-        </div>
-      }
-    </div>
+            </span>
+          </button>
+        }
+        @if (svc.error(); as err) {
+          <p class="link-error">{{ err | translate }}</p>
+        }
+      </div>
+    </app-linked-channel-card>
 
-    <!-- WhatsApp Card (Coming Soon) -->
-    <div class="account-card account-card--coming-soon">
-      <div class="account-card__header">
-        <div class="account-card__icon account-card__icon--whatsapp">
-          <ng-icon name="heroChatBubbleLeftRight" size="1.25rem" />
-        </div>
-        <div class="account-card__info">
-          <h3 class="account-card__title">{{ 'settings.whatsapp.title' | translate }}</h3>
-          <p class="account-card__desc">{{ 'settings.whatsapp.desc' | translate }}</p>
-        </div>
-      </div>
-      <div class="coming-soon-state">
-        <div class="coming-soon-badge">
-          <ng-icon name="heroClock" size="1rem" />
-          <span>{{ 'settings.whatsapp.coming_soon' | translate }}</span>
-        </div>
-        <button class="btn-whatsapp" disabled>
-          {{ 'settings.whatsapp.link_whatsapp' | translate }}
-        </button>
-      </div>
-    </div>
+    <!-- ── Gmail (priority) ─────────────────────────────────────── -->
+    <app-linked-channel-card
+      [state]="gmailState()"
+      [iconKey]="'gmail'"
+      [iconBgClass]="'gmail'"
+      [title]="'settings.gmail.title'"
+      [description]="'settings.gmail.desc'"
+      [connectLabel]="'settings.gmail.connect'"
+      [connectingLabel]="'settings.gmail.connecting'"
+      [syncLabel]="gmail.syncing() ? 'settings.gmail.connecting' : 'settings.linked.sync'"
+      [disconnectLabel]="'settings.linked.disconnect'"
+      [isFirstConnect]="gmailFirstConnectVisible()"
+      [recent]="gmailRecent()"
+      [recentTitle]="'settings.gmail.recent'"
+      [connectedStatus]="gmailConnectedStatus()"
+      [connectedMeta]="gmailLastSync()"
+      (connect)="connectGmail()"
+      (sync)="onGmailSync()"
+      (disconnect)="onGmailDisconnect()"
+    />
+
+    <!-- ── WhatsApp (coming soon) ────────────────────────────────── -->
+    <app-linked-channel-card
+      [state]="whatsappState"
+      [iconKey]="'chatBubble'"
+      [iconBgClass]="'whatsapp'"
+      [title]="'settings.whatsapp.title'"
+      [description]="'settings.whatsapp.desc'"
+      [connectLabel]="'settings.whatsapp.link_whatsapp'"
+      [showComingSoon]="true"
+    />
+
+    <!-- ── SMS (not a priority) ──────────────────────────────────── -->
+    <app-linked-channel-card
+      [state]="smsState"
+      [iconKey]="'chatBubble'"
+      [iconBgClass]="'sms'"
+      [title]="'settings.sms.title'"
+      [description]="'settings.sms.desc'"
+      [connectLabel]="'settings.sms.link_sms'"
+      [showComingSoon]="true"
+    />
   </div>
 </div>

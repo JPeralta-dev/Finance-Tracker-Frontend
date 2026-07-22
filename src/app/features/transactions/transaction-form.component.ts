@@ -150,9 +150,9 @@ export class TransactionFormComponent implements OnInit {
             type: tx.type,
             amount: tx.amount,
             description: tx.description,
-            category: tx.category,
+            category: tx.category?.id ?? tx.category ?? '',
             bank: tx.bank?.id ?? '',
-            date: tx.date.split('T')[0],
+            date: tx.date?.split('T')[0] ?? '',
           });
           this.loadingEdit.set(false);
         },

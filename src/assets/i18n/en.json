@@ -361,13 +361,41 @@
       "code_instructions": "Send this code to the Telegram bot to link your account.",
       "open_with_code": "Open Telegram with code",
       "generating": "Generating code...",
-      "generate_code": "Generate linking code"
+      "generate_code": "Generate linking code",
+      "connected_status": "Connected — @{{handle}}",
+      "last_sync": "Ready to log transactions"
     },
     "whatsapp": {
       "title": "WhatsApp",
-      "desc": "Link your WhatsApp account.",
+      "desc": "Get your transactions delivered straight to your WhatsApp.",
       "coming_soon": "Coming soon",
       "link_whatsapp": "Link WhatsApp"
+    },
+    "sms": {
+      "title": "SMS",
+      "desc": "Parse transaction SMS from supported banks.",
+      "coming_soon": "Not a priority",
+      "link_sms": "Link SMS"
+    },
+    "gmail": {
+      "title": "Connect Gmail",
+      "desc": "Connect your Gmail to automatically import bank notifications as transactions.",
+      "connect": "Connect Gmail",
+      "connecting": "Connecting to Gmail...",
+      "connect_failed": "Could not start Gmail connection. Please try again.",
+      "sync_failed": "Could not sync Gmail. Please try again.",
+      "connected_status": "Connected — {{email}}",
+      "last_sync": "Last sync: {{when}}",
+      "last_sync_just_now": "Last sync: just now",
+      "recent": "Recent imports",
+      "no_email": "Connected"
+    },
+    "linked": {
+      "connected_pill": "Connected",
+      "coming_soon_pill": "Soon",
+      "sync": "Sync now",
+      "disconnect": "Disconnect",
+      "open": "Open"
     },
     "preferences": {
       "title": "Preferences",

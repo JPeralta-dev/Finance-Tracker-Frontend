@@ -1,0 +1,129 @@
+<div
+  class="channel-card"
+  [class.channel-card--connected]="isConnected()"
+  [class.channel-card--connecting]="isConnecting()"
+  [class.channel-card--disconnected]="isDisconnected()"
+  [class.channel-card--coming-soon]="showComingSoon()"
+  [class.channel-card--just-linked]="isFirstConnect()"
+>
+  <!-- ── Header (icon + title + description) ──────────────────────── -->
+  <div class="channel-card__header">
+    <div class="channel-card__icon" [ngClass]="'channel-card__icon--' + iconBgClass()">
+      @if (isConnected()) {
+        <ng-icon name="check" size="1.125rem" class="channel-card__icon-check" />
+      } @else {
+        <ng-icon [name]="iconKey()" size="1.25rem" />
+      }
+    </div>
+    <div class="channel-card__info">
+      <h3 class="channel-card__title">
+        {{ title() | translate }}
+        @if (isConnected()) {
+          <span class="channel-card__title-pill" aria-hidden="true">
+            <ng-icon name="check" size="0.75rem" />
+            <span>{{ 'settings.linked.connected_pill' | translate }}</span>
+          </span>
+        }
+        @if (showComingSoon()) {
+          <span class="channel-card__title-pill channel-card__title-pill--muted">
+            <ng-icon name="clock" size="0.75rem" />
+            <span>{{ 'settings.linked.coming_soon_pill' | translate }}</span>
+          </span>
+        }
+      </h3>
+      <p class="channel-card__desc">{{ description() | translate }}</p>
+    </div>
+  </div>
+
+  <!-- ── Body ──────────────────────────────────────────────────────── -->
+  <div class="channel-card__body">
+    @switch (state()) {
+      @case ('connecting') {
+        <div class="channel-card__state channel-card__state--connecting">
+          <div class="skeleton-line"></div>
+          <p class="channel-card__state-text">
+            <span class="spinner-sm"></span>
+            {{ connectingLabel() | translate }}
+          </p>
+        </div>
+      }
+      @case ('connected') {
+        <div class="channel-card__state channel-card__state--connected">
+          @if (connectedStatus() || connectedMeta()) {
+            <div class="channel-card__connected-meta">
+              @if (connectedStatus()) {
+                <span class="channel-card__status">{{ connectedStatus() | translate }}</span>
+              }
+              @if (connectedMeta()) {
+                <span class="channel-card__meta">{{ connectedMeta() | translate }}</span>
+              }
+            </div>
+          }
+
+          <div class="channel-card__actions">
+            <button
+              type="button"
+              class="channel-card__btn channel-card__btn--ghost"
+              (click)="onSync()"
+              [attr.aria-label]="syncLabel() | translate"
+            >
+              <ng-icon name="arrowPath" size="0.875rem" />
+              <span>{{ syncLabel() | translate }}</span>
+            </button>
+            <button
+              type="button"
+              class="channel-card__btn channel-card__btn--danger-ghost"
+              (click)="onDisconnect()"
+              [attr.aria-label]="disconnectLabel() | translate"
+            >
+              <ng-icon name="link" size="0.875rem" />
+              <span>{{ disconnectLabel() | translate }}</span>
+            </button>
+          </div>
+
+          @if (recent().length > 0) {
+            <div class="channel-card__recent">
+              <p class="channel-card__recent-title">
+                {{ recentTitle() | translate }}
+              </p>
+              <ul class="channel-card__recent-list">
+                @for (item of recent(); track item.id) {
+                  <li class="channel-card__recent-item">
+                    <span class="channel-card__recent-icon" [attr.data-icon]="item.iconKey">
+                      <ng-icon [name]="item.iconKey === 'bank' ? 'buildingOffice' : (item.iconKey === 'card' ? 'creditCard' : 'wallet')" size="0.875rem" />
+                    </span>
+                    <span class="channel-card__recent-primary">{{ item.primary | translate }}</span>
+                    @if (item.amount) {
+                      <span class="channel-card__recent-amount">{{ item.amount | translate }}</span>
+                    }
+                    <span class="channel-card__recent-secondary">{{ item.secondary | translate }}</span>
+                  </li>
+                }
+              </ul>
+            </div>
+          }
+        </div>
+      }
+      @default {
+        <div class="channel-card__state channel-card__state--disconnected">
+          @if (hasCustomDisconnected()) {
+            <ng-content select="[slot=disconnected]"></ng-content>
+          } @else {
+            <button
+              type="button"
+              class="channel-card__btn channel-card__btn--primary"
+              (click)="onConnect()"
+              [disabled]="showComingSoon()"
+            >
+              <ng-icon name="link" size="0.875rem" />
+              <span class="channel-card__btn-text">{{ connectLabel() | translate }}</span>
+              <span class="channel-card__btn-spinner" aria-hidden="true">
+                <span class="spinner-sm"></span>
+              </span>
+            </button>
+          }
+        </div>
+      }
+    }
+  </div>
+</div>
