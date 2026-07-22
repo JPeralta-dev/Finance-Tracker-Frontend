@@ -216,14 +216,32 @@ export class AuthService {
       );
   }
 
-  /** Redirect to Google OAuth sign-in */
-  signInWithGoogle(): void {
+  /**
+   * Redirect to Google OAuth sign-in.
+   *
+   * When `scopes` is provided, they are forwarded to Better Auth's
+   * `sign-in/social` endpoint so the OAuth consent screen can request
+   * extra permissions (e.g. `gmail.readonly` + `gmail.modify` for the
+   * "Connect Gmail" linked-accounts flow).
+   *
+   * Backward compatible: calling without scopes behaves exactly as before.
+   */
+  signInWithGoogle(scopes?: string[]): void {
     const callbackURL = `${window.location.origin}/dashboard`;
+
+    const body: { provider: 'google'; callbackURL: string; scopes?: string[] } = {
+      provider: 'google',
+      callbackURL,
+    };
+
+    if (scopes && scopes.length > 0) {
+      body.scopes = scopes;
+    }
 
     this.http
       .post<{ url: string; redirect: boolean }>(
         `${this.base}/sign-in/social`,
-        { provider: 'google', callbackURL },
+        body,
         { withCredentials: true },
       )
       .subscribe({

@@ -1,0 +1,488 @@
+/* ═══════════════════════════════════════════════════════════════════
+   LinkedChannelCard — Three-state channel card
+   - Disconnected: subtle neutral, primary CTA
+   - Connecting: shimmer skeleton + disabled spinner button
+   - Connected: green tint, success check, action row, recent list
+   First-connect flash: gold/green wave + checkmark pop (one-time)
+   ═══════════════════════════════════════════════════════════════════ */
+
+:host {
+  display: block;
+}
+
+.channel-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 20px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition:
+    border-color var(--duration-normal) var(--ease-smooth),
+    background-color var(--duration-normal) var(--ease-smooth),
+    box-shadow var(--duration-normal) var(--ease-smooth),
+    transform var(--duration-normal) var(--ease-smooth);
+  will-change: transform;
+
+  &::before {
+    /* Subtle inner highlight — Doppelrand */
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+
+  &:hover {
+    border-color: var(--glass-border-hover);
+    transform: translateY(-1px);
+  }
+
+  /* ─── Connected — green-tinted, elevated ─────────────────────── */
+  &--connected {
+    background:
+      linear-gradient(180deg, rgba(6, 214, 160, 0.08) 0%, transparent 60%),
+      var(--glass-bg);
+    border-color: rgba(6, 214, 160, 0.28);
+    box-shadow: 0 6px 22px rgba(6, 214, 160, 0.08);
+  }
+
+  .theme-light &--connected {
+    background:
+      linear-gradient(180deg, rgba(45, 212, 191, 0.10) 0%, transparent 60%),
+      var(--bg-secondary);
+    border-color: rgba(45, 212, 191, 0.4);
+  }
+
+  &--coming-soon {
+    opacity: 0.72;
+    filter: saturate(0.7);
+  }
+
+  /* ─── Just-linked (first-connect flash, one-shot) ───────────── */
+  &--just-linked {
+    animation: justLinkedPop 1.2s var(--ease-spring) 1;
+  }
+}
+
+/* ─── Header ────────────────────────────────────────────────────── */
+.channel-card__header {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.channel-card__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-md);
+  flex-shrink: 0;
+  transition: all var(--duration-normal) var(--ease-spring);
+  position: relative;
+  overflow: hidden;
+
+  /* Per-channel accent tints */
+  &--telegram {
+    background: rgba(217, 70, 239, 0.18);
+    color: #D946EF;
+  }
+  &--gmail {
+    background: rgba(234, 67, 53, 0.16);
+    color: #ea4335;
+  }
+  &--whatsapp {
+    background: rgba(45, 212, 191, 0.16);
+    color: #2DD4BF;
+  }
+  &--sms {
+    background: rgba(167, 139, 250, 0.16);
+    color: var(--accent-mid);
+  }
+  &--default {
+    background: var(--bg-elevated);
+    color: var(--text-secondary);
+  }
+
+  .channel-card--connected & {
+    background: rgba(6, 214, 160, 0.22);
+    color: var(--success);
+    box-shadow: 0 0 0 4px rgba(6, 214, 160, 0.08);
+  }
+}
+
+.channel-card__icon-check {
+  animation: checkPop var(--duration-slow) var(--ease-spring) both;
+}
+
+.channel-card__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.channel-card__title {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.channel-card__title-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 9px;
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--success);
+  background: rgba(6, 214, 160, 0.14);
+  border: 1px solid rgba(6, 214, 160, 0.3);
+  border-radius: 999px;
+  white-space: nowrap;
+
+  &--muted {
+    color: var(--text-tertiary);
+    background: var(--bg-tertiary);
+    border-color: var(--border-subtle);
+  }
+}
+
+.channel-card__desc {
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  margin: 4px 0 0;
+  line-height: 1.4;
+}
+
+/* ─── Body ──────────────────────────────────────────────────────── */
+.channel-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.channel-card__state {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: stateEnter var(--duration-normal) var(--ease-smooth);
+}
+
+.channel-card__state-text {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* ─── Skeleton shimmer (connecting) ───────────────────────────── */
+.skeleton-line {
+  height: 8px;
+  width: 60%;
+  margin: 0 auto;
+  background: linear-gradient(
+    90deg,
+    var(--bg-tertiary) 0%,
+    rgba(255, 255, 255, 0.08) 50%,
+    var(--bg-tertiary) 100%
+  );
+  background-size: 200% 100%;
+  border-radius: 999px;
+  animation: shimmer 1.4s ease-in-out infinite;
+}
+
+/* ─── Connected meta line ──────────────────────────────────────── */
+.channel-card__connected-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 12px;
+  background: rgba(6, 214, 160, 0.07);
+  border: 1px solid rgba(6, 214, 160, 0.15);
+  border-radius: var(--radius-md);
+  animation: stateEnter var(--duration-slow) var(--ease-smooth);
+}
+
+.channel-card__status {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary);
+
+  &::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    margin-right: 6px;
+    background: var(--success);
+    border-radius: 50%;
+    box-shadow: 0 0 6px var(--success);
+    vertical-align: middle;
+  }
+}
+
+.channel-card__meta {
+  font-size: 11.5px;
+  color: var(--text-tertiary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ─── Actions row (Sync / Disconnect) ─────────────────────────── */
+.channel-card__actions {
+  display: flex;
+  gap: 8px;
+  /* Delay: appears AFTER the success flash */
+  animation: actionsFadeIn 0.4s var(--ease-out) 0.4s both;
+}
+
+/* ─── Buttons (shared) ────────────────────────────────────────── */
+.channel-card__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 14px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform var(--duration-fast) var(--ease-smooth),
+    background var(--duration-fast) var(--ease-smooth),
+    border-color var(--duration-fast) var(--ease-smooth),
+    color var(--duration-fast) var(--ease-smooth);
+
+  &:active:not(:disabled) {
+    transform: scale(0.97);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  &--primary {
+    width: 100%;
+    background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+    color: var(--text-inverse);
+    box-shadow: 0 2px 10px rgba(217, 70, 239, 0.2);
+    height: 40px;
+    font-weight: 600;
+
+    &:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(217, 70, 239, 0.3);
+    }
+
+    /* Morphing spinner — only visible while in connecting state */
+    .channel-card__btn-text {
+      transition: opacity var(--duration-fast) var(--ease-smooth);
+    }
+    .channel-card__btn-spinner {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.5);
+      transition: opacity var(--duration-fast) var(--ease-smooth),
+                  transform var(--duration-fast) var(--ease-spring);
+    }
+
+    .theme-light & {
+      box-shadow: 0 2px 10px rgba(139, 92, 246, 0.25);
+      &:hover:not(:disabled) { box-shadow: 0 4px 16px rgba(139, 92, 246, 0.35); }
+    }
+  }
+
+  &--ghost {
+    flex: 1;
+    background: var(--bg-tertiary);
+    border-color: var(--border-subtle);
+    color: var(--text-primary);
+
+    &:hover:not(:disabled) {
+      background: rgba(6, 214, 160, 0.12);
+      border-color: rgba(6, 214, 160, 0.3);
+      color: var(--success);
+    }
+  }
+
+  &--danger-ghost {
+    background: transparent;
+    border-color: var(--border-subtle);
+    color: var(--text-secondary);
+
+    &:hover:not(:disabled) {
+      background: rgba(255, 107, 107, 0.08);
+      border-color: rgba(255, 107, 107, 0.3);
+      color: var(--danger);
+    }
+  }
+}
+
+/* When the section is in 'connecting', the primary button morphs */
+.channel-card--connecting .channel-card__btn--primary {
+  pointer-events: none;
+  .channel-card__btn-text { opacity: 0; }
+  .channel-card__btn-spinner {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* ─── Recent transactions list (connected) ────────────────────── */
+.channel-card__recent {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  animation: stateEnter var(--duration-slow) var(--ease-smooth) 0.2s both;
+}
+
+.channel-card__recent-title {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.channel-card__recent-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.channel-card__recent-item {
+  display: grid;
+  grid-template-columns: 24px 1fr auto;
+  grid-template-rows: auto auto;
+  align-items: center;
+  gap: 4px 10px;
+  padding: 8px 10px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  transition: background var(--duration-fast) var(--ease-smooth);
+
+  &:hover {
+    background: var(--bg-elevated);
+  }
+}
+
+.channel-card__recent-icon {
+  grid-row: 1 / 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background: var(--bg-elevated);
+  border-radius: var(--radius-xs);
+  color: var(--accent-mid);
+}
+
+.channel-card__recent-primary {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.channel-card__recent-secondary {
+  font-size: 11px;
+  color: var(--text-tertiary);
+  font-variant-numeric: tabular-nums;
+  grid-column: 2 / 3;
+}
+
+.channel-card__recent-amount {
+  grid-column: 3;
+  grid-row: 1 / 3;
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   Animations
+   ═══════════════════════════════════════════════════════════════════ */
+
+@keyframes stateEnter {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes actionsFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@keyframes checkPop {
+  0%   { opacity: 0; transform: scale(0.4) rotate(-12deg); }
+  60%  { opacity: 1; transform: scale(1.18) rotate(4deg); }
+  100% { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+
+@keyframes justLinkedPop {
+  /* Subtle but premium: scale + border flash + ring */
+  0%   { transform: scale(1); box-shadow: 0 0 0 0 rgba(6, 214, 160, 0); }
+  18%  {
+    transform: scale(1.015);
+    box-shadow: 0 0 0 6px rgba(6, 214, 160, 0.18),
+                0 0 32px rgba(6, 214, 160, 0.25);
+  }
+  60%  { transform: scale(1); box-shadow: 0 0 0 0 rgba(6, 214, 160, 0); }
+  100% { transform: scale(1); }
+}
+
+/* ─── Reduced motion (accessibility) ───────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .channel-card,
+  .channel-card--just-linked,
+  .channel-card__icon-check,
+  .skeleton-line,
+  .channel-card__state,
+  .channel-card__connected-meta,
+  .channel-card__recent,
+  .channel-card__actions {
+    animation: none !important;
+    transition: none !important;
+  }
+}

@@ -361,13 +361,41 @@
       "code_instructions": "Enviá este código al bot de Telegram para vincular tu cuenta.",
       "open_with_code": "Abrir Telegram con código",
       "generating": "Generando código...",
-      "generate_code": "Generar código de vinculación"
+      "generate_code": "Generar código de vinculación",
+      "connected_status": "Conectado — @{{handle}}",
+      "last_sync": "Listo para registrar transacciones"
     },
     "whatsapp": {
       "title": "WhatsApp",
-      "desc": "Vinculá tu cuenta de WhatsApp.",
+      "desc": "Recibí tus transacciones directo en tu WhatsApp.",
       "coming_soon": "Próximamente",
       "link_whatsapp": "Vincular WhatsApp"
+    },
+    "sms": {
+      "title": "SMS",
+      "desc": "Parsear SMS de transacciones de bancos compatibles.",
+      "coming_soon": "No es prioridad",
+      "link_sms": "Vincular SMS"
+    },
+    "gmail": {
+      "title": "Conectar Gmail",
+      "desc": "Conectá tu Gmail para importar automáticamente las notificaciones bancarias como transacciones.",
+      "connect": "Conectar Gmail",
+      "connecting": "Conectando a Gmail...",
+      "connect_failed": "No se pudo iniciar la conexión con Gmail. Intentá de nuevo.",
+      "sync_failed": "No se pudo sincronizar Gmail. Intentá de nuevo.",
+      "connected_status": "Conectado — {{email}}",
+      "last_sync": "Última sync: {{when}}",
+      "last_sync_just_now": "Última sync: ahora",
+      "recent": "Importaciones recientes",
+      "no_email": "Conectado"
+    },
+    "linked": {
+      "connected_pill": "Conectado",
+      "coming_soon_pill": "Pronto",
+      "sync": "Sincronizar",
+      "disconnect": "Desconectar",
+      "open": "Abrir"
     },
     "preferences": {
       "title": "Preferencias",
