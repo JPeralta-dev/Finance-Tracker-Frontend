@@ -10,9 +10,11 @@ import { TelegramSectionComponent } from './components/telegram-section/telegram
 import { FinalCtaComponent } from './components/final-cta/final-cta.component';
 import { LandingBackgroundComponent } from './components/landing-background/landing-background.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { PricingComponent } from './components/pricing/pricing.component';
 import { FtSubtleRevealDirective } from '../../shared/directives/ft-subtle-reveal.directive';
 import { TranslatePipe } from '../../core/pipes/translate.pipe';
 import { TranslationService } from '../../core/services/translation.service';
+import { TierCard } from '../../core/models/tier.model';
 import { environment } from '../../../environments/environment';
 
 @Component({
@@ -29,6 +31,7 @@ import { environment } from '../../../environments/environment';
     FinalCtaComponent,
     LandingBackgroundComponent,
     FooterComponent,
+    PricingComponent,
     FtSubtleRevealDirective,
     TranslatePipe,
   ],
@@ -67,5 +70,64 @@ export class LandingComponent {
     { icon: 'info', title: 'landing.features.ai_insights.title', description: 'landing.features.ai_insights.description' },
     { icon: 'categories', title: 'landing.features.categories.title', description: 'landing.features.categories.description' },
     { icon: 'telegram', title: 'landing.features.telegram.title', description: 'landing.features.telegram.description' },
+  ];
+
+  /**
+   * Tier cards shared with the subscription page.
+   * Prices are USD for the marketing landing — the subscription page
+   * localizes the same fields per user currency.
+   */
+  readonly tiers: TierCard[] = [
+    {
+      id: 'free',
+      nameKey: 'landing.pricing.tiers.free.name',
+      taglineKey: 'landing.pricing.tiers.free.tagline',
+      price: '$0',
+      priceAnnual: 'forever',
+      popular: false,
+      featureKeys: [
+        'landing.pricing.tiers.free.features.transactions',
+        'landing.pricing.tiers.free.features.categories',
+        'landing.pricing.tiers.free.features.basic_charts',
+        'landing.pricing.tiers.free.features.history',
+      ],
+      ctaKey: 'landing.pricing.tiers.free.cta',
+      highlighted: false,
+    },
+    {
+      id: 'premium',
+      nameKey: 'landing.pricing.tiers.premium.name',
+      taglineKey: 'landing.pricing.tiers.premium.tagline',
+      price: '$4.99',
+      priceAnnual: '/month',
+      annualSavingsKey: 'landing.pricing.save_badge',
+      popular: true,
+      featureKeys: [
+        'landing.pricing.tiers.premium.features.ai_insights',
+        'landing.pricing.tiers.premium.features.goals',
+        'landing.pricing.tiers.premium.features.budgets',
+        'landing.pricing.tiers.premium.features.alerts',
+        'landing.pricing.tiers.premium.features.support',
+      ],
+      ctaKey: 'landing.pricing.tiers.premium.cta',
+      highlighted: true,
+    },
+    {
+      id: 'premium_plus',
+      nameKey: 'landing.pricing.tiers.premium_plus.name',
+      taglineKey: 'landing.pricing.tiers.premium_plus.tagline',
+      price: '$8.99',
+      priceAnnual: '/month',
+      popular: false,
+      featureKeys: [
+        'landing.pricing.tiers.premium_plus.features.everything_premium',
+        'landing.pricing.tiers.premium_plus.features.ai_chat',
+        'landing.pricing.tiers.premium_plus.features.telegram',
+        'landing.pricing.tiers.premium_plus.features.export',
+        'landing.pricing.tiers.premium_plus.features.priority_support',
+      ],
+      ctaKey: 'landing.pricing.tiers.premium_plus.cta',
+      highlighted: false,
+    },
   ];
 }

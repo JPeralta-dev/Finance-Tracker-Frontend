@@ -18,6 +18,8 @@ export interface TierCard {
   id: SubscriptionTier;
   /** i18n key for the display name (e.g. 'landing.pricing.tiers.premium.name') */
   nameKey: string;
+  /** i18n key for the one-line tagline under the name */
+  taglineKey: string;
   /** Display price string (already formatted for current locale) */
   price: string;
   /** Annual price string (shown when annual billing selected) */
