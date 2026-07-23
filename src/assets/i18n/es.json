@@ -713,6 +713,53 @@
       "learnMore": "Más información"
     }
   },
+  "modal": {
+    "close": "Cerrar"
+  },
+  "upgradeModal": {
+    "headline": "Desbloqueá todo el potencial de Flowr",
+    "subhead": "Compará los planes y elegí el que mejor se adapta a tu ritmo.",
+    "featureCol": "Función",
+    "currentTier": "Tu plan",
+    "trialActive": "Tu prueba activa termina en {{days}} días.",
+    "maybeLater": "Quizás más tarde",
+    "tiers": {
+      "free": {
+        "name": "Free",
+        "tagline": "Para empezar",
+        "cta": "Plan actual"
+      },
+      "premium": {
+        "name": "Premium",
+        "tagline": "Más popular",
+        "cta": "Elegir Premium"
+      },
+      "premiumPlus": {
+        "name": "Premium Plus",
+        "tagline": "Para power users",
+        "cta": "Elegir Plus"
+      }
+    },
+    "features": {
+      "transactions": "Registro de transacciones",
+      "basicCharts": "Gráficos básicos",
+      "customCategories": "Categorías personalizables",
+      "history": "Historial",
+      "aiInsights": "Insights con IA",
+      "aiInsightsSub": "Patrones y recomendaciones automáticas",
+      "goals": "Metas de ahorro",
+      "goalsSub": "Trackea hasta el objetivo",
+      "aiChat": "Chat con IA ilimitado",
+      "telegramIntegration": "Integración con Telegram",
+      "exportPdf": "Exportar PDF y CSV",
+      "prioritySupport": "Soporte prioritario"
+    },
+    "cta": {
+      "upgradeToPremium": "Pasarme a Premium",
+      "upgradeToPlus": "Pasarme a Premium Plus",
+      "continueWithPremium": "Continuar con Premium"
+    }
+  },
   "notifications": {
     "bellLabel": "Notificaciones",
     "title": "Notificaciones",

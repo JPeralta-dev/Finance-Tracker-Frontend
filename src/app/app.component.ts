@@ -7,6 +7,7 @@ import { CommandPaletteComponent } from './shared/ui/command-palette/command-pal
 import { ToastContainerComponent } from './shared/ui/toast/toast.component';
 import { CategoryModalComponent } from './shared/ui/category-modal/category-modal.component';
 import { FtConsentBannerComponent } from './shared/components/consent-banner.component';
+import { FtUpgradeModalComponent } from './shared/ui/upgrade-modal/upgrade-modal.component';
 import { CommandService } from './core/services/command.service';
 import { AuthService } from './core/services/auth.service';
 import { FtAnalyticsService } from './core/services/analytics.service';
@@ -14,7 +15,7 @@ import { FtAnalyticsService } from './core/services/analytics.service';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, TopbarComponent, CommandPaletteComponent, ToastContainerComponent, CategoryModalComponent, FtConsentBannerComponent],
+  imports: [RouterOutlet, TopbarComponent, CommandPaletteComponent, ToastContainerComponent, CategoryModalComponent, FtConsentBannerComponent, FtUpgradeModalComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })

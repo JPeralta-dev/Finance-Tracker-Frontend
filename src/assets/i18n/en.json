@@ -713,6 +713,53 @@
       "learnMore": "Learn more"
     }
   },
+  "modal": {
+    "close": "Close"
+  },
+  "upgradeModal": {
+    "headline": "Unlock the full potential of Flowr",
+    "subhead": "Compare the plans and pick the one that fits your pace.",
+    "featureCol": "Feature",
+    "currentTier": "Your plan",
+    "trialActive": "Your active trial ends in {{days}} days.",
+    "maybeLater": "Maybe later",
+    "tiers": {
+      "free": {
+        "name": "Free",
+        "tagline": "To get started",
+        "cta": "Current plan"
+      },
+      "premium": {
+        "name": "Premium",
+        "tagline": "Most popular",
+        "cta": "Choose Premium"
+      },
+      "premiumPlus": {
+        "name": "Premium Plus",
+        "tagline": "For power users",
+        "cta": "Choose Plus"
+      }
+    },
+    "features": {
+      "transactions": "Transaction tracking",
+      "basicCharts": "Basic charts",
+      "customCategories": "Custom categories",
+      "history": "History",
+      "aiInsights": "AI insights",
+      "aiInsightsSub": "Patterns and automatic recommendations",
+      "goals": "Savings goals",
+      "goalsSub": "Track to your target",
+      "aiChat": "Unlimited AI chat",
+      "telegramIntegration": "Telegram integration",
+      "exportPdf": "PDF and CSV export",
+      "prioritySupport": "Priority support"
+    },
+    "cta": {
+      "upgradeToPremium": "Upgrade to Premium",
+      "upgradeToPlus": "Upgrade to Premium Plus",
+      "continueWithPremium": "Continue with Premium"
+    }
+  },
   "notifications": {
     "bellLabel": "Notifications",
     "title": "Notifications",
