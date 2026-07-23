@@ -11,10 +11,11 @@ import { FinalCtaComponent } from './components/final-cta/final-cta.component';
 import { LandingBackgroundComponent } from './components/landing-background/landing-background.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { PricingComponent } from './components/pricing/pricing.component';
+import { ComparisonTableComponent } from './components/comparison-table/comparison-table.component';
 import { FtSubtleRevealDirective } from '../../shared/directives/ft-subtle-reveal.directive';
 import { TranslatePipe } from '../../core/pipes/translate.pipe';
 import { TranslationService } from '../../core/services/translation.service';
-import { TierCard } from '../../core/models/tier.model';
+import { TierCard, TierComparisonRow } from '../../core/models/tier.model';
 import { environment } from '../../../environments/environment';
 
 @Component({
@@ -32,6 +33,7 @@ import { environment } from '../../../environments/environment';
     LandingBackgroundComponent,
     FooterComponent,
     PricingComponent,
+    ComparisonTableComponent,
     FtSubtleRevealDirective,
     TranslatePipe,
   ],
@@ -129,5 +131,19 @@ export class LandingComponent {
       ctaKey: 'landing.pricing.tiers.premium_plus.cta',
       highlighted: false,
     },
+  ];
+
+  /** Comparison rows: each feature mapped to per-tier availability. */
+  readonly comparisonRows: TierComparisonRow[] = [
+    { featureKey: 'landing.comparison.features.transactions', free: true, premium: true, premiumPlus: true },
+    { featureKey: 'landing.comparison.features.categories', free: true, premium: true, premiumPlus: true },
+    { featureKey: 'landing.comparison.features.basic_charts', free: true, premium: true, premiumPlus: true },
+    { featureKey: 'landing.comparison.features.ai_insights', free: false, premium: true, premiumPlus: true },
+    { featureKey: 'landing.comparison.features.goals', free: false, premium: true, premiumPlus: true },
+    { featureKey: 'landing.comparison.features.budgets', free: false, premium: true, premiumPlus: true },
+    { featureKey: 'landing.comparison.features.alerts', free: false, premium: true, premiumPlus: true },
+    { featureKey: 'landing.comparison.features.telegram', free: false, premium: false, premiumPlus: true },
+    { featureKey: 'landing.comparison.features.export', free: false, premium: false, premiumPlus: true },
+    { featureKey: 'landing.comparison.features.priority_support', free: false, premium: false, premiumPlus: true },
   ];
 }
