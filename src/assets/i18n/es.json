@@ -138,7 +138,143 @@
     "cta": {
       "title": "Empezá a trackear tu plata en 30 segundos",
       "subtitle": "Gratis para siempre. Sin tarjeta de crédito. Solo registrate y tomá el control.",
-      "button": "Comenzar Gratis"
+      "button": "Comenzá tu prueba gratis de 30 días"
+    },
+    "pricing": {
+      "section_title": "Precios simples y transparentes",
+      "section_subtitle": "Elegí el plan que se adapte a tus objetivos. Subí de plan o cancelá cuando quieras.",
+      "billing_monthly": "Mensual",
+      "billing_annual": "Anual",
+      "save_badge": "Ahorrá 33%",
+      "tiers": {
+        "free": {
+          "name": "Free",
+          "tagline": "Empezá con lo esencial",
+          "features": {
+            "transactions": "Transacciones ilimitadas",
+            "categories": "Categorías personalizadas",
+            "basic_charts": "Gráficos básicos",
+            "history": "Historial completo"
+          },
+          "cta": "Comenzar"
+        },
+        "premium": {
+          "name": "Premium",
+          "tagline": "Para los que se toman en serio su plata",
+          "features": {
+            "ai_insights": "Insights con IA",
+            "goals": "Metas de ahorro",
+            "budgets": "Presupuestos inteligentes",
+            "alerts": "Alertas de gasto",
+            "support": "Soporte por email"
+          },
+          "cta": "Comenzá tu prueba gratis de 30 días"
+        },
+        "premium_plus": {
+          "name": "Premium Plus",
+          "tagline": "Para power users y profesionales",
+          "features": {
+            "ai_chat": "Chat con IA ilimitado",
+            "telegram": "Integración con Telegram",
+            "export": "Exportar PDF y CSV",
+            "priority_support": "Soporte prioritario",
+            "everything_premium": "Todo lo de Premium"
+          },
+          "cta": "Comenzá tu prueba gratis de 30 días"
+        }
+      }
+    },
+    "comparison": {
+      "title": "Compará los planes",
+      "subtitle": "Todo lo que obtenés con cada tier",
+      "free": "Free",
+      "premium": "Premium",
+      "premium_plus": "Premium Plus",
+      "features": {
+        "transactions": "Transacciones ilimitadas",
+        "categories": "Categorías personalizadas",
+        "basic_charts": "Analítica básica",
+        "ai_insights": "Insights con IA",
+        "goals": "Metas de ahorro",
+        "budgets": "Presupuestos inteligentes",
+        "alerts": "Alertas de gasto",
+        "telegram": "Bot de Telegram",
+        "export": "Exportar PDF y CSV",
+        "priority_support": "Soporte prioritario"
+      }
+    },
+    "testimonials": {
+      "section_title": "Amado por quienes rastrean su plata",
+      "section_subtitle": "Historias reales de usuarios reales",
+      "items": {
+        "maria": {
+          "text": "Flowr me ayudó a ahorrar $2.400 en 3 meses. Los insights de IA me mostraron suscripciones que había olvidado.",
+          "name": "María G.",
+          "role": "Diseñadora, Buenos Aires"
+        },
+        "carlos": {
+          "text": "Registrar gastos desde Telegram es un game changer. Anoto cada café en 5 segundos sin abrir la app.",
+          "name": "Carlos R.",
+          "role": "Ingeniero, Madrid"
+        },
+        "ana": {
+          "text": "Probé 4 apps de finanzas. Flowr es la única con la que me quedo. La interfaz lo hace sentir fácil.",
+          "name": "Ana L.",
+          "role": "Freelancer, Ciudad de México"
+        }
+      },
+      "prev": "Testimonio anterior",
+      "next": "Siguiente testimonio"
+    },
+    "faq": {
+      "section_title": "Preguntas frecuentes",
+      "section_subtitle": "Todo lo que necesitás saber para empezar",
+      "items": {
+        "pricing": {
+          "question": "¿Cuánto cuesta Flowr?",
+          "answer": "Flowr es gratis para siempre en su versión esencial. Premium cuesta $14.900/mes (o $119.000/año) y Premium Plus cuesta $24.900/mes (o $199.000/año). Podés empezar una prueba gratis de 30 días de cualquier plan pago sin tarjeta de crédito."
+        },
+        "cancel": {
+          "question": "¿Puedo cancelar cuando quiera?",
+          "answer": "Sí. Cancelá desde la configuración de tu cuenta en dos clics. Mantenés el acceso hasta el final de tu período de facturación y tus datos quedan disponibles en el plan Free."
+        },
+        "free_trial": {
+          "question": "¿La prueba gratis es realmente gratis?",
+          "answer": "Sí — 30 días, todas las funciones Premium, sin tarjeta de crédito. Te avisamos antes de que termine para que decidas sin presión."
+        },
+        "data_safety": {
+          "question": "¿Están seguros mis datos financieros?",
+          "answer": "Totalmente. Usamos encriptación de 256 bits, nunca vendemos tus datos y tu historial queda en tu dispositivo. Podés exportar o eliminar todo cuando quieras."
+        },
+        "telegram": {
+          "question": "¿Tengo que usar el bot de Telegram?",
+          "answer": "Para nada — el bot es opcional. La app web funciona perfecto sola. El bot solo hace que registrar gastos en movimiento sea más rápido."
+        }
+      }
+    },
+    "trust": {
+      "section_title": "Construido con seguridad y privacidad primero",
+      "section_subtitle": "Tus datos financieros merecen protección de grado bancario",
+      "badges": {
+        "encryption": {
+          "label": "Encriptación 256-bit"
+        },
+        "local_data": {
+          "label": "Tus datos quedan en tu dispositivo"
+        },
+        "no_selling": {
+          "label": "Nunca vendemos tus datos"
+        },
+        "open_source": {
+          "label": "Open source y auditable"
+        },
+        "two_factor": {
+          "label": "Autenticación de dos factores"
+        },
+        "gdpr": {
+          "label": "Cumple GDPR y CCPA"
+        }
+      }
     }
   },
   "dashboard": {
