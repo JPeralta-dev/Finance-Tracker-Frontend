@@ -808,6 +808,14 @@
       }
     }
   },
+  "upgradePrompt": {
+    "default": {
+      "title": "Función premium",
+      "description": "Desbloqueá esta función con Premium.",
+      "cta": "Desbloquear"
+    },
+    "learnMore": "Más información"
+  },
   "emptyState": {
     "premiumUpsell": {
       "insights": {

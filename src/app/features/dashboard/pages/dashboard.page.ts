@@ -15,6 +15,9 @@ import { ClickOutsideDirective } from '../../../shared/directives/click-outside.
 import { FinanceService } from '../../../core/services/finance.service';
 import { ToastService } from '../../../core/services/toast.service';
 import { EmptyStateComponent } from '../../../shared/components/empty-state.component';
+import { FtTrialBannerComponent } from '../../../shared/components/trial-banner.component';
+import { FtUpgradePromptComponent } from '../../../shared/components/upgrade-prompt.component';
+import { FtTourService } from '../../../core/services/tour.service';
 import { TranslatePipe } from '../../../core/pipes/translate.pipe';
 import { TranslationService } from '../../../core/services/translation.service';
 import { AuthService } from '../../../core/services/auth.service';
@@ -61,6 +64,8 @@ class ChartColorCache {
     HoverDepthDirective,
     ClickOutsideDirective,
     EmptyStateComponent,
+    FtTrialBannerComponent,
+    FtUpgradePromptComponent,
     TranslatePipe,
     AiInsightsCardComponent,
     GoalsWidgetComponent,
@@ -80,6 +85,9 @@ export class DashboardPage implements OnInit {
   private readonly chartColors = inject(ChartColorCache);
   readonly authService = inject(AuthService);
   readonly dateRange = inject(DateRangeService);
+  readonly tour = inject(FtTourService);
+
+  readonly isPremium = this.authService.isPremium;
 
   readonly stats = signal<StatCardData[]>([]);
   readonly activity = signal<ActivityItem[]>([]);

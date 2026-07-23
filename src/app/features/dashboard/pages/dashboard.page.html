@@ -9,6 +9,11 @@
     />
   } @else if (state() === 'ready') {
     <div class="dashboard-content-layer dashboard-content-layer--ready">
+      <!-- ROW 0: Trial countdown banner (only when active trial) -->
+      <div class="dashboard-row dashboard-row--banner" ftSubtleReveal="fade-up" [delay]="25">
+        <ft-trial-banner />
+      </div>
+
       <!-- Greeting -->
       <div class="dashboard-greeting" ftSubtleReveal="fade-up">
         <div>
@@ -104,14 +109,40 @@
         </div>
       </div>
 
-      <!-- ROW 3: AI Insights Card (premium gated) -->
+      <!-- ROW 3: AI Insights Card (premium gated, with upgrade prompt for free users) -->
       <div class="dashboard-row dashboard-row--premium" ftSubtleReveal="fade-up" [delay]="125">
-        <ft-ai-insights-card />
+        @if (isPremium()) {
+          <ft-ai-insights-card />
+        } @else {
+          <ft-upgrade-prompt
+            feature="insights"
+            titleKey="emptyState.premiumUpsell.insights.title"
+            descriptionKey="emptyState.premiumUpsell.insights.description"
+            ctaKey="emptyState.premiumUpsell.insights.cta"
+          >
+            <div upgradePreview>
+              <ft-ai-insights-card />
+            </div>
+          </ft-upgrade-prompt>
+        }
       </div>
 
-      <!-- ROW 4: Goals Widget (premium gated) -->
+      <!-- ROW 4: Goals Widget (premium gated, with upgrade prompt for free users) -->
       <div class="dashboard-row dashboard-row--premium" ftSubtleReveal="fade-up" [delay]="150">
-        <ft-goals-widget />
+        @if (isPremium()) {
+          <ft-goals-widget />
+        } @else {
+          <ft-upgrade-prompt
+            feature="goals"
+            titleKey="emptyState.premiumUpsell.goals.title"
+            descriptionKey="emptyState.premiumUpsell.goals.description"
+            ctaKey="emptyState.premiumUpsell.goals.cta"
+          >
+            <div upgradePreview>
+              <ft-goals-widget />
+            </div>
+          </ft-upgrade-prompt>
+        }
       </div>
 
       <!-- ROW 4b: Pocket Progress Widget (premium gated) -->

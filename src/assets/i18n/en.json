@@ -808,6 +808,14 @@
       }
     }
   },
+  "upgradePrompt": {
+    "default": {
+      "title": "Premium feature",
+      "description": "Unlock this with Premium.",
+      "cta": "Unlock"
+    },
+    "learnMore": "Learn more"
+  },
   "emptyState": {
     "premiumUpsell": {
       "insights": {
