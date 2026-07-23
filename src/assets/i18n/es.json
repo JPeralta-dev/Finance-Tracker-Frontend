@@ -87,7 +87,7 @@
     "heroSubtitle": "Rastrea, analiza y optimiza tus gastos con información en tiempo real. Conecta tus cuentas o usa nuestro bot de Telegram para registrar al instante.",
     "getStarted": "Comenzar",
     "telegramBot": "Bot de Telegram",
-    "tryTelegramBot": "o probá nuestro bot de Telegram",
+    "tryTelegramBot": "o prueba nuestro bot de Telegram",
     "trustFree": "Gratis para siempre",
     "trustNoCard": "Sin tarjeta de crédito",
     "trustEncrypted": "Encriptado",
@@ -95,28 +95,28 @@
       "title": "Todo lo que necesitas",
       "view_all": "Ver todas las funciones",
       "dashboard": {
-        "title": "Conocé tu posición en 3 segundos",
-        "description": "Ves tu balance exacto, ingresos y gastos apenas abrís la app. Sin navegar por menús."
+        "title": "Conoce tu posición en 3 segundos",
+        "description": "Ve tu balance exacto, ingresos y gastos apenas abres la app. Sin navegar por menús."
       },
       "transactions": {
         "title": "Cada transacción, perfectamente organizada",
-        "description": "Registrá gastos en segundos. Filtra por fecha, tipo o categoría para encontrar justo lo que necesitás."
+        "description": "Registra gastos en segundos. Filtra por fecha, tipo o categoría para encontrar justo lo que necesitas."
       },
       "analytics": {
-        "title": "Entendé a dónde va tu plata",
-        "description": "Gráficos interactivos muestran tus patrones de gasto. Detectá tendencias antes de que sean problemas."
+        "title": "Entiende a dónde va tu dinero",
+        "description": "Gráficos interactivos muestran tus patrones de gasto. Detecta tendencias antes de que sean problemas."
       },
       "ai_insights": {
-        "title": "Tomá decisiones más inteligentes",
+        "title": "Toma decisiones más inteligentes",
         "description": "Recomendaciones personalizadas te ayudan a ahorrar más. Sin necesidad de un asesor financiero."
       },
       "categories": {
         "title": "Organización automática",
-        "description": "Las categorías se ordenan solas. Creá categorías personalizadas para tener control total."
+        "description": "Las categorías se ordenan solas. Crea categorías personalizadas para tener control total."
       },
       "telegram": {
-        "title": "Registrá gastos sin abrir la app",
-        "description": "Mandá un mensaje como 'Café $5' a nuestro bot. Se registra al instante. Cero fricción."
+        "title": "Registra gastos sin abrir la app",
+        "description": "Envía un mensaje como 'Café $5' a nuestro bot. Se registra al instante. Cero fricción."
       }
     },
     "telegram": {
@@ -125,8 +125,8 @@
     },
     "telegram_section": {
       "badge": "Impulsado por FlowrBot",
-      "title": "Registrá gastos directamente<br />desde <span class=\"telegram-section__accent\">Telegram</span>",
-      "description": "Registrá transacciones al instante con FlowrBot. Solo enviá un mensaje como \"Café $5\" y se registra automáticamente. Sin abrir la app.",
+      "title": "Registra gastos directamente<br />desde <span class=\"telegram-section__accent\">Telegram</span>",
+      "description": "Registra transacciones al instante con FlowrBot. Solo envía un mensaje como \"Café $5\" y se registra automáticamente. Sin abrir la app.",
       "open_bot": "Abrir FlowrBot",
       "chat_name": "FlowrBot",
       "chat_status": "En línea",
@@ -136,20 +136,20 @@
       "demo_bot_2": "Registrado: <strong>$12.00</strong> en <strong>Transporte</strong><br /><span class=\"chat-preview__meta\">Hoy, 11:15 AM</span>"
     },
     "cta": {
-      "title": "Empezá a trackear tu plata en 30 segundos",
-      "subtitle": "Gratis para siempre. Sin tarjeta de crédito. Solo registrate y tomá el control.",
-      "button": "Comenzá tu prueba gratis de 30 días"
+      "title": "Empieza a trackear tu dinero en 30 segundos",
+      "subtitle": "Gratis para siempre. Sin tarjeta de crédito. Solo regístrate y toma el control.",
+      "button": "Comienza tu prueba gratis de 30 días"
     },
     "pricing": {
       "section_title": "Precios simples y transparentes",
-      "section_subtitle": "Elegí el plan que se adapte a tus objetivos. Subí de plan o cancelá cuando quieras.",
+      "section_subtitle": "Elige el plan que se adapte a tus objetivos. Sube de plan o cancela cuando quieras.",
       "billing_monthly": "Mensual",
       "billing_annual": "Anual",
-      "save_badge": "Ahorrá 33%",
+      "save_badge": "Ahorra 33%",
       "tiers": {
         "free": {
           "name": "Free",
-          "tagline": "Empezá con lo esencial",
+          "tagline": "Empieza con lo esencial",
           "features": {
             "transactions": "Transacciones ilimitadas",
             "categories": "Categorías personalizadas",
@@ -160,7 +160,7 @@
         },
         "premium": {
           "name": "Premium",
-          "tagline": "Para los que se toman en serio su plata",
+          "tagline": "Para los que se toman en serio su dinero",
           "features": {
             "ai_insights": "Insights con IA",
             "goals": "Metas de ahorro",
@@ -168,7 +168,7 @@
             "alerts": "Alertas de gasto",
             "support": "Soporte por email"
           },
-          "cta": "Comenzá tu prueba gratis de 30 días"
+          "cta": "Comienza tu prueba gratis de 30 días"
         },
         "premium_plus": {
           "name": "Premium Plus",
@@ -180,13 +180,13 @@
             "priority_support": "Soporte prioritario",
             "everything_premium": "Todo lo de Premium"
           },
-          "cta": "Comenzá tu prueba gratis de 30 días"
+          "cta": "Comienza tu prueba gratis de 30 días"
         }
       }
     },
     "comparison": {
-      "title": "Compará los planes",
-      "subtitle": "Todo lo que obtenés con cada tier",
+      "title": "Compara los planes",
+      "subtitle": "Todo lo que obtienes con cada tier",
       "free": "Free",
       "premium": "Premium",
       "premium_plus": "Premium Plus",
@@ -204,7 +204,7 @@
       }
     },
     "testimonials": {
-      "section_title": "Amado por quienes rastrean su plata",
+      "section_title": "Amado por quienes rastrean su dinero",
       "section_subtitle": "Historias reales de usuarios reales",
       "items": {
         "maria": {
@@ -228,15 +228,15 @@
     },
     "faq": {
       "section_title": "Preguntas frecuentes",
-      "section_subtitle": "Todo lo que necesitás saber para empezar",
+      "section_subtitle": "Todo lo que necesitas saber para empezar",
       "items": {
         "pricing": {
           "question": "¿Cuánto cuesta Flowr?",
-          "answer": "Flowr es gratis para siempre en su versión esencial. Premium cuesta $14.900/mes (o $119.000/año) y Premium Plus cuesta $24.900/mes (o $199.000/año). Podés empezar una prueba gratis de 30 días de cualquier plan pago sin tarjeta de crédito."
+          "answer": "Flowr es gratis para siempre en su versión esencial. Premium cuesta $14.900/mes (o $119.000/año) y Premium Plus cuesta $24.900/mes (o $199.000/año). Puedes empezar una prueba gratis de 30 días de cualquier plan pago sin tarjeta de crédito."
         },
         "cancel": {
           "question": "¿Puedo cancelar cuando quiera?",
-          "answer": "Sí. Cancelá desde la configuración de tu cuenta en dos clics. Mantenés el acceso hasta el final de tu período de facturación y tus datos quedan disponibles en el plan Free."
+          "answer": "Sí. Cancela desde la configuración de tu cuenta en dos clics. Mantienes el acceso hasta el final de tu período de facturación y tus datos quedan disponibles en el plan Free."
         },
         "free_trial": {
           "question": "¿La prueba gratis es realmente gratis?",
@@ -244,7 +244,7 @@
         },
         "data_safety": {
           "question": "¿Están seguros mis datos financieros?",
-          "answer": "Totalmente. Usamos encriptación de 256 bits, nunca vendemos tus datos y tu historial queda en tu dispositivo. Podés exportar o eliminar todo cuando quieras."
+          "answer": "Totalmente. Usamos encriptación de 256 bits, nunca vendemos tus datos y tu historial queda en tu dispositivo. Puedes exportar o eliminar todo cuando quieras."
         },
         "telegram": {
           "question": "¿Tengo que usar el bot de Telegram?",
@@ -291,7 +291,7 @@
       "privacy": {
         "eyebrow": "Legal",
         "title": "Política de Privacidad",
-        "coming_soon_text": "Nuestra Política de Privacidad completa está en camino. Mientras tanto, la versión corta: encriptamos tus datos, nunca los vendemos, y podés eliminar tu cuenta en cualquier momento."
+        "coming_soon_text": "Nuestra Política de Privacidad completa está en camino. Mientras tanto, la versión corta: encriptamos tus datos, nunca los vendemos, y puedes eliminar tu cuenta en cualquier momento."
       },
       "cookies": {
         "eyebrow": "Legal",
@@ -390,7 +390,7 @@
       "negative_savings": "Estás gastando {{rate}}% más de lo que ganás este mes",
       "high_concentration": "El {{percentage}}% de tus gastos se concentra en {{count}} categorías",
       "period_trend": "Comparado con el período anterior, tus gastos {{direction}} un {{percentage}}%",
-      "monthly_projection": "Si mantenés este ritmo terminarás el mes con ${{projectedIncome}} en ingresos y ${{projectedExpenses}} en gastos",
+      "monthly_projection": "Si mantienes este ritmo terminarás el mes con ${{projectedIncome}} en ingresos y ${{projectedExpenses}} en gastos",
       "new_category_expense": "Nuevo gasto en {{category}} este mes: ${{amount}}",
       "category_spike": "Tu gasto en {{category}} aumentó {{percentage}}% respecto al mes pasado",
       "category_increase": "Tu gasto en {{category}} aumentó {{percentage}}% respecto al mes pasado",
@@ -501,35 +501,35 @@
     "coming_soon": "Próximamente...",
     "security": {
       "title": "Seguridad",
-      "desc": "Configurá la seguridad de tu cuenta.",
+      "desc": "configura la seguridad de tu cuenta.",
       "coming_soon": "Próximamente"
     },
     "settings_notifications": {
       "title": "Notificaciones",
-      "desc": "Configurá cómo recibís las notificaciones.",
+      "desc": "configura cómo recibes las notificaciones.",
       "coming_soon": "Próximamente"
     },
     "session": {
       "title": "Sesión",
       "sign_out": "Cerrar sesión",
-      "confirm_message": "¿Estás seguro de que querés cerrar sesión?",
+      "confirm_message": "¿Estás seguro de que quieres cerrar sesión?",
       "confirm_sign_out": "Sí, cerrar sesión"
     },
     "accounts": {
       "title": "Cuentas vinculadas",
-      "desc": "Conectá tus cuentas de mensajería."
+      "desc": "conecta tus cuentas de mensajería."
     },
     "telegram": {
-      "title": "Vinculá Telegram",
-      "desc": "Conectá tu cuenta de Telegram para registrar transacciones desde el bot.",
+      "title": "vincula Telegram",
+      "desc": "conecta tu cuenta de Telegram para registrar transacciones desde el bot.",
       "loading": "Verificando estado de vinculación...",
       "linked_success": "¡Cuenta vinculada exitosamente!",
       "already_linked": "Cuenta vinculada",
-      "linked_desc": "Tu cuenta de Telegram está vinculada. Podés registrar transacciones desde el bot.",
+      "linked_desc": "Tu cuenta de Telegram está vinculada. puedes registrar transacciones desde el bot.",
       "link_telegram": "Abrir Telegram",
       "code_label": "Tu código de vinculación",
       "code_expires": "Expira",
-      "code_instructions": "Enviá este código al bot de Telegram para vincular tu cuenta.",
+      "code_instructions": "envía este código al bot de Telegram para vincular tu cuenta.",
       "open_with_code": "Abrir Telegram con código",
       "generating": "Generando código...",
       "generate_code": "Generar código de vinculación",
@@ -538,7 +538,7 @@
     },
     "whatsapp": {
       "title": "WhatsApp",
-      "desc": "Recibí tus transacciones directo en tu WhatsApp.",
+      "desc": "recibe tus transacciones directo en tu WhatsApp.",
       "coming_soon": "Próximamente",
       "link_whatsapp": "Vincular WhatsApp"
     },
@@ -550,7 +550,7 @@
     },
     "gmail": {
       "title": "Conectar Gmail",
-      "desc": "Conectá tu Gmail para importar automáticamente las notificaciones bancarias como transacciones.",
+      "desc": "conecta tu Gmail para importar automáticamente las notificaciones bancarias como transacciones.",
       "connect": "Conectar Gmail",
       "connecting": "Conectando a Gmail...",
       "connect_failed": "No se pudo iniciar la conexión con Gmail. Intentá de nuevo.",
@@ -584,7 +584,7 @@
   },
   "analytics": {
     "title": "Análisis",
-    "subtitle": "Visualizá tus tendencias financieras y desgloses.",
+    "subtitle": "visualiza tus tendencias financieras y desgloses.",
     "monthlyTrends": "Tendencias Mensuales",
     "incomeVsExpenses": "Ingresos vs Gastos",
     "last6Months": "Últimos 6 meses",
@@ -607,7 +607,7 @@
     "netSavings": "Ahorro Neto",
     "savingsRate": "Tasa de Ahorro",
     "emptyTitle": "Sin datos aún",
-    "emptyDesc": "Empezá a registrar transacciones para ver tu análisis financiero.",
+    "emptyDesc": "empieza a registrar transacciones para ver tu análisis financiero.",
     "loading": "Cargando análisis...",
     "fetchingData": "Obteniendo datos financieros",
     "errorTitle": "Error al cargar",
@@ -619,12 +619,12 @@
     "noDailyData": "Sin datos de gastos diarios",
     "chartError": "Error al cargar gráfico",
     "welcomeTitle": "Bienvenido a Análisis",
-    "welcomeDesc": "Empezá agregando tu primera transacción para ver insights.",
+    "welcomeDesc": "empieza agregando tu primera transacción para ver insights.",
     "addFirstTransaction": "Agregar Primera Transacción",
     "noDataTitle": "Sin Datos para Este Período",
     "noDataDesc": "Intentá ajustar los filtros para ver resultados.",
     "clearFilters": "Limpiar Filtros",
-    "welcomeBanner": "¿Listo para empezar? Agregá tu primera transacción para desbloquear insights.",
+    "welcomeBanner": "¿Listo para empezar? agrega tu primera transacción para desbloquear insights.",
     "period": {
       "1m": "1M",
       "3m": "3M",

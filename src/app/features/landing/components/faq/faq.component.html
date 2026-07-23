@@ -1,13 +1,19 @@
 <section class="faq" id="faq" aria-label="Frequently asked questions">
-  <div class="faq__inner" ftSubtleReveal="fade-up">
-    <div class="faq__header">
+  <div class="faq__inner">
+    <div class="faq__header" ftSubtleReveal="per-word-crossfade" [delay]="100">
       <h2 class="faq__title">{{ 'landing.faq.section_title' | translate }}</h2>
       <p class="faq__subtitle">{{ 'landing.faq.section_subtitle' | translate }}</p>
     </div>
 
     <div class="faq__list" role="list">
       @for (item of items(); track item.questionKey; let i = $index) {
-        <div class="faq-item" [class.faq-item--expanded]="isExpanded(i)" role="listitem">
+        <div 
+          class="faq-item" 
+          [class.faq-item--expanded]="isExpanded(i)" 
+          role="listitem"
+          ftSubtleReveal="fade-up"
+          [delay]="200 + (i * 100)"
+        >
           <button
             type="button"
             class="faq-item__question"

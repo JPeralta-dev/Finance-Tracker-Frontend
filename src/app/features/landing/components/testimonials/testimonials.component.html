@@ -1,7 +1,7 @@
 @if (hasItems()) {
   <section class="testimonials" id="testimonials" aria-label="Testimonials">
-    <div class="testimonials__inner" ftSubtleReveal="fade-up">
-      <div class="testimonials__header">
+    <div class="testimonials__inner">
+      <div class="testimonials__header" ftSubtleReveal="per-word-crossfade" [delay]="100">
         <h2 class="testimonials__title">{{ 'landing.testimonials.section_title' | translate }}</h2>
         <p class="testimonials__subtitle">{{ 'landing.testimonials.section_subtitle' | translate }}</p>
       </div>
@@ -11,6 +11,8 @@
         role="region"
         aria-roledescription="carousel"
         aria-label="Testimonial carousel"
+        ftSubtleReveal="soft-blur-in"
+        [delay]="300"
       >
         <button
           type="button"
@@ -64,7 +66,7 @@
         </button>
       </div>
 
-      <div class="testimonials__dots" role="tablist" aria-label="Testimonial selector">
+      <div class="testimonials__dots" role="tablist" aria-label="Testimonial selector" ftSubtleReveal="fade-up" [delay]="500">
         @for (item of items(); track item.nameKey; let i = $index) {
           <button
             type="button"
