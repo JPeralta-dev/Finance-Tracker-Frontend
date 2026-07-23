@@ -705,6 +705,14 @@
   "theme": {
     "toggle": "Cambiar tema"
   },
+  "analytics": {
+    "consent": {
+      "message": "Usamos cookies y herramientas de análisis para entender cómo mejoramos Flowr. Vos decidís.",
+      "accept": "Aceptar",
+      "decline": "Rechazar",
+      "learnMore": "Más información"
+    }
+  },
   "notifications": {
     "bellLabel": "Notificaciones",
     "title": "Notificaciones",
