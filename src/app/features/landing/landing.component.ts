@@ -12,10 +12,11 @@ import { LandingBackgroundComponent } from './components/landing-background/land
 import { FooterComponent } from './components/footer/footer.component';
 import { PricingComponent } from './components/pricing/pricing.component';
 import { ComparisonTableComponent } from './components/comparison-table/comparison-table.component';
+import { TestimonialsComponent } from './components/testimonials/testimonials.component';
 import { FtSubtleRevealDirective } from '../../shared/directives/ft-subtle-reveal.directive';
 import { TranslatePipe } from '../../core/pipes/translate.pipe';
 import { TranslationService } from '../../core/services/translation.service';
-import { TierCard, TierComparisonRow } from '../../core/models/tier.model';
+import { TierCard, TierComparisonRow, Testimonial } from '../../core/models/tier.model';
 import { environment } from '../../../environments/environment';
 
 @Component({
@@ -34,6 +35,7 @@ import { environment } from '../../../environments/environment';
     FooterComponent,
     PricingComponent,
     ComparisonTableComponent,
+    TestimonialsComponent,
     FtSubtleRevealDirective,
     TranslatePipe,
   ],
@@ -145,5 +147,27 @@ export class LandingComponent {
     { featureKey: 'landing.comparison.features.telegram', free: false, premium: false, premiumPlus: true },
     { featureKey: 'landing.comparison.features.export', free: false, premium: false, premiumPlus: true },
     { featureKey: 'landing.comparison.features.priority_support', free: false, premium: false, premiumPlus: true },
+  ];
+
+  /** Placeholder testimonials — swappable via the input array. */
+  readonly testimonials: Testimonial[] = [
+    {
+      nameKey: 'landing.testimonials.items.maria.name',
+      roleKey: 'landing.testimonials.items.maria.role',
+      textKey: 'landing.testimonials.items.maria.text',
+      avatarInitials: 'MG',
+    },
+    {
+      nameKey: 'landing.testimonials.items.carlos.name',
+      roleKey: 'landing.testimonials.items.carlos.role',
+      textKey: 'landing.testimonials.items.carlos.text',
+      avatarInitials: 'CR',
+    },
+    {
+      nameKey: 'landing.testimonials.items.ana.name',
+      roleKey: 'landing.testimonials.items.ana.role',
+      textKey: 'landing.testimonials.items.ana.text',
+      avatarInitials: 'AL',
+    },
   ];
 }

@@ -1,0 +1,82 @@
+@if (hasItems()) {
+  <section class="testimonials" id="testimonials" aria-label="Testimonials">
+    <div class="testimonials__inner" ftSubtleReveal="fade-up">
+      <div class="testimonials__header">
+        <h2 class="testimonials__title">{{ 'landing.testimonials.section_title' | translate }}</h2>
+        <p class="testimonials__subtitle">{{ 'landing.testimonials.section_subtitle' | translate }}</p>
+      </div>
+
+      <div
+        class="testimonials__viewport"
+        role="region"
+        aria-roledescription="carousel"
+        aria-label="Testimonial carousel"
+      >
+        <button
+          type="button"
+          class="testimonials__nav testimonials__nav--prev"
+          (click)="prev()"
+          [attr.aria-label]="'landing.testimonials.prev' | translate"
+        >
+          <ng-icon name="chevronLeft" size="1.25rem" />
+        </button>
+
+        <div class="testimonials__track" [style.transform]="'translateX(-' + currentIndex() * 100 + '%)'">
+          @for (item of items(); track item.nameKey; let i = $index) {
+            <article
+              class="testimonial-card"
+              role="group"
+              aria-roledescription="slide"
+              [attr.aria-label]="'Testimonial ' + (i + 1) + ' of ' + totalItems()"
+              [attr.aria-hidden]="i !== currentIndex()"
+            >
+              <div class="testimonial-card__avatar" aria-hidden="true">
+                <span class="testimonial-card__initials">{{ item.avatarInitials }}</span>
+              </div>
+              <blockquote class="testimonial-card__quote">
+                <ng-icon name="check" size="1.5rem" class="testimonial-card__quote-icon" />
+                <p class="testimonial-card__text">{{ item.textKey | translate }}</p>
+              </blockquote>
+              <footer class="testimonial-card__footer">
+                <div class="testimonial-card__author">
+                  <span class="testimonial-card__name">{{ item.nameKey | translate }}</span>
+                  <span class="testimonial-card__role">{{ item.roleKey | translate }}</span>
+                </div>
+                <div class="testimonial-card__rating" aria-label="5 out of 5 stars">
+                  <ng-icon name="star" size="0.875rem" />
+                  <ng-icon name="star" size="0.875rem" />
+                  <ng-icon name="star" size="0.875rem" />
+                  <ng-icon name="star" size="0.875rem" />
+                  <ng-icon name="star" size="0.875rem" />
+                </div>
+              </footer>
+            </article>
+          }
+        </div>
+
+        <button
+          type="button"
+          class="testimonials__nav testimonials__nav--next"
+          (click)="next()"
+          [attr.aria-label]="'landing.testimonials.next' | translate"
+        >
+          <ng-icon name="chevronRight" size="1.25rem" />
+        </button>
+      </div>
+
+      <div class="testimonials__dots" role="tablist" aria-label="Testimonial selector">
+        @for (item of items(); track item.nameKey; let i = $index) {
+          <button
+            type="button"
+            class="testimonials__dot"
+            [class.testimonials__dot--active]="i === currentIndex()"
+            (click)="goTo(i)"
+            [attr.aria-label]="'Go to testimonial ' + (i + 1)"
+            [attr.aria-selected]="i === currentIndex()"
+            role="tab"
+          ></button>
+        }
+      </div>
+    </div>
+  </section>
+}

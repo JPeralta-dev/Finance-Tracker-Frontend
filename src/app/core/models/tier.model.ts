@@ -45,8 +45,10 @@ export interface TierComparisonRow {
 }
 
 export interface Testimonial {
-  name: string;
-  role: string;
+  /** i18n key for the person name */
+  nameKey: string;
+  /** i18n key for the person role / location */
+  roleKey: string;
   /** i18n key for the testimonial text */
   textKey: string;
   /** Two-letter initials for avatar placeholder */
