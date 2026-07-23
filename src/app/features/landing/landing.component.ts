@@ -14,10 +14,11 @@ import { PricingComponent } from './components/pricing/pricing.component';
 import { ComparisonTableComponent } from './components/comparison-table/comparison-table.component';
 import { TestimonialsComponent } from './components/testimonials/testimonials.component';
 import { FaqComponent } from './components/faq/faq.component';
+import { TrustSignalsComponent } from './components/trust-signals/trust-signals.component';
 import { FtSubtleRevealDirective } from '../../shared/directives/ft-subtle-reveal.directive';
 import { TranslatePipe } from '../../core/pipes/translate.pipe';
 import { TranslationService } from '../../core/services/translation.service';
-import { TierCard, TierComparisonRow, Testimonial, FaqItem } from '../../core/models/tier.model';
+import { TierCard, TierComparisonRow, Testimonial, FaqItem, TrustBadge } from '../../core/models/tier.model';
 import { environment } from '../../../environments/environment';
 
 @Component({
@@ -38,6 +39,7 @@ import { environment } from '../../../environments/environment';
     ComparisonTableComponent,
     TestimonialsComponent,
     FaqComponent,
+    TrustSignalsComponent,
     FtSubtleRevealDirective,
     TranslatePipe,
   ],
@@ -195,5 +197,15 @@ export class LandingComponent {
       questionKey: 'landing.faq.items.telegram.question',
       answerKey: 'landing.faq.items.telegram.answer',
     },
+  ];
+
+  /** Trust badges — six security/privacy signals rendered as glass cards. */
+  readonly trustBadges: TrustBadge[] = [
+    { icon: 'lockClosed', labelKey: 'landing.trust.badges.encryption.label' },
+    { icon: 'shieldCheck', labelKey: 'landing.trust.badges.local_data.label' },
+    { icon: 'check', labelKey: 'landing.trust.badges.no_selling.label' },
+    { icon: 'code', labelKey: 'landing.trust.badges.open_source.label' },
+    { icon: 'shieldCheck', labelKey: 'landing.trust.badges.two_factor.label' },
+    { icon: 'globe', labelKey: 'landing.trust.badges.gdpr.label' },
   ];
 }
