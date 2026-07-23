@@ -1,6 +1,7 @@
-import { Component, HostListener, signal, inject } from '@angular/core';
+import { Component, HostListener, OnInit, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { Meta, Title } from '@angular/platform-browser';
 import { NgIcon } from '@ng-icons/core';
 import { ICONS } from '../../shared/icons/icon-registry';
 import { PublicNavbarComponent } from './components/public-navbar/public-navbar.component';
@@ -46,12 +47,63 @@ import { environment } from '../../../environments/environment';
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.scss',
 })
-export class LandingComponent {
+export class LandingComponent implements OnInit {
   private readonly translationService = inject(TranslationService);
+  private readonly meta = inject(Meta);
+  private readonly title = inject(Title);
+
   readonly scrollProgress = signal(0);
   readonly telegramBotUrl = environment.telegramBotUrl;
 
+  /** Public site URL — used as og:url and twitter:url. */
+  readonly siteUrl = environment.production
+    ? 'https://flowr.finance'
+    : 'http://localhost:4200';
+
+  /** Path to the OG image — 1200×630 SVG placeholder. */
+  readonly ogImagePath = '/assets/og/og-image.svg';
+
   private scrollTicking = false;
+
+  ngOnInit(): void {
+    this.setSeoTags();
+  }
+
+  /**
+   * Set Open Graph, Twitter Card, description, and keywords meta tags.
+   * Values are pulled from the active language's translations so they
+   * update when the user switches language.
+   */
+  private setSeoTags(): void {
+    const translations = this.translationService.translations();
+    const t = (translations && translations['landing']) ?? {};
+    const title = `${t['heroBadge'] ?? 'Flowr'} — ${(t['heroTitle'] ?? 'Your money, perfectly organized').replace(/<[^>]+>/g, '')}`;
+    const description = t['heroSubtitle'] ?? 'Track, analyze, and optimize your spending — free forever.';
+    const keywords =
+      'personal finance, expense tracker, budget app, money management, financial insights, Flowr';
+    const ogImage = `${this.siteUrl}${this.ogImagePath}`;
+
+    this.title.setTitle(title);
+
+    this.meta.updateTag({ name: 'description', content: description });
+    this.meta.updateTag({ name: 'keywords', content: keywords });
+
+    // Open Graph
+    this.meta.updateTag({ property: 'og:title', content: title });
+    this.meta.updateTag({ property: 'og:description', content: description });
+    this.meta.updateTag({ property: 'og:type', content: 'website' });
+    this.meta.updateTag({ property: 'og:url', content: this.siteUrl });
+    this.meta.updateTag({ property: 'og:image', content: ogImage });
+    this.meta.updateTag({ property: 'og:image:width', content: '1200' });
+    this.meta.updateTag({ property: 'og:image:height', content: '630' });
+    this.meta.updateTag({ property: 'og:locale', content: this.translationService.currentLang() });
+
+    // Twitter Card
+    this.meta.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
+    this.meta.updateTag({ name: 'twitter:title', content: title });
+    this.meta.updateTag({ name: 'twitter:description', content: description });
+    this.meta.updateTag({ name: 'twitter:image', content: ogImage });
+  }
 
   @HostListener('window:scroll', [])
   onScroll(): void {
