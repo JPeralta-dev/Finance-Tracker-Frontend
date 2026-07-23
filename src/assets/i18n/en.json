@@ -808,6 +808,42 @@
       }
     }
   },
+  "emptyState": {
+    "premiumUpsell": {
+      "insights": {
+        "title": "Unlock AI insights",
+        "description": "Let AI detect patterns in your spending and recommend ways to save more.",
+        "cta": "Unlock insights"
+      },
+      "goals": {
+        "title": "Your financial goals, unlocked",
+        "description": "Track to the finish line with custom goals and alerts as you get close.",
+        "cta": "Create a goal"
+      },
+      "analytics": {
+        "title": "Advanced analytics",
+        "description": "Visualize your money with detailed charts and future projections.",
+        "cta": "View analytics"
+      }
+    },
+    "firstUse": {
+      "categories": {
+        "title": "Let's get started!",
+        "description": "Create your first category to start organizing your spending your way.",
+        "cta": "Create my first category"
+      },
+      "goals": {
+        "title": "Your first goal",
+        "description": "Set a financial target and Flowr will help you reach it. Start with something concrete.",
+        "cta": "Create my first goal"
+      },
+      "transactions": {
+        "title": "Add your first transaction",
+        "description": "Log an expense or income manually. You can connect the Telegram bot later to automate.",
+        "cta": "Add first transaction"
+      }
+    }
+  },
   "notifications": {
     "bellLabel": "Notifications",
     "title": "Notifications",
