@@ -769,6 +769,45 @@
     "endsToday": "Your premium trial ends today.",
     "cta": "Upgrade to Premium"
   },
+  "tour": {
+    "progress": "Step {{current}} of {{total}}",
+    "skipTour": "Skip tour",
+    "previous": "Back",
+    "next": "Next",
+    "finish": "Done",
+    "startExploring": "Start exploring",
+    "triggerCard": {
+      "title": "Take a quick tour?",
+      "description": "We'll show you the essentials in under a minute.",
+      "start": "Start tour",
+      "later": "Maybe later"
+    },
+    "steps": {
+      "welcome": {
+        "title": "Welcome to Flowr!",
+        "description": "Your money, perfectly organized. Here's what you can do from the main panel."
+      },
+      "telegram": {
+        "title": "Connect Telegram",
+        "description": "Log expenses by sending a message to our bot. No need to open the app.",
+        "cta": "Connect now"
+      },
+      "categories": {
+        "title": "Create categories",
+        "description": "Customize how your spending is organized. Food, transport, fun — your call.",
+        "cta": "Create category"
+      },
+      "logExpense": {
+        "title": "Log your first expense",
+        "description": "One click, one expense logged. Flowr handles the rest.",
+        "cta": "Log expense"
+      },
+      "done": {
+        "title": "You're all set!",
+        "description": "You know the essentials. Start exploring and see what Flowr can do for you."
+      }
+    }
+  },
   "notifications": {
     "bellLabel": "Notifications",
     "title": "Notifications",
