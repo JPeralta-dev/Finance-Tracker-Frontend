@@ -275,6 +275,41 @@
           "label": "Cumple GDPR y CCPA"
         }
       }
+    },
+    "legal": {
+      "back": "Volver al inicio",
+      "back_to_home": "Volver al inicio",
+      "last_updated": "Última actualización: {{year}}",
+      "coming_soon": {
+        "title": "Próximamente"
+      },
+      "terms": {
+        "eyebrow": "Legal",
+        "title": "Términos del Servicio",
+        "coming_soon_text": "Nuestros Términos del Servicio completos están siendo redactados por nuestro equipo legal. Mientras tanto, al usar Flowr aceptás usar el servicio de forma responsable y respetar a otros usuarios."
+      },
+      "privacy": {
+        "eyebrow": "Legal",
+        "title": "Política de Privacidad",
+        "coming_soon_text": "Nuestra Política de Privacidad completa está en camino. Mientras tanto, la versión corta: encriptamos tus datos, nunca los vendemos, y podés eliminar tu cuenta en cualquier momento."
+      },
+      "cookies": {
+        "eyebrow": "Legal",
+        "title": "Política de Cookies",
+        "coming_soon_text": "Usamos un set mínimo de cookies para mantenerte conectado y recordar tu idioma. La Política de Cookies detallada llegará pronto."
+      },
+      "footer": {
+        "platform": "Plataforma",
+        "legal": "Legal",
+        "contact": "Contacto",
+        "security": "Seguridad",
+        "features": "Funciones",
+        "telegram_bot": "Bot de Telegram",
+        "api_docs": "Documentación de la API",
+        "terms": "Términos del Servicio",
+        "privacy": "Política de Privacidad",
+        "cookies": "Política de Cookies"
+      }
     }
   },
   "dashboard": {

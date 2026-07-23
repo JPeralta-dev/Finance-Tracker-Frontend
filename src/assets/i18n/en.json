@@ -275,6 +275,41 @@
           "label": "GDPR & CCPA compliant"
         }
       }
+    },
+    "legal": {
+      "back": "Back to home",
+      "back_to_home": "Back to home",
+      "last_updated": "Last updated: {{year}}",
+      "coming_soon": {
+        "title": "Coming soon"
+      },
+      "terms": {
+        "eyebrow": "Legal",
+        "title": "Terms of Service",
+        "coming_soon_text": "Our full Terms of Service are being drafted by our legal team. In the meantime, by using Flowr you agree to use the service responsibly and respect other users."
+      },
+      "privacy": {
+        "eyebrow": "Legal",
+        "title": "Privacy Policy",
+        "coming_soon_text": "Our complete Privacy Policy is on its way. Until then, the short version: we encrypt your data, never sell it, and you can delete your account at any time."
+      },
+      "cookies": {
+        "eyebrow": "Legal",
+        "title": "Cookie Policy",
+        "coming_soon_text": "We use a minimal set of cookies to keep you signed in and remember your language preference. The detailed Cookie Policy is coming soon."
+      },
+      "footer": {
+        "platform": "Platform",
+        "legal": "Legal",
+        "contact": "Contact",
+        "security": "Security",
+        "features": "Features",
+        "telegram_bot": "Telegram Bot",
+        "api_docs": "API Documentation",
+        "terms": "Terms of Service",
+        "privacy": "Privacy Policy",
+        "cookies": "Cookie Policy"
+      }
     }
   },
   "dashboard": {
