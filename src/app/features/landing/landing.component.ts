@@ -13,10 +13,11 @@ import { FooterComponent } from './components/footer/footer.component';
 import { PricingComponent } from './components/pricing/pricing.component';
 import { ComparisonTableComponent } from './components/comparison-table/comparison-table.component';
 import { TestimonialsComponent } from './components/testimonials/testimonials.component';
+import { FaqComponent } from './components/faq/faq.component';
 import { FtSubtleRevealDirective } from '../../shared/directives/ft-subtle-reveal.directive';
 import { TranslatePipe } from '../../core/pipes/translate.pipe';
 import { TranslationService } from '../../core/services/translation.service';
-import { TierCard, TierComparisonRow, Testimonial } from '../../core/models/tier.model';
+import { TierCard, TierComparisonRow, Testimonial, FaqItem } from '../../core/models/tier.model';
 import { environment } from '../../../environments/environment';
 
 @Component({
@@ -36,6 +37,7 @@ import { environment } from '../../../environments/environment';
     PricingComponent,
     ComparisonTableComponent,
     TestimonialsComponent,
+    FaqComponent,
     FtSubtleRevealDirective,
     TranslatePipe,
   ],
@@ -168,6 +170,30 @@ export class LandingComponent {
       roleKey: 'landing.testimonials.items.ana.role',
       textKey: 'landing.testimonials.items.ana.text',
       avatarInitials: 'AL',
+    },
+  ];
+
+  /** FAQ items — single-open accordion, all collapsed by default. */
+  readonly faqItems: FaqItem[] = [
+    {
+      questionKey: 'landing.faq.items.pricing.question',
+      answerKey: 'landing.faq.items.pricing.answer',
+    },
+    {
+      questionKey: 'landing.faq.items.cancel.question',
+      answerKey: 'landing.faq.items.cancel.answer',
+    },
+    {
+      questionKey: 'landing.faq.items.free_trial.question',
+      answerKey: 'landing.faq.items.free_trial.answer',
+    },
+    {
+      questionKey: 'landing.faq.items.data_safety.question',
+      answerKey: 'landing.faq.items.data_safety.answer',
+    },
+    {
+      questionKey: 'landing.faq.items.telegram.question',
+      answerKey: 'landing.faq.items.telegram.answer',
     },
   ];
 }
