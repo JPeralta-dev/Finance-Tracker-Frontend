@@ -107,6 +107,12 @@ export const routes: Routes = [
       import('./features/subscription/pages/subscription.page').then(m => m.SubscriptionPage),
     canActivate: [authGuard],
   },
+  {
+    path: 'referral',
+    loadComponent: () =>
+      import('./features/referral/pages/referral.page').then(m => m.ReferralPage),
+    canActivate: [authGuard],
+  },
   // Legal pages (public)
   {
     path: 'legal/terms',

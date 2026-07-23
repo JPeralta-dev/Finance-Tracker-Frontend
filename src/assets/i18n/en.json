@@ -852,6 +852,61 @@
       }
     }
   },
+  "referral": {
+    "hero": {
+      "eyebrow": "Referrals",
+      "title": "Invite friends, both win",
+      "subtitle": "For every friend who subscribes to Premium, you get 1 month free, and so do they."
+    },
+    "linkCard": {
+      "title": "Your unique link",
+      "codeAria": "Your referral link",
+      "copy": "Copy link",
+      "copied": "Copied!"
+    },
+    "share": {
+      "label": "Share via",
+      "email": "Email",
+      "whatsapp": "WhatsApp",
+      "twitter": "X",
+      "telegram": "Telegram"
+    },
+    "stats": {
+      "friends": "Friends invited",
+      "monthsEarned": "Months earned",
+      "pending": "Pending"
+    },
+    "howItWorks": {
+      "title": "How it works",
+      "step1": {
+        "title": "Share your link",
+        "desc": "Send your unique link via WhatsApp, email, or anywhere you like."
+      },
+      "step2": {
+        "title": "Your friend subscribes",
+        "desc": "When they activate Premium, you both get 1 month free."
+      },
+      "step3": {
+        "title": "Stack your discounts",
+        "desc": "Each referral adds a month. No cap."
+      }
+    },
+    "terms": "Terms and conditions apply.",
+    "input": {
+      "label": "Have a referral code?",
+      "placeholder": "ABC123XY",
+      "apply": "Apply",
+      "invalid": "Invalid code. Make sure it has 8 characters.",
+      "applied": "Done! Your discount will be applied at checkout."
+    },
+    "widget": {
+      "title": "Referrals",
+      "subtitle_one": "Invite {{count}} friend and you both get 1 month free.",
+      "subtitle_other": "Invite {{count}} friends and you both get 1 month free.",
+      "copy": "Copy link",
+      "openFull": "See referrals"
+    }
+  },
   "notifications": {
     "bellLabel": "Notifications",
     "title": "Notifications",

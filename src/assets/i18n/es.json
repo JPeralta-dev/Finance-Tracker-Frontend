@@ -852,6 +852,61 @@
       }
     }
   },
+  "referral": {
+    "hero": {
+      "eyebrow": "Referidos",
+      "title": "Invitá amigos, ambos ganan",
+      "subtitle": "Por cada amigo que se suscriba a Premium, te llevás 1 mes gratis y tu amigo también."
+    },
+    "linkCard": {
+      "title": "Tu link único",
+      "codeAria": "Tu link de referido",
+      "copy": "Copiar link",
+      "copied": "¡Copiado!"
+    },
+    "share": {
+      "label": "Compartir por",
+      "email": "Email",
+      "whatsapp": "WhatsApp",
+      "twitter": "X",
+      "telegram": "Telegram"
+    },
+    "stats": {
+      "friends": "Amigos invitados",
+      "monthsEarned": "Meses ganados",
+      "pending": "Pendientes"
+    },
+    "howItWorks": {
+      "title": "Cómo funciona",
+      "step1": {
+        "title": "Compartí tu link",
+        "desc": "Enviá tu link único por WhatsApp, email, o donde quieras."
+      },
+      "step2": {
+        "title": "Tu amigo se suscribe",
+        "desc": "Cuando active Premium, ambos reciben 1 mes gratis."
+      },
+      "step3": {
+        "title": "Acumulás descuentos",
+        "desc": "Cada referido suma un mes más. Sin tope."
+      }
+    },
+    "terms": "Aplican términos y condiciones.",
+    "input": {
+      "label": "¿Tenés un código de referido?",
+      "placeholder": "ABC123XY",
+      "apply": "Aplicar",
+      "invalid": "Código inválido. Revisá que tenga 8 caracteres.",
+      "applied": "¡Listo! Tu descuento se aplicará al finalizar la compra."
+    },
+    "widget": {
+      "title": "Referidos",
+      "subtitle_one": "Invitá a {{count}} amigo y ambos ganan 1 mes gratis.",
+      "subtitle_other": "Invitá a {{count}} amigos y ambos ganan 1 mes gratis.",
+      "copy": "Copiar link",
+      "openFull": "Ver referidos"
+    }
+  },
   "notifications": {
     "bellLabel": "Notificaciones",
     "title": "Notificaciones",
