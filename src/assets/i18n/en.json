@@ -760,6 +760,15 @@
       "continueWithPremium": "Continue with Premium"
     }
   },
+  "banner": {
+    "dismiss": "Dismiss"
+  },
+  "trialBanner": {
+    "daysRemaining": "Your premium trial ends in {{count}} days.",
+    "daysRemaining_one": "Your premium trial ends in {{count}} day.",
+    "endsToday": "Your premium trial ends today.",
+    "cta": "Upgrade to Premium"
+  },
   "notifications": {
     "bellLabel": "Notifications",
     "title": "Notifications",

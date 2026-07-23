@@ -760,6 +760,15 @@
       "continueWithPremium": "Continuar con Premium"
     }
   },
+  "banner": {
+    "dismiss": "Descartar"
+  },
+  "trialBanner": {
+    "daysRemaining": "Tu prueba premium termina en {{count}} días.",
+    "daysRemaining_one": "Tu prueba premium termina en {{count}} día.",
+    "endsToday": "Tu prueba premium termina hoy.",
+    "cta": "Pasarme a Premium"
+  },
   "notifications": {
     "bellLabel": "Notificaciones",
     "title": "Notificaciones",
