@@ -73,6 +73,9 @@ export interface AnalyticsProperties {
   // ── Page view ────────────────────────────────────────────────────
   path?: string;
   referrer?: string;
+
+  // Allow arbitrary extra properties for forward compatibility
+  [key: string]: unknown;
 }
 
 /** A queued event waiting to be flushed to PostHog. */

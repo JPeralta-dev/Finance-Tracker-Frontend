@@ -25,11 +25,12 @@ import { FtAnalyticsService } from '../../../core/services/analytics.service';
 import { ICONS } from '../../../shared/icons/icon-registry';
 import { TranslatePipe } from '../../../core/pipes/translate.pipe';
 import { ShareMethod } from '../referral.models';
+import { FtSubtleRevealDirective } from '../../../shared/directives/ft-subtle-reveal.directive';
 
 @Component({
   selector: 'ft-referral-page',
   standalone: true,
-  imports: [CommonModule, NgIcon, RouterLink, TranslatePipe],
+  imports: [CommonModule, NgIcon, RouterLink, TranslatePipe, FtSubtleRevealDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './referral.page.html',
   styleUrl: './referral.page.scss',

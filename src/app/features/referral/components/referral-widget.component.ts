@@ -16,11 +16,11 @@ import {
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { NgIcon } from '@ng-icons/core';
-import { FtReferralService } from '../../referral.service';
-import { AuthService } from '../../../../core/services/auth.service';
-import { FtAnalyticsService } from '../../../../core/services/analytics.service';
-import { ICONS } from '../../../../shared/icons/icon-registry';
-import { TranslatePipe } from '../../../../core/pipes/translate.pipe';
+import { FtReferralService } from '../referral.service';
+import { AuthService } from '../../../core/services/auth.service';
+import { FtAnalyticsService } from '../../../core/services/analytics.service';
+import { ICONS } from '../../../shared/icons/icon-registry';
+import { TranslatePipe } from '../../../core/pipes/translate.pipe';
 
 @Component({
   selector: 'ft-referral-widget',

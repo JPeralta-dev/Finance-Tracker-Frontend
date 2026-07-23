@@ -31,7 +31,7 @@ export class FtTrialBannerService {
     if (!sub) return false;
     if (sub.status !== 'active_trial') return false;
     if (!sub.trialEnd) return false;
-    const days = this.daysRemaining(sub.trialEnd);
+    const days = this.computeDaysRemaining(sub.trialEnd);
     if (days === null || days < 0) return false;
 
     const dismissed = this._dismissedAt();
@@ -43,7 +43,7 @@ export class FtTrialBannerService {
   readonly daysRemaining = computed<number | null>(() => {
     const sub = this.auth.currentSubscription();
     if (!sub?.trialEnd) return null;
-    return this.daysRemaining(sub.trialEnd);
+    return this.computeDaysRemaining(sub.trialEnd);
   });
 
   /** Map days remaining to the visual variant per spec. */
@@ -64,7 +64,7 @@ export class FtTrialBannerService {
   }
 
   // ── Helpers ─────────────────────────────────────────────────────
-  private daysRemaining(trialEnd: string): number | null {
+  private computeDaysRemaining(trialEnd: string): number | null {
     const end = new Date(trialEnd).getTime();
     if (Number.isNaN(end)) return null;
     const diff = end - Date.now();

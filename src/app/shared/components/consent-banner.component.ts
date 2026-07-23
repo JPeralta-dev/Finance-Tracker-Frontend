@@ -10,8 +10,8 @@
  */
 import { Component, ChangeDetectionStrategy, inject, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FtAnalyticsService } from '../../../core/services/analytics.service';
-import { TranslatePipe } from '../../pipes/translate.pipe';
+import { FtAnalyticsService } from '../../core/services/analytics.service';
+import { TranslatePipe } from '../../core/pipes/translate.pipe';
 
 @Component({
   selector: 'ft-consent-banner',

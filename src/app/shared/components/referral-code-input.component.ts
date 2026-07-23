@@ -12,10 +12,10 @@ import {
   computed,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FtReferralService } from '../../../core/services/referral.service';
+import { FtReferralService } from '../../features/referral/referral.service';
 import { NgIcon } from '@ng-icons/core';
-import { ICONS } from '../../icons/icon-registry';
-import { TranslatePipe } from '../../../core/pipes/translate.pipe';
+import { ICONS } from '../icons/icon-registry';
+import { TranslatePipe } from '../../core/pipes/translate.pipe';
 
 @Component({
   selector: 'ft-referral-code-input',

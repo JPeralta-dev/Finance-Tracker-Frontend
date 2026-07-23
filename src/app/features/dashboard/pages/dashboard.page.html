@@ -14,6 +14,38 @@
         <ft-trial-banner />
       </div>
 
+      <!-- ROW 0b: Tour trigger card (new users who haven't completed tour) -->
+      @if (tour.shouldPromptForTour()) {
+        <div class="dashboard-row dashboard-row--banner" ftSubtleReveal="fade-up" [delay]="35">
+          <article class="tour-trigger-card" aria-labelledby="tour-trigger-title">
+            <div class="tour-trigger-card__body">
+              <h3 id="tour-trigger-title" class="tour-trigger-card__title">
+                {{ 'tour.triggerCard.title' | translate }}
+              </h3>
+              <p class="tour-trigger-card__description">
+                {{ 'tour.triggerCard.description' | translate }}
+              </p>
+            </div>
+            <div class="tour-trigger-card__actions">
+              <button
+                type="button"
+                class="tour-trigger-card__btn tour-trigger-card__btn--primary"
+                (click)="startTour()"
+              >
+                {{ 'tour.triggerCard.start' | translate }}
+              </button>
+              <button
+                type="button"
+                class="tour-trigger-card__btn tour-trigger-card__btn--ghost"
+                (click)="dismissTourPrompt()"
+              >
+                {{ 'tour.triggerCard.later' | translate }}
+              </button>
+            </div>
+          </article>
+        </div>
+      }
+
       <!-- Greeting -->
       <div class="dashboard-greeting" ftSubtleReveal="fade-up">
         <div>
@@ -149,6 +181,13 @@
       <div class="dashboard-row dashboard-row--premium" ftSubtleReveal="fade-up" [delay]="160">
         <ft-pocket-progress-widget />
       </div>
+
+      <!-- ROW 4c: Referral Widget (premium users only) -->
+      @if (isPremium()) {
+        <div class="dashboard-row dashboard-row--premium" ftSubtleReveal="fade-up" [delay]="165">
+          <ft-referral-widget />
+        </div>
+      }
 
       <!-- ROW 5: Chart + Recent Activity -->
       <div class="dashboard-row dashboard-row--content" ftSubtleReveal="fade-up" [delay]="175">

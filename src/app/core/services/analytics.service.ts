@@ -233,6 +233,7 @@ export class FtAnalyticsService {
     try {
       // Dynamic import keeps PostHog out of the main bundle. The SDK is
       // tiny (~25KB gzip) but worth deferring until consent is granted.
+      // @ts-ignore — remote CDN module without bundled type declarations
       const mod = await import(/* webpackIgnore: true */ 'https://cdn.jsdelivr.net/npm/posthog-js@1.130.0/dist/array.js')
         .catch(() => null);
 

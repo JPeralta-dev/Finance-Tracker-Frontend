@@ -26,9 +26,9 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgIcon } from '@ng-icons/core';
-import { ICONS } from '../../icons/icon-registry';
-import { TranslatePipe } from '../../../core/pipes/translate.pipe';
-import { FtAnalyticsService } from '../../../core/services/analytics.service';
+import { ICONS } from '../icons/icon-registry';
+import { TranslatePipe } from '../../core/pipes/translate.pipe';
+import { FtAnalyticsService } from '../../core/services/analytics.service';
 
 export type BannerVariant = 'info' | 'success' | 'warning' | 'error';
 
@@ -48,7 +48,7 @@ export type BannerVariant = 'info' | 'success' | 'warning' | 'error';
       >
         @if (iconName()) {
           <span class="announcement-banner__icon" aria-hidden="true">
-            <ng-icon [name]="iconName()" size="20px" />
+            <ng-icon [name]="iconName()!" size="20px" />
           </span>
         }
         <div class="announcement-banner__body">
@@ -245,18 +245,20 @@ export class FtAnnouncementBannerComponent {
     this.userDismissed = true;
     this.visible.set(false);
     this.dismissed.emit();
-    if (this.trackingId()) {
+    const id = this.trackingId();
+    if (id) {
       this.analytics.trackEvent('trial_banner_dismissed', {
-        variant: this.trackingId(),
+        variant: id,
       });
     }
   }
 
   onCta(): void {
     this.ctaClicked.emit();
-    if (this.trackingId()) {
+    const id = this.trackingId();
+    if (id) {
       this.analytics.trackEvent('trial_banner_cta_clicked', {
-        variant: this.trackingId(),
+        variant: id,
       });
     }
   }

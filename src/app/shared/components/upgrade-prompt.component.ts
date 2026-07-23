@@ -21,11 +21,11 @@ import {
 import { CommonModule } from '@angular/common';
 import { NgIcon } from '@ng-icons/core';
 import { Router } from '@angular/router';
-import { ICONS } from '../../icons/icon-registry';
-import { AuthService } from '../../../core/services/auth.service';
-import { UpgradeModalService } from '../../../core/services/upgrade-modal.service';
-import { FtAnalyticsService } from '../../../core/services/analytics.service';
-import { TranslatePipe } from '../../../core/pipes/translate.pipe';
+import { ICONS } from '../icons/icon-registry';
+import { AuthService } from '../../core/services/auth.service';
+import { UpgradeModalService } from '../../core/services/upgrade-modal.service';
+import { FtAnalyticsService } from '../../core/services/analytics.service';
+import { TranslatePipe } from '../../core/pipes/translate.pipe';
 
 @Component({
   selector: 'ft-upgrade-prompt',

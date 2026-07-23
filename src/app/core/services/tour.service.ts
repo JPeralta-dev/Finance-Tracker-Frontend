@@ -29,6 +29,7 @@ import {
   DEFAULT_TOUR_STATE,
 } from '../../shared/models/tour.types';
 import { FtAnalyticsService } from './analytics.service';
+import { OnboardingStep } from '../models/analytics-event.model';
 
 const STORAGE_KEY = 'flowr_onboarding_tour';
 
@@ -135,13 +136,13 @@ export class FtTourService {
 
     if (s.status === 'in_progress') {
       this.analytics.trackEvent('onboarding_tour_started', {
-        step: this.currentStepNumber(),
+        step: this.currentStepNumber() as OnboardingStep,
         step_id: this.steps[resumeStep]?.id,
       });
     } else {
       this.updateStatus('in_progress');
       this.analytics.trackEvent('onboarding_tour_started', {
-        step: this.currentStepNumber(),
+        step: this.currentStepNumber() as OnboardingStep,
         step_id: this.steps[resumeStep]?.id,
       });
     }
@@ -161,7 +162,7 @@ export class FtTourService {
     this._currentStepIndex.set(nextIdx);
     this.updateStatus('in_progress');
     this.analytics.trackEvent('onboarding_tour_step_viewed', {
-      step: nextIdx + 1,
+      step: (nextIdx + 1) as OnboardingStep,
       step_id: this.steps[nextIdx].id,
     });
   }
@@ -172,7 +173,7 @@ export class FtTourService {
     const prevIdx = i - 1;
     this._currentStepIndex.set(prevIdx);
     this.analytics.trackEvent('onboarding_tour_step_viewed', {
-      step: prevIdx + 1,
+      step: (prevIdx + 1) as OnboardingStep,
       step_id: this.steps[prevIdx].id,
     });
   }
@@ -180,7 +181,7 @@ export class FtTourService {
   skip(): void {
     this.updateStatus('skipped');
     this.analytics.trackEvent('onboarding_tour_skipped', {
-      step: this.currentStepNumber(),
+      step: this.currentStepNumber() as OnboardingStep,
       step_id: this.currentStep()?.id,
     });
     this._isActive.set(false);
@@ -189,7 +190,7 @@ export class FtTourService {
   complete(): void {
     this.updateStatus('completed', { completedAt: new Date().toISOString() });
     this.analytics.trackEvent('onboarding_tour_completed', {
-      step: this.currentStepNumber(),
+      step: this.currentStepNumber() as OnboardingStep,
       step_id: this.currentStep()?.id,
     });
     this._isActive.set(false);

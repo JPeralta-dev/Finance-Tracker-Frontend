@@ -61,16 +61,16 @@ export class FtTrialBannerComponent {
     return ICONS.info;
   });
 
-  readonly messageKey = computed<string | null>(() => {
+  readonly messageKey = computed<string>(() => {
     const days = this.svc.daysRemaining() ?? 0;
-    if (days < 1) return null; // messageText used instead for "today"
+    if (days < 1) return ''; // empty when showing the inline "today" message
     return 'trialBanner.daysRemaining';
   });
 
-  readonly messageText = computed<string | null>(() => {
+  readonly messageText = computed<string>(() => {
     const days = this.svc.daysRemaining() ?? 0;
-    if (days < 1) return ''; // i18n key 'trialBanner.endsToday' rendered via TranslatePipe below
-    return null;
+    if (days < 1) return 'trialBanner.endsToday';
+    return '';
   });
 
   // Computed key for "ends today" — we override via the template directly.
