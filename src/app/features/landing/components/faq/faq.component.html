@@ -1,0 +1,43 @@
+<section class="faq" id="faq" aria-label="Frequently asked questions">
+  <div class="faq__inner">
+    <div class="faq__header" ftSubtleReveal="per-word-crossfade" [delay]="100">
+      <h2 class="faq__title">{{ 'landing.faq.section_title' | translate }}</h2>
+      <p class="faq__subtitle">{{ 'landing.faq.section_subtitle' | translate }}</p>
+    </div>
+
+    <div class="faq__list" role="list">
+      @for (item of items(); track item.questionKey; let i = $index) {
+        <div 
+          class="faq-item" 
+          [class.faq-item--expanded]="isExpanded(i)" 
+          role="listitem"
+          ftSubtleReveal="fade-up"
+          [delay]="200 + (i * 100)"
+        >
+          <button
+            type="button"
+            class="faq-item__question"
+            [id]="buttonId(i)"
+            [attr.aria-expanded]="isExpanded(i)"
+            [attr.aria-controls]="panelId(i)"
+            (click)="toggle(i)"
+          >
+            <span class="faq-item__question-text">{{ item.questionKey | translate }}</span>
+            <span class="faq-item__icon" aria-hidden="true">
+              <ng-icon name="chevronDown" size="1.1rem" />
+            </span>
+          </button>
+          <div
+            class="faq-item__answer"
+            [id]="panelId(i)"
+            role="region"
+            [attr.aria-labelledby]="buttonId(i)"
+            [@expand]="isExpanded(i) ? 'expanded' : 'collapsed'"
+          >
+            <p class="faq-item__answer-text">{{ item.answerKey | translate }}</p>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>

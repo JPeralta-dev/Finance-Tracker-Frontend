@@ -57,6 +57,10 @@
   width: 100%;
 }
 
+.dashboard-row--banner {
+  margin-bottom: 4px;
+}
+
 /* ── Stats grid (2-column) ───────────────────────────────────────── */
 
 .stats-grid--2col {
@@ -542,5 +546,93 @@
 
   .dashboard-content__chart {
     padding: 16px;
+  }
+}
+
+/* ─── Tour Trigger Card ─────────────────────────────────────────────
+   Shown to new users (or those who skipped the tour). Calls
+   startTour() on primary CTA and skip() on "Maybe later".
+   ─────────────────────────────────────────────────────────────────── */
+.tour-trigger-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 20px;
+  background: var(--bg-secondary, #14101f);
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.08));
+  border-radius: 14px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+}
+
+.tour-trigger-card__body {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.tour-trigger-card__title {
+  margin: 0 0 4px;
+  font-family: var(--font-display, 'Space Grotesk', system-ui);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary, #fff);
+}
+
+.tour-trigger-card__description {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-secondary, rgba(255, 255, 255, 0.7));
+  line-height: 1.4;
+}
+
+.tour-trigger-card__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.tour-trigger-card__btn {
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.tour-trigger-card__btn--primary {
+  background: linear-gradient(135deg, var(--accent-start, #a78bfa), var(--accent-end, #8b5cf6));
+  color: #fff;
+  border: none;
+}
+
+.tour-trigger-card__btn--primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.35);
+}
+
+.tour-trigger-card__btn--ghost {
+  background: transparent;
+  color: var(--text-secondary, rgba(255, 255, 255, 0.7));
+  border-color: var(--border-default, rgba(255, 255, 255, 0.12));
+}
+
+.tour-trigger-card__btn--ghost:hover {
+  color: var(--text-primary, #fff);
+  background: var(--bg-elevated, rgba(255, 255, 255, 0.05));
+}
+
+@media (max-width: 640px) {
+  .tour-trigger-card {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .tour-trigger-card__actions {
+    justify-content: flex-end;
   }
 }

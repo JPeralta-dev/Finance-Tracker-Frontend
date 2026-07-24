@@ -18,10 +18,7 @@
           The next evolution in personal finance management. Track, analyze, and grow your wealth with precision.
         </p>
         <div class="footer__socials">
-          <a href="#" class="footer__social-link" aria-label="Website">
-            <ng-icon name="globe" size="1rem" />
-          </a>
-          <a href="#" class="footer__social-link" aria-label="Email">
+          <a [href]="'mailto:' + contactEmail" class="footer__social-link" aria-label="Email">
             <ng-icon name="envelope" size="1rem" />
           </a>
         </div>
@@ -29,38 +26,52 @@
 
       <!-- Platform Column -->
       <div class="footer__column">
-        <h4 class="footer__column-title">Platform</h4>
+        <h4 class="footer__column-title">{{ 'landing.legal.footer.platform' | translate }}</h4>
         <nav class="footer__nav">
-          <a href="#" class="footer__link">Security</a>
-          <a href="#" class="footer__link">Features</a>
-          <a href="#" class="footer__link">Telegram Bot</a>
-          <a href="#" class="footer__link">API Documentation</a>
+          <a routerLink="/#features" class="footer__link" fragment="features">
+            {{ 'landing.legal.footer.features' | translate }}
+          </a>
+          <a routerLink="/#pricing" class="footer__link" fragment="pricing">
+            {{ 'landing.cta.title' | translate }}
+          </a>
+          <a [href]="telegramBotUrl" target="_blank" rel="noopener" class="footer__link">
+            {{ 'landing.legal.footer.telegram_bot' | translate }}
+          </a>
+          <a [href]="telegramBotUrl" target="_blank" rel="noopener" class="footer__link">
+            {{ 'landing.legal.footer.api_docs' | translate }}
+          </a>
         </nav>
       </div>
 
       <!-- Legal Column -->
       <div class="footer__column">
-        <h4 class="footer__column-title">Legal</h4>
+        <h4 class="footer__column-title">{{ 'landing.legal.footer.legal' | translate }}</h4>
         <nav class="footer__nav">
-          <a href="#" class="footer__link">Terms of Service</a>
-          <a href="#" class="footer__link">Privacy Policy</a>
-          <a href="#" class="footer__link">Cookie Policy</a>
+          <a routerLink="/legal/terms" class="footer__link">
+            {{ 'landing.legal.footer.terms' | translate }}
+          </a>
+          <a routerLink="/legal/privacy" class="footer__link">
+            {{ 'landing.legal.footer.privacy' | translate }}
+          </a>
+          <a routerLink="/legal/cookies" class="footer__link">
+            {{ 'landing.legal.footer.cookies' | translate }}
+          </a>
         </nav>
       </div>
 
       <!-- Contact Column -->
       <div class="footer__column">
-        <h4 class="footer__column-title">Contact</h4>
+        <h4 class="footer__column-title">{{ 'landing.legal.footer.contact' | translate }}</h4>
         <div class="footer__contact">
           <a [href]="'mailto:' + contactEmail" class="footer__contact-email">
             {{ contactEmail }}
           </a>
           <div class="footer__contact-icons">
-            <a href="#" class="footer__contact-icon" aria-label="Telegram">
+            <a [href]="telegramBotUrl" target="_blank" rel="noopener" class="footer__contact-icon" aria-label="Telegram">
               <ng-icon name="telegram" size="0.875rem" />
             </a>
-            <a href="#" class="footer__contact-icon" aria-label="Chat">
-              <ng-icon name="chatBubble" size="0.875rem" />
+            <a [href]="'mailto:' + contactEmail" class="footer__contact-icon" aria-label="Email">
+              <ng-icon name="envelope" size="0.875rem" />
             </a>
           </div>
         </div>
@@ -69,7 +80,7 @@
 
     <!-- Bottom Bar -->
     <div class="footer__bottom">
-      <p class="footer__brand-name">Flowr Finance</p>
+      <p class="footer__brand-name">Flowr Finance © {{ currentYear }}</p>
       <div class="footer__status">
         <span class="footer__status-dot"></span>
         <span class="footer__status-text">SYSTEMS OPERATIONAL</span>
