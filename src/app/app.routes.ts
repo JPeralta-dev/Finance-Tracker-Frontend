@@ -107,5 +107,27 @@ export const routes: Routes = [
       import('./features/subscription/pages/subscription.page').then(m => m.SubscriptionPage),
     canActivate: [authGuard],
   },
+  {
+    path: 'referral',
+    loadComponent: () =>
+      import('./features/referral/pages/referral.page').then(m => m.ReferralPage),
+    canActivate: [authGuard],
+  },
+  // Legal pages (public)
+  {
+    path: 'legal/terms',
+    loadComponent: () =>
+      import('./features/legal/terms/terms.component').then(m => m.TermsComponent),
+  },
+  {
+    path: 'legal/privacy',
+    loadComponent: () =>
+      import('./features/legal/privacy/privacy.component').then(m => m.PrivacyComponent),
+  },
+  {
+    path: 'legal/cookies',
+    loadComponent: () =>
+      import('./features/legal/cookies/cookies.component').then(m => m.CookiesComponent),
+  },
   { path: '**', redirectTo: '' }
 ];

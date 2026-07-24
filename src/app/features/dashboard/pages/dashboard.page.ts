@@ -15,6 +15,9 @@ import { ClickOutsideDirective } from '../../../shared/directives/click-outside.
 import { FinanceService } from '../../../core/services/finance.service';
 import { ToastService } from '../../../core/services/toast.service';
 import { EmptyStateComponent } from '../../../shared/components/empty-state.component';
+import { FtTrialBannerComponent } from '../../../shared/components/trial-banner.component';
+import { FtUpgradePromptComponent } from '../../../shared/components/upgrade-prompt.component';
+import { FtTourService } from '../../../core/services/tour.service';
 import { TranslatePipe } from '../../../core/pipes/translate.pipe';
 import { TranslationService } from '../../../core/services/translation.service';
 import { AuthService } from '../../../core/services/auth.service';
@@ -22,6 +25,7 @@ import { DateRangeService } from '../../../core/services/date-range.service';
 import { AiInsightsCardComponent } from '../components/ai-insights-card/ai-insights-card.component';
 import { GoalsWidgetComponent } from '../components/goals-widget/goals-widget.component';
 import { PocketProgressWidget } from '../widgets/pocket-progress.widget';
+import { FtReferralWidgetComponent } from '../../referral/components/referral-widget.component';
 import { IconComponent } from '../../../shared/icons/icon.component';
 import type { EChartsOption } from 'echarts';
 
@@ -61,10 +65,13 @@ class ChartColorCache {
     HoverDepthDirective,
     ClickOutsideDirective,
     EmptyStateComponent,
+    FtTrialBannerComponent,
+    FtUpgradePromptComponent,
     TranslatePipe,
     AiInsightsCardComponent,
     GoalsWidgetComponent,
     PocketProgressWidget,
+    FtReferralWidgetComponent,
     IconComponent,
     NgIcon,
   ],
@@ -80,6 +87,9 @@ export class DashboardPage implements OnInit {
   private readonly chartColors = inject(ChartColorCache);
   readonly authService = inject(AuthService);
   readonly dateRange = inject(DateRangeService);
+  readonly tour = inject(FtTourService);
+
+  readonly isPremium = this.authService.isPremium;
 
   readonly stats = signal<StatCardData[]>([]);
   readonly activity = signal<ActivityItem[]>([]);
@@ -208,5 +218,13 @@ export class DashboardPage implements OnInit {
 
   retry(): void {
     this.loadData();
+  }
+
+  startTour(): void {
+    this.tour.start();
+  }
+
+  dismissTourPrompt(): void {
+    this.tour.skip();
   }
 }

@@ -1,172 +1,85 @@
-import { TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { provideRouter, Router } from '@angular/router';
-import { signal } from '@angular/core';
-
+import { TestBed } from '@angular/core/testing';
+import { Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { premiumGuard } from './premium.guard';
 import { AuthService } from '../services/auth.service';
-import { ToastService } from '../services/toast.service';
+import { UpgradeModalService } from '../services/upgrade-modal.service';
+import { FtAnalyticsService } from '../services/analytics.service';
+import { signal } from '@angular/core';
+import { Subject } from 'rxjs';
 
-describe('PremiumGuard', () => {
-  let router: Router;
-  let authServiceSpy: jasmine.SpyObj<AuthService>;
-  let toastServiceSpy: jasmine.SpyObj<ToastService>;
+describe('premiumGuard', () => {
+  let authMock: jasmine.SpyObj<AuthService>;
+  let upgradeModalMock: jasmine.SpyObj<UpgradeModalService>;
+  let analyticsMock: jasmine.SpyObj<FtAnalyticsService>;
+  let routerMock: jasmine.SpyObj<Router>;
 
   beforeEach(() => {
-    authServiceSpy = jasmine.createSpyObj('AuthService', ['initAuthCheck', 'isPremium'], {
-      isPremium: signal(false),
-      authReady$: undefined as any,
+    authMock = jasmine.createSpyObj<AuthService>('AuthService', [
+      'initAuthCheck',
+      'isPremium',
+      'subscriptionTier',
+      'currentSubscription',
+    ], {
+      authReady$: new Subject<boolean>(),
     });
-    toastServiceSpy = jasmine.createSpyObj('ToastService', ['warning', 'info', 'success', 'error']);
+    upgradeModalMock = jasmine.createSpyObj<UpgradeModalService>('UpgradeModalService', ['openModal']);
+    analyticsMock = jasmine.createSpyObj<FtAnalyticsService>('FtAnalyticsService', ['trackEvent']);
+    routerMock = jasmine.createSpyObj<Router>('Router', ['navigate']);
+
+    authMock.isPremium.and.returnValue(false);
+    authMock.subscriptionTier.and.returnValue('free');
+    authMock.currentSubscription.and.returnValue(null);
 
     TestBed.configureTestingModule({
       providers: [
-        { provide: AuthService, useValue: authServiceSpy },
-        { provide: ToastService, useValue: toastServiceSpy },
-        provideRouter([]),
+        { provide: AuthService, useValue: authMock },
+        { provide: UpgradeModalService, useValue: upgradeModalMock },
+        { provide: FtAnalyticsService, useValue: analyticsMock },
+        { provide: Router, useValue: routerMock },
       ],
     });
-
-    router = TestBed.inject(Router);
-    spyOn(router, 'navigate').and.returnValue(Promise.resolve(true));
   });
 
-  describe('Free user', () => {
-    beforeEach(() => {
-      (authServiceSpy.isPremium as any).set(false);
-      // Mock authReady$ to emit true immediately
-      (authServiceSpy as any).authReady$ = {
-        pipe: () => ({
-          filter: () => ({
-            take: () => ({
-              map: (fn: (v: boolean) => boolean) => ({
-                subscribe: (callbacks: { next: (v: boolean) => void }) => {
-                  callbacks.next(true);
-                },
-              }),
-            }),
-          }),
-        }),
-      };
+  it('should NOT open the modal for premium users (allow access)', (done) => {
+    authMock.isPremium.and.returnValue(true);
+    // authReady$ should emit true to unblock the guard
+    const subject = authMock.authReady$ as unknown as Subject<boolean>;
+    const result$ = TestBed.runInInjectionContext(() =>
+      premiumGuard(
+        {} as ActivatedRouteSnapshot,
+        { url: '/goals' } as RouterStateSnapshot,
+      ),
+    );
+    (result$ as any).subscribe((res: boolean) => {
+      expect(res).toBe(true);
+      expect(upgradeModalMock.openModal).not.toHaveBeenCalled();
+      done();
     });
+    subject.next(true);
+  });
 
-    it('should redirect to /subscription when user is not premium', fakeAsync(() => {
-      TestBed.runInInjectionContext(() => {
-        premiumGuard(null as any, null as any);
-      });
-      tick();
-
-      expect(router.navigate).toHaveBeenCalledWith(['/subscription'], {
-        queryParams: { upgrade: 'true' },
-      });
-    }));
-
-    it('should show warning toast for free user', fakeAsync(() => {
-      TestBed.runInInjectionContext(() => {
-        premiumGuard(null as any, null as any);
-      });
-      tick();
-
-      expect(toastServiceSpy.warning).toHaveBeenCalledWith(
-        'Función premium',
-        'Necesitás una suscripción premium para acceder a esta sección.',
+  it('should open the modal for free users (block access)', (done) => {
+    const subject = authMock.authReady$ as unknown as Subject<boolean>;
+    const result$ = TestBed.runInInjectionContext(() =>
+      premiumGuard(
+        {} as ActivatedRouteSnapshot,
+        { url: '/insights' } as RouterStateSnapshot,
+      ),
+    );
+    (result$ as any).subscribe((res: boolean) => {
+      expect(res).toBe(false);
+      expect(upgradeModalMock.openModal).toHaveBeenCalledWith(
+        jasmine.objectContaining({
+          trigger: 'premium_guard',
+          route: '/insights',
+        }),
       );
-    }));
-
-    it('should return false (block navigation) for free user', fakeAsync(() => {
-      let result: unknown;
-      TestBed.runInInjectionContext(() => {
-        const guardResult = premiumGuard(null as any, null as any);
-        // The guard returns an Observable, we need to subscribe
-        (guardResult as any).subscribe({
-          next: (val: unknown) => { result = val; },
-        });
-      });
-      tick();
-
-      expect(result).toBe(false);
-    }));
-  });
-
-  describe('Premium user', () => {
-    beforeEach(() => {
-      (authServiceSpy.isPremium as any).set(true);
-      (authServiceSpy as any).authReady$ = {
-        pipe: () => ({
-          filter: () => ({
-            take: () => ({
-              map: (fn: (v: boolean) => boolean) => ({
-                subscribe: (callbacks: { next: (v: boolean) => void }) => {
-                  callbacks.next(true);
-                },
-              }),
-            }),
-          }),
-        }),
-      };
+      expect(analyticsMock.trackEvent).toHaveBeenCalledWith(
+        'premium_access_attempted',
+        jasmine.objectContaining({ route: '/insights' }),
+      );
+      done();
     });
-
-    it('should allow navigation for premium user', fakeAsync(() => {
-      let result: unknown;
-      TestBed.runInInjectionContext(() => {
-        const guardResult = premiumGuard(null as any, null as any);
-        (guardResult as any).subscribe({
-          next: (val: unknown) => { result = val; },
-        });
-      });
-      tick();
-
-      expect(result).toBe(true);
-    }));
-
-    it('should NOT redirect for premium user', fakeAsync(() => {
-      TestBed.runInInjectionContext(() => {
-        premiumGuard(null as any, null as any);
-      });
-      tick();
-
-      expect(router.navigate).not.toHaveBeenCalled();
-    }));
-
-    it('should NOT show toast for premium user', fakeAsync(() => {
-      TestBed.runInInjectionContext(() => {
-        premiumGuard(null as any, null as any);
-      });
-      tick();
-
-      expect(toastServiceSpy.warning).not.toHaveBeenCalled();
-    }));
-  });
-
-  describe('Premium Plus user', () => {
-    beforeEach(() => {
-      // Premium Plus is also "premium" (tier !== 'free')
-      (authServiceSpy.isPremium as any).set(true);
-      (authServiceSpy as any).authReady$ = {
-        pipe: () => ({
-          filter: () => ({
-            take: () => ({
-              map: (fn: (v: boolean) => boolean) => ({
-                subscribe: (callbacks: { next: (v: boolean) => void }) => {
-                  callbacks.next(true);
-                },
-              }),
-            }),
-          }),
-        }),
-      };
-    });
-
-    it('should allow navigation for premium_plus user', fakeAsync(() => {
-      let result: unknown;
-      TestBed.runInInjectionContext(() => {
-        const guardResult = premiumGuard(null as any, null as any);
-        (guardResult as any).subscribe({
-          next: (val: unknown) => { result = val; },
-        });
-      });
-      tick();
-
-      expect(result).toBe(true);
-    }));
+    subject.next(true);
   });
 });
