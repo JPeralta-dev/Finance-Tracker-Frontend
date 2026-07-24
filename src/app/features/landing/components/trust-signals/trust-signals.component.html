@@ -1,0 +1,24 @@
+<section class="trust" id="trust" aria-label="Security and privacy">
+  <div class="trust__inner">
+    <div class="trust__header" ftSubtleReveal="per-word-crossfade" [delay]="100">
+      <h2 class="trust__title">{{ 'landing.trust.section_title' | translate }}</h2>
+      <p class="trust__subtitle">{{ 'landing.trust.section_subtitle' | translate }}</p>
+    </div>
+
+    <div class="trust__grid" role="list">
+      @for (badge of badges(); track badge.icon; let i = $index) {
+        <div 
+          class="trust-badge" 
+          role="listitem"
+          ftSubtleReveal="micro-scale-fade"
+          [delay]="200 + (i * 80)"
+        >
+          <div class="trust-badge__icon" aria-hidden="true">
+            <ng-icon [name]="badge.icon" size="1.5rem" />
+          </div>
+          <p class="trust-badge__label">{{ badge.labelKey | translate }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>

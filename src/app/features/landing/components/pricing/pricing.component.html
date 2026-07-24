@@ -1,0 +1,56 @@
+<section class="pricing" [class.pricing--compact]="compact()" id="pricing">
+  <div class="pricing__inner">
+    <div class="pricing__header" ftSubtleReveal="per-word-crossfade" [delay]="100">
+      <h2 class="pricing__title">{{ 'landing.pricing.section_title' | translate }}</h2>
+      <p class="pricing__subtitle">{{ 'landing.pricing.section_subtitle' | translate }}</p>
+    </div>
+
+    <div class="pricing__grid">
+      @for (tier of tiers(); track tier.id; let i = $index) {
+        <article
+          class="tier-card"
+          [class.tier-card--highlighted]="tier.highlighted || tier.popular"
+          ftSubtleReveal="soft-blur-in"
+          [delay]="200 + (i * 150)"
+        >
+          @if (tier.popular) {
+            <div class="tier-card__ribbon" ftSubtleReveal="micro-scale-fade" [delay]="300 + (i * 150)">
+              <ng-icon name="star" size="0.875rem" />
+              <span>{{ 'landing.pricing.save_badge' | translate }}</span>
+            </div>
+          }
+
+          <header class="tier-card__header">
+            <h3 class="tier-card__name">{{ tier.nameKey | translate }}</h3>
+            <p class="tier-card__tagline">{{ tier.taglineKey | translate }}</p>
+          </header>
+
+          <div class="tier-card__price" ftSubtleReveal="fade-up" [delay]="400 + (i * 150)">
+            <span class="tier-card__price-amount">{{ tier.price }}</span>
+            <span class="tier-card__price-period">{{ tier.priceAnnual }}</span>
+          </div>
+
+          <ul class="tier-card__features" role="list">
+            @for (featureKey of tier.featureKeys; track featureKey; let j = $index) {
+              <li class="tier-card__feature" ftSubtleReveal="fade-up" [delay]="500 + (i * 150) + (j * 50)">
+                <ng-icon name="check" size="1rem" class="tier-card__feature-icon" />
+                <span>{{ featureKey | translate }}</span>
+              </li>
+            }
+          </ul>
+
+          <a
+            routerLink="/register"
+            class="tier-card__cta"
+            [class.tier-card__cta--primary]="tier.popular"
+            ftSubtleReveal="fade-up"
+            [delay]="600 + (i * 150)"
+          >
+            {{ tier.ctaKey | translate }}
+            <ng-icon name="chevronRight" size="1rem" />
+          </a>
+        </article>
+      }
+    </div>
+  </div>
+</section>

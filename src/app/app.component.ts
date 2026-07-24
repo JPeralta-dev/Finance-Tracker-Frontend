@@ -6,13 +6,17 @@ import { TopbarComponent } from './shared/layout/topbar/topbar.component';
 import { CommandPaletteComponent } from './shared/ui/command-palette/command-palette.component';
 import { ToastContainerComponent } from './shared/ui/toast/toast.component';
 import { CategoryModalComponent } from './shared/ui/category-modal/category-modal.component';
+import { FtConsentBannerComponent } from './shared/components/consent-banner.component';
+import { FtUpgradeModalComponent } from './shared/ui/upgrade-modal/upgrade-modal.component';
+import { FtTourOverlayComponent } from './shared/components/tour/tour-overlay.component';
 import { CommandService } from './core/services/command.service';
 import { AuthService } from './core/services/auth.service';
+import { FtAnalyticsService } from './core/services/analytics.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, TopbarComponent, CommandPaletteComponent, ToastContainerComponent, CategoryModalComponent],
+  imports: [RouterOutlet, TopbarComponent, CommandPaletteComponent, ToastContainerComponent, CategoryModalComponent, FtConsentBannerComponent, FtUpgradeModalComponent, FtTourOverlayComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
@@ -20,6 +24,7 @@ export class AppComponent implements AfterViewInit {
   private commandService = inject(CommandService);
   private router = inject(Router);
   private authService = inject(AuthService);
+  private analytics = inject(FtAnalyticsService);
   private destroyRef = inject(DestroyRef);
 
   // Rutas públicas donde no se muestra el topbar privado
@@ -28,6 +33,9 @@ export class AppComponent implements AfterViewInit {
   readonly showTopbar = signal(false);
 
   ngAfterViewInit(): void {
+    // Boot analytics (idempotent — re-hydrates queue and consent).
+    this.analytics.init();
+
     // Register global commands
     this.commandService.register([
       { id: 'nav-dashboard', label: 'Go to Dashboard', icon: 'dashboard', shortcut: 'G D', group: 'Navigation', action: () => this.router.navigate(['/dashboard']) },
@@ -41,8 +49,11 @@ export class AppComponent implements AfterViewInit {
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd),
       takeUntilDestroyed(this.destroyRef),
-    ).subscribe(() => {
+    ).subscribe((event) => {
+      const nav = event as NavigationEnd;
       this.updateShellVisibility();
+      // Track page views for analytics (deferred so it doesn't block render).
+      setTimeout(() => this.analytics.trackPageView(nav.urlAfterRedirects), 0);
     });
 
     // Initial check
