@@ -54,6 +54,8 @@ export class LandingComponent implements OnInit {
 
   readonly scrollProgress = signal(0);
   readonly telegramBotUrl = environment.telegramBotUrl;
+  readonly showAllFeatures = signal(false);
+  readonly showComparison = signal(false);
 
   /** Public site URL — used as og:url and twitter:url. */
   readonly siteUrl = environment.production
@@ -251,13 +253,10 @@ export class LandingComponent implements OnInit {
     },
   ];
 
-  /** Trust badges — six security/privacy signals rendered as glass cards. */
+  /** Trust badges — three most impactful security signals. */
   readonly trustBadges: TrustBadge[] = [
     { icon: 'lockClosed', labelKey: 'landing.trust.badges.encryption.label' },
-    { icon: 'shieldCheck', labelKey: 'landing.trust.badges.local_data.label' },
-    { icon: 'check', labelKey: 'landing.trust.badges.no_selling.label' },
-    { icon: 'code', labelKey: 'landing.trust.badges.open_source.label' },
-    { icon: 'shieldCheck', labelKey: 'landing.trust.badges.two_factor.label' },
-    { icon: 'globe', labelKey: 'landing.trust.badges.gdpr.label' },
+    { icon: 'shieldCheck', labelKey: 'landing.trust.badges.no_selling.label' },
+    { icon: 'check', labelKey: 'landing.trust.badges.local_data.label' },
   ];
 }

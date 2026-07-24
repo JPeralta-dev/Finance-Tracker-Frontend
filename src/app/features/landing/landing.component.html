@@ -16,10 +16,10 @@
     <div class="features__inner">
       <div class="features__header" ftSubtleReveal="per-word-crossfade" [delay]="200">
         <h2 class="features__title">{{ 'landing.features.title' | translate }}</h2>
-        <a href="#features" class="features__view-all">
-          {{ 'landing.features.view_all' | translate }}
-          <ng-icon name="chevronRight" size="0.875rem" />
-        </a>
+        <button class="features__toggle" (click)="showAllFeatures.set(!showAllFeatures())">
+          {{ showAllFeatures() ? ('landing.features.show_less' | translate) : ('landing.features.view_all' | translate) }}
+          <ng-icon name="chevronRight" size="0.875rem" class="features__toggle-icon" [class.features__toggle-icon--open]="showAllFeatures()" />
+        </button>
       </div>
       <div class="features__grid">
         @for (feature of features; track feature.title; let i = $index) {
@@ -29,6 +29,7 @@
             [description]="feature.description | translate"
             ftSubtleReveal="fade-up"
             [delay]="300 + (i * 100)"
+            [class.features__hidden]="i >= 4 && !showAllFeatures()"
           />
         }
       </div>
@@ -54,9 +55,28 @@
     <ft-pricing [tiers]="tiers" />
   </section>
 
-  <!-- Comparison Table -->
+  <!-- Comparison Table — collapsed by default -->
   <section class="comparison-wrapper section-full" ftSubtleReveal="soft-blur-in" [delay]="100">
-    <ft-comparison-table [rows]="comparisonRows" />
+    <div class="comparison-toggle">
+      <button
+        class="comparison-toggle__btn"
+        (click)="showComparison.set(!showComparison())"
+        [attr.aria-expanded]="showComparison()"
+      >
+        <span>{{ 'landing.comparison.title' | translate }}</span>
+        <ng-icon
+          name="chevronRight"
+          size="1.125rem"
+          class="comparison-toggle__icon"
+          [class.comparison-toggle__icon--open]="showComparison()"
+        />
+      </button>
+      @if (showComparison()) {
+        <div class="comparison-toggle__content">
+          <ft-comparison-table [rows]="comparisonRows" />
+        </div>
+      }
+    </div>
   </section>
 
   <!-- Testimonials -->
@@ -85,7 +105,7 @@
   <!-- Back to top -->
   <button
     class="back-to-top"
-    [class.back-to-top--visible]="scrollProgress() > 500"
+    [class.back-to-top--visible]="scrollProgress() > 5"
     (click)="scrollToTop()"
     aria-label="Back to top"
   >

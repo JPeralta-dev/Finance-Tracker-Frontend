@@ -1,44 +1,281 @@
+/* ═══════════════════════════════════════════════════════════════════
+   Final CTA — The Glass Vault destination
+   Centered monumental proclamation: card → message → button → trust
+   ═══════════════════════════════════════════════════════════════════ */
+
 .final-cta {
-  padding: 80px 24px;
+  position: relative;
+  padding: 100px 24px 120px;
+  background: var(--bg-primary);
+  overflow: hidden;
   text-align: center;
-  width: 100%;
 }
 
-.final-cta__inner {
-  max-width: 700px;
-  margin: 0 auto;
+/* ─── Background Glow ───────────────────────────────────────────── */
+
+.final-cta__glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 900px;
+  height: 700px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(168, 85, 247, 0.09) 0%,
+    rgba(217, 70, 239, 0.04) 40%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(80px);
 }
+
+/* ─── Inner — centered column ──────────────────────────────────── */
+
+.final-cta__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 640px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ─── Floating Preview Card ─────────────────────────────────────── */
+
+.final-cta__card {
+  width: 100%;
+  max-width: 380px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: 22px 24px 20px;
+  margin-bottom: 48px;
+  box-shadow: 0 0 40px rgba(168, 85, 247, 0.1);
+  transition:
+    border-color var(--duration-normal) var(--ease-smooth),
+    box-shadow var(--duration-normal) var(--ease-smooth);
+
+  &:hover {
+    border-color: var(--accent-start);
+    box-shadow: 0 0 60px rgba(217, 70, 239, 0.18);
+  }
+}
+
+.final-cta__card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 18px;
+}
+
+.final-cta__card-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--success);
+  border-radius: 50%;
+  animation: pulse-slow 2s ease-in-out infinite;
+}
+
+.final-cta__stats {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.final-cta__stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border-subtle);
+
+  &:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+}
+
+.final-cta__stat-label {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.final-cta__stat-value {
+  font-family: var(--font-mono);
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+
+  &--accent {
+    color: var(--accent-start);
+  }
+
+  &--positive {
+    color: var(--success);
+  }
+}
+
+/* ─── Title — display scale, centered ──────────────────────────── */
 
 .final-cta__title {
   font-family: var(--font-display);
-  font-size: 36px;
+  font-size: clamp(2rem, 5vw, 3.75rem);
   font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
   color: var(--text-primary);
-  margin: 0 0 16px;
+  margin: 0 0 20px;
+  max-width: 580px;
 }
 
+/* ─── Subtitle ──────────────────────────────────────────────────── */
+
 .final-cta__subtitle {
-  font-size: 16px;
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.65;
   color: var(--text-secondary);
-  margin: 0 0 32px;
-  line-height: 1.6;
+  margin: 0 0 40px;
+  max-width: 440px;
+}
+
+/* ─── Actions ───────────────────────────────────────────────────── */
+
+.final-cta__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 40px;
 }
 
 .final-cta__btn {
   display: inline-flex;
   align-items: center;
-  padding: 14px 32px;
+  gap: 10px;
+  padding: 16px 40px;
   background: linear-gradient(135deg, var(--accent-start), var(--accent-mid));
   color: var(--text-inverse);
-  font-size: 16px;
+  font-family: var(--font-body);
+  font-size: 17px;
   font-weight: 600;
+  line-height: 1;
   border-radius: var(--radius-sm);
   text-decoration: none;
-  transition: all var(--duration-normal) var(--ease-out);
-  box-shadow: var(--glow-accent);
+  box-shadow: 0 0 36px rgba(217, 70, 239, 0.3);
+  transition:
+    box-shadow var(--duration-normal) var(--ease-out),
+    transform var(--duration-normal) var(--ease-out);
 
   &:hover {
-    box-shadow: 0 0 40px rgba(217, 70, 239, 0.35);
+    box-shadow: 0 0 56px rgba(217, 70, 239, 0.45);
     transform: translateY(-2px);
   }
+
+  &:active {
+    transform: scale(0.97);
+    transition-duration: var(--duration-fast);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--accent-start);
+    outline-offset: 3px;
+  }
+}
+
+.final-cta__reassurance {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--text-tertiary);
+  margin: 0;
+}
+
+/* ─── Trust — grounded, confident ────────────────────────────────── */
+
+.final-cta__trust {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+}
+
+.final-cta__trust-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--text-secondary);
+  font-weight: 500;
+
+  ng-icon {
+    color: var(--accent-start);
+    flex-shrink: 0;
+  }
+}
+
+/* ─── Responsive ────────────────────────────────────────────────── */
+
+@media (max-width: 640px) {
+  .final-cta {
+    padding: 80px 16px 100px;
+  }
+
+  .final-cta__title {
+    font-size: 2rem;
+  }
+
+  .final-cta__subtitle {
+    font-size: 15px;
+  }
+
+  .final-cta__card {
+    max-width: 100%;
+    padding: 20px 18px 18px;
+    margin-bottom: 36px;
+  }
+
+  .final-cta__btn {
+    width: 100%;
+    justify-content: center;
+    padding: 14px 28px;
+    font-size: 16px;
+  }
+
+  .final-cta__trust {
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  }
+}
+
+/* ─── Reduced Motion ────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .final-cta__btn {
+    transition-duration: 0.01ms;
+  }
+  .final-cta__card-dot {
+    animation: none;
+  }
+}
+
+/* ─── Keyframes ─────────────────────────────────────────────────── */
+
+@keyframes pulse-slow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
 }

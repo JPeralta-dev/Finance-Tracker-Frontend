@@ -46,20 +46,31 @@
   margin: 0;
 }
 
-.features__view-all {
+.features__toggle {
   display: inline-flex;
   align-items: center;
   gap: 6px;
   font-size: 14px;
   font-weight: 600;
   color: var(--info);
-  text-decoration: none;
-  transition: color 0.2s, gap 0.2s;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-family: var(--font-body);
+  transition: color 0.2s;
   white-space: nowrap;
 
   &:hover {
     color: var(--accent-start);
-    gap: 10px;
+  }
+}
+
+.features__toggle-icon {
+  transition: transform var(--duration-fast) var(--ease-out);
+
+  &--open {
+    transform: rotate(90deg);
   }
 }
 
@@ -75,32 +86,8 @@
   height: 100%;
 }
 
-/* Feature cards stagger animation */
-.features__grid ft-feature-card {
-  opacity: 0;
-  animation: cardFadeIn 0.5s ease-out forwards;
-}
-
-/* Force all cards in a row to same height */
-.features__grid ft-feature-card {
-  height: 100%;
-}
-
-/* Feature cards stagger animation */
-.features__grid ft-feature-card {
-  opacity: 0;
-  animation: cardFadeIn 0.5s ease-out forwards;
-}
-
-@keyframes cardFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.features__hidden {
+  display: none;
 }
 
 /* Telegram Section Wrapper */
@@ -150,9 +137,9 @@
   }
 }
 
-/* Final CTA Wrapper */
+/* Final CTA Wrapper — component self-contained */
 .final-cta-wrapper {
-  padding: 80px 24px;
+  padding: 0;
 }
 
 /* Pricing Wrapper */
@@ -163,6 +150,59 @@
 /* Comparison Wrapper */
 .comparison-wrapper {
   padding: 0;
+}
+
+/* Comparison Toggle — collapsible "Compare Plans" */
+.comparison-toggle {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.comparison-toggle__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 18px 24px;
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition:
+    border-color var(--duration-normal) var(--ease-smooth),
+    box-shadow var(--duration-normal) var(--ease-smooth);
+
+  &:hover {
+    border-color: var(--glass-border-hover);
+    box-shadow: var(--shadow-md);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--accent-start);
+    outline-offset: 2px;
+  }
+}
+
+.comparison-toggle__icon {
+  flex-shrink: 0;
+  transition: transform var(--duration-fast) var(--ease-out);
+  color: var(--text-tertiary);
+
+  &--open {
+    transform: rotate(90deg);
+  }
+}
+
+.comparison-toggle__content {
+  margin-top: 24px;
 }
 
 /* Testimonials Wrapper */
@@ -309,6 +349,6 @@
   }
 
   .final-cta-wrapper {
-    padding: 100px 32px;
+    padding: 0;
   }
 }
