@@ -55,7 +55,6 @@ export class LandingComponent implements OnInit {
   readonly scrollProgress = signal(0);
   readonly telegramBotUrl = environment.telegramBotUrl;
   readonly showAllFeatures = signal(false);
-  readonly showComparison = signal(false);
 
   /** Public site URL — used as og:url and twitter:url. */
   readonly siteUrl = environment.production

@@ -156,59 +156,6 @@
   padding: 0;
 }
 
-/* Comparison Toggle — collapsible "Compare Plans" */
-.comparison-toggle {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 0 24px;
-}
-
-.comparison-toggle__btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  width: 100%;
-  padding: 18px 24px;
-  font-family: var(--font-display);
-  font-size: 18px;
-  font-weight: 600;
-  color: var(--text-primary);
-  background: var(--glass-bg);
-  backdrop-filter: blur(var(--glass-blur));
-  -webkit-backdrop-filter: blur(var(--glass-blur));
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-md);
-  cursor: pointer;
-  transition:
-    border-color var(--duration-normal) var(--ease-smooth),
-    box-shadow var(--duration-normal) var(--ease-smooth);
-
-  &:hover {
-    border-color: var(--glass-border-hover);
-    box-shadow: var(--shadow-md);
-  }
-
-  &:focus-visible {
-    outline: 2px solid var(--accent-start);
-    outline-offset: 2px;
-  }
-}
-
-.comparison-toggle__icon {
-  flex-shrink: 0;
-  transition: transform var(--duration-fast) var(--ease-out);
-  color: var(--text-tertiary);
-
-  &--open {
-    transform: rotate(90deg);
-  }
-}
-
-.comparison-toggle__content {
-  margin-top: 24px;
-}
-
 /* Testimonials Wrapper */
 .testimonials-wrapper {
   padding: 0;

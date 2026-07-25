@@ -55,28 +55,9 @@
     <ft-pricing [tiers]="tiers" />
   </section>
 
-  <!-- Comparison Table — collapsed by default -->
-  <section class="comparison-wrapper">
-    <div class="comparison-toggle">
-      <button
-        class="comparison-toggle__btn"
-        (click)="showComparison.set(!showComparison())"
-        [attr.aria-expanded]="showComparison()"
-      >
-        <span>{{ 'landing.comparison.title' | translate }}</span>
-        <ng-icon
-          name="chevronRight"
-          size="1.125rem"
-          class="comparison-toggle__icon"
-          [class.comparison-toggle__icon--open]="showComparison()"
-        />
-      </button>
-      @if (showComparison()) {
-        <div class="comparison-toggle__content">
-          <ft-comparison-table [rows]="comparisonRows" />
-        </div>
-      }
-    </div>
+  <!-- Comparison Table -->
+  <section class="comparison-wrapper" id="compare-plans">
+    <ft-comparison-table [rows]="comparisonRows" />
   </section>
 
   <!-- Testimonials -->
