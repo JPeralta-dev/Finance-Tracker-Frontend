@@ -166,9 +166,14 @@
   padding: 0;
 }
 
+/* Testimonials Wrapper */
+.testimonials-wrapper {
+  padding: 60px 24px;
+}
+
 /* Trust Wrapper */
 .trust-wrapper {
-  padding: 0;
+  padding: 60px 24px;
 }
 
 /* Back to top button */
@@ -223,6 +228,11 @@
   .section-full {
     padding: 40px 24px;
   }
+
+  .testimonials-wrapper,
+  .trust-wrapper {
+    padding: 40px 24px;
+  }
 }
 
 @media (max-width: 640px) {
@@ -261,6 +271,11 @@
   .section-full {
     padding: 40px 16px;
   }
+
+  .testimonials-wrapper,
+  .trust-wrapper {
+    padding: 40px 16px;
+  }
 }
 
 /* Wide screens (≥1440px) — proportional scaling */
@@ -271,6 +286,11 @@
 
   .features {
     padding: 120px 32px;
+  }
+
+  .testimonials-wrapper,
+  .trust-wrapper {
+    padding: 80px 32px;
   }
 
   .features__inner,
