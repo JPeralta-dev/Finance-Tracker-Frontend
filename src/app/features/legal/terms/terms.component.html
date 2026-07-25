@@ -1,0 +1,27 @@
+<div class="legal">
+  <a routerLink="/" class="legal__back">
+    <ng-icon name="chevronLeft" size="0.875rem" />
+    {{ 'landing.legal.back' | translate }}
+  </a>
+
+  <p class="legal__eyebrow">{{ 'landing.legal.terms.eyebrow' | translate }}</p>
+  <h1 class="legal__title">{{ 'landing.legal.terms.title' | translate }}</h1>
+  <p class="legal__updated">
+    <ng-icon name="clock" size="0.875rem" />
+    {{ 'landing.legal.last_updated' | translate: { year: updatedYear } }}
+  </p>
+
+  <div class="legal__coming-soon">
+    <div class="legal__coming-soon-icon" aria-hidden="true">
+      <ng-icon name="documentText" size="1.5rem" />
+    </div>
+    <div class="legal__coming-soon-content">
+      <h2 class="legal__coming-soon-title">{{ 'landing.legal.coming_soon.title' | translate }}</h2>
+      <p class="legal__coming-soon-text">{{ 'landing.legal.terms.coming_soon_text' | translate }}</p>
+      <a routerLink="/" class="legal__cta">
+        {{ 'landing.legal.back_to_home' | translate }}
+        <ng-icon name="chevronRight" size="0.875rem" />
+      </a>
+    </div>
+  </div>
+</div>

@@ -85,14 +85,14 @@ describe('FtEChartComponent', () => {
 
   describe('initial state', () => {
     it('should start in loading state when loading input is true', () => {
-      component.loading = () => true;
+      fixture.componentRef.setInput('loading', true);
       fixture.detectChanges();
       // State is managed internally via signal
       expect(component).toBeTruthy();
     });
 
     it('should accept options input', () => {
-      component.options = () => ({
+      fixture.componentRef.setInput('options', {
         xAxis: { type: 'category', data: ['A'] },
         yAxis: { type: 'value' },
         series: [{ type: 'bar', data: [1] }],
@@ -108,8 +108,8 @@ describe('FtEChartComponent', () => {
 
   describe('state transitions', () => {
     it('should transition to empty state when options are undefined', fakeAsync(() => {
-      component.options = () => undefined;
-      component.loading = () => false;
+      fixture.componentRef.setInput('options', undefined);
+      fixture.componentRef.setInput('loading', false);
       fixture.detectChanges();
       tick();
 
@@ -118,12 +118,12 @@ describe('FtEChartComponent', () => {
     }));
 
     it('should transition to empty state when options have empty series', fakeAsync(() => {
-      component.options = () => ({
+      fixture.componentRef.setInput('options', {
         xAxis: { type: 'category', data: [] },
         yAxis: { type: 'value' },
         series: [],
       });
-      component.loading = () => false;
+      fixture.componentRef.setInput('loading', false);
       fixture.detectChanges();
       tick();
 
@@ -134,12 +134,12 @@ describe('FtEChartComponent', () => {
       const readySpy = jasmine.createSpy('chartReady');
       component.chartReady.subscribe(readySpy);
 
-      component.options = () => ({
+      fixture.componentRef.setInput('options', {
         xAxis: { type: 'category', data: ['Jan'] },
         yAxis: { type: 'value' },
         series: [{ type: 'bar', data: [100] }],
       });
-      component.loading = () => false;
+      fixture.componentRef.setInput('loading', false);
       fixture.detectChanges();
       tick();
 

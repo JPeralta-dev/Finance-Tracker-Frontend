@@ -1,0 +1,119 @@
+<div class="referral-page">
+  <!-- Hero -->
+  <section class="referral-hero" ftSubtleReveal="fade-up">
+    <span class="referral-hero__eyebrow">{{ 'referral.hero.eyebrow' | translate }}</span>
+    <h1 class="referral-hero__title">{{ 'referral.hero.title' | translate }}</h1>
+    <p class="referral-hero__subtitle">{{ 'referral.hero.subtitle' | translate }}</p>
+  </section>
+
+  <!-- Link card -->
+  <section class="referral-card" ftSubtleReveal="fade-up" [delay]="50">
+    <div class="referral-card__header">
+      <ng-icon [name]="iconLink" size="20px" />
+      <h2 class="referral-card__title">{{ 'referral.linkCard.title' | translate }}</h2>
+    </div>
+
+    <div class="referral-link">
+      <code class="referral-link__code" [attr.aria-label]="'referral.linkCard.codeAria' | translate">
+        {{ referral.link() || '…' }}
+      </code>
+      <button
+        type="button"
+        class="referral-link__copy"
+        [class.referral-link__copy--done]="copyState() === 'copied'"
+        (click)="copyLink()"
+        [attr.aria-label]="'referral.linkCard.copy' | translate"
+      >
+        <ng-icon [name]="copyState() === 'copied' ? iconCheck : iconCopy" size="18px" />
+        <span>
+          {{ (copyState() === 'copied' ? 'referral.linkCard.copied' : 'referral.linkCard.copy') | translate }}
+        </span>
+      </button>
+    </div>
+
+    <!-- Share buttons -->
+    <div class="referral-share">
+      <span class="referral-share__label">{{ 'referral.share.label' | translate }}</span>
+      <div class="referral-share__buttons">
+        @for (method of shareMethods; track method) {
+          <button
+            type="button"
+            class="referral-share__btn"
+            [class]="'referral-share__btn--' + method"
+            (click)="share(method)"
+            [attr.aria-label]="('referral.share.' + method) | translate"
+          >
+            <ng-icon [name]="iconShare" size="16px" />
+            <span>{{ ('referral.share.' + method) | translate }}</span>
+          </button>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <section class="referral-stats" ftSubtleReveal="fade-up" [delay]="100">
+    <div class="referral-stat">
+      <div class="referral-stat__icon">
+        <ng-icon [name]="iconUserGroup" size="22px" />
+      </div>
+      <div class="referral-stat__body">
+        <span class="referral-stat__value">{{ displayStats().count }}</span>
+        <span class="referral-stat__label">{{ 'referral.stats.friends' | translate }}</span>
+      </div>
+    </div>
+    <div class="referral-stat">
+      <div class="referral-stat__icon">
+        <ng-icon [name]="iconGift" size="22px" />
+      </div>
+      <div class="referral-stat__body">
+        <span class="referral-stat__value">{{ displayStats().months }}</span>
+        <span class="referral-stat__label">{{ 'referral.stats.monthsEarned' | translate }}</span>
+      </div>
+    </div>
+    <div class="referral-stat">
+      <div class="referral-stat__icon">
+        <ng-icon [name]="iconShare" size="22px" />
+      </div>
+      <div class="referral-stat__body">
+        <span class="referral-stat__value">{{ displayStats().pending }}</span>
+        <span class="referral-stat__label">{{ 'referral.stats.pending' | translate }}</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="referral-steps" ftSubtleReveal="fade-up" [delay]="150">
+    <h2 class="referral-steps__title">{{ 'referral.howItWorks.title' | translate }}</h2>
+    <ol class="referral-steps__list">
+      <li class="referral-step">
+        <span class="referral-step__num">1</span>
+        <div>
+          <h3 class="referral-step__title">{{ 'referral.howItWorks.step1.title' | translate }}</h3>
+          <p class="referral-step__desc">{{ 'referral.howItWorks.step1.desc' | translate }}</p>
+        </div>
+      </li>
+      <li class="referral-step">
+        <span class="referral-step__num">2</span>
+        <div>
+          <h3 class="referral-step__title">{{ 'referral.howItWorks.step2.title' | translate }}</h3>
+          <p class="referral-step__desc">{{ 'referral.howItWorks.step2.desc' | translate }}</p>
+        </div>
+      </li>
+      <li class="referral-step">
+        <span class="referral-step__num">3</span>
+        <div>
+          <h3 class="referral-step__title">{{ 'referral.howItWorks.step3.title' | translate }}</h3>
+          <p class="referral-step__desc">{{ 'referral.howItWorks.step3.desc' | translate }}</p>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <!-- Terms -->
+  <p class="referral-terms">
+    <a routerLink="/legal/terms" class="referral-terms__link">
+      {{ 'referral.terms' | translate }}
+    </a>
+  </p>
+</div>

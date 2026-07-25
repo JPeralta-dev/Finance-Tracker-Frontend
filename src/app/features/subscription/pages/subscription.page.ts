@@ -253,16 +253,4 @@ export class SubscriptionPage implements OnInit {
       this.upgradeTier(tier);
     }
   }
-
-  // ─── Helpers for template ──────────────────────────────────────
-
-  isCurrentTier(tierId: SubscriptionTier): boolean {
-    return this.currentTier() === tierId;
-  }
-
-  isCtaDisabled(tierId: SubscriptionTier): boolean {
-    const trial = this.trialStatus();
-    const action = this.getCtaAction(tierId, trial);
-    return action === 'none' || this.actionLoading();
-  }
 }

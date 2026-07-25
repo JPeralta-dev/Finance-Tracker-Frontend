@@ -10,8 +10,11 @@
  * Rules are configurable via thresholds that can be injected or overridden.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, InjectionToken, Inject, Optional } from '@angular/core';
 import type { InsightProvider, InsightData, AnalyticsData, InsightSeverity, InsightType } from './insights.provider';
+
+/** DI token for providing initial insight rule config. */
+export const INSIGHT_RULES_CONFIG = new InjectionToken<Partial<InsightRuleConfig>>('INSIGHT_RULES_CONFIG');
 
 // ─── Rule Configuration ─────────────────────────────────────────────────────
 
@@ -38,9 +41,11 @@ export const DEFAULT_INSIGHT_RULES: InsightRuleConfig = {
 
 @Injectable({ providedIn: 'root' })
 export class RuleBasedInsightsService implements InsightProvider {
-  private config: InsightRuleConfig = { ...DEFAULT_INSIGHT_RULES };
+  private config: InsightRuleConfig;
 
-  constructor() {}
+  constructor(@Optional() @Inject(INSIGHT_RULES_CONFIG) initialConfig?: Partial<InsightRuleConfig>) {
+    this.config = { ...DEFAULT_INSIGHT_RULES, ...initialConfig };
+  }
 
   /**
    * Override default rule thresholds at runtime.

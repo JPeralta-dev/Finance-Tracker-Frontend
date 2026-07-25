@@ -138,7 +138,178 @@
     "cta": {
       "title": "Start tracking your money in 30 seconds",
       "subtitle": "Free forever. No credit card needed. Just sign up and take control.",
-      "button": "Get Started for Free"
+      "button": "Start your 30-day free trial"
+    },
+    "pricing": {
+      "section_title": "Simple, transparent pricing",
+      "section_subtitle": "Choose the plan that fits your goals. Upgrade or cancel anytime.",
+      "billing_monthly": "Monthly",
+      "billing_annual": "Annual",
+      "save_badge": "Save 33%",
+      "tiers": {
+        "free": {
+          "name": "Free",
+          "tagline": "Get started with the essentials",
+          "features": {
+            "transactions": "Unlimited transactions",
+            "categories": "Custom categories",
+            "basic_charts": "Basic charts",
+            "history": "Full transaction history"
+          },
+          "cta": "Get started"
+        },
+        "premium": {
+          "name": "Premium",
+          "tagline": "For people serious about their money",
+          "features": {
+            "ai_insights": "AI-powered insights",
+            "goals": "Savings goals",
+            "budgets": "Smart budgets",
+            "alerts": "Spending alerts",
+            "support": "Email support"
+          },
+          "cta": "Start your 30-day free trial"
+        },
+        "premium_plus": {
+          "name": "Premium Plus",
+          "tagline": "For power users and pros",
+          "features": {
+            "ai_chat": "Unlimited AI chat",
+            "telegram": "Telegram bot integration",
+            "export": "Export PDF & CSV",
+            "priority_support": "Priority support",
+            "everything_premium": "Everything in Premium"
+          },
+          "cta": "Start your 30-day free trial"
+        }
+      }
+    },
+    "comparison": {
+      "title": "Compare plans",
+      "subtitle": "Everything you get with each tier",
+      "free": "Free",
+      "premium": "Premium",
+      "premium_plus": "Premium Plus",
+      "features": {
+        "transactions": "Unlimited transactions",
+        "categories": "Custom categories",
+        "basic_charts": "Basic analytics",
+        "ai_insights": "AI-powered insights",
+        "goals": "Savings goals",
+        "budgets": "Smart budgets",
+        "alerts": "Spending alerts",
+        "telegram": "Telegram bot",
+        "export": "Export PDF & CSV",
+        "priority_support": "Priority support"
+      }
+    },
+    "testimonials": {
+      "section_title": "Loved by people who track their money",
+      "section_subtitle": "Real stories from real users",
+      "items": {
+        "maria": {
+          "text": "Flowr helped me save $2,400 in 3 months. The AI insights pointed out subscriptions I'd forgotten about.",
+          "name": "María G.",
+          "role": "Designer, Buenos Aires"
+        },
+        "carlos": {
+          "text": "Logging expenses from Telegram is a game changer. I track every coffee in 5 seconds without opening the app.",
+          "name": "Carlos R.",
+          "role": "Engineer, Madrid"
+        },
+        "ana": {
+          "text": "I've tried 4 finance apps. Flowr is the only one I actually stick with. The interface makes it feel easy.",
+          "name": "Ana L.",
+          "role": "Freelancer, Mexico City"
+        }
+      },
+      "prev": "Previous testimonial",
+      "next": "Next testimonial"
+    },
+    "faq": {
+      "section_title": "Frequently asked questions",
+      "section_subtitle": "Everything you need to know to get started",
+      "items": {
+        "pricing": {
+          "question": "How much does Flowr cost?",
+          "answer": "Flowr is free forever for the essentials. Premium is $14.900/month (or $119.000/year) and Premium Plus is $24.900/month (or $199.000/year). You can start a 30-day free trial of any paid plan with no credit card required."
+        },
+        "cancel": {
+          "question": "Can I cancel anytime?",
+          "answer": "Yes. Cancel from your account settings in two clicks. You'll keep access until the end of your billing period, and your data stays available on the Free plan."
+        },
+        "free_trial": {
+          "question": "Is the free trial really free?",
+          "answer": "Yes — 30 days, full Premium features, no credit card required. We'll remind you before it ends so you can decide with no pressure."
+        },
+        "data_safety": {
+          "question": "Is my financial data safe?",
+          "answer": "Absolutely. We use 256-bit encryption, never sell your data, and your transaction history stays on your device. You can export or delete everything at any time."
+        },
+        "telegram": {
+          "question": "Do I need to use the Telegram bot?",
+          "answer": "Not at all — the bot is optional. The web app works perfectly on its own. The bot just makes logging on the go faster."
+        }
+      }
+    },
+    "trust": {
+      "section_title": "Built with security and privacy first",
+      "section_subtitle": "Your money data deserves bank-grade protection",
+      "badges": {
+        "encryption": {
+          "label": "256-bit encryption"
+        },
+        "local_data": {
+          "label": "Your data stays on your device"
+        },
+        "no_selling": {
+          "label": "We never sell your data"
+        },
+        "open_source": {
+          "label": "Open source and auditable"
+        },
+        "two_factor": {
+          "label": "Two-factor authentication"
+        },
+        "gdpr": {
+          "label": "GDPR & CCPA compliant"
+        }
+      }
+    },
+    "legal": {
+      "back": "Back to home",
+      "back_to_home": "Back to home",
+      "last_updated": "Last updated: {{year}}",
+      "coming_soon": {
+        "title": "Coming soon"
+      },
+      "terms": {
+        "eyebrow": "Legal",
+        "title": "Terms of Service",
+        "coming_soon_text": "Our full Terms of Service are being drafted by our legal team. In the meantime, by using Flowr you agree to use the service responsibly and respect other users."
+      },
+      "privacy": {
+        "eyebrow": "Legal",
+        "title": "Privacy Policy",
+        "coming_soon_text": "Our complete Privacy Policy is on its way. Until then, the short version: we encrypt your data, never sell it, and you can delete your account at any time."
+      },
+      "cookies": {
+        "eyebrow": "Legal",
+        "title": "Cookie Policy",
+        "coming_soon_text": "We use a minimal set of cookies to keep you signed in and remember your language preference. The detailed Cookie Policy is coming soon."
+      },
+      "footer": {
+        "platform": "Platform",
+        "legal": "Legal",
+        "contact": "Contact",
+        "security": "Security",
+        "features": "Features",
+        "telegram_bot": "Telegram Bot",
+        "api_docs": "API Documentation",
+        "terms": "Terms of Service",
+        "privacy": "Privacy Policy",
+        "cookies": "Cookie Policy"
+      }
     }
   },
   "dashboard": {
@@ -533,6 +704,208 @@
   },
   "theme": {
     "toggle": "Toggle theme"
+  },
+  "analytics": {
+    "consent": {
+      "message": "We use cookies and analytics tools to understand how to improve Flowr. It's your call.",
+      "accept": "Accept",
+      "decline": "Decline",
+      "learnMore": "Learn more"
+    }
+  },
+  "modal": {
+    "close": "Close"
+  },
+  "upgradeModal": {
+    "headline": "Unlock the full potential of Flowr",
+    "subhead": "Compare the plans and pick the one that fits your pace.",
+    "featureCol": "Feature",
+    "currentTier": "Your plan",
+    "trialActive": "Your active trial ends in {{days}} days.",
+    "maybeLater": "Maybe later",
+    "tiers": {
+      "free": {
+        "name": "Free",
+        "tagline": "To get started",
+        "cta": "Current plan"
+      },
+      "premium": {
+        "name": "Premium",
+        "tagline": "Most popular",
+        "cta": "Choose Premium"
+      },
+      "premiumPlus": {
+        "name": "Premium Plus",
+        "tagline": "For power users",
+        "cta": "Choose Plus"
+      }
+    },
+    "features": {
+      "transactions": "Transaction tracking",
+      "basicCharts": "Basic charts",
+      "customCategories": "Custom categories",
+      "history": "History",
+      "aiInsights": "AI insights",
+      "aiInsightsSub": "Patterns and automatic recommendations",
+      "goals": "Savings goals",
+      "goalsSub": "Track to your target",
+      "aiChat": "Unlimited AI chat",
+      "telegramIntegration": "Telegram integration",
+      "exportPdf": "PDF and CSV export",
+      "prioritySupport": "Priority support"
+    },
+    "cta": {
+      "upgradeToPremium": "Upgrade to Premium",
+      "upgradeToPlus": "Upgrade to Premium Plus",
+      "continueWithPremium": "Continue with Premium"
+    }
+  },
+  "banner": {
+    "dismiss": "Dismiss"
+  },
+  "trialBanner": {
+    "daysRemaining": "Your premium trial ends in {{count}} days.",
+    "daysRemaining_one": "Your premium trial ends in {{count}} day.",
+    "endsToday": "Your premium trial ends today.",
+    "cta": "Upgrade to Premium"
+  },
+  "tour": {
+    "progress": "Step {{current}} of {{total}}",
+    "skipTour": "Skip tour",
+    "previous": "Back",
+    "next": "Next",
+    "finish": "Done",
+    "startExploring": "Start exploring",
+    "triggerCard": {
+      "title": "Take a quick tour?",
+      "description": "We'll show you the essentials in under a minute.",
+      "start": "Start tour",
+      "later": "Maybe later"
+    },
+    "steps": {
+      "welcome": {
+        "title": "Welcome to Flowr!",
+        "description": "Your money, perfectly organized. Here's what you can do from the main panel."
+      },
+      "telegram": {
+        "title": "Connect Telegram",
+        "description": "Log expenses by sending a message to our bot. No need to open the app.",
+        "cta": "Connect now"
+      },
+      "categories": {
+        "title": "Create categories",
+        "description": "Customize how your spending is organized. Food, transport, fun — your call.",
+        "cta": "Create category"
+      },
+      "logExpense": {
+        "title": "Log your first expense",
+        "description": "One click, one expense logged. Flowr handles the rest.",
+        "cta": "Log expense"
+      },
+      "done": {
+        "title": "You're all set!",
+        "description": "You know the essentials. Start exploring and see what Flowr can do for you."
+      }
+    }
+  },
+  "upgradePrompt": {
+    "default": {
+      "title": "Premium feature",
+      "description": "Unlock this with Premium.",
+      "cta": "Unlock"
+    },
+    "learnMore": "Learn more"
+  },
+  "emptyState": {
+    "premiumUpsell": {
+      "insights": {
+        "title": "Unlock AI insights",
+        "description": "Let AI detect patterns in your spending and recommend ways to save more.",
+        "cta": "Unlock insights"
+      },
+      "goals": {
+        "title": "Your financial goals, unlocked",
+        "description": "Track to the finish line with custom goals and alerts as you get close.",
+        "cta": "Create a goal"
+      },
+      "analytics": {
+        "title": "Advanced analytics",
+        "description": "Visualize your money with detailed charts and future projections.",
+        "cta": "View analytics"
+      }
+    },
+    "firstUse": {
+      "categories": {
+        "title": "Let's get started!",
+        "description": "Create your first category to start organizing your spending your way.",
+        "cta": "Create my first category"
+      },
+      "goals": {
+        "title": "Your first goal",
+        "description": "Set a financial target and Flowr will help you reach it. Start with something concrete.",
+        "cta": "Create my first goal"
+      },
+      "transactions": {
+        "title": "Add your first transaction",
+        "description": "Log an expense or income manually. You can connect the Telegram bot later to automate.",
+        "cta": "Add first transaction"
+      }
+    }
+  },
+  "referral": {
+    "hero": {
+      "eyebrow": "Referrals",
+      "title": "Invite friends, both win",
+      "subtitle": "For every friend who subscribes to Premium, you get 1 month free, and so do they."
+    },
+    "linkCard": {
+      "title": "Your unique link",
+      "codeAria": "Your referral link",
+      "copy": "Copy link",
+      "copied": "Copied!"
+    },
+    "share": {
+      "label": "Share via",
+      "email": "Email",
+      "whatsapp": "WhatsApp",
+      "twitter": "X",
+      "telegram": "Telegram"
+    },
+    "stats": {
+      "friends": "Friends invited",
+      "monthsEarned": "Months earned",
+      "pending": "Pending"
+    },
+    "howItWorks": {
+      "title": "How it works",
+      "step1": {
+        "title": "Share your link",
+        "desc": "Send your unique link via WhatsApp, email, or anywhere you like."
+      },
+      "step2": {
+        "title": "Your friend subscribes",
+        "desc": "When they activate Premium, you both get 1 month free."
+      },
+      "step3": {
+        "title": "Stack your discounts",
+        "desc": "Each referral adds a month. No cap."
+      }
+    },
+    "terms": "Terms and conditions apply.",
+    "input": {
+      "label": "Have a referral code?",
+      "placeholder": "ABC123XY",
+      "apply": "Apply",
+      "invalid": "Invalid code. Make sure it has 8 characters.",
+      "applied": "Done! Your discount will be applied at checkout."
+    },
+    "widget": {
+      "title": "Referrals",
+      "subtitle_one": "Invite {{count}} friend and you both get 1 month free.",
+      "subtitle_other": "Invite {{count}} friends and you both get 1 month free.",
+      "copy": "Copy link",
+      "openFull": "See referrals"
+    }
   },
   "notifications": {
     "bellLabel": "Notifications",

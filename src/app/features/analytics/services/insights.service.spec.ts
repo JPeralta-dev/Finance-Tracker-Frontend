@@ -20,7 +20,9 @@ describe('RuleBasedInsightsService', () => {
   // ─── Helpers ────────────────────────────────────────────────────────────
 
   function createService(config?: Partial<InsightRuleConfig>): RuleBasedInsightsService {
-    return new RuleBasedInsightsService(config);
+    const svc = new RuleBasedInsightsService();
+    if (config) svc.configure(config);
+    return svc;
   }
 
   function emptyData(): AnalyticsData {
@@ -305,9 +307,9 @@ describe('RuleBasedInsightsService', () => {
         ...emptyData(),
         categoryBreakdown: {
           categories: [
-            { name: 'Rent', amount: 1500, percentage: 50 },
-            { name: 'Food', amount: 600, percentage: 20 },
-            { name: 'Transport', amount: 300, percentage: 10 },
+            { categoryId: 'cat-rent', category: 'Rent', amount: 1500, percentage: 50 },
+            { categoryId: 'cat-food', category: 'Food', amount: 600, percentage: 20 },
+            { categoryId: 'cat-transport', category: 'Transport', amount: 300, percentage: 10 },
           ],
         },
       };
@@ -325,8 +327,8 @@ describe('RuleBasedInsightsService', () => {
         ...emptyData(),
         categoryBreakdown: {
           categories: [
-            { name: 'Rent', amount: 2000, percentage: 67 },
-            { name: 'Food', amount: 500, percentage: 17 },
+            { categoryId: 'cat-rent', category: 'Rent', amount: 2000, percentage: 67 },
+            { categoryId: 'cat-food', category: 'Food', amount: 500, percentage: 17 },
           ],
         },
       };
@@ -342,9 +344,9 @@ describe('RuleBasedInsightsService', () => {
         ...emptyData(),
         categoryBreakdown: {
           categories: [
-            { name: 'Rent', amount: 1000, percentage: 33 },
-            { name: 'Food', amount: 800, percentage: 27 },
-            { name: 'Transport', amount: 600, percentage: 20 },
+            { categoryId: 'cat-rent', category: 'Rent', amount: 1000, percentage: 33 },
+            { categoryId: 'cat-food', category: 'Food', amount: 800, percentage: 27 },
+            { categoryId: 'cat-transport', category: 'Transport', amount: 600, percentage: 20 },
           ],
         },
       };
@@ -388,7 +390,7 @@ describe('RuleBasedInsightsService', () => {
         },
         categoryBreakdown: {
           categories: [
-            { name: 'Rent', amount: 1500, percentage: 50 }, // medium severity
+            { categoryId: 'cat-rent', category: 'Rent', amount: 1500, percentage: 50 }, // medium severity
           ],
         },
         dailySpending: null,
@@ -565,15 +567,15 @@ describe('RuleBasedInsightsService', () => {
   describe('table-driven: category anomaly', () => {
     const testCases: {
       name: string;
-      categories: { name: string; percentage: number }[];
+      categories: { category: string; percentage: number }[];
       expectedAnomalyCount: number;
     }[] = [
       { name: 'no categories', categories: [], expectedAnomalyCount: 0 },
-      { name: 'all below threshold', categories: [{ name: 'A', percentage: 30 }, { name: 'B', percentage: 25 }], expectedAnomalyCount: 0 },
-      { name: 'one at threshold (40%)', categories: [{ name: 'Rent', percentage: 40 }, { name: 'Food', percentage: 30 }], expectedAnomalyCount: 1 },
-      { name: 'one above threshold', categories: [{ name: 'Rent', percentage: 55 }, { name: 'Food', percentage: 20 }], expectedAnomalyCount: 1 },
-      { name: 'multiple above threshold', categories: [{ name: 'Rent', percentage: 50 }, { name: 'Food', percentage: 45 }], expectedAnomalyCount: 2 },
-      { name: 'extreme concentration (90%)', categories: [{ name: 'Rent', percentage: 90 }], expectedAnomalyCount: 1 },
+      { name: 'all below threshold', categories: [{ category: 'A', percentage: 30 }, { category: 'B', percentage: 25 }], expectedAnomalyCount: 0 },
+      { name: 'one at threshold (40%)', categories: [{ category: 'Rent', percentage: 40 }, { category: 'Food', percentage: 30 }], expectedAnomalyCount: 1 },
+      { name: 'one above threshold', categories: [{ category: 'Rent', percentage: 55 }, { category: 'Food', percentage: 20 }], expectedAnomalyCount: 1 },
+      { name: 'multiple above threshold', categories: [{ category: 'Rent', percentage: 50 }, { category: 'Food', percentage: 45 }], expectedAnomalyCount: 2 },
+      { name: 'extreme concentration (90%)', categories: [{ category: 'Rent', percentage: 90 }], expectedAnomalyCount: 1 },
     ];
 
     testCases.forEach((tc) => {
@@ -582,7 +584,8 @@ describe('RuleBasedInsightsService', () => {
           ...emptyData(),
           categoryBreakdown: {
             categories: tc.categories.map((c) => ({
-              name: c.name,
+              categoryId: `cat-${c.category.toLowerCase()}`,
+              category: c.category,
               amount: c.percentage * 10,
               percentage: c.percentage,
             })),

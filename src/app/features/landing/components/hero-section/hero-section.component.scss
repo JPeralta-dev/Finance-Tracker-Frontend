@@ -79,8 +79,8 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 12px 24px;
-  font-size: 15px;
+  padding: 10px 20px;
+  font-size: 14px;
   font-weight: 600;
   border-radius: var(--radius-sm);
   text-decoration: none;
@@ -182,29 +182,6 @@
     justify-content: center;
   }
 
-.hero__link {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--text-tertiary);
-  text-decoration: none;
-  transition: color var(--duration-fast) var(--ease-out);
-
-  &:hover {
-    color: var(--text-secondary);
-  }
-
-  ng-icon {
-    transition: transform var(--duration-fast) var(--ease-out);
-  }
-
-  &:hover ng-icon {
-    transform: translateX(2px);
-  }
-}
-
 .hero__trust {
     justify-content: center;
   }
@@ -222,5 +199,13 @@
   .hero__btn {
     width: 100%;
     justify-content: center;
+  }
+}
+
+/* ─── Reduced Motion ────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__badge-dot {
+    animation: none;
   }
 }

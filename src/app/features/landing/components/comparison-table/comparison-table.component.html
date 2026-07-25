@@ -1,0 +1,64 @@
+<section class="comparison" id="compare">
+  <div class="comparison__inner" ftSubtleReveal="fade-up">
+    <div class="comparison__header">
+      <h2 class="comparison__title">{{ 'landing.comparison.title' | translate }}</h2>
+      <p class="comparison__subtitle">{{ 'landing.comparison.subtitle' | translate }}</p>
+    </div>
+
+    <div class="comparison__scroll">
+      <div class="comparison__grid" role="table" aria-label="Plan comparison">
+        <div class="comparison__row comparison__row--head" role="row">
+          <div class="comparison__cell comparison__cell--label" role="columnheader">
+            <span class="visually-hidden">{{ 'landing.comparison.subtitle' | translate }}</span>
+          </div>
+          <div class="comparison__cell comparison__cell--tier" role="columnheader">
+            <span class="comparison__tier-name">{{ 'landing.comparison.free' | translate }}</span>
+          </div>
+          <div class="comparison__cell comparison__cell--tier comparison__cell--popular" role="columnheader">
+            <span class="comparison__tier-name">{{ 'landing.comparison.premium' | translate }}</span>
+            <ng-icon name="star" size="0.875rem" class="comparison__tier-icon" />
+          </div>
+          <div class="comparison__cell comparison__cell--tier" role="columnheader">
+            <span class="comparison__tier-name">{{ 'landing.comparison.premium_plus' | translate }}</span>
+          </div>
+        </div>
+
+        @for (row of rows(); track row.featureKey; let i = $index) {
+          <div
+            class="comparison__row"
+            role="row"
+            [class.comparison__row--alt]="i % 2 === 1"
+          >
+            <div class="comparison__cell comparison__cell--label" role="cell">
+              {{ row.featureKey | translate }}
+            </div>
+            <div class="comparison__cell comparison__cell--tier" role="cell">
+              @if (row.free) {
+                <ng-icon name="check" size="1.1rem" class="comparison__check" aria-label="Included" />
+              } @else {
+                <ng-icon name="close" size="1.1rem" class="comparison__cross" aria-label="Not included" />
+              }
+            </div>
+            <div
+              class="comparison__cell comparison__cell--tier comparison__cell--popular"
+              role="cell"
+            >
+              @if (row.premium) {
+                <ng-icon name="check" size="1.1rem" class="comparison__check" aria-label="Included" />
+              } @else {
+                <ng-icon name="close" size="1.1rem" class="comparison__cross" aria-label="Not included" />
+              }
+            </div>
+            <div class="comparison__cell comparison__cell--tier" role="cell">
+              @if (row.premiumPlus) {
+                <ng-icon name="check" size="1.1rem" class="comparison__check" aria-label="Included" />
+              } @else {
+                <ng-icon name="close" size="1.1rem" class="comparison__cross" aria-label="Not included" />
+              }
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</section>

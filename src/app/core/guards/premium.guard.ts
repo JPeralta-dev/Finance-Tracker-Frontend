@@ -1,17 +1,22 @@
 import { CanActivateFn, Router } from '@angular/router';
 import { inject } from '@angular/core';
-import { filter, map, take, tap } from 'rxjs';
+import { filter, map, take } from 'rxjs';
 import { AuthService } from '../services/auth.service';
-import { ToastService } from '../services/toast.service';
+import { UpgradeModalService } from '../services/upgrade-modal.service';
+import { FtAnalyticsService } from '../services/analytics.service';
 
 /**
- * Premium route guard — redirects free users to /subscription with ?upgrade=true.
- * Shows a warning toast explaining the feature requires a premium tier.
+ * Premium route guard — opens the global upgrade modal for free users
+ * instead of redirecting, so the user can compare tiers and choose.
+ *
+ * If the user dismisses the modal they stay on the previous page; the
+ * route is NOT activated.
  */
 export const premiumGuard: CanActivateFn = (_route, state) => {
   const router = inject(Router);
   const authService = inject(AuthService);
-  const toast = inject(ToastService);
+  const upgradeModal = inject(UpgradeModalService);
+  const analytics = inject(FtAnalyticsService);
 
   // Trigger session check (idempotent)
   authService.initAuthCheck();
@@ -24,16 +29,38 @@ export const premiumGuard: CanActivateFn = (_route, state) => {
         return true;
       }
 
-      // Free user — redirect to subscription page
-      toast.warning(
-        'Función premium',
-        'Necesitás una suscripción premium para acceder a esta sección.',
-      );
+      // Track the attempt and open the modal. We DON'T redirect — the
+      // modal gives the user a clear path to upgrade and respects their
+      // choice to stay where they were.
+      analytics.trackEvent('premium_access_attempted', {
+        route: state.url,
+        trigger: 'premium_guard',
+        tier: authService.subscriptionTier(),
+      });
+      analytics.trackEvent('paywall_modal_shown', {
+        route: state.url,
+        trigger: 'premium_guard',
+      });
 
-      const urlTree = router.parseUrl('/subscription');
-      urlTree.queryParams = { upgrade: 'true' };
-      router.navigate(['/subscription'], { queryParams: { upgrade: 'true' } });
+      const trialDays = computeTrialDaysRemaining(authService.currentSubscription()?.trialEnd);
+      upgradeModal.openModal({
+        trigger: 'premium_guard',
+        route: state.url,
+        currentTier: authService.subscriptionTier(),
+        trialDaysRemaining: trialDays,
+        onCta: () => router.navigate(['/subscription'], { queryParams: { upgrade: 'true' } }),
+      });
+
       return false;
     }),
   );
 };
+
+function computeTrialDaysRemaining(trialEnd: string | null | undefined): number | undefined {
+  if (!trialEnd) return undefined;
+  const end = new Date(trialEnd).getTime();
+  if (Number.isNaN(end)) return undefined;
+  const diff = end - Date.now();
+  if (diff <= 0) return 0;
+  return Math.ceil(diff / (24 * 60 * 60 * 1000));
+}
