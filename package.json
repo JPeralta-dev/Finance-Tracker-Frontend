@@ -11,6 +11,7 @@
     "test:ci": "ng test --no-watch --browsers=ChromeHeadless --code-coverage",
     "vercel-build": "ng build --configuration production"
   },
+ 
   "private": true,
   "dependencies": {
     "@angular/animations": "^17.3.0",
@@ -48,5 +49,6 @@
     "puppeteer": "25.0.2",
     "tailwindcss": "^3.4.19",
     "typescript": "~5.4.2"
-  }
+  },
+  "packageManager": "pnpm@10.0.0"
 }
