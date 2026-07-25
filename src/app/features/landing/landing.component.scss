@@ -8,7 +8,7 @@
 
 /* Sections - content-driven height */
 .section-full {
-  padding: 100px 24px;
+  padding: 60px 24px;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -17,7 +17,7 @@
 
 /* Features Section */
 .features {
-  padding: 100px 24px;
+  padding: 60px 24px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -76,9 +76,13 @@
 
 .features__grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 24px;
   align-items: stretch;
+}
+
+.features__grid--expanded {
+  grid-template-columns: repeat(3, 1fr);
 }
 
 /* Force cards to fill grid cell height */
@@ -270,13 +274,13 @@
   }
 
   .section-full {
-    padding: 60px 24px;
+    padding: 40px 24px;
   }
 }
 
 @media (max-width: 640px) {
   .features {
-    padding: 60px 16px;
+    padding: 40px 16px;
   }
 
   .features__header {
@@ -294,7 +298,7 @@
   }
 
   .telegram-wrapper {
-    padding: 60px 16px;
+    padding: 40px 16px;
   }
 
   .telegram-wrapper__header {
@@ -308,14 +312,14 @@
   }
 
   .section-full {
-    padding: 60px 16px;
+    padding: 40px 16px;
   }
 }
 
 /* Wide screens (≥1440px) — proportional scaling */
 @media (min-width: 1440px) {
   .section-full {
-    padding: 120px 32px;
+    padding: 80px 32px;
   }
 
   .features {
@@ -341,7 +345,7 @@
   }
 
   .telegram-wrapper {
-    padding: 120px 32px;
+    padding: 80px 32px;
   }
 
   .telegram-wrapper__header {

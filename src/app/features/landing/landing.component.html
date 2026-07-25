@@ -12,7 +12,7 @@
   <ft-hero-section />
 
   <!-- Features Section -->
-  <section id="features" class="features section-full" ftSubtleReveal="soft-blur-in" [delay]="100">
+  <section id="features" class="features">
     <div class="features__inner">
       <div class="features__header" ftSubtleReveal="per-word-crossfade" [delay]="200">
         <h2 class="features__title">{{ 'landing.features.title' | translate }}</h2>
@@ -21,7 +21,7 @@
           <ng-icon name="chevronRight" size="0.875rem" class="features__toggle-icon" [class.features__toggle-icon--open]="showAllFeatures()" />
         </button>
       </div>
-      <div class="features__grid">
+      <div class="features__grid" [class.features__grid--expanded]="showAllFeatures()">
         @for (feature of features; track feature.title; let i = $index) {
           <ft-feature-card
             [icon]="feature.icon"
@@ -37,7 +37,7 @@
   </section>
 
   <!-- Telegram Section -->
-  <section class="telegram-wrapper section-full" ftSubtleReveal="shimmer-sweep" [delay]="100">
+  <section class="telegram-wrapper">
     <div class="telegram-wrapper__inner">
       <div class="telegram-wrapper__header" ftSubtleReveal="per-word-crossfade" [delay]="200">
         <h2 class="telegram-wrapper__title">{{ 'landing.telegram.title' | translate }}</h2>
@@ -51,12 +51,12 @@
   </section>
 
   <!-- Pricing Section -->
-  <section class="pricing-wrapper section-full" ftSubtleReveal="scale-down-fade" [delay]="100">
+  <section class="pricing-wrapper">
     <ft-pricing [tiers]="tiers" />
   </section>
 
   <!-- Comparison Table — collapsed by default -->
-  <section class="comparison-wrapper section-full" ftSubtleReveal="soft-blur-in" [delay]="100">
+  <section class="comparison-wrapper">
     <div class="comparison-toggle">
       <button
         class="comparison-toggle__btn"
@@ -80,22 +80,22 @@
   </section>
 
   <!-- Testimonials -->
-  <section class="testimonials-wrapper section-full" ftSubtleReveal="short-slide-right" [delay]="100">
+  <section class="testimonials-wrapper">
     <ft-testimonials [items]="testimonials" />
   </section>
 
   <!-- FAQ -->
-  <section class="faq-wrapper section-full" ftSubtleReveal="fade-up" [delay]="100">
+  <section class="faq-wrapper">
     <ft-faq [items]="faqItems" />
   </section>
 
   <!-- Trust Signals -->
-  <section class="trust-wrapper section-full" ftSubtleReveal="micro-scale-fade" [delay]="100">
+  <section class="trust-wrapper">
     <ft-trust-signals [badges]="trustBadges" />
   </section>
 
   <!-- Final CTA -->
-  <section class="final-cta-wrapper section-full" ftSubtleReveal="soft-blur-in" [delay]="100">
+  <section class="final-cta-wrapper">
     <ft-final-cta />
   </section>
 
