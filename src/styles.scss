@@ -227,6 +227,23 @@ input, select, textarea { font-family: var(--font-body); }
   animation: 280ms ease-out fade-in;
 }
 
+/* ─── Language Switch Transition ──────────────────────────────────── */
+/*
+ * Applied to <app-root> by the TranslationService via the
+ * `isTransitioning` signal. Creates a subtle crossfade:
+ *   1. Text dims briefly
+ *   2. New translations load
+ *   3. Text fades back to full opacity
+ */
+.lang-switching {
+  opacity: 0.6;
+  transition: opacity 120ms var(--ease-smooth);
+}
+.lang-switching[data-visible="true"] {
+  opacity: 1;
+  transition: opacity 250ms var(--ease-smooth);
+}
+
 /* ─── Transitions.dev Modal (06-modal) ──────────────────────────── */
 .t-modal {
   transform-origin: center;

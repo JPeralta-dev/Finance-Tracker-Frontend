@@ -1,11 +1,62 @@
 <section class="final-cta">
+  <div class="final-cta__glow" aria-hidden="true"></div>
+
   <div class="final-cta__inner">
-    <h2 class="final-cta__title" ftSubtleReveal="fade-up" [delay]="100">{{ 'landing.cta.title' | translate }}</h2>
-    <p class="final-cta__subtitle" ftSubtleReveal="fade-up" [delay]="200">
+    <!-- Floating preview card — proof, not competition -->
+    <div class="final-cta__card" ftSubtleReveal="fade-up" [delay]="100">
+      <div class="final-cta__card-header">
+        <span class="final-cta__card-dot"></span>
+        Your Financial Snapshot
+      </div>
+      <div class="final-cta__stats">
+        <div class="final-cta__stat">
+          <span class="final-cta__stat-label">Balance</span>
+          <span class="final-cta__stat-value">$12,400</span>
+        </div>
+        <div class="final-cta__stat">
+          <span class="final-cta__stat-label">Savings</span>
+          <span class="final-cta__stat-value final-cta__stat-value--accent">53.7%</span>
+        </div>
+        <div class="final-cta__stat">
+          <span class="final-cta__stat-label">This Month</span>
+          <span class="final-cta__stat-value final-cta__stat-value--positive">+$2,840</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Message — the proclamation -->
+    <h2 class="final-cta__title" ftSubtleReveal="fade-up" [delay]="200">
+      {{ 'landing.cta.title' | translate }}
+    </h2>
+    <p class="final-cta__subtitle" ftSubtleReveal="fade-up" [delay]="300">
       {{ 'landing.cta.subtitle' | translate }}
     </p>
-    <a routerLink="/register" class="final-cta__btn" ftSubtleReveal="fade-up" [delay]="300">
-      {{ 'landing.cta.button' | translate }}
-    </a>
+
+    <!-- CTA — escalated -->
+    <div class="final-cta__actions" ftSubtleReveal="fade-up" [delay]="400">
+      <a routerLink="/register" class="final-cta__btn">
+        {{ 'landing.cta.button' | translate }}
+        <ng-icon name="chevronRight" size="1.125rem" />
+      </a>
+      <p class="final-cta__reassurance">
+        {{ 'landing.trustNoCard' | translate }}
+      </p>
+    </div>
+
+    <!-- Trust — grounded -->
+    <div class="final-cta__trust" ftSubtleReveal="fade-up" [delay]="500">
+      <span class="final-cta__trust-item">
+        <ng-icon name="check" size="1rem" />
+        {{ 'landing.trustFree' | translate }}
+      </span>
+      <span class="final-cta__trust-item">
+        <ng-icon name="lockClosed" size="1rem" />
+        {{ 'landing.trustEncrypted' | translate }}
+      </span>
+      <span class="final-cta__trust-item">
+        <ng-icon name="sparkles" size="1rem" />
+        {{ 'landing.heroBadge' | translate }}
+      </span>
+    </div>
   </div>
 </section>

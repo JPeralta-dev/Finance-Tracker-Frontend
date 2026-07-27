@@ -208,19 +208,19 @@
       "section_subtitle": "Historias reales de usuarios reales",
       "items": {
         "maria": {
-          "text": "Flowr me ayudó a ahorrar $2.400 en 3 meses. Los insights de IA me mostraron suscripciones que había olvidado.",
-          "name": "María G.",
-          "role": "Diseñadora, Buenos Aires"
+          "text": "Recibo mis gastos por WhatsApp y aparecen automáticamente en Flowr. No necesito abrir la app para registrar nada. En 3 meses ahorré $2.400 porque vi suscripciones que había olvidado.",
+          "name": "María González",
+          "role": "Diseñadora UX, Buenos Aires"
         },
         "carlos": {
-          "text": "Registrar gastos desde Telegram es un game changer. Anoto cada café en 5 segundos sin abrir la app.",
-          "name": "Carlos R.",
-          "role": "Ingeniero, Madrid"
+          "text": "Soy freelancer con ingresos variables. Flowr me muestra exactamente cuánto puedo gastar cada semana sin pasarme. El bot de Telegram es perfecto: le mando 'Café $3.50' y listo.",
+          "name": "Carlos Rodríguez",
+          "role": "Desarrollador freelance, Madrid"
         },
         "ana": {
-          "text": "Probé 4 apps de finanzas. Flowr es la única con la que me quedo. La interfaz lo hace sentir fácil.",
-          "name": "Ana L.",
-          "role": "Freelancer, Ciudad de México"
+          "text": "Probé Mint, YNAB, Wallet. Todas requieren abrir la app. Flowr es la única donde registro gastos sin interrumpir mi día. La vista de categorías me muestra dónde se va el dinero.",
+          "name": "Ana López",
+          "role": "Product Manager, Ciudad de México"
         }
       },
       "prev": "Testimonio anterior",
