@@ -1,22 +1,19 @@
-import { Pipe, PipeTransform, ChangeDetectorRef, inject, effect } from '@angular/core';
+import { Pipe, PipeTransform, inject } from '@angular/core';
 import { TranslationService } from '../services/translation.service';
 
+/**
+ * Impure translate pipe — re-evaluates on every change detection cycle
+ * so language switches reflect instantly without page reload.
+ * The `translate()` lookup is a simple object traversal + string replace,
+ * so the performance cost is negligible.
+ */
 @Pipe({
   name: 'translate',
   standalone: true,
-  pure: true,
+  pure: false,
 })
 export class TranslatePipe implements PipeTransform {
   private translationService = inject(TranslationService);
-  private cdr = inject(ChangeDetectorRef);
-
-  constructor() {
-    // When language changes, trigger change detection so pure pipe re-evaluates
-    effect(() => {
-      this.translationService.currentLang();
-      this.cdr.markForCheck();
-    });
-  }
 
   transform(key: string, params?: Record<string, number | string>): string {
     if (key == null) return '';

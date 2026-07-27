@@ -25,14 +25,27 @@
   <script>
     (function() {
       try {
+        // Theme detection
         var theme = localStorage.getItem('flowr_theme');
         if (theme === 'light') {
           document.documentElement.classList.add('light');
         } else {
           document.documentElement.classList.add('dark');
         }
+
+        // Language detection (before Angular boots)
+        var storedLang = localStorage.getItem('flowr_language');
+        if (storedLang && (storedLang === 'es' || storedLang === 'en' || storedLang === 'fr')) {
+          document.documentElement.lang = storedLang;
+        } else {
+          var browserLang = (navigator.language || '').slice(0, 2);
+          document.documentElement.lang = (browserLang === 'es' || browserLang === 'en' || browserLang === 'fr')
+            ? browserLang
+            : 'en';
+        }
       } catch(e) {
         document.documentElement.classList.add('dark');
+        document.documentElement.lang = 'en';
       }
     })();
   </script>

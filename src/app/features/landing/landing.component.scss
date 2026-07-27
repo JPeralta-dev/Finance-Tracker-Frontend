@@ -1,9 +1,15 @@
 .landing {
   min-height: 100vh;
   background: var(--bg-primary);
-  overflow-x: hidden;
   position: relative;
   z-index: 1;
+
+  /* Footer lives outside this wrapper so it can break out to full viewport width.
+     Keep overflow clipping only on the main content sections. */
+}
+
+.landing__content {
+  overflow-x: hidden;
 }
 
 /* Sections - content-driven height */
@@ -143,11 +149,6 @@
 
 /* Final CTA Wrapper — component self-contained */
 .final-cta-wrapper {
-  padding: 0;
-}
-
-/* Pricing Wrapper */
-.pricing-wrapper {
   padding: 0;
 }
 

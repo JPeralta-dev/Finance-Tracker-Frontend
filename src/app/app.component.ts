@@ -12,6 +12,7 @@ import { FtTourOverlayComponent } from './shared/components/tour/tour-overlay.co
 import { CommandService } from './core/services/command.service';
 import { AuthService } from './core/services/auth.service';
 import { FtAnalyticsService } from './core/services/analytics.service';
+import { TranslationService } from './core/services/translation.service';
 
 @Component({
   selector: 'app-root',
@@ -19,6 +20,9 @@ import { FtAnalyticsService } from './core/services/analytics.service';
   imports: [RouterOutlet, TopbarComponent, CommandPaletteComponent, ToastContainerComponent, CategoryModalComponent, FtConsentBannerComponent, FtUpgradeModalComponent, FtTourOverlayComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
+  host: {
+    '[class.lang-switching]': 'translationService.isTransitioning()',
+  },
 })
 export class AppComponent implements AfterViewInit {
   private commandService = inject(CommandService);
@@ -26,6 +30,8 @@ export class AppComponent implements AfterViewInit {
   private authService = inject(AuthService);
   private analytics = inject(FtAnalyticsService);
   private destroyRef = inject(DestroyRef);
+
+  translationService = inject(TranslationService);
 
   // Rutas públicas donde no se muestra el topbar privado
   private readonly publicRoutes = ['', 'login', 'register'];
