@@ -1,30 +1,60 @@
-import { Injectable, signal, computed, inject } from '@angular/core';
+import { Injectable, signal, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 
 export type Language = 'es' | 'en' | 'fr';
 
+const SUPPORTED_LANGUAGES: Language[] = ['es', 'en', 'fr'];
+const DEFAULT_LANG: Language = 'en';
+
 // Pre-compiled regex for {{ paramName }} interpolation — avoids re-compilation on every call
 const PARAM_REGEX = /\{\{\s*(\w+)\s*\}\}/g;
+
+/**
+ * Resolves the best initial language:
+ * 1. Stored user preference (localStorage)
+ * 2. Browser language (navigator.language)
+ * 3. Fallback: English
+ */
+function detectBestLanguage(): Language {
+  // 1. Explicit user preference
+  const stored = localStorage.getItem('flowr_language') as Language | null;
+  if (stored && SUPPORTED_LANGUAGES.includes(stored)) return stored;
+
+  // 2. Browser preference
+  try {
+    const browserLang = (navigator.language || '').slice(0, 2) as Language;
+    if (SUPPORTED_LANGUAGES.includes(browserLang)) return browserLang;
+  } catch {
+    // SSR or restricted environment — fall through
+  }
+
+  // 3. Default
+  return DEFAULT_LANG;
+}
 
 @Injectable({ providedIn: 'root' })
 export class TranslationService {
   private readonly STORAGE_KEY = 'flowr_language';
   private readonly TRANSLATIONS_KEY = 'flowr_translations';
-  private readonly defaultLang: Language = 'es';
 
   // Lazy-inject HttpClient — only needed for async fetch, not for constructor
   private http = inject(HttpClient, { optional: true });
 
   private _translations = signal<Record<string, any>>({});
-  private _currentLang = signal<Language>(this.defaultLang);
+  private _currentLang = signal<Language>(detectBestLanguage());
   private _loaded = signal(false);
+  private _isTransitioning = signal(false);
 
   readonly currentLang = this._currentLang.asReadonly();
   readonly translations = this._translations.asReadonly();
   readonly isLoaded = this._loaded.asReadonly();
+  readonly isTransitioning = this._isTransitioning.asReadonly();
 
   constructor() {
+    // Set the `lang` attribute on <html> immediately
+    document.documentElement.lang = this._currentLang();
+
     // Try loading from localStorage first (sync, no blocking)
     const cached = localStorage.getItem(this.TRANSLATIONS_KEY);
     if (cached) {
@@ -34,13 +64,6 @@ export class TranslationService {
       } catch {
         // Invalid JSON, fall through to async fetch
       }
-    }
-
-    // Restore language preference
-    const stored = localStorage.getItem(this.STORAGE_KEY) as Language | null;
-    if (stored) {
-      this._currentLang.set(stored);
-      document.documentElement.lang = stored;
     }
 
     // If not cached, fetch async in background
@@ -65,14 +88,29 @@ export class TranslationService {
     }
   }
 
+  /**
+   * Switches the active language with a brief CSS transition.
+   * Sets `isTransitioning` → fetches new translations → clears transition.
+   * The global `.lang-switching` class drives the visual fade crossfade.
+   */
   async setLanguage(lang: Language): Promise<void> {
     if (lang === this._currentLang()) return;
+
+    // Trigger transition state
+    this._isTransitioning.set(true);
 
     this._currentLang.set(lang);
     localStorage.setItem(this.STORAGE_KEY, lang);
     document.documentElement.lang = lang;
 
+    // Small delay so the CSS transition starts before text swaps
+    await new Promise((r) => setTimeout(r, 50));
+
     await this.fetchTranslations();
+
+    // Release transition — CSS will animate text back in
+    await new Promise((r) => setTimeout(r, 30));
+    this._isTransitioning.set(false);
   }
 
   translate(key: string, params?: Record<string, number | string>): string {

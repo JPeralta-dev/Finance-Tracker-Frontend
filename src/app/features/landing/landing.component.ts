@@ -252,10 +252,13 @@ export class LandingComponent implements OnInit {
     },
   ];
 
-  /** Trust badges — three most impactful security signals. */
+  /** Trust badges — six security & privacy signals. */
   readonly trustBadges: TrustBadge[] = [
     { icon: 'lockClosed', labelKey: 'landing.trust.badges.encryption.label' },
     { icon: 'shieldCheck', labelKey: 'landing.trust.badges.no_selling.label' },
     { icon: 'check', labelKey: 'landing.trust.badges.local_data.label' },
+    { icon: 'codeBracket', labelKey: 'landing.trust.badges.open_source.label' },
+    { icon: 'user', labelKey: 'landing.trust.badges.two_factor.label' },
+    { icon: 'globe', labelKey: 'landing.trust.badges.gdpr.label' },
   ];
 }

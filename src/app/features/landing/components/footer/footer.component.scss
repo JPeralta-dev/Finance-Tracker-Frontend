@@ -14,6 +14,16 @@ ft-footer {
   border-top: 2px solid var(--glass-border-hover);
   position: relative;
   overflow: hidden;
+
+  /* Break out of parent containers to span full viewport width.
+     .app-main constrains content to max-width: 1440px + centered —
+     this ensures the footer background bleeds edge-to-edge on wide screens
+     while .footer__inner keeps the text/content centered and readable. */
+  width: 100vw;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
 }
 
 .footer__inner {
