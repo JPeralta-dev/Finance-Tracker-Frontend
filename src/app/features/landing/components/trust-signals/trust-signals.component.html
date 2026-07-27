@@ -5,13 +5,11 @@
       <p class="trust__subtitle">{{ 'landing.trust.section_subtitle' | translate }}</p>
     </div>
 
-    <div class="trust__grid" role="list">
+    <div class="trust__grid" role="list" ftSubtleReveal="fade-up" [delay]="200">
       @for (badge of badges(); track badge.icon; let i = $index) {
         <div 
           class="trust-badge" 
           role="listitem"
-          ftSubtleReveal="micro-scale-fade"
-          [delay]="200 + (i * 80)"
         >
           <div class="trust-badge__icon" aria-hidden="true">
             <ng-icon [name]="badge.icon" size="1.5rem" />

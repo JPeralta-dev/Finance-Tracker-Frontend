@@ -1,6 +1,7 @@
 {
   "name": "finance-tracker",
   "version": "0.0.1",
+  "packageManager": "pnpm@9.15.4",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -43,10 +44,11 @@
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
-    "karma-jasmine-html-reporter": "~2.1.0",
+    "karma-jasmine-html-reporter": "^2.1.0",
     "postcss": "^8.5.14",
     "puppeteer": "25.0.2",
     "tailwindcss": "^3.4.19",
     "typescript": "~5.4.2"
   }
 }
+
