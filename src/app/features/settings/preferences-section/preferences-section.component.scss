@@ -140,14 +140,27 @@
 }
 
 @media (max-width: 640px) {
-/* ── Local accent-hover token ─────────────────────────────────── */
-$accent-hover-border: rgba(168, 85, 247, 0.3); /* Amethyst Pulse Mid @ 30% */
-
-.pref-row {
+  .pref-row {
     flex-direction: column;
     align-items: flex-start;
     gap: 12px;
   }
+
+  .lang-options,
+  .currency-options {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .lang-btn,
+  .currency-btn {
+    flex: 1;
+    justify-content: center;
+    min-height: 44px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+}
 
   .lang-options,
   .currency-options {

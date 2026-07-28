@@ -491,3 +491,18 @@ $channel-whatsapp: #2DD4BF;   /* WhatsApp brand teal */
     transition: none !important;
   }
 }
+
+/* ─── Touch targets (44×44px) ──────────────────────────────────── */
+@media (max-width: 768px) {
+  .channel-card__btn {
+    height: auto;
+    min-height: 44px;
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .channel-card__btn--primary {
+    height: auto;
+    min-height: 44px;
+  }
+}
