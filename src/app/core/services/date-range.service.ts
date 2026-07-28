@@ -26,8 +26,11 @@ export class DateRangeService {
     for (let i = 0; i < 24; i++) {
       const year = now.getUTCFullYear();
       const month = now.getUTCMonth() - i;
-      const firstDay = new Date(Date.UTC(year, month, 1));
-      const lastDay = new Date(Date.UTC(year, month + 1, 0));
+      // Use noon UTC so toLocaleDateString stays in the same calendar month
+      // across all timezones (midnight UTC can roll back to the previous day
+      // in UTC-5 or earlier, shifting the label by one month).
+      const firstDay = new Date(Date.UTC(year, month, 1, 12, 0, 0));
+      const lastDay = new Date(Date.UTC(year, month + 1, 0, 12, 0, 0));
       months.push({
         label: firstDay.toLocaleDateString('es-CO', { month: 'long', year: 'numeric' }),
         start: toUTCDateString(firstDay.getUTCFullYear(), firstDay.getUTCMonth(), firstDay.getUTCDate()),

@@ -34,7 +34,7 @@
       {{ data().category | categoryTranslate }}
       @if (data().bankName) {
         · 
-        @if (data().bankLogoUrl && data().bankLogoUrl.length > 0) {
+        @if (data().bankLogoUrl?.length) {
           <img class="tx-row__bank-logo" [src]="data().bankLogoUrl" [alt]="data().bankName" />
         }
         {{ data().bankName }}
