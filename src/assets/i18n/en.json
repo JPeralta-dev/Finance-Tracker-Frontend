@@ -507,6 +507,8 @@
     "add": "Add",
     "edit": "Edit",
     "delete": "Delete",
+    "delete_title": "Delete category?",
+    "delete_message": "Transactions in this category will be moved to Other. This cannot be undone.",
     "default": "Default",
     "of_total": "of total",
     "view_transactions": "View transactions",
@@ -520,7 +522,7 @@
     "empty": {
       "title": "No categories yet",
       "desc": "Add some transactions to see categories appear here.",
-      "action": "+ New Transaction",
+      "action": "Create Category",
       "search": "No categories match your search"
     },
     "form": {

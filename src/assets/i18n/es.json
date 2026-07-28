@@ -507,6 +507,8 @@
     "add": "Agregar",
     "edit": "Editar",
     "delete": "Eliminar",
+    "delete_title": "¿Eliminar categoría?",
+    "delete_message": "Las transacciones de esta categoría se moverán a Otros. Esto no se puede deshacer.",
     "default": "Por defecto",
     "of_total": "del total",
     "view_transactions": "Ver transacciones",
@@ -520,7 +522,7 @@
     "empty": {
       "title": "No hay categorías aún",
       "desc": "Agrega transacciones para ver las categorías aquí.",
-      "action": "+ Nueva Transacción",
+      "action": "Crear categoría",
       "search": "Ninguna categoría coincide con tu búsqueda"
     },
     "form": {
