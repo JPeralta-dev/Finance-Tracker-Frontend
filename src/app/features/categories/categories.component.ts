@@ -48,6 +48,7 @@ export class CategoriesComponent implements OnInit {
 
   categories = signal<Category[]>([]);
   loading = signal(true);
+  error = signal(false);
   readonly skeletonArray = Array.from({ length: 6 }, (_, i) => i);
 
   // Confirm dialog state
@@ -75,6 +76,7 @@ export class CategoriesComponent implements OnInit {
 
   private loadCategories(): void {
     this.loading.set(true);
+    this.error.set(false);
     this.financeService.getCategories().subscribe({
       next: (data) => {
         this.categories.set(data);
@@ -82,9 +84,14 @@ export class CategoriesComponent implements OnInit {
       },
       error: () => {
         this.loading.set(false);
+        this.error.set(true);
         this.toast.error(this.i18n.translate('common.toasts.categories_load_failed'));
       },
     });
+  }
+
+  retry(): void {
+    this.loadCategories();
   }
 
   percentage(total: number): number {

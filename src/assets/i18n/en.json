@@ -526,6 +526,11 @@
       "action": "Create Category",
       "search": "No categories match your search"
     },
+    "error": {
+      "title": "Could not load categories",
+      "desc": "Something went wrong while fetching your categories. Check your connection and try again.",
+      "retry": "Try again"
+    },
     "form": {
       "name": "Name",
       "name_placeholder": "e.g. Food",

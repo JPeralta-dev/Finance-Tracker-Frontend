@@ -521,10 +521,15 @@
       "total_expenses": "Gastos totales"
     },
     "empty": {
-      "title": "No hay categorías aún",
+      "title": "No hay categorías todavía",
       "desc": "Creá tu primera categoría para empezar a organizar tus gastos.",
       "action": "Crear categoría",
-      "search": "Ninguna categoría coincide con tu búsqueda"
+      "search": "No hay categorías que coincidan con tu búsqueda"
+    },
+    "error": {
+      "title": "No se pudieron cargar las categorías",
+      "desc": "Algo salió mal al obtener tus categorías. Revisá tu conexión e intentá de nuevo.",
+      "retry": "Reintentar"
     },
     "form": {
       "name": "Nombre",
