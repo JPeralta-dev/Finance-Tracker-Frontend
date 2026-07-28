@@ -129,5 +129,16 @@
         (ftBulkDelete)="onBulkDelete($event)"
       />
     </div>
+
+    <!-- Bulk delete confirmation dialog -->
+    <ft-confirm-dialog
+      [visible]="showDeleteConfirm()"
+      [title]="'transactions.deleteConfirmTitle' | translate"
+      [message]="deleteConfirmMessage()"
+      [confirmLabel]="'common.delete' | translate"
+      [cancelLabel]="'common.cancel' | translate"
+      (confirm)="onConfirmDelete()"
+      (cancel)="onCancelDelete()"
+    />
   }
 </div>

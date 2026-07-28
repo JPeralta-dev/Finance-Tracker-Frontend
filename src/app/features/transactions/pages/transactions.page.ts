@@ -1,4 +1,4 @@
-import { Component, signal, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, signal, computed, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterLink, Router } from '@angular/router';
@@ -11,6 +11,7 @@ import { TransactionRowData } from '../transaction.types';
 import { FinanceService } from '../../../core/services/finance.service';
 import { ToastService } from '../../../core/services/toast.service';
 import { EmptyStateComponent } from '../../../shared/components/empty-state.component';
+import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog.component';
 import { TranslatePipe } from '../../../core/pipes/translate.pipe';
 import { TranslationService } from '../../../core/services/translation.service';
 import { DateRangeService } from '../../../core/services/date-range.service';
@@ -21,7 +22,7 @@ type TransactionsState = 'loading' | 'ready' | 'empty' | 'error';
 @Component({
   selector: 'ft-transactions-page',
   standalone: true,
-  imports: [CommonModule, RouterLink, TransactionTableComponent, EmptyStateComponent, TranslatePipe, FormsModule, NgIcon, ClickOutsideDirective],
+  imports: [CommonModule, RouterLink, TransactionTableComponent, EmptyStateComponent, ConfirmDialogComponent, TranslatePipe, FormsModule, NgIcon, ClickOutsideDirective],
   templateUrl: './transactions.page.html',
   styleUrl: './transactions.page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -35,7 +36,21 @@ export class TransactionsPage implements OnInit {
 
   readonly transactions = signal<TransactionRowData[]>([]);
   readonly state = signal<TransactionsState>('loading');
+  readonly monthOpen = signal(false);
   readonly bulkDeleting = signal(false);
+
+  /** Confirm dialog state for bulk delete */
+  readonly showDeleteConfirm = signal(false);
+  readonly pendingDeleteIds = signal<string[]>([]);
+  private deletedTransactionCount = 0;
+
+  readonly deleteConfirmMessage = computed(() => {
+    const count = this.pendingDeleteIds().length;
+    const key = 'transactions.deleteConfirmMessage';
+    const translated = this.i18n.translate(key, { count });
+    if (translated !== key) return translated;
+    return `Are you sure you want to permanently delete ${count} transaction${count > 1 ? 's' : ''}? This cannot be undone.`;
+  });
 
   readonly monthOpen = signal(false);
 
@@ -92,18 +107,34 @@ export class TransactionsPage implements OnInit {
   }
 
   onBulkDelete(ids: string[]): void {
-    const msg = this.i18n.translate('transactions.bulkDeleteConfirm', { count: ids.length });
-    const displayMsg = msg === 'transactions.bulkDeleteConfirm'
-      ? `Are you sure you want to delete ${ids.length} transaction${ids.length > 1 ? 's' : ''}? This cannot be undone.`
-      : msg;
-    if (!confirm(displayMsg)) return;
+    this.pendingDeleteIds.set(ids);
+    this.showDeleteConfirm.set(true);
+  }
+
+  onConfirmDelete(): void {
+    this.showDeleteConfirm.set(false);
+    const ids = this.pendingDeleteIds();
+    this.deletedTransactionCount = ids.length;
     this.bulkDeleting.set(true);
     forkJoin(ids.map(id => this.financeService.deleteTransaction(id).pipe(catchError(() => of(null)))))
       .subscribe(() => {
         this.bulkDeleting.set(false);
+        this.pendingDeleteIds.set([]);
         this.loadData();
-        this.toast.success(`${ids.length} transaction${ids.length > 1 ? 's' : ''} deleted`);
+        const msg = this.i18n.translate(
+          'transactions.deletedCount',
+          { count: this.deletedTransactionCount },
+        );
+        const displayMsg = msg === 'transactions.deletedCount'
+          ? `${this.deletedTransactionCount} transaction${this.deletedTransactionCount > 1 ? 's' : ''} deleted`
+          : msg;
+        this.toast.success(displayMsg);
       });
+  }
+
+  onCancelDelete(): void {
+    this.showDeleteConfirm.set(false);
+    this.pendingDeleteIds.set([]);
   }
 
   retry(): void {

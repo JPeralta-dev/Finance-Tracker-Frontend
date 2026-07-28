@@ -74,9 +74,9 @@
     }
 
     &--active {
-      background: rgba(6, 214, 160, 0.1);
-      color: var(--accent-start);
-      border-color: rgba(6, 214, 160, 0.25);
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-primary);
+      border-color: var(--glass-border-hover);
     }
   }
 
@@ -122,9 +122,26 @@
     flex-direction: column;
     align-items: stretch;
 
+    &__pill {
+      min-height: 44px;
+      padding: 11px 16px;
+    }
+
     &__sort {
       margin-left: 0;
       justify-content: center;
     }
+
+    &__sort-btn {
+      min-height: 44px;
+      padding: 11px 14px;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tx-filters__pill,
+  .tx-filters__sort-btn {
+    transition-duration: 0.01ms !important;
   }
 }

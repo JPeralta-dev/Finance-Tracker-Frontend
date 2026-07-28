@@ -278,7 +278,7 @@
   box-shadow: var(--glow-accent);
 
   &:hover:not(:disabled) {
-    box-shadow: 0 0 40px rgba(157, 80, 187, 0.4);
+    box-shadow: 0 0 40px rgba(168, 85, 247, 0.4);
     transform: translateY(-1px);
   }
 
@@ -336,7 +336,7 @@
 /* Banners */
 .success-banner {
   background: var(--success-bg);
-  border: 1px solid rgba(16, 185, 129, 0.3);
+  border: 1px solid rgba(6, 214, 160, 0.3);
   color: var(--success);
   padding: 12px 16px;
   border-radius: var(--radius-sm);
@@ -440,5 +440,29 @@
 
   .form-card {
     max-height: 100vh;
+  }
+}
+
+/* ── Reduced motion ───────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .tx-overlay,
+  .form-card {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .sk-label,
+  .sk-input {
+    animation: none;
+  }
+
+  .spinner {
+    animation: none;
+  }
+
+  .btn-submit {
+    transition: none;
   }
 }

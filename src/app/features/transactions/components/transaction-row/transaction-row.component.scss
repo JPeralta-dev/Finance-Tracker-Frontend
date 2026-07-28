@@ -36,8 +36,8 @@
   }
 
   &--selected {
-    background: var(--accent-glow);
-    border: 1px solid rgba(217, 70, 239, 0.2);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--glass-border-hover);
   }
 
   &__icon {
@@ -107,8 +107,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   border-radius: var(--radius-sm);
   border: 1px solid var(--glass-border);
   color: var(--text-tertiary);
@@ -120,5 +120,15 @@
     background: var(--accent-start);
     border-color: var(--accent-start);
     color: var(--text-inverse);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tx-row {
+    transition-duration: 0.01ms !important;
+  }
+
+  .tx-row__checkbox {
+    transition-duration: 0.01ms !important;
   }
 }

@@ -495,7 +495,10 @@
       "date": "Date",
       "amount": "Amount",
       "category": "Category"
-    }
+    },
+    "deleteConfirmTitle": "Delete Transactions",
+    "deleteConfirmMessage": "Are you sure you want to permanently delete {{count}} transaction(s)? This cannot be undone.",
+    "deletedCount": "{{count}} transaction(s) deleted"
   },
   "categories": {
     "title": "Categories",

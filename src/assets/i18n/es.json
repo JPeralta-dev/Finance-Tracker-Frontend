@@ -495,7 +495,10 @@
       "date": "Fecha",
       "amount": "Monto",
       "category": "Categoría"
-    }
+    },
+    "deleteConfirmTitle": "Eliminar Transacciones",
+    "deleteConfirmMessage": "¿Estás seguro de eliminar permanentemente {{count}} transacción(es)? Esta acción no se puede deshacer.",
+    "deletedCount": "{{count}} transacción(es) eliminada(s)"
   },
   "categories": {
     "title": "Categorías",
