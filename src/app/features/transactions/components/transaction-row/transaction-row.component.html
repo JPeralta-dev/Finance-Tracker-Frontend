@@ -3,13 +3,18 @@
   [class.tx-row--compact]="compact()"
   [class.tx-row--selectable]="selectable()"
   [class.tx-row--selected]="selected()"
+  [attr.aria-selected]="selected()"
   (click)="onClick()"
   role="button"
   tabindex="0"
 >
   <!-- Selection checkbox -->
   @if (selectable()) {
-    <div class="tx-row__checkbox">
+    <div
+      class="tx-row__checkbox"
+      role="checkbox"
+      [attr.aria-checked]="selected()"
+    >
       <ng-icon [name]="selected() ? 'check' : 'plus'" size="1rem" />
     </div>
   }
@@ -29,7 +34,7 @@
       {{ data().category | categoryTranslate }}
       @if (data().bankName) {
         · 
-        @if (data().bankLogoUrl) {
+        @if (data().bankLogoUrl && data().bankLogoUrl.length > 0) {
           <img class="tx-row__bank-logo" [src]="data().bankLogoUrl" [alt]="data().bankName" />
         }
         {{ data().bankName }}

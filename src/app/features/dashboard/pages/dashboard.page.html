@@ -1,4 +1,5 @@
 <div class="dashboard-page" [class.dashboard-page--loading]="state() === 'loading'">
+  <a href="#dashboard-main" class="skip-link">Skip to dashboard content</a>
   @if (state() === 'error') {
     <ft-empty-state
       icon="warning"
@@ -8,7 +9,7 @@
       (action)="retry()"
     />
   } @else if (state() === 'ready') {
-    <div class="dashboard-content-layer dashboard-content-layer--ready">
+    <div id="dashboard-main" class="dashboard-content-layer dashboard-content-layer--ready">
       <!-- ROW 0: Trial countdown banner (only when active trial) -->
       <div class="dashboard-row dashboard-row--banner" ftSubtleReveal="fade-up" [delay]="25">
         <ft-trial-banner />
@@ -53,27 +54,6 @@
           <p class="dashboard-greeting__subtitle">{{ today() }}</p>
         </div>
         <div class="dashboard-greeting__actions">
-          <div class="month-selector">
-            <button class="month-selector__btn" (click)="toggleMonthDropdown()" type="button">
-              <ng-icon name="calendar" size="1rem" />
-              <span>{{ dateRange.currentMonthLabel() }}</span>
-              <ng-icon name="chevronDown" size="0.75rem" />
-            </button>
-            @if (monthOpen()) {
-              <div class="month-selector__dropdown" (clickOutside)="monthOpen.set(false)">
-                @for (month of dateRange.availableMonths(); track month.start) {
-                  <button
-                    class="month-selector__option"
-                    [class.month-selector__option--active]="dateRange.startDate() === month.start"
-                    (click)="onMonthSelect(month)"
-                    type="button"
-                  >
-                    {{ month.label }}
-                  </button>
-                }
-              </div>
-            }
-          </div>
           <a routerLink="/transactions/new" class="dashboard-greeting__cta" [ftHoverDepth]="8">
             {{ 'dashboard.newTransaction' | translate }}
           </a>
@@ -94,7 +74,7 @@
       <div class="dashboard-row dashboard-row--stats" ftSubtleReveal="fade-up" [delay]="75">
         <div class="stats-grid stats-grid--2col">
           @for (stat of stats().slice(0, 2); track stat.id) {
-            <div class="stat-card-large">
+            <div class="stat-card-large" tabindex="0" role="button" [attr.aria-label]="stat.label | translate">
               <div class="stat-card-large__icon">
                 @if (stat.icon === 'wallet') { <ft-icon name="wallet" [size]="22" /> }
                 @if (stat.icon === 'income') { <ft-icon name="arrow-up" [size]="22" /> }
@@ -121,7 +101,7 @@
       <div class="dashboard-row dashboard-row--stats" ftSubtleReveal="fade-up" [delay]="100">
         <div class="stats-grid stats-grid--2col">
           @for (stat of stats().slice(2, 4); track stat.id) {
-            <div class="stat-card-large">
+            <div class="stat-card-large" tabindex="0" role="button" [attr.aria-label]="stat.label | translate">
               <div class="stat-card-large__icon">
                 @if (stat.icon === 'expense') { <ft-icon name="arrow-down" [size]="22" /> }
                 @if (stat.icon === 'subscription') { <ft-icon name="chart" [size]="22" /> }

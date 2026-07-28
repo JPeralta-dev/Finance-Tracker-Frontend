@@ -65,7 +65,7 @@
   align-items: center;
   justify-content: center;
   gap: 12px;
-  background: linear-gradient(135deg, rgba(18, 11, 26, 0.6), rgba(29, 20, 38, 0.8));
+  background: linear-gradient(135deg, var(--bg-primary), var(--bg-secondary));
   border-radius: var(--radius-md);
 }
 
@@ -271,7 +271,7 @@
     transition: width 600ms cubic-bezier(0.22, 1, 0.36, 1);
 
     &--complete {
-      background: linear-gradient(90deg, var(--success), #34d399);
+      background: var(--success);
     }
   }
 

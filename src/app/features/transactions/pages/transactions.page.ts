@@ -35,6 +35,7 @@ export class TransactionsPage implements OnInit {
 
   readonly transactions = signal<TransactionRowData[]>([]);
   readonly state = signal<TransactionsState>('loading');
+  readonly bulkDeleting = signal(false);
 
   readonly monthOpen = signal(false);
 
@@ -91,8 +92,15 @@ export class TransactionsPage implements OnInit {
   }
 
   onBulkDelete(ids: string[]): void {
+    const msg = this.i18n.translate('transactions.bulkDeleteConfirm', { count: ids.length });
+    const displayMsg = msg === 'transactions.bulkDeleteConfirm'
+      ? `Are you sure you want to delete ${ids.length} transaction${ids.length > 1 ? 's' : ''}? This cannot be undone.`
+      : msg;
+    if (!confirm(displayMsg)) return;
+    this.bulkDeleting.set(true);
     forkJoin(ids.map(id => this.financeService.deleteTransaction(id).pipe(catchError(() => of(null)))))
       .subscribe(() => {
+        this.bulkDeleting.set(false);
         this.loadData();
         this.toast.success(`${ids.length} transaction${ids.length > 1 ? 's' : ''} deleted`);
       });
