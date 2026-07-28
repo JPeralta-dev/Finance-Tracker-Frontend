@@ -447,6 +447,11 @@
       "connecting": "Connexion...",
       "connect_failed": "Impossible de démarrer la connexion Gmail. Veuillez réessayer."
     },
+    "profile": {
+      "title": "Profil",
+      "display_name": "Nom affiché",
+      "email": "E-mail"
+    },
     "preferences": {
       "title": "Préférences",
       "desc": "Personnalisez votre expérience.",

@@ -1,3 +1,6 @@
+/* ── Local accent token ────────────────────────────────────────── */
+$accent-hover-border: rgba(217, 70, 239, 0.3);
+
 .pref-row {
   display: flex;
   align-items: center;
@@ -140,7 +143,10 @@
 }
 
 @media (max-width: 640px) {
-  .pref-row {
+/* ── Local accent token ────────────────────────────────────────── */
+$accent-hover-border: rgba(217, 70, 239, 0.3);
+
+.pref-row {
     flex-direction: column;
     align-items: flex-start;
     gap: 12px;
@@ -162,15 +168,3 @@
   }
 }
 
-  .lang-options,
-  .currency-options {
-    width: 100%;
-    justify-content: space-between;
-  }
-
-  .lang-btn,
-  .currency-btn {
-    flex: 1;
-    justify-content: center;
-  }
-}

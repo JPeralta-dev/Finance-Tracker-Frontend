@@ -1,17 +1,20 @@
 # openspec/config.yaml
+# Last updated: 2026-07-28 (sdd-init refresh)
 schema: spec-driven
 
 context: |
   Tech stack: Angular 17.3 standalone, TypeScript 5.4 strict, TailwindCSS 3.4, SCSS
-  Architecture: Standalone components, lazy-loaded feature modules, core/shared/features layering
+  Package manager: pnpm 9.15.4
+  Architecture: Standalone components, lazy-loaded features, core/shared/features layering
     - Core: guards, interceptors, services, models, pipes, i18n
-    - Features: auth, dashboard, transactions, categories, settings, profile, landing
+    - Features: auth, dashboard, transactions, categories, settings, profile, landing, referral
     - Shared: UI components, layout, icons, animations, directives, charts
   Build: @angular-devkit/build-angular:application (esbuild)
-  Deploy: Vercel static build, SPA rewrites
+  Deploy: Vercel static build, SPA rewrites, nginx reverse-proxy ready
   State: Angular signals, HTTP interceptor-based auth, localStorage for tokens
-  Testing: Karma 6.4 + Jasmine 5.1, ChromeHeadless CI
-  Design: Dark-themed obsidian palette, glassmorphism, Space Grotesk + Inter fonts
+  Testing: Karma 6.4 + Jasmine 5.1, ChromeHeadless CI (57 spec files)
+  Design: "Obsidian Glass" dark-first, glassmorphism, Space Grotesk + Inter + JetBrains Mono
+  Design docs: DESIGN.md (345 lines), PRODUCT.md (127 lines), UX-AUDIT.md
 
 rules:
   proposal:
@@ -73,15 +76,27 @@ testing:
       available: false
       command: "—"
   existing_tests:
-    count: 42
+    count: 57
     spec_glob: "src/**/*.spec.ts"
+    last_counted: 2026-07-28
     coverage: |
-      Core services: auth, toast, translation, theme, telegram-link, notification, currency, i18n-sync
-      Core guards: auth, redirect-if-auth
-      Core interceptors: auth
-      Core pipes: ft-currency
-      Features: analytics (page + 2 services), categories, dashboard (2), profile (page + 3 components),
-        settings (6 sections), transactions (row)
-      Shared: design-tokens, echart (component + mapper), layout (topbar, profile-dropdown 3, 
-        notifications-dropdown, mobile-menu), directive (ft-subtle-reveal), language-dropdown, insights-panel
-      Landing: hero-section
+      Core services (12): auth, toast, translation, theme, telegram-link, notification, currency,
+        i18n-sync, analytics, gmail-link, trial-banner, tour
+      Core guards (3): auth, redirect-if-auth, premium
+      Core interceptors (1): auth
+      Core pipes (3): ft-currency, translate, category-translate
+      Features — analytics (3): page + insights.service + analytics-api.service
+      Features — categories (1): component
+      Features — dashboard (4): stat-card, recent-activity, goals-widget, ai-insights-card
+      Features — profile (4): page + personal-info + insights-card + avatar-card
+      Features — settings (8): main + security + profile + preferences + category-default-selector +
+        notifications + linked-accounts + linked-channel-card
+      Features — transactions (1): transaction-row
+      Features — referral (1): service
+      Features — landing (1): hero-section
+      Shared — layout (6): topbar, profile-dropdown (trigger + menu + container),
+        notifications-dropdown, mobile-menu
+      Shared — components (3): language-dropdown, insights-panel, empty-state
+      Shared — charts (2): ft-echart component + echarts-theme.mapper
+      Shared — directives (2): ft-subtle-reveal, premium-action
+      Shared — UI (2): ft-modal, design-tokens

@@ -547,6 +547,11 @@
     "signOut": "Sign Out",
     "back_to_dashboard": "Back to dashboard",
     "coming_soon": "Coming Soon...",
+    "profile": {
+      "title": "Profile",
+      "display_name": "Display name",
+      "email": "Email"
+    },
     "security": {
       "title": "Security",
       "desc": "Configure your account security.",

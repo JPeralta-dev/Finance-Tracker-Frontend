@@ -547,6 +547,11 @@
     "signOut": "Cerrar Sesión",
     "back_to_dashboard": "Volver al dashboard",
     "coming_soon": "Próximamente...",
+    "profile": {
+      "title": "Perfil",
+      "display_name": "Nombre visible",
+      "email": "Correo"
+    },
     "security": {
       "title": "Seguridad",
       "desc": "configura la seguridad de tu cuenta.",
