@@ -138,6 +138,7 @@
   color: var(--text-tertiary);
   font-size: 15px;
   font-weight: 600;
+  font-family: var(--font-mono);
   pointer-events: none;
 }
 
@@ -170,6 +171,8 @@
 
 .currency-input {
   padding-left: 34px;
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
 }
 
 .form-select {
