@@ -14,7 +14,8 @@
   </div>
 
   <!-- Stats row -->
-  @if (!loading() && categories().length > 0) {
+      <h2 class="sr-only">{{ 'categories.stats.title' | translate }}</h2>
+      @if (!loading() && categories().length > 0) {
     <div class="stats-row" ftSubtleReveal="fade-up" [delay]="100">
       <div class="stat-item">
         <span class="stat-label">{{ 'categories.stats.total' | translate }}</span>
@@ -36,7 +37,7 @@
   <!-- Grid -->
   <div class="cat-grid" ftSubtleReveal="fade-up" [delay]="200">
     @if (loading()) {
-      @for (s of [1, 2, 3, 4, 5, 6]; track s) {
+      @for (s of skeletonArray; track s) {
         <div class="cat-card skeleton-card">
           <div class="sk-icon"></div>
           <app-skeleton height="16px" width="80px" radius="5px" />
@@ -65,12 +66,12 @@
             </div>
             <div class="cat-actions">
               @if (!cat.isDefault) {
-                <button class="cat-action" (click)="openEditForm(cat)" [attr.aria-label]="'Edit'" title="Edit category" data-blendy-from="category-modal">
+                <button class="cat-action" (click)="openEditForm(cat)" [attr.aria-label]="'categories.edit' | translate" data-blendy-from="category-modal">
                   <span>
                     <ng-icon name="edit" size="0.875rem" />
                   </span>
                 </button>
-                <button class="cat-action cat-action--danger" (click)="deleteCategory(cat)" [attr.aria-label]="'Delete'" title="Delete category">
+                <button class="cat-action cat-action--danger" (click)="deleteCategory(cat)" [attr.aria-label]="'categories.delete' | translate">
                   <ng-icon name="close" size="0.875rem" />
                 </button>
               } @else {

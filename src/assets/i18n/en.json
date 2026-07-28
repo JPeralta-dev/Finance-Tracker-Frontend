@@ -515,6 +515,7 @@
     "edit_title": "Edit Category",
     "new_title": "New Category",
     "stats": {
+      "title": "Category summary",
       "total": "Total tracked",
       "highest": "Highest spend",
       "total_expenses": "Total expenses"

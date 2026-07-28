@@ -515,6 +515,7 @@
     "edit_title": "Editar Categoría",
     "new_title": "Nueva Categoría",
     "stats": {
+      "title": "Resumen de categorías",
       "total": "Total rastreadas",
       "highest": "Mayor gasto",
       "total_expenses": "Gastos totales"

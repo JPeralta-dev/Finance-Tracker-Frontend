@@ -17,6 +17,7 @@ import { TranslationService } from '../../core/services/translation.service';
 import { FtCurrencyPipe } from '../../core/pipes/ft-currency.pipe';
 import { ModalService } from '../../core/services/modal.service';
 import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog.component';
+import { categoryMark } from '../../shared/utils/category-mark';
 
 @Component({
   selector: 'app-categories',
@@ -47,6 +48,7 @@ export class CategoriesComponent implements OnInit {
 
   categories = signal<Category[]>([]);
   loading = signal(true);
+  readonly skeletonArray = Array.from({ length: 6 }, (_, i) => i);
 
   // Confirm dialog state
   confirmVisible = signal(false);
@@ -91,14 +93,7 @@ export class CategoriesComponent implements OnInit {
     return Math.min((total / max) * 100, 100);
   }
 
-  categoryMark(name: string): string {
-    return name
-      .split(/[^A-Za-z0-9]+/)
-      .filter(Boolean)
-      .slice(0, 2)
-      .map((part) => part[0]!.toUpperCase())
-      .join('') || 'OT';
-  }
+  categoryMark = categoryMark;
 
   // CRUD Actions
   openCreateForm(): void {

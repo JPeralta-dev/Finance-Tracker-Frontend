@@ -40,7 +40,8 @@
   border: none;
   border-radius: var(--radius-sm);
   cursor: pointer;
-  transition: all var(--duration-normal) var(--ease-out);
+  transition: box-shadow var(--duration-normal) var(--ease-out),
+              transform var(--duration-normal) var(--ease-out);
   box-shadow: var(--glow-accent);
 
   &:hover {
@@ -103,6 +104,19 @@
   grid-column: 1 / -1;
 }
 
+/* Screen-reader only utility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .cat-card {
   background: var(--glass-bg);
   backdrop-filter: blur(var(--glass-blur));
@@ -112,7 +126,9 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
-  transition: all var(--duration-normal) var(--ease-out);
+  transition: border-color var(--duration-normal) var(--ease-out),
+              box-shadow var(--duration-normal) var(--ease-out),
+              transform var(--duration-normal) var(--ease-out);
   cursor: default;
   position: relative;
 
@@ -188,7 +204,8 @@
   background: var(--bg-tertiary);
   color: var(--text-secondary);
   cursor: pointer;
-  transition: all var(--duration-fast) var(--ease-out);
+  transition: background var(--duration-fast) var(--ease-out),
+              color var(--duration-fast) var(--ease-out);
 
   &:focus-visible {
     outline: 2px solid var(--accent-start);
