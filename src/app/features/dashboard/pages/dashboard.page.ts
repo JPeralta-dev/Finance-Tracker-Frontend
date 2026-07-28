@@ -2,8 +2,6 @@ import { Component, signal, inject, OnInit, computed, Injectable, ChangeDetectio
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { catchError, forkJoin, of } from 'rxjs';
-import { NgIcon } from '@ng-icons/core';
-import { ICONS } from '../../../shared/icons/icon-registry';
 
 import { StatsGridComponent } from '../components/stats-grid/stats-grid.component';
 import { FtEChartComponent, EchartsThemeMapper } from '../../../shared/charts';
@@ -11,7 +9,6 @@ import { RecentActivityComponent, ActivityItem } from '../components/recent-acti
 import { StatCardData } from '../components/stat-card/stat-card.types';
 import { FtSubtleRevealDirective } from '../../../shared/directives/ft-subtle-reveal.directive';
 import { HoverDepthDirective } from '../../../shared/directives/hover-depth.directive';
-import { ClickOutsideDirective } from '../../../shared/directives/click-outside.directive';
 import { FinanceService } from '../../../core/services/finance.service';
 import { ToastService } from '../../../core/services/toast.service';
 import { EmptyStateComponent } from '../../../shared/components/empty-state.component';
@@ -63,7 +60,6 @@ class ChartColorCache {
     RecentActivityComponent,
     FtSubtleRevealDirective,
     HoverDepthDirective,
-    ClickOutsideDirective,
     EmptyStateComponent,
     FtTrialBannerComponent,
     FtUpgradePromptComponent,
@@ -73,7 +69,6 @@ class ChartColorCache {
     PocketProgressWidget,
     FtReferralWidgetComponent,
     IconComponent,
-    NgIcon,
   ],
   templateUrl: './dashboard.page.html',
   styleUrl: './dashboard.page.scss',
@@ -94,19 +89,11 @@ export class DashboardPage implements OnInit {
   readonly stats = signal<StatCardData[]>([]);
   readonly activity = signal<ActivityItem[]>([]);
   readonly state = signal<DashboardState>('loading');
-  readonly monthOpen = signal(false);
 
   readonly chartLabels = signal<string[]>([]);
   readonly chartDatasets = signal<AreaDataset[]>([]);
 
-  readonly chartMonths = computed(() => {
-    const start = this.dateRange.startDate();
-    if (!start) return 6;
-    const today = new Date();
-    const startDate = new Date(start + 'T12:00:00');
-    const monthsDiff = (today.getFullYear() - startDate.getFullYear()) * 12 + (today.getMonth() - startDate.getMonth()) + 1;
-    return Math.max(6, monthsDiff);
-  });
+  readonly chartMonths = 6;
 
   readonly areaChartOptions = computed<EChartsOption | undefined>(() => {
     const labels = this.chartLabels();
@@ -146,7 +133,7 @@ export class DashboardPage implements OnInit {
 
     forkJoin({
       summary: this.financeService.getSummary(dateParams).pipe(catchError(() => of(null))),
-      chart: this.financeService.getMonthlyChart(this.chartMonths()).pipe(catchError(() => of(null))),
+      chart: this.financeService.getMonthlyChart(this.chartMonths).pipe(catchError(() => of(null))),
       transactions: this.financeService.getTransactions({
         limit: 10,
         sortBy: 'date',
@@ -197,14 +184,8 @@ export class DashboardPage implements OnInit {
     });
   }
 
-  onMonthSelect(month: { start: string; end: string }): void {
-    this.dateRange.setMonth(month.start, month.end);
-    this.monthOpen.set(false);
+  retry(): void {
     this.loadData();
-  }
-
-  toggleMonthDropdown(): void {
-    this.monthOpen.update(v => !v);
   }
 
   private mapSummary(summary: { totalBalance: number; totalIncome: number; totalExpenses: number; savingsRate: number }): StatCardData[] {
@@ -214,10 +195,6 @@ export class DashboardPage implements OnInit {
       { id: 'expenses', label: 'dashboard.monthlyExpenses', value: summary.totalExpenses, icon: 'expense', sign: '-' },
       { id: 'savings', label: 'dashboard.savingsRate', value: summary.savingsRate, suffix: '%', icon: 'subscription', insight: summary.savingsRate > 20 ? 'dashboard.onTrack' : summary.savingsRate > 0 ? 'dashboard.couldImprove' : undefined },
     ];
-  }
-
-  retry(): void {
-    this.loadData();
   }
 
   startTour(): void {

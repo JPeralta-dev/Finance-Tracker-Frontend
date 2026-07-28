@@ -82,7 +82,7 @@
         <button class="activity-load-more" (click)="loadMore()" type="button">
           <ng-icon name="arrowDown" size="0.9rem" />
           <span>{{ 'dashboard.viewAll' | translate }}</span>
-          <span class="activity-load-more__remaining">({{ items().length - visibleCount() }} más)</span>
+          <span class="activity-load-more__remaining">({{ items().length - visibleCount() }} {{ 'common.more' | translate }})</span>
         </button>
       }
     </div>

@@ -10,6 +10,10 @@
     "search": "Buscar",
     "filter": "Filtrar",
     "viewAll": "Ver todo",
+    "month": "mes",
+    "months": "meses",
+    "monthsCount": "{{count}} meses",
+    "more": "más",
     "toasts": {
       "categories_load_failed": "Error al cargar las categorías.",
       "category_created": "Categoría creada",
@@ -352,7 +356,40 @@
     "addExpense": "Agregar Gasto",
     "addIncome": "Agregar Ingreso",
     "manageCategories": "Categorías",
-    "viewAnalytics": "Ver Analytics"
+    "viewAnalytics": "Ver Analytics",
+    "aiInsights": {
+      "title": "Insights Financieros",
+      "viewAll": "Ver todos",
+      "preview1Title": "Detectamos un patrón de gasto",
+      "preview1Desc": "Tus gastos de los viernes subieron un 23%...",
+      "preview2Title": "Oportunidad de ahorro",
+      "preview2Desc": "Podrías ahorrar $45.000 cambiando tu plan de...",
+      "upgradeTitle": "Desbloqueá insights personalizados con IA",
+      "upgradeCta": "Activar Premium",
+      "emptyText": "Agregá más transacciones para recibir insights personalizados.",
+      "errorText": "No pudimos cargar los insights. Intentá de nuevo."
+    },
+    "goals": {
+      "title": "Metas de Ahorro",
+      "viewAll": "Ver todas",
+      "previewGoal": "Meta de ejemplo",
+      "upgradeTitle": "Creá metas de ahorro y seguí tu progreso",
+      "upgradeCta": "Activar Premium",
+      "emptyText": "Todavía no tenés metas. Creá tu primera meta de ahorro.",
+      "emptyCta": "Crear primera meta",
+      "errorText": "No pudimos cargar tus metas. Intentá de nuevo.",
+      "remaining": "Te faltan"
+    },
+    "pockets": {
+      "title": "Pockets",
+      "viewAll": "Ver todos",
+      "previewPocket": "Pocket de ejemplo",
+      "upgradeTitle": "Organizá tu presupuesto por categorías con Pockets",
+      "upgradeCta": "Activar Premium",
+      "emptyText": "Todavía no tenés pockets. Creá tu primer pocket para organizar tu presupuesto.",
+      "emptyCta": "Crear primer pocket",
+      "errorText": "No pudimos cargar tus pockets. Intentá de nuevo."
+    }
   },
   "insights": {
     "title": "Insights IA",

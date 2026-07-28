@@ -13,6 +13,7 @@ import { IconComponent } from '../../../shared/icons/icon.component';
 import { PocketsService } from '../../../core/services/pockets.service';
 import { AuthService } from '../../../core/services/auth.service';
 import { CurrencyService } from '../../../core/services/currency.service';
+import { TranslatePipe } from '../../../core/pipes/translate.pipe';
 import { PocketResponse } from '../../../core/models/pocket.model';
 
 type PocketsState = 'loading' | 'ready' | 'empty' | 'error';
@@ -20,7 +21,7 @@ type PocketsState = 'loading' | 'ready' | 'empty' | 'error';
 @Component({
   selector: 'ft-pocket-progress-widget',
   standalone: true,
-  imports: [CommonModule, RouterLink, IconComponent],
+  imports: [CommonModule, RouterLink, IconComponent, TranslatePipe],
   templateUrl: './pocket-progress.widget.html',
   styleUrl: './pocket-progress.widget.scss',
 })

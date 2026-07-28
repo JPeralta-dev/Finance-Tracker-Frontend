@@ -1,16 +1,18 @@
-import { Component, input, output } from '@angular/core';
+import { Component, input, output, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgIcon } from '@ng-icons/core';
 import { TranslatePipe } from '../../../../core/pipes/translate.pipe';
 import { TransactionFilter, SortField, SortDirection } from '../../transaction.types';
+import { ICONS } from '../../../../shared/icons/icon-registry';
 
 @Component({
   selector: 'ft-transaction-filters',
   standalone: true,
-  imports: [CommonModule, TranslatePipe],
+  imports: [CommonModule, NgIcon, TranslatePipe],
   templateUrl: './transaction-filters.component.html',
   styleUrl: './transaction-filters.component.scss',
 })
-export class TransactionFiltersComponent {
+export class TransactionFiltersComponent implements OnDestroy {
   activeFilter = input<TransactionFilter>('all');
   activeSort = input<SortField>('date');
   activeDirection = input<SortDirection>('desc');
@@ -18,6 +20,8 @@ export class TransactionFiltersComponent {
   filterChange = output<TransactionFilter>();
   sortChange = output<{ field: SortField; direction: SortDirection }>();
   searchChange = output<string>();
+
+  private searchTimeout: ReturnType<typeof setTimeout> | null = null;
 
   onFilterChange(filter: TransactionFilter): void {
     this.filterChange.emit(filter);
@@ -32,11 +36,17 @@ export class TransactionFiltersComponent {
 
   onSearch(event: Event): void {
     const value = (event.target as HTMLInputElement).value;
-    this.searchChange.emit(value);
+    if (this.searchTimeout) {
+      clearTimeout(this.searchTimeout);
+    }
+    this.searchTimeout = setTimeout(() => {
+      this.searchChange.emit(value);
+    }, 200);
   }
 
-  getSortIcon(field: SortField): string {
-    if (this.activeSort() !== field) return '';
-    return this.activeDirection() === 'desc' ? 'v' : '^';
+  ngOnDestroy(): void {
+    if (this.searchTimeout) {
+      clearTimeout(this.searchTimeout);
+    }
   }
 }

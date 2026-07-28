@@ -10,6 +10,10 @@
     "search": "Search",
     "filter": "Filter",
     "viewAll": "View all",
+    "month": "month",
+    "months": "months",
+    "monthsCount": "{{count}} months",
+    "more": "more",
     "toasts": {
       "categories_load_failed": "Failed to load categories.",
       "category_created": "Category created",
@@ -352,7 +356,40 @@
     "addExpense": "Add Expense",
     "addIncome": "Add Income",
     "manageCategories": "Manage Categories",
-    "viewAnalytics": "View Analytics"
+    "viewAnalytics": "View Analytics",
+    "aiInsights": {
+      "title": "Financial Insights",
+      "viewAll": "View all",
+      "preview1Title": "We detected a spending pattern",
+      "preview1Desc": "Your Friday spending went up 23%...",
+      "preview2Title": "Savings opportunity",
+      "preview2Desc": "You could save $45,000 by switching your plan...",
+      "upgradeTitle": "Unlock personalized AI insights",
+      "upgradeCta": "Activate Premium",
+      "emptyText": "Add more transactions to receive personalized insights.",
+      "errorText": "We couldn't load your insights. Please try again."
+    },
+    "goals": {
+      "title": "Savings Goals",
+      "viewAll": "View all",
+      "previewGoal": "Example goal",
+      "upgradeTitle": "Create savings goals and track your progress",
+      "upgradeCta": "Activate Premium",
+      "emptyText": "You don't have any goals yet. Create your first savings goal.",
+      "emptyCta": "Create first goal",
+      "errorText": "We couldn't load your goals. Please try again.",
+      "remaining": "Remaining"
+    },
+    "pockets": {
+      "title": "Pockets",
+      "viewAll": "View all",
+      "previewPocket": "Example pocket",
+      "upgradeTitle": "Organize your budget by categories with Pockets",
+      "upgradeCta": "Activate Premium",
+      "emptyText": "You don't have any pockets yet. Create your first pocket to organize your budget.",
+      "emptyCta": "Create first pocket",
+      "errorText": "We couldn't load your pockets. Please try again."
+    }
   },
   "insights": {
     "title": "AI Insights",

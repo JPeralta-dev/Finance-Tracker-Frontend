@@ -1,5 +1,6 @@
 import { Component, input, output, computed, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { NgIcon } from '@ng-icons/core';
 import { TransactionRowComponent } from '../transaction-row/transaction-row.component';
 import { TransactionFiltersComponent } from '../transaction-filters/transaction-filters.component';
@@ -10,13 +11,14 @@ import { ICONS } from '../../../../shared/icons/icon-registry';
 @Component({
   selector: 'ft-transaction-table',
   standalone: true,
-  imports: [CommonModule, NgIcon, TransactionRowComponent, TransactionFiltersComponent, PaginationComponent],
+  imports: [CommonModule, RouterLink, NgIcon, TransactionRowComponent, TransactionFiltersComponent, PaginationComponent],
   templateUrl: './transaction-table.component.html',
   styleUrl: './transaction-table.component.scss',
 })
 export class TransactionTableComponent {
   items = input.required<TransactionRowData[]>();
   loading = input<boolean>(false);
+  deleting = input<boolean>(false);
   pageSize = input<number>(10);
   compact = input<boolean>(false);
 
@@ -105,6 +107,7 @@ export class TransactionTableComponent {
 
   onPageChange(page: number): void {
     this._page.set(page);
+    document.querySelector('.tx-table')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   onSelect(id: string): void {
