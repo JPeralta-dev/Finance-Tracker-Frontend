@@ -52,8 +52,6 @@ export class TransactionsPage implements OnInit {
     return `Are you sure you want to permanently delete ${count} transaction${count > 1 ? 's' : ''}? This cannot be undone.`;
   });
 
-  readonly monthOpen = signal(false);
-
   ngOnInit(): void {
     this.loadData();
   }
