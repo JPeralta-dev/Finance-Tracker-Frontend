@@ -35,20 +35,37 @@ export class SettingsComponent {
 
   logoutLoading = signal(false);
   confirmLogout = signal(false);
+  logoutError = signal('');
+
+  /** Toggle confirmation and move focus to the Cancel button. */
+  onRequestSignOut(): void {
+    this.confirmLogout.set(true);
+    // Focus the Cancel button after the template re-renders
+    setTimeout(() => {
+      const cancelBtn = document.querySelector<HTMLElement>(
+        '.logout-confirm .btn-cancel',
+      );
+      cancelBtn?.focus();
+    });
+  }
 
   onSignOut(): void {
     this.logoutLoading.set(true);
+    this.logoutError.set('');
+
     this.authService.logout().pipe(
       finalize(() => {
         this.logoutLoading.set(false);
-        this.confirmLogout.set(false);
       }),
     ).subscribe({
       next: () => {
+        this.confirmLogout.set(false);
         this.router.navigate(['/login']);
       },
       error: () => {
-        this.router.navigate(['/login']);
+        this.logoutError.set(
+          'Sign out failed. Please check your connection and try again.',
+        );
       },
     });
   }

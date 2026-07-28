@@ -161,3 +161,59 @@
 }
 
 @keyframes spin { to { transform: rotate(360deg); } }
+
+/* ─────────────────────────────────────────────────────────────────
+   Disconnect confirmation (two-step guard for Gmail)
+   ─────────────────────────────────────────────────────────────── */
+.disconnect-confirm {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  background: var(--danger-bg);
+  border: 1px solid rgba(255, 107, 107, 0.25);
+  border-radius: var(--radius-md);
+}
+
+.disconnect-confirm__text {
+  font-size: 14px;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.disconnect-confirm__actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.btn-cancel {
+  padding: 8px 20px;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 600;
+  font-family: var(--font-body);
+  cursor: pointer;
+  transition: all 0.15s ease;
+
+  &:hover { background: var(--accent-glow); color: var(--text-primary); }
+}
+
+.btn-confirm-danger {
+  padding: 8px 20px;
+  border: none;
+  background: var(--danger);
+  border-radius: var(--radius-md);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: var(--font-body);
+  cursor: pointer;
+  transition: all 0.15s ease;
+
+  &:hover:not(:disabled) { opacity: 0.85; }
+  &:disabled { opacity: 0.5; cursor: not-allowed; }
+}

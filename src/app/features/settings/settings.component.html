@@ -22,14 +22,20 @@
     </div>
     <div class="session-actions">
       @if (!confirmLogout()) {
-        <button class="btn-sign-out" (click)="confirmLogout.set(true)">
+        <button class="btn-sign-out" (click)="onRequestSignOut()">
           {{ 'settings.session.sign_out' | translate }}
         </button>
       } @else {
         <div class="logout-confirm">
           <p>{{ 'settings.session.confirm_message' | translate }}</p>
+          @if (logoutError()) {
+            <p class="logout-error">{{ logoutError() }}</p>
+          }
           <div class="logout-confirm__actions">
-            <button class="btn-cancel" (click)="confirmLogout.set(false)">
+            <button
+              class="btn-cancel"
+              (click)="confirmLogout.set(false); logoutError.set('')"
+            >
               {{ 'common.cancel' | translate }}
             </button>
             <button class="btn-confirm" (click)="onSignOut()" [disabled]="logoutLoading()">
