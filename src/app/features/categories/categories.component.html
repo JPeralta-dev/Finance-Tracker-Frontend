@@ -86,7 +86,7 @@
           <div class="cat-bar">
             <div
               class="cat-fill"
-              [style.width.%]="percentage(cat.total)"
+              [style.--fill-pct]="percentage(cat.total) / 100"
               [style.background]="cat.color"
             ></div>
           </div>
