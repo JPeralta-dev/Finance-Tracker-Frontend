@@ -47,7 +47,7 @@ export class TransactionRowComponent {
 
   formatDate(dateStr: string): string {
     const date = new Date(dateStr);
-    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    return date.toLocaleDateString(this.currencyService.currencyConfig().locale, { month: 'short', day: 'numeric' });
   }
 
   formatAmount(amount: number): string {

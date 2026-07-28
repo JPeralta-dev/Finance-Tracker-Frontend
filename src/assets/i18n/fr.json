@@ -10,6 +10,10 @@
     "search": "Rechercher",
     "filter": "Filtrer",
     "viewAll": "Voir tout",
+    "month": "mois",
+    "months": "mois",
+    "monthsCount": "{{count}} mois",
+    "more": "plus",
     "toasts": {
       "categories_load_failed": "Échec du chargement des catégories.",
       "category_created": "Catégorie créée",
@@ -181,7 +185,40 @@
     "addExpense": "Ajouter une Dépense",
     "addIncome": "Ajouter un Revenu",
     "manageCategories": "Gérer les Catégories",
-    "viewAnalytics": "Voir Analytique"
+    "viewAnalytics": "Voir Analytique",
+    "aiInsights": {
+      "title": "Insights Financiers",
+      "viewAll": "Voir tout",
+      "preview1Title": "Nous avons détecté une tendance de dépenses",
+      "preview1Desc": "Vos dépenses du vendredi ont augmenté de 23%...",
+      "preview2Title": "Opportunité d'épargne",
+      "preview2Desc": "Vous pourriez économiser 45 000 $ en changeant votre plan...",
+      "upgradeTitle": "Débloquez des insights IA personnalisés",
+      "upgradeCta": "Activer Premium",
+      "emptyText": "Ajoutez plus de transactions pour recevoir des insights personnalisés.",
+      "errorText": "Nous n'avons pas pu charger vos insights. Veuillez réessayer."
+    },
+    "goals": {
+      "title": "Objectifs d'Épargne",
+      "viewAll": "Voir tout",
+      "previewGoal": "Objectif exemple",
+      "upgradeTitle": "Créez des objectifs d'épargne et suivez votre progression",
+      "upgradeCta": "Activer Premium",
+      "emptyText": "Vous n'avez pas encore d'objectifs. Créez votre premier objectif d'épargne.",
+      "emptyCta": "Créer un objectif",
+      "errorText": "Nous n'avons pas pu charger vos objectifs. Veuillez réessayer.",
+      "remaining": "Il vous reste"
+    },
+    "pockets": {
+      "title": "Pockets",
+      "viewAll": "Voir tout",
+      "previewPocket": "Pocket exemple",
+      "upgradeTitle": "Organisez votre budget par catégories avec Pockets",
+      "upgradeCta": "Activer Premium",
+      "emptyText": "Vous n'avez pas encore de pockets. Créez votre premier pocket pour organiser votre budget.",
+      "emptyCta": "Créer un pocket",
+      "errorText": "Nous n'avons pas pu charger vos pockets. Veuillez réessayer."
+    }
   },
   "insights": {
     "title": "Insights IA",

@@ -112,11 +112,10 @@
       color: var(--text-primary);
       background: var(--bg-elevated);
     }
-  }
 
-  &__sort-icon {
-    font-size: 10px;
-    opacity: 0.6;
+    ng-icon {
+      opacity: 0.6;
+    }
   }
 
   @media (max-width: 768px) {

@@ -1,12 +1,12 @@
-<div class="insights-card">
+<div class="insights-card" role="region" aria-labelledby="insights-title">
   <!-- Header -->
   <div class="insights-card__header">
-    <h2 class="insights-card__title">
+    <h2 class="insights-card__title" id="insights-title">
       <span class="insights-card__icon"><ft-icon name="sparkles" [size]="22" /></span>
-      Insights Financieros
+      {{ 'dashboard.aiInsights.title' | translate }}
     </h2>
     @if (isPremium()) {
-      <a routerLink="/ai-insights" class="insights-card__link">Ver todos</a>
+      <a routerLink="/ai-insights" class="insights-card__link">{{ 'dashboard.aiInsights.viewAll' | translate }}</a>
     }
   </div>
 
@@ -17,24 +17,24 @@
         <div class="insight-row insight-row--blurred">
           <span class="insight-row__icon"><ft-icon name="alert-triangle" [size]="18" /></span>
           <div class="insight-row__content">
-            <span class="insight-row__title">Detectamos un patrón de gasto</span>
-            <span class="insight-row__desc">Tus gastos de los viernes subieron un 23%...</span>
+            <span class="insight-row__title">{{ 'dashboard.aiInsights.preview1Title' | translate }}</span>
+            <span class="insight-row__desc">{{ 'dashboard.aiInsights.preview1Desc' | translate }}</span>
           </div>
         </div>
         <div class="insight-row insight-row--blurred">
           <span class="insight-row__icon"><ft-icon name="circle-dollar" [size]="18" /></span>
           <div class="insight-row__content">
-            <span class="insight-row__title">Oportunidad de ahorro</span>
-            <span class="insight-row__desc">Podrías ahorrar $45.000 cambiando tu plan de...</span>
+            <span class="insight-row__title">{{ 'dashboard.aiInsights.preview2Title' | translate }}</span>
+            <span class="insight-row__desc">{{ 'dashboard.aiInsights.preview2Desc' | translate }}</span>
           </div>
         </div>
       </div>
       <div class="insights-card__cta-overlay">
         <p class="insights-card__cta-text">
-          Desbloqueá insights personalizados con IA
+          {{ 'dashboard.aiInsights.upgradeTitle' | translate }}
         </p>
         <a routerLink="/subscription" [queryParams]="{ upgrade: 'true' }" class="insights-card__cta-btn">
-          Activar Premium
+          {{ 'dashboard.aiInsights.upgradeCta' | translate }}
         </a>
       </div>
     </div>
@@ -60,7 +60,7 @@
         <div class="insights-card__empty">
           <span class="insights-card__empty-icon"><ft-icon name="search" [size]="28" /></span>
           <p class="insights-card__empty-text">
-          Agregá más transacciones para recibir insights personalizados.
+          {{ 'dashboard.aiInsights.emptyText' | translate }}
           </p>
         </div>
       }
@@ -68,14 +68,14 @@
         <div class="insights-card__empty">
           <span class="insights-card__empty-icon"><ft-icon name="alert-triangle" [size]="28" /></span>
           <p class="insights-card__empty-text">
-          No pudimos cargar los insights. Intentá de nuevo.
+          {{ 'dashboard.aiInsights.errorText' | translate }}
           </p>
         </div>
       }
       @case ('ready') {
         <div class="insights-card__list">
           @for (insight of displayInsights(); track insight.id) {
-            <div class="insight-row" [style.borderLeftColor]="severityColors[insight.severity] || 'var(--accent-start)'">
+            <div class="insight-row" [class]="'insight-row ' + (severityClass(insight.severity))">
               <span class="insight-row__icon"><ft-icon [name]="iconMap[insight.type] || 'chart'" [size]="18" /></span>
               <div class="insight-row__content">
                 <span class="insight-row__title">{{ insight.titleKey }}</span>
