@@ -105,7 +105,7 @@ export class CategoriesComponent implements OnInit {
     this.modalService.openCategoryModal({
       name: '',
       icon: '',
-      color: '#9D50BB',
+      color: '#A855F7',
       kind: 'expense',
     });
   }

@@ -521,7 +521,7 @@
     },
     "empty": {
       "title": "No categories yet",
-      "desc": "Add some transactions to see categories appear here.",
+      "desc": "Create your first category to start organizing your spending.",
       "action": "Create Category",
       "search": "No categories match your search"
     },

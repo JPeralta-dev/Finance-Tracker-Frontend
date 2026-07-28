@@ -521,7 +521,7 @@
     },
     "empty": {
       "title": "No hay categorías aún",
-      "desc": "Agrega transacciones para ver las categorías aquí.",
+      "desc": "Creá tu primera categoría para empezar a organizar tus gastos.",
       "action": "Crear categoría",
       "search": "Ninguna categoría coincide con tu búsqueda"
     },

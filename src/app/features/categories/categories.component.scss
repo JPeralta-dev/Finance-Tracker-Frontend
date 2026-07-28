@@ -44,7 +44,7 @@
   box-shadow: var(--glow-accent);
 
   &:hover {
-    box-shadow: 0 0 40px rgba(157, 80, 187, 0.4);
+    box-shadow: 0 0 40px rgba(217, 70, 239, 0.35);
     transform: translateY(-1px);
   }
 }
@@ -115,6 +115,25 @@
   transition: all var(--duration-normal) var(--ease-out);
   cursor: default;
   position: relative;
+
+  /* Glass surface top highlight — system spec */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 12px;
+    right: 12px;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--glass-border-hover) 20%,
+      var(--glass-border-hover) 80%,
+      transparent
+    );
+    opacity: 0.5;
+    pointer-events: none;
+  }
 
   &:hover {
     border-color: var(--glass-border-hover);
