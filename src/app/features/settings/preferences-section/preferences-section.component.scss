@@ -1,3 +1,6 @@
+/* ── Local accent token ────────────────────────────────────────── */
+$accent-hover-border: rgba(217, 70, 239, 0.3);
+
 .pref-row {
   display: flex;
   align-items: center;
@@ -51,7 +54,7 @@
 
   &:hover {
     background: var(--accent-glow);
-    border-color: rgba(157, 80, 187, 0.3);
+    border-color: $accent-hover-border;
     color: var(--accent-start);
   }
 
@@ -84,7 +87,7 @@
 
   &:hover {
     background: var(--accent-glow);
-    border-color: rgba(157, 80, 187, 0.3);
+    border-color: $accent-hover-border;
     color: var(--accent-start);
   }
 
@@ -123,7 +126,7 @@
 
   &:hover {
     background: var(--accent-glow);
-    border-color: rgba(157, 80, 187, 0.3);
+    border-color: $accent-hover-border;
     color: var(--accent-start);
   }
 
@@ -140,7 +143,10 @@
 }
 
 @media (max-width: 640px) {
-  .pref-row {
+/* ── Local accent token ────────────────────────────────────────── */
+$accent-hover-border: rgba(217, 70, 239, 0.3);
+
+.pref-row {
     flex-direction: column;
     align-items: flex-start;
     gap: 12px;
@@ -156,5 +162,9 @@
   .currency-btn {
     flex: 1;
     justify-content: center;
+    min-height: 44px;
+    padding-top: 10px;
+    padding-bottom: 10px;
   }
 }
+

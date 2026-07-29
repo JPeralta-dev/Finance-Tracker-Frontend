@@ -65,7 +65,7 @@
   align-items: center;
   justify-content: center;
   gap: 12px;
-  background: linear-gradient(135deg, rgba(18, 11, 26, 0.6), rgba(29, 20, 38, 0.8));
+  background: linear-gradient(135deg, var(--bg-primary), var(--bg-secondary));
   border-radius: var(--radius-md);
 }
 
@@ -221,6 +221,11 @@
     opacity: 0.5;
   }
 }
+
+.insight-row--severity-danger { border-left-color: var(--danger); }
+.insight-row--severity-warning { border-left-color: var(--warning); }
+.insight-row--severity-success { border-left-color: var(--success); }
+.insight-row--severity-info { border-left-color: var(--info); }
 
 /* ── Responsive ──────────────────────────────────────────────────── */
 

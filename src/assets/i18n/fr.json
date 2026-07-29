@@ -10,6 +10,10 @@
     "search": "Rechercher",
     "filter": "Filtrer",
     "viewAll": "Voir tout",
+    "month": "mois",
+    "months": "mois",
+    "monthsCount": "{{count}} mois",
+    "more": "plus",
     "toasts": {
       "categories_load_failed": "Échec du chargement des catégories.",
       "category_created": "Catégorie créée",
@@ -181,7 +185,47 @@
     "addExpense": "Ajouter une Dépense",
     "addIncome": "Ajouter un Revenu",
     "manageCategories": "Gérer les Catégories",
-    "viewAnalytics": "Voir Analytique"
+    "viewAnalytics": "Voir Analytique",
+    "aiInsights": {
+      "title": "Insights Financiers",
+      "viewAll": "Voir tout",
+      "preview1Title": "Nous avons détecté une tendance de dépenses",
+      "preview1Desc": "Vos dépenses du vendredi ont augmenté de 23%...",
+      "preview2Title": "Opportunité d'épargne",
+      "preview2Desc": "Vous pourriez économiser 45 000 $ en changeant votre plan...",
+      "upgradeTitle": "Débloquez des insights IA personnalisés",
+      "upgradeCta": "Activer Premium",
+      "emptyText": "Ajoutez plus de transactions pour recevoir des insights personnalisés.",
+      "errorText": "Nous n'avons pas pu charger vos insights. Veuillez réessayer."
+    },
+    "goals": {
+      "title": "Objectifs d'Épargne",
+      "viewAll": "Voir tout",
+      "previewGoal": "Objectif exemple",
+      "upgradeTitle": "Créez des objectifs d'épargne et suivez votre progression",
+      "upgradeCta": "Activer Premium",
+      "emptyText": "Vous n'avez pas encore d'objectifs. Créez votre premier objectif d'épargne.",
+      "emptyCta": "Créer un objectif",
+      "errorText": "Nous n'avons pas pu charger vos objectifs. Veuillez réessayer.",
+      "remaining": "Il vous reste"
+    },
+    "pockets": {
+      "title": "Pockets",
+      "viewAll": "Voir tout",
+      "previewPocket": "Pocket exemple",
+      "upgradeTitle": "Organisez votre budget par catégories avec Pockets",
+      "upgradeCta": "Activer Premium",
+      "emptyText": "Vous n'avez pas encore de pockets. Créez votre premier pocket pour organiser votre budget.",
+      "emptyCta": "Créer un pocket",
+      "errorText": "Nous n'avons pas pu charger vos pockets. Veuillez réessayer."
+    },
+    "savingsRateTooltip": "Pourcentage de vos revenus que vous épargnez ce mois-ci",
+    "activity": {
+      "today": "Aujourd'hui",
+      "yesterday": "Hier",
+      "thisWeek": "Cette semaine",
+      "earlier": "Plus tôt"
+    }
   },
   "insights": {
     "title": "Insights IA",
@@ -410,6 +454,11 @@
       "connecting": "Connexion...",
       "connect_failed": "Impossible de démarrer la connexion Gmail. Veuillez réessayer."
     },
+    "profile": {
+      "title": "Profil",
+      "display_name": "Nom affiché",
+      "email": "E-mail"
+    },
     "preferences": {
       "title": "Préférences",
       "desc": "Personnalisez votre expérience.",
@@ -447,11 +496,21 @@
     "noCategoryData": "Pas de données de catégories",
     "noChartData": "Pas de données mensuelles",
     "noDailyData": "Pas de données de dépenses quotidiennes",
+    "hourlyActivity": "Activité Horaire",
+    "hourlySubtitle": "Quand vous dépensez dans la journée",
+    "noHourlyData": "Pas de données d'activité horaire",
+    "weeklyPatterns": "Tendances Hebdomadaires",
+    "weeklyAverage": "Dépense moyenne quotidienne",
+    "noWeeklyData": "Pas de données de tendances hebdomadaires",
     "chartError": "Erreur lors du chargement du graphique",
     "welcomeTitle": "Bienvenue dans Analytique",
     "welcomeDesc": "Commencez par ajouter votre première transaction pour voir les insights.",
     "welcomeBanner": "Prêt à commencer ? Ajoutez votre première transaction pour débloquer les insights.",
     "addFirstTransaction": "Ajouter une Première Transaction",
+    "filtered": "Filtré par: {{name}}",
+    "clearFilter": "Effacer le filtre",
+    "clearFilterTip": "Cliquez sur le badge pour effacer",
+    "customRange": "Période personnalisée...",
     "noDataTitle": "Pas de Données pour Cette Période",
     "noDataDesc": "Essayez d'ajuster vos filtres pour voir les résultats.",
     "clearFilters": "Effacer les Filtres",
@@ -469,7 +528,9 @@
       "more": "Plus de filtres",
       "category": "Catégorie",
       "allCats": "Toutes les catégories",
-      "reset": "Réinitialiser"
+      "reset": "Réinitialiser",
+      "removeCategory": "Retirer le filtre {{name}}",
+      "removeCategory": "Retirer le filtre {{name}}"
     },
     "insight": {
       "spending": "Alerte de Dépenses",
@@ -501,6 +562,7 @@
     "savingsRate": "Taux d'Épargne",
     "dailySpending": "Dépenses Quotidiennes",
     "thisWeek": "Cette semaine",
+    "currentWeekNote": "Affiche toujours la semaine en cours",
     "days": {
       "mon": "Lun",
       "tue": "Mar",

@@ -37,7 +37,7 @@ import { TranslatePipe } from '../../../core/pipes/translate.pipe';
 import { TranslationService } from '../../../core/services/translation.service';
 import { CurrencyService } from '../../../core/services/currency.service';
 import { ToastService } from '../../../core/services/toast.service';
-import { AnalyticsApiService, AnalyticsSummary, MonthlyTrend, CategoryBreakdown, DailySpending, AnalyticsInsight, AnalyticsTransaction, BankInfo, DateRange } from '../services/analytics-api.service';
+import { AnalyticsApiService, AnalyticsSummary, MonthlyTrend, CategoryBreakdown, DailySpending, AnalyticsInsight, AnalyticsTransaction, BankInfo, DateRange, HourlyActivityResponse, WeeklyPatternsResponse } from '../services/analytics-api.service';
 import { AnalyticsStore } from '../services/analytics.store';
 import { ICONS } from '../../../shared/icons/icon-registry';
 import { DateRangeService } from '../../../core/services/date-range.service';
@@ -424,16 +424,16 @@ export class AnalyticsPage implements OnInit {
 
   // ─── Hourly Activity Chart ──────────────────────────────────────────────
 
-  private readonly _hourlyData = signal<{ data: { hour: number; income: number; expenses: number }[] } | null>(null);
+  private readonly _hourlyData = signal<HourlyActivityResponse | null>(null);
   readonly hourlyData = this._hourlyData.asReadonly();
 
   readonly hourlyChartOptions = computed<EChartsOption | undefined>(() => {
     const data = this._hourlyData();
-    if (!data || !data.data || data.data.length === 0) return undefined;
+    if (!data || !data.hours || data.hours.length === 0) return undefined;
 
-    const hours = data.data.map(h => h.hour);
-    const incomeData = data.data.map(h => h.income);
-    const expenseData = data.data.map(h => h.expenses);
+    const hours = data.hours.map(h => h.hour);
+    const incomeData = data.hours.map(h => h.income);
+    const expenseData = data.hours.map(h => h.expenses);
     const currencySymbol = this.currencyService.currencyConfig().symbol;
 
     return this.themeMapper.buildHourlyBarOption(hours, incomeData, expenseData, currencySymbol);
@@ -441,21 +441,23 @@ export class AnalyticsPage implements OnInit {
 
   // ─── Weekly Patterns Chart (with averages) ──────────────────────────────
 
-  private readonly _weeklyPatterns = signal<{ patterns: { weekday: number; weekdayLabel: string; category: string; averageAmount: number; count: number }[] } | null>(null);
+  private readonly _weeklyPatterns = signal<WeeklyPatternsResponse | null>(null);
   readonly weeklyPatterns = this._weeklyPatterns.asReadonly();
 
   readonly weeklyPatternsChartOptions = computed<EChartsOption | undefined>(() => {
     const data = this._weeklyPatterns();
     if (!data || !data.patterns || data.patterns.length === 0) return undefined;
 
-    // Group by weekday label, sum averages across categories
-    const dayOrder = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    // Map dayOfWeek (0=Sun, 1=Mon, ..., 6=Sat) to labels and sum averages
+    const DAY_LABELS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     const dayMap = new Map<string, number>();
     for (const p of data.patterns) {
-      const current = dayMap.get(p.weekdayLabel) ?? 0;
-      dayMap.set(p.weekdayLabel, current + p.averageAmount);
+      const label = DAY_LABELS[p.dayOfWeek] ?? 'Unknown';
+      const current = dayMap.get(label) ?? 0;
+      dayMap.set(label, current + p.average);
     }
 
+    const dayOrder = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
     const labels = dayOrder.map(d => this.i18n.translate(DAY_KEY_MAP[d] ?? d));
     const values = dayOrder.map(d => dayMap.get(d) ?? 0);
 
@@ -474,12 +476,27 @@ export class AnalyticsPage implements OnInit {
   readonly isNewUser = computed(() => this.store.isNewUser());
 
   readonly monthOpen = signal(false);
+  readonly dailyChartSubtitle = computed<string>(() => {
+    const period = this.store.filters().period;
+    const thisWeek = this.i18n.translate('analytics.thisWeek');
+    // For periods longer than 1 month, clarify that daily spending is always current week
+    if (period === '90d' || period === '6m' || period === '1y' || period === 'custom') {
+      return thisWeek + ' · ' + this.i18n.translate('analytics.currentWeekNote');
+    }
+    return thisWeek;
+  });
+
+  readonly showCustomDates = signal(false);
 
   /** Show content layout whenever data is loaded — even with zero values */
   readonly showContent = computed(() => this.store.loadState() === 'ready');
 
+  /** Whether a filter-triggered refetch is in progress (existing data + loading). Avoids full skeleton flash. */
+  readonly isRefetching = computed(() => this.isLoading() && this.store.hasData());
+
   readonly pageState = computed<'loading' | 'error' | 'content'>(() => {
-    if (this.isLoading()) return 'loading';
+    // Keep content visible during refetch — just show a thin progress bar
+    if (this.isLoading() && !this.store.hasData()) return 'loading';
     if (this.isError()) return 'error';
     return 'content';
   });
@@ -580,6 +597,8 @@ export class AnalyticsPage implements OnInit {
 
   /** Handle chart click events for drill-down filtering */
   onChartClick(event: ChartClickEvent, chartType: 'category' | 'hourly' | 'weekly'): void {
+    const t = this.i18n.translate.bind(this.i18n);
+
     if (chartType === 'category' && event.name) {
       // Donut/bar click → filter by category name
       // Map display name back to category ID
@@ -587,14 +606,23 @@ export class AnalyticsPage implements OnInit {
       const matched = analysis.find(c => c.name === event.name);
       if (matched) {
         this.store.setCrossFilterCategory(matched.id, matched.name);
+        this.toast.info(
+          t('analytics.filtered', { name: matched.name }),
+          t('analytics.clearFilterTip'),
+        );
       }
     } else if (chartType === 'hourly' && event.hour !== undefined) {
       // Hourly chart click → filter by hour
+      const label = `${event.hour}:00`;
       this.store.setChartFilter({
         type: 'hour',
         value: event.hour,
-        label: `${event.hour}:00`,
+        label,
       });
+      this.toast.info(
+        t('analytics.filtered', { name: label }),
+        t('analytics.clearFilterTip'),
+      );
     } else if (chartType === 'weekly' && event.name) {
       // Weekly patterns click → filter by day
       const dayKeyMapReverse: Record<string, string> = {
@@ -612,6 +640,10 @@ export class AnalyticsPage implements OnInit {
         value: dayLabel,
         label: event.name,
       });
+      this.toast.info(
+        t('analytics.filtered', { name: event.name }),
+        t('analytics.clearFilterTip'),
+      );
     }
   }
 
@@ -699,7 +731,7 @@ export class AnalyticsPage implements OnInit {
     }).subscribe({
       next: ({ hourlyActivity, weeklyPatterns }) => {
         // Validate response shape before setting signals (defense against malformed responses)
-        if (hourlyActivity && Array.isArray(hourlyActivity.data)) {
+        if (hourlyActivity && Array.isArray(hourlyActivity.hours)) {
           this._hourlyData.set(hourlyActivity);
         } else {
           this._hourlyData.set(null);

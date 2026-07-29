@@ -1,12 +1,12 @@
-<div class="goals-widget">
+<div class="goals-widget" role="region" aria-labelledby="goals-title">
   <!-- Header -->
   <div class="goals-widget__header">
-    <h2 class="goals-widget__title">
+    <h2 class="goals-widget__title" id="goals-title">
       <span class="goals-widget__icon"><ft-icon name="target" [size]="22" /></span>
-      Metas de Ahorro
+      {{ 'dashboard.goals.title' | translate }}
     </h2>
     @if (isPremium()) {
-      <a routerLink="/goals" class="goals-widget__link">Ver todas</a>
+      <a routerLink="/goals" class="goals-widget__link">{{ 'dashboard.goals.viewAll' | translate }}</a>
     }
   </div>
 
@@ -16,7 +16,7 @@
       <div class="goals-widget__blur">
         <div class="goal-row goal-row--blurred">
           <div class="goal-row__info">
-            <span class="goal-row__name">Meta de ejemplo</span>
+            <span class="goal-row__name">{{ 'dashboard.goals.previewGoal' | translate }}</span>
             <span class="goal-row__progress-text">45%</span>
           </div>
           <div class="goal-row__bar">
@@ -26,10 +26,10 @@
       </div>
       <div class="goals-widget__cta-overlay">
         <p class="goals-widget__cta-text">
-          Creá metas de ahorro y seguí tu progreso
+          {{ 'dashboard.goals.upgradeTitle' | translate }}
         </p>
         <a routerLink="/subscription" [queryParams]="{ upgrade: 'true' }" class="goals-widget__cta-btn">
-          Activar Premium
+          {{ 'dashboard.goals.upgradeCta' | translate }}
         </a>
       </div>
     </div>
@@ -55,10 +55,10 @@
         <div class="goals-widget__empty">
           <span class="goals-widget__empty-icon"><ft-icon name="target" [size]="28" /></span>
           <p class="goals-widget__empty-text">
-          Todavía no tenés metas. Creá tu primera meta de ahorro.
+          {{ 'dashboard.goals.emptyText' | translate }}
           </p>
           <a routerLink="/goals" class="goals-widget__empty-btn">
-            Crear primera meta
+            {{ 'dashboard.goals.emptyCta' | translate }}
           </a>
         </div>
       }
@@ -66,7 +66,7 @@
         <div class="goals-widget__empty">
           <span class="goals-widget__empty-icon"><ft-icon name="alert-triangle" [size]="28" /></span>
           <p class="goals-widget__empty-text">
-          No pudimos cargar tus metas. Intentá de nuevo.
+          {{ 'dashboard.goals.errorText' | translate }}
           </p>
         </div>
       }
@@ -82,7 +82,7 @@
                   </span>
                   @if (estimatedMonths(goal); as months) {
                     <span class="goal-row__projection">
-                      · Te faltan {{ months }} {{ months === 1 ? 'mes' : 'meses' }}
+                      · {{ 'dashboard.goals.remaining' | translate }} {{ months }} {{ 'common.monthsCount' | translate: { count: months } }}
                     </span>
                   }
                 </div>

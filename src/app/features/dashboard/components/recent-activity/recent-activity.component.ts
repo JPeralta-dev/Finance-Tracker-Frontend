@@ -8,6 +8,7 @@ import { ICONS } from '../../../../shared/icons/icon-registry';
 import { TranslatePipe } from '../../../../core/pipes/translate.pipe';
 import { CategoryTranslatePipe } from '../../../../core/pipes/category-translate.pipe';
 import { CurrencyService } from '../../../../core/services/currency.service';
+import { ChannelBadgeComponent, ChannelOrigin } from '../../../../shared/ui/channel-badge/channel-badge.component';
 
 export interface ActivityItem {
   id: string;
@@ -17,18 +18,18 @@ export interface ActivityItem {
   type: 'income' | 'expense';
   date: string;
   bankName?: string;
-  origin?: string;
+  origin?: ChannelOrigin;
 }
 
 interface ActivityGroup {
-  label: string;
+  labelKey: string;
   items: ActivityItem[];
 }
 
 @Component({
   selector: 'ft-recent-activity',
   standalone: true,
-  imports: [CommonModule, DatePipe, RouterLink, UiBadgeComponent, NgIcon, TranslatePipe, CategoryTranslatePipe],
+  imports: [CommonModule, DatePipe, RouterLink, UiBadgeComponent, NgIcon, TranslatePipe, CategoryTranslatePipe, ChannelBadgeComponent],
   templateUrl: './recent-activity.component.html',
   styleUrl: './recent-activity.component.scss',
 })
@@ -65,27 +66,26 @@ export class RecentActivityComponent {
       const itemDate = new Date(item.date);
       const itemDay = new Date(Date.UTC(itemDate.getUTCFullYear(), itemDate.getUTCMonth(), itemDate.getUTCDate()));
 
-      let label: string;
+      let key: string;
       if (itemDay.getTime() === today.getTime()) {
-        label = 'Hoy';
+        key = 'dashboard.activity.today';
       } else if (itemDay.getTime() === yesterday.getTime()) {
-        label = 'Ayer';
+        key = 'dashboard.activity.yesterday';
       } else if (itemDay.getTime() >= weekAgo.getTime()) {
-        label = 'Esta semana';
+        key = 'dashboard.activity.thisWeek';
       } else {
-        label = 'Anterior';
+        key = 'dashboard.activity.earlier';
       }
 
-      const existing = groups.get(label) ?? [];
+      const existing = groups.get(key) ?? [];
       existing.push(item);
-      groups.set(label, existing);
+      groups.set(key, existing);
     }
 
-    // Preserve order: Today, Yesterday, This Week, Earlier
-    const order = ['Hoy', 'Ayer', 'Esta semana', 'Anterior'];
+    const order = ['dashboard.activity.today', 'dashboard.activity.yesterday', 'dashboard.activity.thisWeek', 'dashboard.activity.earlier'];
     return order
-      .filter(label => groups.has(label))
-      .map(label => ({ label, items: groups.get(label)! }));
+      .filter(key => groups.has(key))
+      .map(key => ({ labelKey: key, items: groups.get(key)! }));
   });
 
   loadMore(): void {

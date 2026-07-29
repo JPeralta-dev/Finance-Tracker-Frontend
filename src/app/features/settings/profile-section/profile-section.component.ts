@@ -19,6 +19,7 @@ export class ProfileSectionComponent implements OnInit {
   delay = input<number>(0);
   displayName = signal('');
   email = signal('');
+  profileError = signal('');
 
   ngOnInit(): void {
     if (this.authService.isAuthenticated()) {
@@ -28,6 +29,9 @@ export class ProfileSectionComponent implements OnInit {
           this.email.set(user.email);
         },
         error: () => {
+          this.profileError.set(
+            'Unable to load profile. Your session may have expired. Please sign in again.',
+          );
           this.authService.clearTokens();
         },
       });

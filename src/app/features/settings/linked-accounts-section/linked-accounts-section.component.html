@@ -90,6 +90,23 @@
       (disconnect)="onGmailDisconnect()"
     />
 
+    <!-- Gmail disconnect confirmation (two-step guard) -->
+    @if (gmailDisconnectConfirm()) {
+      <div class="disconnect-confirm">
+        <p class="disconnect-confirm__text">
+          {{ 'settings.accounts.disconnect_confirm' | translate }}
+        </p>
+        <div class="disconnect-confirm__actions">
+          <button class="btn-cancel" (click)="cancelGmailDisconnect()">
+            {{ 'common.cancel' | translate }}
+          </button>
+          <button class="btn-confirm-danger" (click)="confirmGmailDisconnect()">
+            {{ 'settings.linked.disconnect' | translate }}
+          </button>
+        </div>
+      </div>
+    }
+
     <!-- ── WhatsApp (coming soon) ────────────────────────────────── -->
     <app-linked-channel-card
       [state]="whatsappState"

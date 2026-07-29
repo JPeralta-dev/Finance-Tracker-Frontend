@@ -13,14 +13,21 @@ import { catchError, of } from 'rxjs';
 import { IconComponent } from '../../../../shared/icons/icon.component';
 import { FinanceService } from '../../../../core/services/finance.service';
 import { AuthService } from '../../../../core/services/auth.service';
+import { TranslatePipe } from '../../../../core/pipes/translate.pipe';
 import { Insight } from '../../../../core/models/insight.model';
 
 type InsightsState = 'loading' | 'ready' | 'empty' | 'error';
 
+const SEVERITY_CLASS_MAP: Record<string, string> = {
+  low: 'insight-row--severity-info',
+  medium: 'insight-row--severity-warning',
+  high: 'insight-row--severity-danger',
+};
+
 @Component({
   selector: 'ft-ai-insights-card',
   standalone: true,
-  imports: [CommonModule, RouterLink, IconComponent],
+  imports: [CommonModule, RouterLink, IconComponent, TranslatePipe],
   templateUrl: './ai-insights-card.component.html',
   styleUrl: './ai-insights-card.component.scss',
 })
@@ -40,11 +47,9 @@ export class AiInsightsCardComponent implements OnInit {
     trend: 'trending-up',
   };
 
-  readonly severityColors: Record<string, string | undefined> = {
-    low: 'var(--info, #A78BFA)',
-    medium: 'var(--warning, #FFD93D)',
-    high: 'var(--danger, #FF6B6B)',
-  };
+  severityClass(severity: string): string {
+    return SEVERITY_CLASS_MAP[severity] || 'insight-row--severity-success';
+  }
 
   readonly displayInsights = computed(() => this.insights().slice(0, 3));
 

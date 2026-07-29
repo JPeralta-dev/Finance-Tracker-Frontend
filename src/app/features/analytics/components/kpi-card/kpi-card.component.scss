@@ -57,11 +57,11 @@
   }
 
   &__value {
-    font-family: var(--font-body);
-    font-size: 26px;
-    font-weight: 600;
+    font-family: var(--font-mono);
+    font-size: clamp(20px, 4vw, 26px);
+    font-weight: 500;
     color: var(--text-primary);
-    letter-spacing: -0.02em;
+    letter-spacing: -0.01em;
     font-variant-numeric: tabular-nums;
     line-height: 1.2;
   }
@@ -124,5 +124,13 @@
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kpi-card--animated {
+    animation: none;
+    opacity: 1;
+    transform: none;
   }
 }

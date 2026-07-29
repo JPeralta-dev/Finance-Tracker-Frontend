@@ -10,6 +10,10 @@
     "search": "Buscar",
     "filter": "Filtrar",
     "viewAll": "Ver todo",
+    "month": "mes",
+    "months": "meses",
+    "monthsCount": "{{count}} meses",
+    "more": "más",
     "toasts": {
       "categories_load_failed": "Error al cargar las categorías.",
       "category_created": "Categoría creada",
@@ -352,7 +356,47 @@
     "addExpense": "Agregar Gasto",
     "addIncome": "Agregar Ingreso",
     "manageCategories": "Categorías",
-    "viewAnalytics": "Ver Analytics"
+    "viewAnalytics": "Ver Analytics",
+    "aiInsights": {
+      "title": "Insights Financieros",
+      "viewAll": "Ver todos",
+      "preview1Title": "Detectamos un patrón de gasto",
+      "preview1Desc": "Tus gastos de los viernes subieron un 23%...",
+      "preview2Title": "Oportunidad de ahorro",
+      "preview2Desc": "Podrías ahorrar $45.000 cambiando tu plan de...",
+      "upgradeTitle": "Desbloqueá insights personalizados con IA",
+      "upgradeCta": "Activar Premium",
+      "emptyText": "Agregá más transacciones para recibir insights personalizados.",
+      "errorText": "No pudimos cargar los insights. Intentá de nuevo."
+    },
+    "goals": {
+      "title": "Metas de Ahorro",
+      "viewAll": "Ver todas",
+      "previewGoal": "Meta de ejemplo",
+      "upgradeTitle": "Creá metas de ahorro y seguí tu progreso",
+      "upgradeCta": "Activar Premium",
+      "emptyText": "Todavía no tenés metas. Creá tu primera meta de ahorro.",
+      "emptyCta": "Crear primera meta",
+      "errorText": "No pudimos cargar tus metas. Intentá de nuevo.",
+      "remaining": "Te faltan"
+    },
+    "pockets": {
+      "title": "Pockets",
+      "viewAll": "Ver todos",
+      "previewPocket": "Pocket de ejemplo",
+      "upgradeTitle": "Organizá tu presupuesto por categorías con Pockets",
+      "upgradeCta": "Activar Premium",
+      "emptyText": "Todavía no tenés pockets. Creá tu primer pocket para organizar tu presupuesto.",
+      "emptyCta": "Crear primer pocket",
+      "errorText": "No pudimos cargar tus pockets. Intentá de nuevo."
+    },
+    "savingsRateTooltip": "Porcentaje de tus ingresos que estás ahorrando este mes",
+    "activity": {
+      "today": "Hoy",
+      "yesterday": "Ayer",
+      "thisWeek": "Esta semana",
+      "earlier": "Anterior"
+    }
   },
   "insights": {
     "title": "Insights IA",
@@ -458,7 +502,10 @@
       "date": "Fecha",
       "amount": "Monto",
       "category": "Categoría"
-    }
+    },
+    "deleteConfirmTitle": "Eliminar Transacciones",
+    "deleteConfirmMessage": "¿Estás seguro de eliminar permanentemente {{count}} transacción(es)? Esta acción no se puede deshacer.",
+    "deletedCount": "{{count}} transacción(es) eliminada(s)"
   },
   "categories": {
     "title": "Categorías",
@@ -467,21 +514,29 @@
     "add": "Agregar",
     "edit": "Editar",
     "delete": "Eliminar",
+    "delete_title": "¿Eliminar categoría?",
+    "delete_message": "Las transacciones de esta categoría se moverán a Otros. Esto no se puede deshacer.",
     "default": "Por defecto",
     "of_total": "del total",
     "view_transactions": "Ver transacciones",
     "edit_title": "Editar Categoría",
     "new_title": "Nueva Categoría",
     "stats": {
+      "title": "Resumen de categorías",
       "total": "Total rastreadas",
       "highest": "Mayor gasto",
       "total_expenses": "Gastos totales"
     },
     "empty": {
-      "title": "No hay categorías aún",
-      "desc": "Agrega transacciones para ver las categorías aquí.",
-      "action": "+ Nueva Transacción",
-      "search": "Ninguna categoría coincide con tu búsqueda"
+      "title": "No hay categorías todavía",
+      "desc": "Creá tu primera categoría para empezar a organizar tus gastos.",
+      "action": "Crear categoría",
+      "search": "No hay categorías que coincidan con tu búsqueda"
+    },
+    "error": {
+      "title": "No se pudieron cargar las categorías",
+      "desc": "Algo salió mal al obtener tus categorías. Revisá tu conexión e intentá de nuevo.",
+      "retry": "Reintentar"
     },
     "form": {
       "name": "Nombre",
@@ -499,6 +554,11 @@
     "signOut": "Cerrar Sesión",
     "back_to_dashboard": "Volver al dashboard",
     "coming_soon": "Próximamente...",
+    "profile": {
+      "title": "Perfil",
+      "display_name": "Nombre visible",
+      "email": "Correo"
+    },
     "security": {
       "title": "Seguridad",
       "desc": "configura la seguridad de tu cuenta.",
@@ -592,6 +652,7 @@
     "expenseBreakdown": "Desglose de Gastos",
     "dailySpending": "Gastos por Día",
     "thisWeek": "Esta semana",
+    "currentWeekNote": "Siempre muestra la semana actual",
     "days": {
       "mon": "Lun",
       "tue": "Mar",
@@ -617,10 +678,20 @@
     "noCategoryData": "Sin datos de categorías aún",
     "noChartData": "Sin datos mensuales aún",
     "noDailyData": "Sin datos de gastos diarios",
+    "hourlyActivity": "Actividad por Hora",
+    "hourlySubtitle": "Cuándo gastás durante el día",
+    "noHourlyData": "Sin datos de actividad horaria",
+    "weeklyPatterns": "Patrones Semanales",
+    "weeklyAverage": "Gasto promedio diario",
+    "noWeeklyData": "Sin datos de patrones semanales",
     "chartError": "Error al cargar gráfico",
     "welcomeTitle": "Bienvenido a Análisis",
     "welcomeDesc": "empieza agregando tu primera transacción para ver insights.",
     "addFirstTransaction": "Agregar Primera Transacción",
+    "filtered": "Filtrado por: {{name}}",
+    "clearFilter": "Limpiar filtro",
+    "clearFilterTip": "Hacé clic en la insignia para limpiar",
+    "customRange": "Rango personalizado...",
     "noDataTitle": "Sin Datos para Este Período",
     "noDataDesc": "Intentá ajustar los filtros para ver resultados.",
     "clearFilters": "Limpiar Filtros",
@@ -639,7 +710,8 @@
       "more": "Más filtros",
       "category": "Categoría",
       "allCats": "Todas las categorías",
-      "reset": "Resetear"
+      "reset": "Resetear",
+      "removeCategory": "Quitar filtro {{name}}"
     },
     "insight": {
       "spending": "Alerta de Gastos",
@@ -667,6 +739,12 @@
       "expenses": "Gastos",
       "current": "Actual",
       "previous": "Anterior"
+    },
+    "consent": {
+      "message": "Usamos cookies y herramientas de análisis para entender cómo mejoramos Flowr. Vos decidís.",
+      "accept": "Aceptar",
+      "decline": "Rechazar",
+      "learnMore": "Más información"
     }
   },
   "profile": {
@@ -704,14 +782,6 @@
   },
   "theme": {
     "toggle": "Cambiar tema"
-  },
-  "analytics": {
-    "consent": {
-      "message": "Usamos cookies y herramientas de análisis para entender cómo mejoramos Flowr. Vos decidís.",
-      "accept": "Aceptar",
-      "decline": "Rechazar",
-      "learnMore": "Más información"
-    }
   },
   "modal": {
     "close": "Cerrar"
@@ -929,6 +999,21 @@
     "new": "Agregar nuevo banco",
     "empty": {
       "search": "Ningún banco coincide con tu búsqueda"
+    }
+  },
+  "channels": {
+    "whatsapp": "WhatsApp",
+    "telegram": "Telegram",
+    "gmail": "Gmail",
+    "manual": "Manual",
+    "from": "De {{ channel }}",
+    "dashboard": {
+      "title": "Canales",
+      "transactions": "transacciones",
+      "emptyTitle": "Sin transacciones por canal",
+      "emptyDesc": "Registra tu primera transacción para ver la distribución por canal",
+      "errorTitle": "Error al cargar canales",
+      "errorDesc": "No pudimos cargar la distribución por canal. Intentá de nuevo."
     }
   }
 }

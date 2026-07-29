@@ -127,24 +127,23 @@ export interface HourlyActivityEntry {
 
 /** Hourly activity response */
 export interface HourlyActivityResponse {
-  data: HourlyActivityEntry[];
+  hours: HourlyActivityEntry[];
   period: string;
 }
 
 /** Weekly pattern entry */
 export interface WeeklyPatternEntry {
-  weekday: number;
-  weekdayLabel: string;
+  dayOfWeek: number;   // 0=Sun, 1=Mon, ..., 6=Sat
   category: string;
-  averageAmount: number;
+  total: number;
   count: number;
+  average: number;
 }
 
 /** Weekly patterns response */
 export interface WeeklyPatternsResponse {
   patterns: WeeklyPatternEntry[];
   period: string;
-  weeksInRange: number;
 }
 
 // ─── Service ────────────────────────────────────────────────────────────────
