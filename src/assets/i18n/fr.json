@@ -489,6 +489,12 @@
     "noCategoryData": "Pas de données de catégories",
     "noChartData": "Pas de données mensuelles",
     "noDailyData": "Pas de données de dépenses quotidiennes",
+    "hourlyActivity": "Activité Horaire",
+    "hourlySubtitle": "Quand vous dépensez dans la journée",
+    "noHourlyData": "Pas de données d'activité horaire",
+    "weeklyPatterns": "Tendances Hebdomadaires",
+    "weeklyAverage": "Dépense moyenne quotidienne",
+    "noWeeklyData": "Pas de données de tendances hebdomadaires",
     "chartError": "Erreur lors du chargement du graphique",
     "welcomeTitle": "Bienvenue dans Analytique",
     "welcomeDesc": "Commencez par ajouter votre première transaction pour voir les insights.",
@@ -515,7 +521,8 @@
       "more": "Plus de filtres",
       "category": "Catégorie",
       "allCats": "Toutes les catégories",
-      "reset": "Réinitialiser"
+      "reset": "Réinitialiser",
+      "removeCategory": "Retirer le filtre {{name}}"
     },
     "insight": {
       "spending": "Alerte de Dépenses",

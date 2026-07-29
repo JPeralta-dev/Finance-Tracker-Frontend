@@ -671,6 +671,12 @@
     "noCategoryData": "Sin datos de categorías aún",
     "noChartData": "Sin datos mensuales aún",
     "noDailyData": "Sin datos de gastos diarios",
+    "hourlyActivity": "Actividad por Hora",
+    "hourlySubtitle": "Cuándo gastás durante el día",
+    "noHourlyData": "Sin datos de actividad horaria",
+    "weeklyPatterns": "Patrones Semanales",
+    "weeklyAverage": "Gasto promedio diario",
+    "noWeeklyData": "Sin datos de patrones semanales",
     "chartError": "Error al cargar gráfico",
     "welcomeTitle": "Bienvenido a Análisis",
     "welcomeDesc": "empieza agregando tu primera transacción para ver insights.",
@@ -697,7 +703,8 @@
       "more": "Más filtros",
       "category": "Categoría",
       "allCats": "Todas las categorías",
-      "reset": "Resetear"
+      "reset": "Resetear",
+      "removeCategory": "Quitar filtro {{name}}"
     },
     "insight": {
       "spending": "Alerta de Gastos",

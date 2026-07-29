@@ -671,6 +671,12 @@
     "noCategoryData": "No category data yet",
     "noChartData": "No monthly data yet",
     "noDailyData": "No daily spending data",
+    "hourlyActivity": "Hourly Activity",
+    "hourlySubtitle": "When you spend throughout the day",
+    "noHourlyData": "No hourly spending data",
+    "weeklyPatterns": "Weekly Patterns",
+    "weeklyAverage": "Average daily spending",
+    "noWeeklyData": "No weekly pattern data",
     "chartError": "Error loading chart",
     "welcomeTitle": "Welcome to Analytics",
     "welcomeDesc": "Start by adding your first transaction to see insights.",
@@ -697,7 +703,8 @@
       "more": "More filters",
       "category": "Category",
       "allCats": "All categories",
-      "reset": "Reset"
+      "reset": "Reset",
+      "removeCategory": "Remove {{name}} filter"
     },
     "insight": {
       "spending": "Spending Alert",
