@@ -522,6 +522,7 @@
       "category": "Catégorie",
       "allCats": "Toutes les catégories",
       "reset": "Réinitialiser",
+      "removeCategory": "Retirer le filtre {{name}}",
       "removeCategory": "Retirer le filtre {{name}}"
     },
     "insight": {

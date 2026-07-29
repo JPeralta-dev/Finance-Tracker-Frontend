@@ -704,6 +704,7 @@
       "category": "Categoría",
       "allCats": "Todas las categorías",
       "reset": "Resetear",
+      "removeCategory": "Quitar filtro {{name}}",
       "removeCategory": "Quitar filtro {{name}}"
     },
     "insight": {
@@ -732,6 +733,12 @@
       "expenses": "Gastos",
       "current": "Actual",
       "previous": "Anterior"
+    },
+    "consent": {
+      "message": "Usamos cookies y herramientas de análisis para entender cómo mejoramos Flowr. Vos decidís.",
+      "accept": "Aceptar",
+      "decline": "Rechazar",
+      "learnMore": "Más información"
     }
   },
   "profile": {
@@ -769,14 +776,6 @@
   },
   "theme": {
     "toggle": "Cambiar tema"
-  },
-  "analytics": {
-    "consent": {
-      "message": "Usamos cookies y herramientas de análisis para entender cómo mejoramos Flowr. Vos decidís.",
-      "accept": "Aceptar",
-      "decline": "Rechazar",
-      "learnMore": "Más información"
-    }
   },
   "modal": {
     "close": "Cerrar"

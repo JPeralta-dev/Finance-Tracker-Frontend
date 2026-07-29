@@ -732,6 +732,12 @@
       "expenses": "Expenses",
       "current": "Current",
       "previous": "Previous"
+    },
+    "consent": {
+      "message": "We use cookies and analytics tools to understand how to improve Flowr. It's your call.",
+      "accept": "Accept",
+      "decline": "Decline",
+      "learnMore": "Learn more"
     }
   },
   "profile": {
@@ -769,14 +775,6 @@
   },
   "theme": {
     "toggle": "Toggle theme"
-  },
-  "analytics": {
-    "consent": {
-      "message": "We use cookies and analytics tools to understand how to improve Flowr. It's your call.",
-      "accept": "Accept",
-      "decline": "Decline",
-      "learnMore": "Learn more"
-    }
   },
   "modal": {
     "close": "Close"
