@@ -65,3 +65,14 @@
   from { opacity: 0.3; }
   to { opacity: 0.6; }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .kpis-skeleton__card,
+  .kpis-skeleton__icon,
+  .kpis-skeleton__label,
+  .kpis-skeleton__value,
+  .kpis-skeleton__trend {
+    animation: none;
+    opacity: 0.5;
+  }
+}

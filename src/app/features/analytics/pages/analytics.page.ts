@@ -474,12 +474,17 @@ export class AnalyticsPage implements OnInit {
   readonly isNewUser = computed(() => this.store.isNewUser());
 
   readonly monthOpen = signal(false);
+  readonly showCustomDates = signal(false);
 
   /** Show content layout whenever data is loaded — even with zero values */
   readonly showContent = computed(() => this.store.loadState() === 'ready');
 
+  /** Whether a filter-triggered refetch is in progress (existing data + loading). Avoids full skeleton flash. */
+  readonly isRefetching = computed(() => this.isLoading() && this.store.hasData());
+
   readonly pageState = computed<'loading' | 'error' | 'content'>(() => {
-    if (this.isLoading()) return 'loading';
+    // Keep content visible during refetch — just show a thin progress bar
+    if (this.isLoading() && !this.store.hasData()) return 'loading';
     if (this.isError()) return 'error';
     return 'content';
   });
@@ -580,6 +585,8 @@ export class AnalyticsPage implements OnInit {
 
   /** Handle chart click events for drill-down filtering */
   onChartClick(event: ChartClickEvent, chartType: 'category' | 'hourly' | 'weekly'): void {
+    const t = this.i18n.translate.bind(this.i18n);
+
     if (chartType === 'category' && event.name) {
       // Donut/bar click → filter by category name
       // Map display name back to category ID
@@ -587,14 +594,23 @@ export class AnalyticsPage implements OnInit {
       const matched = analysis.find(c => c.name === event.name);
       if (matched) {
         this.store.setCrossFilterCategory(matched.id, matched.name);
+        this.toast.info(
+          t('analytics.filtered', { name: matched.name }),
+          t('analytics.clearFilterTip'),
+        );
       }
     } else if (chartType === 'hourly' && event.hour !== undefined) {
       // Hourly chart click → filter by hour
+      const label = `${event.hour}:00`;
       this.store.setChartFilter({
         type: 'hour',
         value: event.hour,
-        label: `${event.hour}:00`,
+        label,
       });
+      this.toast.info(
+        t('analytics.filtered', { name: label }),
+        t('analytics.clearFilterTip'),
+      );
     } else if (chartType === 'weekly' && event.name) {
       // Weekly patterns click → filter by day
       const dayKeyMapReverse: Record<string, string> = {
@@ -612,6 +628,10 @@ export class AnalyticsPage implements OnInit {
         value: dayLabel,
         label: event.name,
       });
+      this.toast.info(
+        t('analytics.filtered', { name: event.name }),
+        t('analytics.clearFilterTip'),
+      );
     }
   }
 

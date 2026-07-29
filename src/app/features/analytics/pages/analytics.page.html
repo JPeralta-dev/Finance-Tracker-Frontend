@@ -52,55 +52,72 @@
           }
         </div>
         <div class="analytics-header-row__actions">
-          <!-- Period buttons -->
-          <div class="analytics-header-row__periods">
-            @for (p of periodOptions; track p.value) {
-              <button
-                class="analytics-header-row__period-btn"
-                [class.active]="headerPeriod() === p.value"
-                (click)="onPeriodChange(p.value)"
-                type="button"
-              >
-                {{ p.labelKey | translate }}
+          <!-- Single date-range control: month selector as primary, shortcuts + custom behind dropdown -->
+          <div class="date-control">
+            <div class="month-selector">
+              <button class="month-selector__btn" (click)="toggleMonthDropdown()" type="button">
+                <ng-icon name="calendar" size="1rem" />
+                <span>{{ dateRange.currentMonthLabel() }}</span>
+                <ng-icon name="chevronDown" size="0.75rem" />
               </button>
-            }
-          </div>
-          <!-- Custom date inputs -->
-          <div class="analytics-header-row__custom-dates">
-            <input
-              type="date"
-              [value]="customStartDate()"
-              (change)="onCustomDateChange({ start: $any($event.target).value, end: customEndDate() })"
-              class="analytics-header-row__date-input"
-              aria-label="Start date"
-            />
-            <span class="analytics-header-row__date-separator">—</span>
-            <input
-              type="date"
-              [value]="customEndDate()"
-              (change)="onCustomDateChange({ start: customStartDate(), end: $any($event.target).value })"
-              class="analytics-header-row__date-input"
-              aria-label="End date"
-            />
-          </div>
-          <div class="month-selector">
-            <button class="month-selector__btn" (click)="toggleMonthDropdown()" type="button">
-              <ng-icon name="calendar" size="1rem" />
-              <span>{{ dateRange.currentMonthLabel() }}</span>
-              <ng-icon name="chevronDown" size="0.75rem" />
-            </button>
-            @if (monthOpen()) {
-              <div class="month-selector__dropdown" (clickOutside)="monthOpen.set(false)">
-                @for (month of dateRange.availableMonths(); track month.start) {
+              @if (monthOpen()) {
+                <div class="month-selector__dropdown" (clickOutside)="monthOpen.set(false)">
+                  <!-- Period shortcuts -->
+                  <div class="month-selector__shortcuts">
+                    @for (p of periodOptions; track p.value) {
+                      <button
+                        class="month-selector__shortcut"
+                        [class.month-selector__shortcut--active]="headerPeriod() === p.value"
+                        (click)="onPeriodChange(p.value); monthOpen.set(false)"
+                        type="button"
+                      >
+                        {{ p.labelKey | translate }}
+                      </button>
+                    }
+                  </div>
+                  <div class="month-selector__divider"></div>
+                  <!-- Month list -->
+                  @for (month of dateRange.availableMonths(); track month.start) {
+                    <button
+                      class="month-selector__option"
+                      [class.month-selector__option--active]="dateRange.startDate() === month.start"
+                      (click)="onMonthSelect(month)"
+                      type="button"
+                    >
+                      {{ month.label }}
+                    </button>
+                  }
+                  <div class="month-selector__divider"></div>
+                  <!-- Custom range toggle -->
                   <button
-                    class="month-selector__option"
-                    [class.month-selector__option--active]="dateRange.startDate() === month.start"
-                    (click)="onMonthSelect(month)"
+                    class="month-selector__option month-selector__option--custom"
+                    (click)="showCustomDates.set(!showCustomDates()); monthOpen.set(false)"
                     type="button"
                   >
-                    {{ month.label }}
+                    <ng-icon name="calendar" size="0.9rem" />
+                    <span>{{ 'analytics.customRange' | translate }}</span>
                   </button>
-                }
+                </div>
+              }
+            </div>
+            <!-- Inline custom date inputs (progressive disclosure — only visible when toggled) -->
+            @if (showCustomDates()) {
+              <div class="date-control__custom" ftSubtleReveal="fade-up">
+                <input
+                  type="date"
+                  [value]="customStartDate()"
+                  (change)="onCustomDateChange({ start: $any($event.target).value, end: customEndDate() })"
+                  class="date-control__date-input"
+                  aria-label="Start date"
+                />
+                <span class="date-control__date-separator">—</span>
+                <input
+                  type="date"
+                  [value]="customEndDate()"
+                  (change)="onCustomDateChange({ start: customStartDate(), end: $any($event.target).value })"
+                  class="date-control__date-input"
+                  aria-label="End date"
+                />
               </div>
             }
           </div>
@@ -113,10 +130,21 @@
 
       <!-- Cross-filter badge (shown when drill-down is active) -->
       @if (store.hasCrossFilter() || store.hasChartFilter()) {
-        <div class="cross-filter-badge" (click)="onClearChartFilters()" ftSubtleReveal="fade-up">
-          <span>Filtrado: {{ store.crossFilter().categoryName || store.chartFilter()?.label || store.crossFilter().categoryId }}</span>
-          <ng-icon name="x" size="0.8rem" />
-        </div>
+        <button
+          class="cross-filter-badge"
+          type="button"
+          (click)="onClearChartFilters()"
+          [attr.aria-label]="'analytics.clearFilter' | translate"
+          ftSubtleReveal="fade-up"
+        >
+          <span>{{ 'analytics.filtered' | translate:{ name: store.crossFilter().categoryName || store.chartFilter()?.label || store.crossFilter().categoryId || '' } }}</span>
+          <ng-icon name="x" size="0.8rem" aria-hidden="true" />
+        </button>
+      }
+
+      <!-- Refresh indicator (shown during filter-triggered refetch) -->
+      @if (isRefetching()) {
+        <div class="analytics-refresh-indicator" role="progressbar" aria-label="Loading updated data"></div>
       }
 
       <!-- 2. KPI Cards Row (always visible) -->

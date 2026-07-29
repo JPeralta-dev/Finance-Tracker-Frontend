@@ -167,3 +167,11 @@
     transform: translateY(0);
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .filters-panel {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}

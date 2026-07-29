@@ -71,62 +71,28 @@
     margin-top: 2px;
     font-family: var(--font-body);
   }
+}
 
-  /* ── Period Buttons ──────────────────────────────────────────────── */
-  &__periods {
-    display: flex;
-    gap: 4px;
-    background: var(--bg-tertiary, #2A1E35);
-    border-radius: var(--radius-sm);
-    padding: 3px;
-  }
+/* ═══ Date Control (wrapper for month selector + custom inputs) ═══ */
+.date-control {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex-shrink: 0;
 
-  &__period-btn {
-    padding: 6px 12px;
-    font-size: 12px;
-    font-weight: 500;
-    font-family: var(--font-body);
-    color: var(--text-tertiary);
-    background: transparent;
-    border: none;
-    border-radius: var(--radius-xs, 6px);
-    cursor: pointer;
-    transition:
-      background var(--duration-fast) var(--ease-out),
-      color var(--duration-fast) var(--ease-out);
-    white-space: nowrap;
-
-    &:hover {
-      color: var(--text-primary);
-      background: rgba(255, 255, 255, 0.06);
-    }
-
-    &.active {
-      color: var(--text-inverse, #fff);
-      background: linear-gradient(135deg, var(--accent-start), var(--accent-mid));
-      box-shadow: 0 2px 8px rgba(157, 80, 187, 0.25);
-    }
-  }
-
-  /* ── Custom Date Inputs ──────────────────────────────────────────── */
-  &__custom-dates {
+  &__custom {
     display: flex;
     align-items: center;
     gap: 6px;
-  }
-
-  &__date-separator {
-    color: var(--text-tertiary);
-    font-size: 13px;
   }
 
   &__date-input {
     padding: 6px 10px;
     font-size: 12px;
     font-family: var(--font-body);
-    color: var(--text-primary, #F3E8FF);
-    background: var(--bg-tertiary, #2A1E35);
-    border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.08));
+    color: var(--text-primary);
+    background: var(--bg-tertiary);
+    border: 1px solid var(--glass-border);
     border-radius: var(--radius-xs, 6px);
     color-scheme: dark;
     outline: none;
@@ -134,7 +100,7 @@
     max-width: 140px;
 
     &:focus {
-      border-color: var(--accent-start, #9D50BB);
+      border-color: var(--accent-start);
       box-shadow: 0 0 0 2px rgba(157, 80, 187, 0.15);
     }
 
@@ -142,6 +108,11 @@
       filter: invert(0.8);
       cursor: pointer;
     }
+  }
+
+  &__date-separator {
+    color: var(--text-tertiary);
+    font-size: 13px;
   }
 }
 
@@ -186,7 +157,7 @@
     left: 0;
     z-index: 50;
     min-width: 200px;
-    max-height: 280px;
+    max-height: 320px;
     overflow-y: auto;
     background: var(--bg-secondary);
     border: 1px solid var(--glass-border);
@@ -195,6 +166,46 @@
     display: flex;
     flex-direction: column;
     padding: 4px;
+  }
+
+  &__shortcuts {
+    display: flex;
+    gap: 4px;
+    padding: 4px;
+  }
+
+  &__shortcut {
+    flex: 1;
+    padding: 6px 8px;
+    font-size: 12px;
+    font-weight: 500;
+    font-family: var(--font-body);
+    color: var(--text-tertiary);
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    text-align: center;
+    white-space: nowrap;
+    transition:
+      background var(--duration-fast) var(--ease-out),
+      color var(--duration-fast) var(--ease-out);
+
+    &:hover {
+      color: var(--text-primary);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    &--active {
+      color: var(--text-inverse);
+      background: linear-gradient(135deg, var(--accent-start), var(--accent-mid));
+    }
+  }
+
+  &__divider {
+    height: 1px;
+    margin: 4px 8px;
+    background: var(--glass-border);
   }
 
   &__option {
@@ -222,6 +233,22 @@
       color: var(--accent-start);
       font-weight: 600;
     }
+
+    &--custom {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-secondary);
+      font-style: normal;
+
+      ng-icon {
+        color: var(--accent-start);
+      }
+
+      &:hover {
+        color: var(--text-primary);
+      }
+    }
   }
 }
 
@@ -235,12 +262,64 @@
   border: 1px solid rgba(157, 80, 187, 0.3);
   border-radius: var(--radius-full);
   font-size: 13px;
+  font-family: var(--font-body);
   color: var(--accent-start);
   cursor: pointer;
-  transition: background var(--duration-fast) var(--ease-out);
+  transition:
+    background var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out);
 
   &:hover {
     background: rgba(157, 80, 187, 0.2);
+  }
+
+  &:focus-visible {
+    box-shadow: 0 0 0 2px var(--accent-start);
+    outline: none;
+  }
+}
+
+/* ═══ Refresh Indicator (thin animated bar during refetch) ═══ */
+.analytics-refresh-indicator {
+  position: relative;
+  height: 3px;
+  width: 100%;
+  background: transparent;
+  overflow: hidden;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -40%;
+    width: 40%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      var(--accent-start) 50%,
+      transparent 100%
+    );
+    animation: refreshSlide 1.2s var(--ease-out) infinite;
+  }
+}
+
+@keyframes refreshSlide {
+  0% {
+    left: -40%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+/* ═══ Prefers reduced motion ═══ */
+@media (prefers-reduced-motion: reduce) {
+  .analytics-refresh-indicator::after {
+    animation: none;
+    opacity: 0.5;
+    left: 0;
+    width: 100%;
   }
 }
 
@@ -373,6 +452,15 @@
 @keyframes pulse {
   0%, 100% { opacity: 0.6; }
   50% { opacity: 0.3; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-card,
+  .chart-skeleton,
+  .chart-skeleton::after {
+    animation: none;
+    opacity: 0.5;
+  }
 }
 
 /* ═══ Chart Card Slots ═══ */
