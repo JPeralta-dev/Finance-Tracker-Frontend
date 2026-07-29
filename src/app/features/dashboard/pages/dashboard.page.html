@@ -74,7 +74,7 @@
       <div class="dashboard-row dashboard-row--stats" ftSubtleReveal="fade-up" [delay]="75">
         <div class="stats-grid stats-grid--2col">
           @for (stat of stats().slice(0, 2); track stat.id) {
-            <div class="stat-card-large" tabindex="0" role="button" [attr.aria-label]="stat.label | translate">
+            <div class="stat-card-large">
               <div class="stat-card-large__icon">
                 @if (stat.icon === 'wallet') { <ft-icon name="wallet" [size]="22" /> }
                 @if (stat.icon === 'income') { <ft-icon name="arrow-up" [size]="22" /> }
@@ -101,13 +101,27 @@
       <div class="dashboard-row dashboard-row--stats" ftSubtleReveal="fade-up" [delay]="100">
         <div class="stats-grid stats-grid--2col">
           @for (stat of stats().slice(2, 4); track stat.id) {
-            <div class="stat-card-large" tabindex="0" role="button" [attr.aria-label]="stat.label | translate">
+            <div class="stat-card-large">
               <div class="stat-card-large__icon">
                 @if (stat.icon === 'expense') { <ft-icon name="arrow-down" [size]="22" /> }
                 @if (stat.icon === 'subscription') { <ft-icon name="chart" [size]="22" /> }
               </div>
               <div class="stat-card-large__body">
-                <span class="stat-card-large__label">{{ stat.label | translate }}</span>
+                <span class="stat-card-large__label" id="savings-label">
+                  {{ stat.label | translate }}
+                  @if (stat.id === 'savings') {
+                    <span class="stat-card-large__tooltip-trigger" aria-describedby="savings-tooltip" tabindex="0" role="img" aria-label="Info">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="16" x2="12" y2="12"></line>
+                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                      </svg>
+                      <span id="savings-tooltip" class="stat-card-large__tooltip" role="tooltip">
+                        {{ 'dashboard.savingsRateTooltip' | translate }}
+                      </span>
+                    </span>
+                  }
+                </span>
                 <span class="stat-card-large__value">
                   @if (stat.id === 'savings') {
                     {{ stat.value }}%
@@ -168,6 +182,11 @@
           <ft-referral-widget />
         </div>
       }
+
+      <!-- ROW 4d: Channel Distribution Widget -->
+      <div class="dashboard-row dashboard-row--channels" ftSubtleReveal="fade-up" [delay]="170">
+        <ft-channel-distribution-widget />
+      </div>
 
       <!-- ROW 5: Chart + Recent Activity -->
       <div class="dashboard-row dashboard-row--content" ftSubtleReveal="fade-up" [delay]="175">

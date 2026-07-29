@@ -26,6 +26,14 @@ export class KpiCardComponent {
     return t > 0 ? 'up' : t < 0 ? 'down' : 'neutral';
   });
 
+  readonly trendDisplay = computed<string>(() => {
+    const t = this.data().trend;
+    const abs = Math.abs(t).toFixed(1);
+    if (t > 0) return '+' + abs + '%';
+    if (t < 0) return '−' + abs + '%';
+    return abs + '%';
+  });
+
   currencySymbol(): string {
     return this.currencyService.currencyConfig().symbol;
   }

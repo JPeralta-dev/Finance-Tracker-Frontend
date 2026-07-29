@@ -43,10 +43,10 @@
   <!-- Activity list grouped by date -->
   @if (!loading() && !isEmpty()) {
     <div class="recent-activity__list">
-      @for (group of groups(); track group.label) {
+      @for (group of groups(); track group.labelKey) {
         <div class="activity-group">
           <div class="activity-group__header">
-            <span class="activity-group__label">{{ group.label }}</span>
+            <span class="activity-group__label">{{ group.labelKey | translate }}</span>
             <span class="activity-group__count">{{ group.items.length }}</span>
           </div>
           @for (item of group.items; track item.id) {
@@ -69,9 +69,12 @@
                   }
                 </span>
               </div>
-              <span class="activity-row__amount" [class]="amountClass(item)">
-                {{ formatAmount(item) }}
-              </span>
+              <div class="activity-row__right">
+                <span class="activity-row__amount" [class]="amountClass(item)">
+                  {{ formatAmount(item) }}
+                </span>
+                <ft-channel-badge [origin]="item.origin" [showLabel]="false" iconSize="12px" />
+              </div>
             </div>
           }
         </div>

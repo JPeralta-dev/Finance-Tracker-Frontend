@@ -193,6 +193,68 @@
     color: var(--success);
     font-weight: 500;
   }
+
+  &__tooltip-trigger {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    margin-left: 4px;
+    color: var(--text-tertiary);
+    cursor: help;
+    transition: color var(--duration-fast) var(--ease-out);
+
+    &:hover,
+    &:focus-visible {
+      color: var(--text-secondary);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--accent-start);
+      outline-offset: 2px;
+      border-radius: var(--radius-xs);
+    }
+  }
+
+  &__tooltip {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    width: max-content;
+    max-width: 240px;
+    padding: 8px 12px;
+    font-size: 12px;
+    font-weight: 400;
+    font-family: var(--font-body);
+    color: var(--text-primary);
+    background: var(--bg-elevated);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-md);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity var(--duration-fast) var(--ease-out), visibility var(--duration-fast) var(--ease-out);
+    z-index: 10;
+    line-height: 1.4;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: var(--bg-elevated);
+    }
+  }
+
+  &__tooltip-trigger:hover &__tooltip,
+  &__tooltip-trigger:focus-visible &__tooltip {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
 }
 
 /* ── Skeleton lines ──────────────────────────────────────────────── */

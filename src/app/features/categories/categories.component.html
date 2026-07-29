@@ -14,7 +14,8 @@
   </div>
 
   <!-- Stats row -->
-  @if (!loading() && categories().length > 0) {
+      <h2 class="sr-only">{{ 'categories.stats.title' | translate }}</h2>
+      @if (!loading() && categories().length > 0) {
     <div class="stats-row" ftSubtleReveal="fade-up" [delay]="100">
       <div class="stat-item">
         <span class="stat-label">{{ 'categories.stats.total' | translate }}</span>
@@ -28,7 +29,7 @@
       <div class="stat-divider"></div>
       <div class="stat-item">
         <span class="stat-label">{{ 'categories.stats.total_expenses' | translate }}</span>
-        <span class="stat-value">{{ totalExpenses() | ftCurrency:'short' }}</span>
+        <span class="stat-value stat-value--currency">{{ totalExpenses() | ftCurrency:'short' }}</span>
       </div>
     </div>
   }
@@ -36,22 +37,27 @@
   <!-- Grid -->
   <div class="cat-grid" ftSubtleReveal="fade-up" [delay]="200">
     @if (loading()) {
-      @for (s of [1, 2, 3, 4, 5, 6, 7, 8, 9]; track s) {
-        <div class="cat-card skeleton-card">
-          <div class="sk-icon"></div>
-          <app-skeleton height="16px" width="80px" radius="5px" />
-          <app-skeleton height="24px" width="100px" radius="5px" />
-          <app-skeleton height="6px" width="100%" radius="99px" />
-        </div>
-      }
+      @for (s of skeletonArray; track s) { <div class="cat-card skeleton-card"><div class="sk-icon"></div><app-skeleton height="16px" width="80px" radius="5px" /><app-skeleton height="24px" width="100px" radius="5px" /><app-skeleton height="6px" width="100%" radius="99px" /></div> }
+    } @else if (error()) {
+      <div class="empty-wrap">
+        <ft-empty-state
+          icon="warning"
+          [title]="'categories.error.title' | translate"
+          [description]="'categories.error.desc' | translate"
+          [showActionBtn]="true"
+          [actionLabel]="'categories.error.retry' | translate"
+          (action)="retry()"
+        />
+      </div>
     } @else if (categories().length === 0) {
       <div class="empty-wrap">
         <ft-empty-state
-          icon="list"
+          icon="tag"
           [title]="'categories.empty.title' | translate"
           [description]="'categories.empty.desc' | translate"
-          actionRoute="/transactions/new"
-          [actionLabel]="('categories.empty.action' | translate)!"
+          [showActionBtn]="true"
+          [actionLabel]="'categories.empty.action' | translate"
+          (action)="openCreateForm()"
         />
       </div>
     } @else {
@@ -64,12 +70,12 @@
             </div>
             <div class="cat-actions">
               @if (!cat.isDefault) {
-                <button class="cat-action" (click)="openEditForm(cat)" [attr.aria-label]="'Edit'" title="Edit category" data-blendy-from="category-modal">
+                <button class="cat-action" (click)="openEditForm(cat)" [attr.aria-label]="'categories.edit' | translate" data-blendy-from="category-modal">
                   <span>
                     <ng-icon name="edit" size="0.875rem" />
                   </span>
                 </button>
-                <button class="cat-action cat-action--danger" (click)="deleteCategory(cat)" [attr.aria-label]="'Delete'" title="Delete category">
+                <button class="cat-action cat-action--danger" (click)="deleteCategory(cat)" [attr.aria-label]="'categories.delete' | translate">
                   <ng-icon name="close" size="0.875rem" />
                 </button>
               } @else {
@@ -86,7 +92,7 @@
           <div class="cat-bar">
             <div
               class="cat-fill"
-              [style.width.%]="percentage(cat.total)"
+              [style.--fill-pct]="percentage(cat.total) / 100"
               [style.background]="cat.color"
             ></div>
           </div>
@@ -107,10 +113,10 @@
 <!-- Confirm Delete Dialog -->
 <ft-confirm-dialog
   [visible]="confirmVisible()"
-  title="Delete category?"
-  [message]="'Transactions in this category will be moved to Other. This cannot be undone.'"
-  confirmLabel="Delete"
-  cancelLabel="Cancel"
+  [title]="'categories.delete_title' | translate"
+  [message]="'categories.delete_message' | translate"
+  [confirmLabel]="'common.delete' | translate"
+  [cancelLabel]="'common.cancel' | translate"
   (confirm)="onConfirmDelete()"
   (cancel)="onCancelDelete()"
 />

@@ -100,3 +100,10 @@
   from { opacity: 0.3; }
   to { opacity: 0.6; }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .story-skeleton__card {
+    animation: none;
+    opacity: 0.5;
+  }
+}

@@ -70,8 +70,9 @@
   }
 
   &__bar-value {
+    font-family: var(--font-mono);
     font-size: 13px;
-    font-weight: 600;
+    font-weight: 500;
     color: var(--text-secondary);
     text-align: right;
     font-variant-numeric: tabular-nums;
@@ -117,4 +118,11 @@
 @keyframes shimmer {
   from { opacity: 0.3; }
   to { opacity: 0.6; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .comparison-skeleton__card {
+    animation: none;
+    opacity: 0.5;
+  }
 }

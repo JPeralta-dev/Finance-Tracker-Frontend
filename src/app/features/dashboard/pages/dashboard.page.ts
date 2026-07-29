@@ -22,6 +22,7 @@ import { DateRangeService } from '../../../core/services/date-range.service';
 import { AiInsightsCardComponent } from '../components/ai-insights-card/ai-insights-card.component';
 import { GoalsWidgetComponent } from '../components/goals-widget/goals-widget.component';
 import { PocketProgressWidget } from '../widgets/pocket-progress.widget';
+import { ChannelDistributionWidgetComponent } from '../widgets/channel-distribution-widget.component';
 import { FtReferralWidgetComponent } from '../../referral/components/referral-widget.component';
 import { IconComponent } from '../../../shared/icons/icon.component';
 import type { EChartsOption } from 'echarts';
@@ -67,6 +68,7 @@ class ChartColorCache {
     AiInsightsCardComponent,
     GoalsWidgetComponent,
     PocketProgressWidget,
+    ChannelDistributionWidgetComponent,
     FtReferralWidgetComponent,
     IconComponent,
   ],
