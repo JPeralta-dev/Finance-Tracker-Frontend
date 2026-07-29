@@ -547,6 +547,7 @@
     "savingsRate": "Taux d'Épargne",
     "dailySpending": "Dépenses Quotidiennes",
     "thisWeek": "Cette semaine",
+    "currentWeekNote": "Affiche toujours la semaine en cours",
     "days": {
       "mon": "Lun",
       "tue": "Mar",

@@ -48,7 +48,7 @@
     height: 26px;
     width: 140px;
     background: var(--bg-elevated);
-    border-radius: 6px;
+    border-radius: var(--radius-sm);
     animation: shimmer 1.5s ease-in-out infinite alternate;
   }
 

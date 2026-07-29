@@ -15,13 +15,14 @@
       [class.trend--up]="trendDirection() === 'up'"
       [class.trend--down]="trendDirection() === 'down'"
       [class.trend--neutral]="trendDirection() === 'neutral'"
+      role="status"
     >
       @if (trendDirection() === 'up') {
-        <ng-icon name="trendUp" size="0.8rem" />
+        <ng-icon name="trendUp" size="0.8rem" aria-hidden="true" />
       } @else if (trendDirection() === 'down') {
-        <ng-icon name="trendDown" size="0.8rem" />
+        <ng-icon name="trendDown" size="0.8rem" aria-hidden="true" />
       }
-      {{ absTrend() }}%
+      {{ trendDisplay() }}
     </span>
     @if (data().chart && data().chart!.length > 0) {
       <div class="kpi-card__micro-chart">

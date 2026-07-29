@@ -58,7 +58,7 @@
 
   &__value {
     font-family: var(--font-mono);
-    font-size: 26px;
+    font-size: clamp(20px, 4vw, 26px);
     font-weight: 500;
     color: var(--text-primary);
     letter-spacing: -0.01em;

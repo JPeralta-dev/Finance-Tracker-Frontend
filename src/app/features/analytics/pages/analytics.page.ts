@@ -474,6 +474,16 @@ export class AnalyticsPage implements OnInit {
   readonly isNewUser = computed(() => this.store.isNewUser());
 
   readonly monthOpen = signal(false);
+  readonly dailyChartSubtitle = computed<string>(() => {
+    const period = this.store.filters().period;
+    const thisWeek = this.i18n.translate('analytics.thisWeek');
+    // For periods longer than 1 month, clarify that daily spending is always current week
+    if (period === '90d' || period === '6m' || period === '1y' || period === 'custom') {
+      return thisWeek + ' · ' + this.i18n.translate('analytics.currentWeekNote');
+    }
+    return thisWeek;
+  });
+
   readonly showCustomDates = signal(false);
 
   /** Show content layout whenever data is loaded — even with zero values */

@@ -645,6 +645,7 @@
     "expenseBreakdown": "Desglose de Gastos",
     "dailySpending": "Gastos por Día",
     "thisWeek": "Esta semana",
+    "currentWeekNote": "Siempre muestra la semana actual",
     "days": {
       "mon": "Lun",
       "tue": "Mar",

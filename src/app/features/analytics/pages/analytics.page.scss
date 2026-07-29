@@ -41,13 +41,13 @@
 
   &__heading {
     font-family: var(--font-display);
-    font-size: 28px;
+    font-size: clamp(24px, 5vw, 32px);
     font-weight: 700;
     color: var(--text-primary);
     margin: 0;
     letter-spacing: -0.02em;
 
-    @include at-md { font-size: 32px; }
+    @include at-md { font-size: clamp(24px, 5vw, 32px); }
   }
 
   &__subtitle {
@@ -93,15 +93,15 @@
     color: var(--text-primary);
     background: var(--bg-tertiary);
     border: 1px solid var(--glass-border);
-    border-radius: var(--radius-xs, 6px);
+    border-radius: var(--radius-xs, 4px);
     color-scheme: dark;
     outline: none;
     transition: border-color var(--duration-fast) var(--ease-out);
-    max-width: 140px;
+    max-width: 160px;
 
     &:focus {
       border-color: var(--accent-start);
-      box-shadow: 0 0 0 2px rgba(157, 80, 187, 0.15);
+      box-shadow: 0 0 0 2px var(--accent-glow);
     }
 
     &::-webkit-calendar-picker-indicator {
@@ -524,7 +524,7 @@
 
   &:hover {
     background: var(--bg-secondary, #1D1426);
-    border-color: var(--accent-primary, #9D50BB);
+    border-color: var(--accent-start);
   }
 }
 
@@ -579,7 +579,7 @@
     transition: all var(--duration-fast) var(--ease-out);
 
     &:hover {
-      box-shadow: 0 0 24px rgba(157, 80, 187, 0.35);
+      box-shadow: 0 0 24px var(--accent-glow);
       transform: translateY(-1px);
     }
   }

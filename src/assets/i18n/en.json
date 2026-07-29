@@ -645,6 +645,7 @@
     "expenseBreakdown": "Expense Breakdown",
     "dailySpending": "Daily Spending",
     "thisWeek": "This week",
+    "currentWeekNote": "Always shows the current week",
     "days": {
       "mon": "Mon",
       "tue": "Tue",

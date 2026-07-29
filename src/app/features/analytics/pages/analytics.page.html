@@ -208,7 +208,7 @@
         <div class="analytics-charts-row__daily" ftSubtleReveal="fade-up" [delay]="200">
           <ft-analytics-chart-card
             [title]="'analytics.dailySpending' | translate"
-            [subtitle]="'analytics.thisWeek' | translate"
+            [subtitle]="dailyChartSubtitle()"
             height="320px"
           >
             <ft-echart
