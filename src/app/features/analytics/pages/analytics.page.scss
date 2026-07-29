@@ -27,6 +27,7 @@
   flex-direction: column;
   gap: 16px;
   align-items: flex-start;
+  padding: 16px 0 8px;
 
   @include at-md {
     flex-direction: row;

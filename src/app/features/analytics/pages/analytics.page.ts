@@ -37,7 +37,7 @@ import { TranslatePipe } from '../../../core/pipes/translate.pipe';
 import { TranslationService } from '../../../core/services/translation.service';
 import { CurrencyService } from '../../../core/services/currency.service';
 import { ToastService } from '../../../core/services/toast.service';
-import { AnalyticsApiService, AnalyticsSummary, MonthlyTrend, CategoryBreakdown, DailySpending, AnalyticsInsight, AnalyticsTransaction, BankInfo, DateRange } from '../services/analytics-api.service';
+import { AnalyticsApiService, AnalyticsSummary, MonthlyTrend, CategoryBreakdown, DailySpending, AnalyticsInsight, AnalyticsTransaction, BankInfo, DateRange, HourlyActivityResponse, WeeklyPatternsResponse } from '../services/analytics-api.service';
 import { AnalyticsStore } from '../services/analytics.store';
 import { ICONS } from '../../../shared/icons/icon-registry';
 import { DateRangeService } from '../../../core/services/date-range.service';
@@ -424,16 +424,16 @@ export class AnalyticsPage implements OnInit {
 
   // ─── Hourly Activity Chart ──────────────────────────────────────────────
 
-  private readonly _hourlyData = signal<{ data: { hour: number; income: number; expenses: number }[] } | null>(null);
+  private readonly _hourlyData = signal<HourlyActivityResponse | null>(null);
   readonly hourlyData = this._hourlyData.asReadonly();
 
   readonly hourlyChartOptions = computed<EChartsOption | undefined>(() => {
     const data = this._hourlyData();
-    if (!data || !data.data || data.data.length === 0) return undefined;
+    if (!data || !data.hours || data.hours.length === 0) return undefined;
 
-    const hours = data.data.map(h => h.hour);
-    const incomeData = data.data.map(h => h.income);
-    const expenseData = data.data.map(h => h.expenses);
+    const hours = data.hours.map(h => h.hour);
+    const incomeData = data.hours.map(h => h.income);
+    const expenseData = data.hours.map(h => h.expenses);
     const currencySymbol = this.currencyService.currencyConfig().symbol;
 
     return this.themeMapper.buildHourlyBarOption(hours, incomeData, expenseData, currencySymbol);
@@ -441,21 +441,23 @@ export class AnalyticsPage implements OnInit {
 
   // ─── Weekly Patterns Chart (with averages) ──────────────────────────────
 
-  private readonly _weeklyPatterns = signal<{ patterns: { weekday: number; weekdayLabel: string; category: string; averageAmount: number; count: number }[] } | null>(null);
+  private readonly _weeklyPatterns = signal<WeeklyPatternsResponse | null>(null);
   readonly weeklyPatterns = this._weeklyPatterns.asReadonly();
 
   readonly weeklyPatternsChartOptions = computed<EChartsOption | undefined>(() => {
     const data = this._weeklyPatterns();
     if (!data || !data.patterns || data.patterns.length === 0) return undefined;
 
-    // Group by weekday label, sum averages across categories
-    const dayOrder = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    // Map dayOfWeek (0=Sun, 1=Mon, ..., 6=Sat) to labels and sum averages
+    const DAY_LABELS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     const dayMap = new Map<string, number>();
     for (const p of data.patterns) {
-      const current = dayMap.get(p.weekdayLabel) ?? 0;
-      dayMap.set(p.weekdayLabel, current + p.averageAmount);
+      const label = DAY_LABELS[p.dayOfWeek] ?? 'Unknown';
+      const current = dayMap.get(label) ?? 0;
+      dayMap.set(label, current + p.average);
     }
 
+    const dayOrder = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
     const labels = dayOrder.map(d => this.i18n.translate(DAY_KEY_MAP[d] ?? d));
     const values = dayOrder.map(d => dayMap.get(d) ?? 0);
 
@@ -729,7 +731,7 @@ export class AnalyticsPage implements OnInit {
     }).subscribe({
       next: ({ hourlyActivity, weeklyPatterns }) => {
         // Validate response shape before setting signals (defense against malformed responses)
-        if (hourlyActivity && Array.isArray(hourlyActivity.data)) {
+        if (hourlyActivity && Array.isArray(hourlyActivity.hours)) {
           this._hourlyData.set(hourlyActivity);
         } else {
           this._hourlyData.set(null);

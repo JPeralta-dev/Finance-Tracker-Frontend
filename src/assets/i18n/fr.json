@@ -218,6 +218,13 @@
       "emptyText": "Vous n'avez pas encore de pockets. Créez votre premier pocket pour organiser votre budget.",
       "emptyCta": "Créer un pocket",
       "errorText": "Nous n'avons pas pu charger vos pockets. Veuillez réessayer."
+    },
+    "savingsRateTooltip": "Pourcentage de vos revenus que vous épargnez ce mois-ci",
+    "activity": {
+      "today": "Aujourd'hui",
+      "yesterday": "Hier",
+      "thisWeek": "Cette semaine",
+      "earlier": "Plus tôt"
     }
   },
   "insights": {

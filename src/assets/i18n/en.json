@@ -389,6 +389,13 @@
       "emptyText": "You don't have any pockets yet. Create your first pocket to organize your budget.",
       "emptyCta": "Create first pocket",
       "errorText": "We couldn't load your pockets. Please try again."
+    },
+    "savingsRateTooltip": "Percentage of your income you're saving this month",
+    "activity": {
+      "today": "Today",
+      "yesterday": "Yesterday",
+      "thisWeek": "This week",
+      "earlier": "Earlier"
     }
   },
   "insights": {
@@ -992,6 +999,21 @@
     "new": "Add new bank",
     "empty": {
       "search": "No banks match your search"
+    }
+  },
+  "channels": {
+    "whatsapp": "WhatsApp",
+    "telegram": "Telegram",
+    "gmail": "Gmail",
+    "manual": "Manual",
+    "from": "From {{ channel }}",
+    "dashboard": {
+      "title": "Channels",
+      "transactions": "transactions",
+      "emptyTitle": "No channel transactions",
+      "emptyDesc": "Record your first transaction to see channel distribution",
+      "errorTitle": "Error loading channels",
+      "errorDesc": "We couldn't load the channel distribution. Try again."
     }
   }
 }

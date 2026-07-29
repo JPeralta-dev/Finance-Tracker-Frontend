@@ -389,6 +389,13 @@
       "emptyText": "Todavía no tenés pockets. Creá tu primer pocket para organizar tu presupuesto.",
       "emptyCta": "Crear primer pocket",
       "errorText": "No pudimos cargar tus pockets. Intentá de nuevo."
+    },
+    "savingsRateTooltip": "Porcentaje de tus ingresos que estás ahorrando este mes",
+    "activity": {
+      "today": "Hoy",
+      "yesterday": "Ayer",
+      "thisWeek": "Esta semana",
+      "earlier": "Anterior"
     }
   },
   "insights": {
@@ -704,7 +711,6 @@
       "category": "Categoría",
       "allCats": "Todas las categorías",
       "reset": "Resetear",
-      "removeCategory": "Quitar filtro {{name}}",
       "removeCategory": "Quitar filtro {{name}}"
     },
     "insight": {
@@ -993,6 +999,21 @@
     "new": "Agregar nuevo banco",
     "empty": {
       "search": "Ningún banco coincide con tu búsqueda"
+    }
+  },
+  "channels": {
+    "whatsapp": "WhatsApp",
+    "telegram": "Telegram",
+    "gmail": "Gmail",
+    "manual": "Manual",
+    "from": "De {{ channel }}",
+    "dashboard": {
+      "title": "Canales",
+      "transactions": "transacciones",
+      "emptyTitle": "Sin transacciones por canal",
+      "emptyDesc": "Registra tu primera transacción para ver la distribución por canal",
+      "errorTitle": "Error al cargar canales",
+      "errorDesc": "No pudimos cargar la distribución por canal. Intentá de nuevo."
     }
   }
 }
