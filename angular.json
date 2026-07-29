@@ -86,7 +86,10 @@
             "karmaConfig": "karma.conf.js",
             "styles": ["src/styles.scss"],
             "scripts": [],
-            "assets": ["src/assets"]
+            "assets": ["src/assets"],
+            "stylePreprocessorOptions": {
+              "includePaths": ["src/styles"]
+            }
           }
         }
       }

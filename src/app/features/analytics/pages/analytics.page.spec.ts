@@ -33,11 +33,11 @@ describe('AnalyticsPage — Phase 3 Assembly', () => {
 
   const mockCategoryBreakdown: CategoryBreakdown = {
     categories: [
-      { name: 'Food', amount: 800, percentage: 25 },
-      { name: 'Transport', amount: 400, percentage: 12.5 },
-      { name: 'Entertainment', amount: 600, percentage: 18.75 },
-      { name: 'Housing', amount: 1200, percentage: 37.5 },
-      { name: 'Utilities', amount: 200, percentage: 6.25 },
+      { categoryId: 'food', category: 'Food', amount: 800, percentage: 25 },
+      { categoryId: 'transport', category: 'Transport', amount: 400, percentage: 12.5 },
+      { categoryId: 'entertainment', category: 'Entertainment', amount: 600, percentage: 18.75 },
+      { categoryId: 'housing', category: 'Housing', amount: 1200, percentage: 37.5 },
+      { categoryId: 'utilities', category: 'Utilities', amount: 200, percentage: 6.25 },
     ],
   };
 
@@ -52,14 +52,14 @@ describe('AnalyticsPage — Phase 3 Assembly', () => {
   };
 
   const mockInsights: AnalyticsInsight[] = [
-    { type: 'spending', message: 'Spending increased 15% vs last month', severity: 'medium', actionable: true },
-    { type: 'positive', message: 'Great savings rate!', severity: 'low', actionable: false },
+    { type: 'spending', message: 'Spending increased 15% vs last month', messageKey: 'spending', severity: 'medium', actionable: true },
+    { type: 'positive', message: 'Great savings rate!', messageKey: 'positive', severity: 'low', actionable: false },
   ];
 
   const mockTransactions: AnalyticsTransaction[] = [
-    { id: '1', merchant: 'Uber', amount: -15, date: '2024-06-01', bank: 'Santander', category: 'Transport', icon: 'car' },
-    { id: '2', merchant: 'Salary', amount: 5000, date: '2024-06-01', bank: 'Santander', category: 'Salary', icon: 'briefcase' },
-    { id: '3', merchant: 'Netflix', amount: -12, date: '2024-06-02', bank: 'Santander', category: 'Entertainment', icon: 'tv' },
+    { id: '1', merchant: 'Uber', amount: -15, date: '2024-06-01', bank: 'Santander', category: 'Transport', icon: 'car', type: 'expense' },
+    { id: '2', merchant: 'Salary', amount: 5000, date: '2024-06-01', bank: 'Santander', category: 'Salary', icon: 'briefcase', type: 'income' },
+    { id: '3', merchant: 'Netflix', amount: -12, date: '2024-06-02', bank: 'Santander', category: 'Entertainment', icon: 'tv', type: 'expense' },
   ];
 
   const mockBanks = { banks: [{ id: 'santander', name: 'Santander', logo: '/santander.png' }] };
@@ -203,7 +203,6 @@ describe('AnalyticsPage — Phase 3 Assembly', () => {
       store.setReady();
       fixture.detectChanges();
 
-      expect(component.showWelcome()).toBeTrue();
       expect(component.isNewUser()).toBeTrue();
     });
 

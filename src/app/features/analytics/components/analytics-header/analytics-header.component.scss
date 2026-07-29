@@ -69,7 +69,7 @@
   &__period-btn {
     padding: 6px 14px;
     border: none;
-    border-radius: 6px;
+    border-radius: var(--radius-sm);
     font-size: 12px;
     font-weight: 500;
     color: var(--text-tertiary);
@@ -80,7 +80,7 @@
     &.active {
       color: var(--text-primary);
       background: var(--bg-elevated);
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      box-shadow: var(--shadow-sm);
     }
 
     &:hover:not(.active) {

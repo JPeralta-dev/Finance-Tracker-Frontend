@@ -63,7 +63,7 @@
 }
 
 .success-text {
-  color: var(--success, #22c55e);
+  color: var(--success, #06D6A0);
   font-size: 12px;
 }
 
@@ -71,7 +71,7 @@
   color: var(--text-secondary);
   font-size: 12px;
 
-  &.error { color: var(--danger, #ef4444); }
+  &.error { color: var(--danger, #FF6B6B); }
 }
 
 .loading-text { color: var(--text-secondary); font-size: 13px; }
