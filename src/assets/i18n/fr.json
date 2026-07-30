@@ -473,6 +473,45 @@
       "saved": "Préférence enregistrée"
     }
   },
+  "tour": {
+    "progress": "Étape {{current}} sur {{total}}",
+    "skipTour": "Passer le tour",
+    "previous": "Retour",
+    "next": "Suivant",
+    "finish": "Compris",
+    "startExploring": "Commencer à explorer",
+    "triggerCard": {
+      "title": "Nouveau par ici ?",
+      "description": "Un tour de 30 secondes de votre centre de commande financier.",
+      "start": "Me montrer",
+      "later": "Pas maintenant"
+    },
+    "steps": {
+      "welcome": {
+        "title": "Bienvenue sur Flowr",
+        "description": "Votre argent, parfaitement organisé. Ici, vous voyez votre situation financière complète — solde, revenus, dépenses, tout au même endroit."
+      },
+      "telegram": {
+        "title": "Enregistrez depuis n'importe où",
+        "description": "Connectez Telegram et enregistrez vos dépenses en envoyant simplement un message. Plus besoin d'ouvrir l'application à chaque fois.",
+        "cta": "Connecter Telegram"
+      },
+      "categories": {
+        "title": "Organisez à votre façon",
+        "description": "Les catégories vous montrent exactement où va votre argent. Alimentation, transport, abonnements — personnalisez-les selon votre vie.",
+        "cta": "Configurer les catégories"
+      },
+      "logExpense": {
+        "title": "Votre première dépense",
+        "description": "Appuyez sur le bouton ci-dessous et enregistrez quelque chose. Un café, les courses, cet achat en ligne. Flowr s'occupe du reste.",
+        "cta": "Enregistrer une dépense"
+      },
+      "done": {
+        "title": "Vous êtes prêt",
+        "description": "C'est l'essentiel de Flowr. Enregistrez depuis n'importe où, voyez tout ici. Allez-y — votre argent est entre de bonnes mains."
+      }
+    }
+  },
   "analytics": {
     "title": "Analytique",
     "subtitle": "Visualisez vos tendances financières et desgloses.",

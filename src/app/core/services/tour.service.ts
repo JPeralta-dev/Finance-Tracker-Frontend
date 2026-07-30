@@ -110,6 +110,8 @@ export class FtTourService {
     });
   }
 
+  private readonly POSTPONE_COOLDOWN_MS = 60 * 60 * 1000; // 1 hour
+
   // ── Public API ─────────────────────────────────────────────────
 
   /** Has the user completed or skipped the tour before? */
@@ -118,9 +120,42 @@ export class FtTourService {
     return s.status === 'completed' || s.status === 'skipped';
   }
 
-  /** Should the dashboard show a tour trigger card? */
+  /** Should the dashboard show a tour trigger card? (legacy — use shouldShowTriggerCard) */
   shouldPromptForTour(): boolean {
     return !this.hasFinishedTour();
+  }
+
+  /** Returns true when the trigger card should be visible (available but not auto-starting) */
+  shouldShowTriggerCard(): boolean {
+    const s = this._state();
+    if (s.status === 'completed' || s.status === 'skipped') return false;
+    if (s.status === 'in_progress') return false;
+    if (s.status === 'not_started') {
+      if (s.postponedAt) {
+        const elapsed = Date.now() - s.postponedAt;
+        if (elapsed >= this.POSTPONE_COOLDOWN_MS) return true;
+        return false;
+      }
+      return !this.shouldAutoStart();
+    }
+    return false;
+  }
+
+  /** Auto-start should happen ONLY for brand-new users (never seen, never postponed) */
+  shouldAutoStart(): boolean {
+    const s = this._state();
+    return s.status === 'not_started' && s.postponedAt === undefined;
+  }
+
+  /** Postpone the tour — shows trigger card again after cooldown */
+  postpone(): void {
+    const s = this._state();
+    this._state.set({
+      ...s,
+      postponedAt: Date.now(),
+      status: 'not_started',
+      updatedAt: Date.now(),
+    });
   }
 
   /**
@@ -146,6 +181,15 @@ export class FtTourService {
         step_id: this.steps[resumeStep]?.id,
       });
     }
+  }
+
+  syncStepIndex(index: number): void {
+    this._currentStepIndex.set(index);
+    this.updateStatus('in_progress');
+    this.analytics.trackEvent('onboarding_tour_step_viewed', {
+      step: (index + 1) as OnboardingStep,
+      step_id: this.steps[index]?.id,
+    });
   }
 
   stop(): void {
@@ -198,7 +242,7 @@ export class FtTourService {
 
   /** Reset state — used by the "Replay tour" button in settings. */
   resetTour(): void {
-    this._state.set({ ...DEFAULT_TOUR_STATE, updatedAt: Date.now() });
+    this._state.set({ ...DEFAULT_TOUR_STATE, updatedAt: Date.now(), postponedAt: undefined });
     this._currentStepIndex.set(0);
     this._isActive.set(false);
   }

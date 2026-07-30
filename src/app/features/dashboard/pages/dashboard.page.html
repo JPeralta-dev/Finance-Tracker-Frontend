@@ -16,7 +16,7 @@
       </div>
 
       <!-- ROW 0b: Tour trigger card (new users who haven't completed tour) -->
-      @if (tour.shouldPromptForTour()) {
+      @if (tour.shouldShowTriggerCard()) {
         <div class="dashboard-row dashboard-row--banner" ftSubtleReveal="fade-up" [delay]="35">
           <article class="tour-trigger-card" aria-labelledby="tour-trigger-title">
             <div class="tour-trigger-card__body">
@@ -98,7 +98,7 @@
       </div>
 
       <!-- ROW 2: Gastos Mensuales + Tasa de Ahorro -->
-      <div class="dashboard-row dashboard-row--stats" ftSubtleReveal="fade-up" [delay]="100">
+      <div class="dashboard-row dashboard-row--stats" ftSubtleReveal="fade-up" [delay]="100" data-tour="categories">
         <div class="stats-grid stats-grid--2col">
           @for (stat of stats().slice(2, 4); track stat.id) {
             <div class="stat-card-large">
@@ -184,7 +184,7 @@
       }
 
       <!-- ROW 4d: Channel Distribution Widget -->
-      <div class="dashboard-row dashboard-row--channels" ftSubtleReveal="fade-up" [delay]="170">
+      <div class="dashboard-row dashboard-row--channels" ftSubtleReveal="fade-up" [delay]="170" data-tour="telegram-connect">
         <ft-channel-distribution-widget />
       </div>
 

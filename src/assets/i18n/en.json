@@ -844,37 +844,37 @@
     "skipTour": "Skip tour",
     "previous": "Back",
     "next": "Next",
-    "finish": "Done",
+    "finish": "Got it",
     "startExploring": "Start exploring",
     "triggerCard": {
-      "title": "Take a quick tour?",
-      "description": "We'll show you the essentials in under a minute.",
-      "start": "Start tour",
-      "later": "Maybe later"
+      "title": "New around here?",
+      "description": "Take a 30-second tour of your financial command center.",
+      "start": "Show me around",
+      "later": "Not now"
     },
     "steps": {
       "welcome": {
-        "title": "Welcome to Flowr!",
-        "description": "Your money, perfectly organized. Here's what you can do from the main panel."
+        "title": "Welcome to Flowr",
+        "description": "Your money, perfectly organized. From here you see your full financial picture — balance, income, expenses, all in one place."
       },
       "telegram": {
-        "title": "Connect Telegram",
-        "description": "Log expenses by sending a message to our bot. No need to open the app.",
-        "cta": "Connect now"
+        "title": "Log from anywhere",
+        "description": "Connect Telegram and register expenses by just sending a message. No need to open the app every time.",
+        "cta": "Connect Telegram"
       },
       "categories": {
-        "title": "Create categories",
-        "description": "Customize how your spending is organized. Food, transport, fun — your call.",
-        "cta": "Create category"
+        "title": "Organize your way",
+        "description": "Categories let you see exactly where your money goes. Food, transport, subscriptions — customize them to match your life.",
+        "cta": "Set up categories"
       },
       "logExpense": {
-        "title": "Log your first expense",
-        "description": "One click, one expense logged. Flowr handles the rest.",
-        "cta": "Log expense"
+        "title": "Your first expense",
+        "description": "Tap the button below and log something. Coffee, groceries, that thing you bought online. Flowr handles the rest.",
+        "cta": "Log an expense"
       },
       "done": {
-        "title": "You're all set!",
-        "description": "You know the essentials. Start exploring and see what Flowr can do for you."
+        "title": "You're all set",
+        "description": "That's the core of Flowr. Log from anywhere, see everything here. Go ahead — your money's in good hands."
       }
     }
   },
