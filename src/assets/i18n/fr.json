@@ -507,8 +507,9 @@
         "cta": "Enregistrer une dépense"
       },
       "done": {
-        "title": "Vous êtes prêt",
-        "description": "C'est l'essentiel de Flowr. Enregistrez depuis n'importe où, voyez tout ici. Allez-y — votre argent est entre de bonnes mains."
+        "title": "✅ Vous êtes prêt",
+        "description": "C'est l'essentiel de Flowr. Enregistrez de n'importe où, voyez tout ici — et ce bouton vous emmène directement à votre première dépense.",
+        "cta": "Enregistrer ma première dépense"
       }
     }
   },

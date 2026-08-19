@@ -873,8 +873,9 @@
         "cta": "Registrar un gasto"
       },
       "done": {
-        "title": "Ya estás listo",
-        "description": "Eso es lo esencial de Flowr. Registrá desde cualquier lado, ve todo acá. Dale para adelante — tu plata está en buenas manos."
+        "title": "✅ Ya estás listo",
+        "description": "Eso es lo esencial de Flowr. Registrá desde cualquier lado, ve todo acá — y este botón te lleva directo a tu primer gasto.",
+        "cta": "Registrar mi primer gasto"
       }
     }
   },

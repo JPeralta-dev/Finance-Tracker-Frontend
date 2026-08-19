@@ -873,8 +873,9 @@
         "cta": "Log an expense"
       },
       "done": {
-        "title": "You're all set",
-        "description": "That's the core of Flowr. Log from anywhere, see everything here. Go ahead — your money's in good hands."
+        "title": "✅ You're all set",
+        "description": "That's the core of Flowr. Log from anywhere, see everything here — and this button takes you straight to your first expense.",
+        "cta": "Log my first expense"
       }
     }
   },

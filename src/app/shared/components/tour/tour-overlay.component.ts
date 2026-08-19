@@ -7,6 +7,7 @@ import {
   NgZone,
   DestroyRef,
 } from '@angular/core';
+import { Router } from '@angular/router';
 import { driver, type Driver, type DriveStep } from 'driver.js';
 import 'driver.js/dist/driver.css';
 
@@ -127,8 +128,8 @@ import type { TourStep } from '../../models/tour.types';
       border-radius: var(--radius-md, 12px) !important;
       box-shadow:
         0 0 0 2px var(--accent-start),
-        0 0 0 6px rgba(217, 70, 239, 0.3),
-        0 0 30px rgba(217, 70, 239, 0.15) !important;
+        0 0 0 6px var(--tour-pulse-glow-mid),
+        0 0 30px var(--tour-pulse-glow-dim) !important;
       animation: driver-pulse 2.4s ease-in-out infinite;
     }
 
@@ -136,19 +137,19 @@ import type { TourStep } from '../../models/tour.types';
       0%, 100% {
         box-shadow:
           0 0 0 2px var(--accent-start),
-          0 0 0 6px rgba(217, 70, 239, 0.3),
-          0 0 30px rgba(217, 70, 239, 0.15);
+          0 0 0 6px var(--tour-pulse-glow-mid),
+          0 0 30px var(--tour-pulse-glow-dim);
       }
       50% {
         box-shadow:
           0 0 0 2px var(--accent-start),
-          0 0 0 12px rgba(217, 70, 239, 0.5),
-          0 0 40px rgba(217, 70, 239, 0.25);
+          0 0 0 12px var(--tour-pulse-glow-strong),
+          0 0 40px var(--tour-pulse-glow-bright);
       }
     }
 
     .driver-overlay {
-      background: rgba(18, 11, 26, 0.85);
+      background: var(--tour-overlay-bg);
     }
 
     @media (max-width: 640px) {
@@ -181,6 +182,7 @@ export class FtTourOverlayComponent {
   protected readonly tour = inject(FtTourService);
   private readonly translation = inject(TranslationService);
   private readonly zone = inject(NgZone);
+  private readonly router = inject(Router);
   private readonly destroyRef = inject(DestroyRef);
 
   private driverInstance: Driver | null = null;
@@ -204,13 +206,25 @@ export class FtTourOverlayComponent {
     const steps = this.mapSteps();
     const totalSteps = steps.length;
 
+    const firstStep = this.tour.steps[startIndex];
+    if (firstStep && firstStep.targetSelector !== 'body') {
+      const el = document.querySelector(firstStep.targetSelector);
+      if (!el) {
+        console.warn(
+          `[FtTourOverlay] Target "${firstStep.targetSelector}" not found — skipping tour`
+        );
+        this.zone.run(() => this.tour.skip());
+        return;
+      }
+    }
+
     this.driverInstance = driver({
       showProgress: true,
       progressText: '{{current}} of {{total}}',
       steps,
-      stagePadding: 10,
+      stagePadding: 8,
       popoverClass: 'ft-driver-popover',
-      overlayColor: 'rgba(18, 11, 26, 0.85)',
+      overlayColor: 'var(--tour-overlay-bg)',
       smoothScroll: true,
       allowClose: true,
       animate: true,
@@ -239,14 +253,28 @@ export class FtTourOverlayComponent {
 
       onNextClick: (_element, _step, _opts) => {
         const currentIdx = this.tour.currentStepIndex();
-        if (currentIdx >= totalSteps - 1) {
+        const step = this.tour.steps[currentIdx];
+        const isLast = currentIdx >= totalSteps - 1;
+
+        if (step.actionRoute || isLast) {
           this.driverInstance?.destroy();
-          this.zone.run(() => this.tour.complete());
+          this.zone.run(() => {
+            this.tour.complete();
+            if (step.actionRoute) {
+              this.router.navigateByUrl(step.actionRoute);
+            }
+          });
         }
       },
     });
 
-    this.driverInstance.drive(startIndex);
+    try {
+      this.driverInstance.drive(startIndex);
+    } catch (err) {
+      console.warn('[FtTourOverlay] Driver failed to start — skipping tour', err);
+      this.zone.run(() => this.tour.skip());
+      this.driverInstance = null;
+    }
   }
 
   private destroyDriver(): void {
@@ -261,6 +289,7 @@ export class FtTourOverlayComponent {
     const isLast = (index: number) => index === this.tour.steps.length - 1;
 
     return this.tour.steps.map((step: TourStep, index: number): DriveStep => {
+      const isLastStep = isLast(index);
       return {
         element: step.targetSelector,
         popover: {
@@ -268,7 +297,9 @@ export class FtTourOverlayComponent {
           description: this.translation.translate(step.descriptionKey),
           side: (step.tooltipPosition === 'auto' ? undefined : step.tooltipPosition),
           showButtons: ['next', 'previous', 'close'],
-          doneBtnText: this.translation.translate('tour.finish'),
+          doneBtnText: (isLastStep && step.actionKey)
+            ? this.translation.translate(step.actionKey)
+            : this.translation.translate('tour.finish'),
           nextBtnText: step.actionKey
             ? this.translation.translate(step.actionKey)
             : this.translation.translate('tour.next'),

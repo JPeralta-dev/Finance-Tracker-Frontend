@@ -75,6 +75,8 @@ export const ONBOARDING_TOUR_STEPS: TourStep[] = [
     targetSelector: 'body',
     tooltipPosition: 'auto',
     highlightPadding: 0,
+    actionKey: 'tour.steps.done.cta',
+    actionRoute: '/transactions/new',
   },
 ];
 
