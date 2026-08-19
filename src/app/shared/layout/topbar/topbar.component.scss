@@ -74,13 +74,6 @@
 
   :host-context(html.light) &__logo-mark--light {
     display: block;
-    width: 86px;
-    height: 32px;
-    object-fit: contain;
-  }
-
-  :host-context(html.light) &__logo-mark--light + &__logo-text {
-    display: none;
   }
 
   &__logo-icon {

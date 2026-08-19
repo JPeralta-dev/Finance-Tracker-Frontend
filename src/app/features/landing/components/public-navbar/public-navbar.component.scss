@@ -51,13 +51,6 @@
 
 :host-context(html.light) .public-navbar__logo-mark--light {
   display: block;
-  width: 86px;
-  height: 32px;
-  object-fit: contain;
-}
-
-:host-context(html.light) .public-navbar__logo-mark--light + .public-navbar__logo-text {
-  display: none;
 }
 
 .public-navbar__actions {
