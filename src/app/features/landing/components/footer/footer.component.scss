@@ -87,6 +87,14 @@ ft-footer {
   gap: 8px;
 }
 
+.footer__logo-mark {
+  width: 32px;
+  height: 32px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 0 18px rgba(124, 58, 237, 0.28);
+}
+
 .footer__logo ng-icon {
   color: var(--accent-start);
 }

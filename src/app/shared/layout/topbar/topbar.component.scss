@@ -56,6 +56,14 @@
     }
   }
 
+  &__logo-mark {
+    width: 28px;
+    height: 28px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 0 18px rgba(124, 58, 237, 0.28);
+  }
+
   &__logo-icon {
     display: flex;
     align-items: center;
