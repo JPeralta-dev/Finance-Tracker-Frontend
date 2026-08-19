@@ -64,6 +64,25 @@
     box-shadow: 0 0 18px rgba(124, 58, 237, 0.28);
   }
 
+  &__logo-mark--light {
+    display: none;
+  }
+
+  :host-context(html.light) &__logo-mark--dark {
+    display: none;
+  }
+
+  :host-context(html.light) &__logo-mark--light {
+    display: block;
+    width: 86px;
+    height: 32px;
+    object-fit: contain;
+  }
+
+  :host-context(html.light) &__logo-mark--light + &__logo-text {
+    display: none;
+  }
+
   &__logo-icon {
     display: flex;
     align-items: center;

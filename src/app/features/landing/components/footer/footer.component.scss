@@ -95,6 +95,25 @@ ft-footer {
   box-shadow: 0 0 18px rgba(124, 58, 237, 0.28);
 }
 
+.footer__logo-mark--light {
+  display: none;
+}
+
+:host-context(html.light) .footer__logo-mark--dark {
+  display: none;
+}
+
+:host-context(html.light) .footer__logo-mark--light {
+  display: block;
+  width: 86px;
+  height: 32px;
+  object-fit: contain;
+}
+
+:host-context(html.light) .footer__logo-mark--light + .footer__logo-text {
+  display: none;
+}
+
 .footer__logo ng-icon {
   color: var(--accent-start);
 }

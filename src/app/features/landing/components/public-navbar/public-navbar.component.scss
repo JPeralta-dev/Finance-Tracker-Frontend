@@ -41,6 +41,25 @@
   box-shadow: 0 0 18px rgba(124, 58, 237, 0.28);
 }
 
+.public-navbar__logo-mark--light {
+  display: none;
+}
+
+:host-context(html.light) .public-navbar__logo-mark--dark {
+  display: none;
+}
+
+:host-context(html.light) .public-navbar__logo-mark--light {
+  display: block;
+  width: 86px;
+  height: 32px;
+  object-fit: contain;
+}
+
+:host-context(html.light) .public-navbar__logo-mark--light + .public-navbar__logo-text {
+  display: none;
+}
+
 .public-navbar__actions {
   display: flex;
   align-items: center;
