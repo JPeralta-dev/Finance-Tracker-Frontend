@@ -7,14 +7,19 @@
       <h2 class="section-title">{{ 'settings.profile.title' | translate }}</h2>
     </div>
   </div>
-  <div class="profile-details">
-    <div class="profile-field">
-      <span class="field-label">{{ 'settings.profile.display_name' | translate }}</span>
-      <span class="field-value">{{ displayName() }}</span>
+
+  @if (profileError()) {
+    <p class="profile-error">{{ profileError() }}</p>
+  } @else {
+    <div class="profile-details">
+      <div class="profile-field">
+        <span class="field-label">{{ 'settings.profile.display_name' | translate }}</span>
+        <span class="field-value">{{ displayName() }}</span>
+      </div>
+      <div class="profile-field">
+        <span class="field-label">{{ 'settings.profile.email' | translate }}</span>
+        <span class="field-value">{{ email() }}</span>
+      </div>
     </div>
-    <div class="profile-field">
-      <span class="field-label">{{ 'settings.profile.email' | translate }}</span>
-      <span class="field-value">{{ email() }}</span>
-    </div>
-  </div>
+  }
 </div>

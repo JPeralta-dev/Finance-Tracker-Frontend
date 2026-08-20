@@ -4,6 +4,7 @@
     <span class="tx-filters__search-icon"></span>
     <input
       type="text"
+      aria-label="Search transactions"
       [placeholder]="'transactions.filters.search' | translate"
       class="tx-filters__input"
       (input)="onSearch($event)"
@@ -15,6 +16,7 @@
     <button
       class="tx-filters__pill"
       [class.tx-filters__pill--active]="activeFilter() === 'all'"
+      [attr.aria-pressed]="activeFilter() === 'all'"
       (click)="onFilterChange('all')"
     >
       {{ 'transactions.filters.all' | translate }}
@@ -22,6 +24,7 @@
     <button
       class="tx-filters__pill"
       [class.tx-filters__pill--active]="activeFilter() === 'income'"
+      [attr.aria-pressed]="activeFilter() === 'income'"
       (click)="onFilterChange('income')"
     >
       {{ 'transactions.filters.income' | translate }}
@@ -29,6 +32,7 @@
     <button
       class="tx-filters__pill"
       [class.tx-filters__pill--active]="activeFilter() === 'expense'"
+      [attr.aria-pressed]="activeFilter() === 'expense'"
       (click)="onFilterChange('expense')"
     >
       {{ 'transactions.filters.expenses' | translate }}
@@ -40,26 +44,35 @@
     <button
       class="tx-filters__sort-btn"
       [class.tx-filters__sort-btn--active]="activeSort() === 'date'"
+      [attr.aria-sort]="activeSort() === 'date' ? (activeDirection() === 'desc' ? 'descending' : 'ascending') : 'none'"
       (click)="onSortChange('date')"
     >
       {{ 'transactions.filters.date' | translate }}
-      <span class="tx-filters__sort-icon">{{ getSortIcon('date') }}</span>
+      @if (activeSort() === 'date') {
+        <ng-icon [name]="activeDirection() === 'desc' ? 'chevronDown' : 'chevronUp'" size="0.625rem" />
+      }
     </button>
     <button
       class="tx-filters__sort-btn"
       [class.tx-filters__sort-btn--active]="activeSort() === 'amount'"
+      [attr.aria-sort]="activeSort() === 'amount' ? (activeDirection() === 'desc' ? 'descending' : 'ascending') : 'none'"
       (click)="onSortChange('amount')"
     >
       {{ 'transactions.filters.amount' | translate }}
-      <span class="tx-filters__sort-icon">{{ getSortIcon('amount') }}</span>
+      @if (activeSort() === 'amount') {
+        <ng-icon [name]="activeDirection() === 'desc' ? 'chevronDown' : 'chevronUp'" size="0.625rem" />
+      }
     </button>
     <button
       class="tx-filters__sort-btn"
       [class.tx-filters__sort-btn--active]="activeSort() === 'category'"
+      [attr.aria-sort]="activeSort() === 'category' ? (activeDirection() === 'desc' ? 'descending' : 'ascending') : 'none'"
       (click)="onSortChange('category')"
     >
       {{ 'transactions.filters.category' | translate }}
-      <span class="tx-filters__sort-icon">{{ getSortIcon('category') }}</span>
+      @if (activeSort() === 'category') {
+        <ng-icon [name]="activeDirection() === 'desc' ? 'chevronDown' : 'chevronUp'" size="0.625rem" />
+      }
     </button>
   </div>
 </div>

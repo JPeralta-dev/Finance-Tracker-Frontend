@@ -30,19 +30,27 @@
       </div>
       <div class="transactions-page__actions">
         <div class="month-selector">
-          <button class="month-selector__btn" (click)="toggleMonthDropdown()" type="button">
+          <button
+            class="month-selector__btn"
+            (click)="toggleMonthDropdown()"
+            type="button"
+            [attr.aria-expanded]="monthOpen()"
+            aria-haspopup="listbox"
+          >
             <ng-icon name="calendar" size="1rem" />
             <span>{{ dateRange.currentMonthLabel() }}</span>
             <ng-icon name="chevronDown" size="0.75rem" />
           </button>
           @if (monthOpen()) {
-            <div class="month-selector__dropdown" (clickOutside)="monthOpen.set(false)">
+            <div class="month-selector__dropdown" (clickOutside)="monthOpen.set(false)" role="listbox">
               @for (month of dateRange.availableMonths(); track month.start) {
                 <button
                   class="month-selector__option"
                   [class.month-selector__option--active]="dateRange.startDate() === month.start"
                   (click)="onMonthSelect(month)"
                   type="button"
+                  role="option"
+                  [attr.aria-selected]="dateRange.startDate() === month.start"
                 >
                   {{ month.label }}
                 </button>
@@ -76,19 +84,27 @@
       <div class="transactions-page__actions">
         <!-- Month/year dropdown -->
         <div class="month-selector">
-          <button class="month-selector__btn" (click)="toggleMonthDropdown()" type="button">
+          <button
+            class="month-selector__btn"
+            (click)="toggleMonthDropdown()"
+            type="button"
+            [attr.aria-expanded]="monthOpen()"
+            aria-haspopup="listbox"
+          >
             <ng-icon name="calendar" size="1rem" />
             <span>{{ dateRange.currentMonthLabel() }}</span>
             <ng-icon name="chevronDown" size="0.75rem" />
           </button>
           @if (monthOpen()) {
-            <div class="month-selector__dropdown" (clickOutside)="monthOpen.set(false)">
+            <div class="month-selector__dropdown" (clickOutside)="monthOpen.set(false)" role="listbox">
               @for (month of dateRange.availableMonths(); track month.start) {
                 <button
                   class="month-selector__option"
                   [class.month-selector__option--active]="dateRange.startDate() === month.start"
                   (click)="onMonthSelect(month)"
                   type="button"
+                  role="option"
+                  [attr.aria-selected]="dateRange.startDate() === month.start"
                 >
                   {{ month.label }}
                 </button>
@@ -107,10 +123,22 @@
       <ft-transaction-table
         [items]="transactions()"
         [loading]="false"
+        [deleting]="bulkDeleting()"
         [pageSize]="10"
         (ftSelect)="onSelect($event)"
         (ftBulkDelete)="onBulkDelete($event)"
       />
     </div>
+
+    <!-- Bulk delete confirmation dialog -->
+    <ft-confirm-dialog
+      [visible]="showDeleteConfirm()"
+      [title]="'transactions.deleteConfirmTitle' | translate"
+      [message]="deleteConfirmMessage()"
+      [confirmLabel]="'common.delete' | translate"
+      [cancelLabel]="'common.cancel' | translate"
+      (confirm)="onConfirmDelete()"
+      (cancel)="onCancelDelete()"
+    />
   }
 </div>

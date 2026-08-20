@@ -18,6 +18,7 @@ interface LanguageOption {
 interface CurrencyOption {
   code: string;
   symbol: string;
+  displaySymbol: string;
   locale: string;
   decimals: number;
 }
@@ -44,8 +45,8 @@ export class PreferencesSectionComponent {
   ];
 
   readonly currencies: CurrencyOption[] = [
-    { code: 'USD', symbol: '$', locale: 'en-US', decimals: 2 },
-    { code: 'EUR', symbol: '€', locale: 'de-DE', decimals: 2 },
-    { code: 'COP', symbol: '$', locale: 'es-CO', decimals: 0 },
+    { code: 'USD', symbol: '$', displaySymbol: 'US$', locale: 'en-US', decimals: 2 },
+    { code: 'EUR', symbol: '€', displaySymbol: '€', locale: 'de-DE', decimals: 2 },
+    { code: 'COP', symbol: '$', displaySymbol: 'COP$', locale: 'es-CO', decimals: 0 },
   ];
 }

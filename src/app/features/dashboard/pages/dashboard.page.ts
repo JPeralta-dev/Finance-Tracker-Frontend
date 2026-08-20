@@ -1,9 +1,7 @@
-import { Component, signal, inject, OnInit, computed, Injectable, ChangeDetectionStrategy } from '@angular/core';
+import { Component, signal, inject, OnInit, AfterViewInit, computed, Injectable, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { catchError, forkJoin, of } from 'rxjs';
-import { NgIcon } from '@ng-icons/core';
-import { ICONS } from '../../../shared/icons/icon-registry';
 
 import { StatsGridComponent } from '../components/stats-grid/stats-grid.component';
 import { FtEChartComponent, EchartsThemeMapper } from '../../../shared/charts';
@@ -11,7 +9,6 @@ import { RecentActivityComponent, ActivityItem } from '../components/recent-acti
 import { StatCardData } from '../components/stat-card/stat-card.types';
 import { FtSubtleRevealDirective } from '../../../shared/directives/ft-subtle-reveal.directive';
 import { HoverDepthDirective } from '../../../shared/directives/hover-depth.directive';
-import { ClickOutsideDirective } from '../../../shared/directives/click-outside.directive';
 import { FinanceService } from '../../../core/services/finance.service';
 import { ToastService } from '../../../core/services/toast.service';
 import { EmptyStateComponent } from '../../../shared/components/empty-state.component';
@@ -25,6 +22,7 @@ import { DateRangeService } from '../../../core/services/date-range.service';
 import { AiInsightsCardComponent } from '../components/ai-insights-card/ai-insights-card.component';
 import { GoalsWidgetComponent } from '../components/goals-widget/goals-widget.component';
 import { PocketProgressWidget } from '../widgets/pocket-progress.widget';
+import { ChannelDistributionWidgetComponent } from '../widgets/channel-distribution-widget.component';
 import { FtReferralWidgetComponent } from '../../referral/components/referral-widget.component';
 import { IconComponent } from '../../../shared/icons/icon.component';
 import type { EChartsOption } from 'echarts';
@@ -63,7 +61,6 @@ class ChartColorCache {
     RecentActivityComponent,
     FtSubtleRevealDirective,
     HoverDepthDirective,
-    ClickOutsideDirective,
     EmptyStateComponent,
     FtTrialBannerComponent,
     FtUpgradePromptComponent,
@@ -71,15 +68,15 @@ class ChartColorCache {
     AiInsightsCardComponent,
     GoalsWidgetComponent,
     PocketProgressWidget,
+    ChannelDistributionWidgetComponent,
     FtReferralWidgetComponent,
     IconComponent,
-    NgIcon,
   ],
   templateUrl: './dashboard.page.html',
   styleUrl: './dashboard.page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DashboardPage implements OnInit {
+export class DashboardPage implements OnInit, AfterViewInit {
   private readonly financeService = inject(FinanceService);
   private readonly toast = inject(ToastService);
   readonly i18n = inject(TranslationService);
@@ -94,19 +91,11 @@ export class DashboardPage implements OnInit {
   readonly stats = signal<StatCardData[]>([]);
   readonly activity = signal<ActivityItem[]>([]);
   readonly state = signal<DashboardState>('loading');
-  readonly monthOpen = signal(false);
 
   readonly chartLabels = signal<string[]>([]);
   readonly chartDatasets = signal<AreaDataset[]>([]);
 
-  readonly chartMonths = computed(() => {
-    const start = this.dateRange.startDate();
-    if (!start) return 6;
-    const today = new Date();
-    const startDate = new Date(start + 'T12:00:00');
-    const monthsDiff = (today.getFullYear() - startDate.getFullYear()) * 12 + (today.getMonth() - startDate.getMonth()) + 1;
-    return Math.max(6, monthsDiff);
-  });
+  readonly chartMonths = 6;
 
   readonly areaChartOptions = computed<EChartsOption | undefined>(() => {
     const labels = this.chartLabels();
@@ -140,13 +129,23 @@ export class DashboardPage implements OnInit {
     this.loadData();
   }
 
+  ngAfterViewInit(): void {
+    if (this.authService.isAuthenticated()) {
+      setTimeout(() => {
+        if (this.tour.shouldAutoStart()) {
+          this.tour.start();
+        }
+      }, 1500);
+    }
+  }
+
   private loadData(): void {
     this.state.set('loading');
     const dateParams = this.dateRange.getApiParams();
 
     forkJoin({
       summary: this.financeService.getSummary(dateParams).pipe(catchError(() => of(null))),
-      chart: this.financeService.getMonthlyChart(this.chartMonths()).pipe(catchError(() => of(null))),
+      chart: this.financeService.getMonthlyChart(this.chartMonths).pipe(catchError(() => of(null))),
       transactions: this.financeService.getTransactions({
         limit: 10,
         sortBy: 'date',
@@ -197,14 +196,8 @@ export class DashboardPage implements OnInit {
     });
   }
 
-  onMonthSelect(month: { start: string; end: string }): void {
-    this.dateRange.setMonth(month.start, month.end);
-    this.monthOpen.set(false);
+  retry(): void {
     this.loadData();
-  }
-
-  toggleMonthDropdown(): void {
-    this.monthOpen.update(v => !v);
   }
 
   private mapSummary(summary: { totalBalance: number; totalIncome: number; totalExpenses: number; savingsRate: number }): StatCardData[] {
@@ -216,15 +209,11 @@ export class DashboardPage implements OnInit {
     ];
   }
 
-  retry(): void {
-    this.loadData();
-  }
-
   startTour(): void {
     this.tour.start();
   }
 
   dismissTourPrompt(): void {
-    this.tour.skip();
+    this.tour.postpone();
   }
 }

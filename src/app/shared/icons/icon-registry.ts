@@ -59,6 +59,7 @@ import {
   heroCodeBracket,
   heroBuildingOffice,
   heroChevronDown,
+  heroChevronUp,
   heroStar,
   heroBookOpen,
   heroBriefcase,
@@ -120,6 +121,7 @@ export const ICONS = {
   percent: heroBanknotes,
   calendar: heroCalendar,
   chevronDown: heroChevronDown,
+  chevronUp: heroChevronUp,
 
   // Insights
   star: heroStar,

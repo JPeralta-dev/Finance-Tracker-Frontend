@@ -16,6 +16,16 @@
     background: rgba(255, 255, 255, 0.03);
   }
 
+  &:active {
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--accent-start);
+    outline-offset: -2px;
+    border-radius: var(--radius-sm);
+  }
+
   &--compact {
     padding: 10px 12px;
     gap: 10px;
@@ -26,8 +36,8 @@
   }
 
   &--selected {
-    background: var(--accent-glow);
-    border: 1px solid rgba(217, 70, 239, 0.2);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--glass-border-hover);
   }
 
   &__icon {
@@ -70,12 +80,13 @@
   &__bank-logo {
     width: 14px;
     height: 14px;
-    border-radius: 3px;
+    border-radius: var(--radius-xs);
     object-fit: contain;
     vertical-align: middle;
   }
 
   &__amount {
+    font-family: var(--font-mono);
     font-size: 14px;
     font-weight: 600;
     font-variant-numeric: tabular-nums;
@@ -96,8 +107,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   border-radius: var(--radius-sm);
   border: 1px solid var(--glass-border);
   color: var(--text-tertiary);
@@ -109,5 +120,15 @@
     background: var(--accent-start);
     border-color: var(--accent-start);
     color: var(--text-inverse);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tx-row {
+    transition-duration: 0.01ms !important;
+  }
+
+  .tx-row__checkbox {
+    transition-duration: 0.01ms !important;
   }
 }

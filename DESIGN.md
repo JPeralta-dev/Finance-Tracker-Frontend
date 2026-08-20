@@ -19,6 +19,12 @@ colors:
   coral-ember: "#FF6B6B"
   solar-amber: "#FFD93D"
   lavender-mist: "#A78BFA"
+  category-blue: "#118DFF"
+  category-blue-bg: "rgba(17, 141, 255, 0.12)"
+  category-purple: "#6C63FF"
+  category-purple-bg: "rgba(108, 99, 255, 0.12)"
+  category-slate: "#94A3B8"
+  category-slate-bg: "rgba(148, 163, 184, 0.12)"
   border-subtle: "rgba(255, 255, 255, 0.06)"
   border-default: "rgba(255, 255, 255, 0.1)"
   border-strong: "rgba(255, 255, 255, 0.16)"
@@ -151,6 +157,16 @@ The palette lives on a single hue axis — violet — with semantic accents bran
 - **Coral Ember** (#FF6B6B): Danger. Expense indicators, destructive actions, error states. Glow: `0 0 20px rgba(255, 107, 107, 0.2)`.
 - **Solar Amber** (#FFD93D): Warning. Attention signals, pending states, caution badges.
 - **Lavender Mist** (#A78BFA): Info. Neutral highlights, chart accent 4, informational badges.
+
+### Category Palette
+
+Twelve transaction categories need more hues than the four semantic accents provide. These category tokens extend the palette for data classification — not for UI chrome, action states, or decorative use. Each category has a fill color and a matching 12%-opacity background token for icon circles and badge fills. Categories share hues by domain (income → Verdant, transport → blue, entertainment → purple) while relying on their Heroicon to carry unique identity. The rule is **one icon + one hue per category**; the hue alone does not need to be unique.
+
+- **Category Blue** (#118DFF): Transport, Freelance. Cool and directional. Background: `rgba(17, 141, 255, 0.12)`.
+- **Category Purple** (#6C63FF): Entertainment, Rent, Subscription. Warm violet, distinct from Amethyst Pulse. Background: `rgba(108, 99, 255, 0.12)`.
+- **Category Slate** (#94A3B8): Other / uncategorized. Neutral and recessive — the label that means "none of the above." Background: `rgba(148, 163, 184, 0.12)`.
+
+The remaining categories map to existing semantic tokens: Income / Health / Salary → Verdant, Food → Coral Ember, Shopping / Utilities → Solar Amber.
 
 ### Named Rules
 
@@ -323,7 +339,7 @@ Buttons, inputs, and badges share the 8px radius. Cards and panels share 12px. T
 
 - **Don't** animate financial numbers for decoration. Count-up animations on load are acceptable. Bounce, spin, pulse, or color-cycle on static data is never acceptable.
 - **Don't** use solid borders at rest. The Glass Border Rule applies everywhere except error states and active focus.
-- **Don't** add a new color outside the defined palette. The system has one accent gradient, four semantic colors, four background tones, and three text opacities. That's the complete vocabulary.
+- **Don't** add a new color outside the defined palette without updating DESIGN.md. The system has one accent gradient, four semantic colors, four category hues, four background tones, and three text opacities. New hues require a documented role before they enter the codebase.
 - **Don't** mix font families within a single typographic element. A heading in Inter or body text in Space Grotesk breaks the hierarchy contract.
 - **Don't** use box-shadow on resting surfaces. A card with a shadow before interaction means the Flat-By-Default Rule was violated.
 - **Don't** ship a screen without a visible focus ring. Every interactive element must show `:focus-visible` with the 2px Amethyst Pulse outline + 2px offset.

@@ -1,12 +1,12 @@
-<div class="pocket-progress-widget">
+<div class="pocket-progress-widget" role="region" aria-labelledby="pockets-title">
   <!-- Header -->
   <div class="pocket-progress-widget__header">
-    <h2 class="pocket-progress-widget__title">
+    <h2 class="pocket-progress-widget__title" id="pockets-title">
       <span class="pocket-progress-widget__icon"><ft-icon name="wallet" [size]="22" /></span>
-      Pockets
+      {{ 'dashboard.pockets.title' | translate }}
     </h2>
     @if (isPremium()) {
-      <a routerLink="/pockets" class="pocket-progress-widget__link">Ver todos</a>
+      <a routerLink="/pockets" class="pocket-progress-widget__link">{{ 'dashboard.pockets.viewAll' | translate }}</a>
     }
   </div>
 
@@ -16,7 +16,7 @@
       <div class="pocket-progress-widget__blur">
         <div class="pocket-row pocket-row--blurred">
           <div class="pocket-row__info">
-            <span class="pocket-row__name">Pocket de ejemplo</span>
+            <span class="pocket-row__name">{{ 'dashboard.pockets.previewPocket' | translate }}</span>
             <span class="pocket-row__progress-text">45%</span>
           </div>
           <div class="pocket-row__bar">
@@ -26,10 +26,10 @@
       </div>
       <div class="pocket-progress-widget__cta-overlay">
         <p class="pocket-progress-widget__cta-text">
-          Organizá tu presupuesto por categorías con Pockets
+          {{ 'dashboard.pockets.upgradeTitle' | translate }}
         </p>
         <a routerLink="/subscription" [queryParams]="{ upgrade: 'true' }" class="pocket-progress-widget__cta-btn">
-          Activar Premium
+          {{ 'dashboard.pockets.upgradeCta' | translate }}
         </a>
       </div>
     </div>
@@ -55,10 +55,10 @@
         <div class="pocket-progress-widget__empty">
           <span class="pocket-progress-widget__empty-icon"><ft-icon name="wallet" [size]="28" /></span>
           <p class="pocket-progress-widget__empty-text">
-            Todavía no tenés pockets. Creá tu primer pocket para organizar tu presupuesto.
+            {{ 'dashboard.pockets.emptyText' | translate }}
           </p>
           <a routerLink="/pockets" class="pocket-progress-widget__empty-btn">
-            Crear primer pocket
+            {{ 'dashboard.pockets.emptyCta' | translate }}
           </a>
         </div>
       }
@@ -66,7 +66,7 @@
         <div class="pocket-progress-widget__empty">
           <span class="pocket-progress-widget__empty-icon"><ft-icon name="alert-triangle" [size]="28" /></span>
           <p class="pocket-progress-widget__empty-text">
-            No pudimos cargar tus pockets. Intentá de nuevo.
+            {{ 'dashboard.pockets.errorText' | translate }}
           </p>
         </div>
       }

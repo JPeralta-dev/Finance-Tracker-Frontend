@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-07-24T00:00:00.000Z",
+  "generatedAt": "2026-07-28T00:00:00.000Z",
   "title": "Design System: Flowr Finance",
   "extensions": {
     "colorMeta": {
@@ -101,6 +101,21 @@
         "displayName": "Glass Border Hover",
         "canonical": "rgba(255, 255, 255, 0.16)"
       },
+      "border-subtle": {
+        "role": "neutral",
+        "displayName": "Border Subtle",
+        "canonical": "rgba(255, 255, 255, 0.06)"
+      },
+      "border-default": {
+        "role": "neutral",
+        "displayName": "Border Default",
+        "canonical": "rgba(255, 255, 255, 0.1)"
+      },
+      "border-strong": {
+        "role": "neutral",
+        "displayName": "Border Strong",
+        "canonical": "rgba(255, 255, 255, 0.16)"
+      },
       "verdant": {
         "role": "semantic",
         "displayName": "Verdant",
@@ -141,7 +156,15 @@
     "typographyMeta": {
       "display": {
         "displayName": "Display",
-        "purpose": "Hero page titles and form headers. Space Grotesk 700, 26px+, -0.02em tracking. Exactly once per view."
+        "purpose": "Hero page titles and form headers. Space Grotesk 700, 26px/clamp, -0.02em tracking. Exactly once per view."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section headers within pages. Space Grotesk 600, 20px, -0.01em tracking. Used by SectionHeaderComponent."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Card titles, modal titles, panel headers. Space Grotesk 600, 16–18px."
       },
       "body": {
         "displayName": "Body",
@@ -153,14 +176,14 @@
       },
       "mono": {
         "displayName": "Mono",
-        "purpose": "Currency amounts, percentages, transaction IDs. JetBrains Mono 400, 13px, tabular-nums."
+        "purpose": "Currency amounts, percentages, transaction IDs. JetBrains Mono 400, 13px, tabular-nums. The Number Font Rule applies."
       }
     },
     "shadows": [
       {
         "name": "hover-lift",
         "value": "0 4px 12px rgba(0, 0, 0, 0.5)",
-        "purpose": "Applied to glass panels and hoverable cards on hover. Accompanies 2px translateY lift."
+        "purpose": "Glass panels and hoverable cards on hover. Accompanies 2px translateY lift. State response only — never a resting surface treatment."
       },
       {
         "name": "modal-backdrop",
@@ -170,7 +193,7 @@
       {
         "name": "glow-accent",
         "value": "0 0 30px rgba(217, 70, 239, 0.25)",
-        "purpose": "Primary buttons and premium hoverable cards. The only intentionally visible glow."
+        "purpose": "Reserved for primary buttons and premium hoverable cards. The only intentionally visible glow in the system."
       },
       {
         "name": "glow-success",
@@ -185,39 +208,39 @@
       {
         "name": "topbar-scrolled",
         "value": "0 1px 2px rgba(0, 0, 0, 0.4)",
-        "purpose": "Topbar shadow when scrolled. Subtle ambient separation."
+        "purpose": "Topbar ambient separation when scrolled. Subtle — the blur provides primary depth."
       }
     ],
     "motion": [
       {
         "name": "ease-out",
         "value": "cubic-bezier(0.16, 1, 0.3, 1)",
-        "purpose": "Default easing for state transitions. Used on buttons, toggles, hover effects."
+        "purpose": "Default easing for state transitions. Buttons, toggles, hover effects."
       },
       {
         "name": "ease-smooth",
         "value": "cubic-bezier(0.25, 0.8, 0.25, 1)",
-        "purpose": "Smoother easing for card reveals and panel transitions."
+        "purpose": "Card reveals, dropdown opens, panel transitions."
       },
       {
         "name": "ease-spring",
         "value": "cubic-bezier(0.34, 1.56, 0.64, 1)",
-        "purpose": "Overshoot easing for celebratory or emphasis transitions. Use sparingly."
+        "purpose": "Overshoot easing for celebratory or emphasis transitions. Use sparingly — never on financial data."
       },
       {
         "name": "duration-fast",
         "value": "150ms",
-        "purpose": "Button presses, toggle switches, hover transitions."
+        "purpose": "Button presses, toggle switches, hover transitions. Minimum perceptible feedback."
       },
       {
         "name": "duration-normal",
         "value": "250ms",
-        "purpose": "Card reveals, dropdown opens, border transitions."
+        "purpose": "Card reveals, border transitions, dropdown opens."
       },
       {
         "name": "duration-slow",
         "value": "400ms",
-        "purpose": "Panel reveals, page transitions."
+        "purpose": "Panel reveals, page content transitions."
       },
       {
         "name": "duration-slower",
@@ -237,7 +260,7 @@
       "name": "Primary Button",
       "kind": "button",
       "refersTo": "button-primary",
-      "description": "The single most important action on screen. Amethyst Pulse gradient background with glow.",
+      "description": "The single most important action on screen. Amethyst Pulse gradient with glow halo. Lift 1px on hover.",
       "html": "<button class=\"ds-btn-primary\">Create Transaction</button>",
       "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-family: 'Inter', system-ui, sans-serif; font-weight: 500; font-size: 14px; line-height: 1; border: none; border-radius: 8px; cursor: pointer; padding: 10px 20px; background: linear-gradient(135deg, #D946EF, #A855F7); color: #120B1A; box-shadow: 0 2px 8px rgba(6, 214, 160, 0.25); transition: box-shadow 150ms cubic-bezier(0.16, 1, 0.3, 1), transform 150ms cubic-bezier(0.16, 1, 0.3, 1); white-space: nowrap; user-select: none; } .ds-btn-primary:hover { box-shadow: 0 4px 16px rgba(6, 214, 160, 0.35), 0 0 30px rgba(217, 70, 239, 0.25); transform: translateY(-1px); } .ds-btn-primary:active { transform: scale(0.97); } .ds-btn-primary:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; } .ds-btn-primary:focus-visible { outline: 2px solid #D946EF; outline-offset: 2px; }"
     },
@@ -245,7 +268,7 @@
       "name": "Secondary Button",
       "kind": "button",
       "refersTo": "button-secondary",
-      "description": "Supporting actions. Elevated background with subtle border.",
+      "description": "Supporting actions. Twilight Stone background with glass-border. Background shifts on hover.",
       "html": "<button class=\"ds-btn-secondary\">Cancel</button>",
       "css": ".ds-btn-secondary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-family: 'Inter', system-ui, sans-serif; font-weight: 500; font-size: 14px; line-height: 1; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; cursor: pointer; padding: 10px 20px; background: #362845; color: #F3E8FF; transition: background 150ms cubic-bezier(0.16, 1, 0.3, 1), border-color 150ms cubic-bezier(0.16, 1, 0.3, 1); white-space: nowrap; user-select: none; } .ds-btn-secondary:hover { background: #2A1E35; border-color: rgba(255, 255, 255, 0.16); } .ds-btn-secondary:active { transform: scale(0.97); } .ds-btn-secondary:disabled { opacity: 0.4; cursor: not-allowed; transform: none; } .ds-btn-secondary:focus-visible { outline: 2px solid #D946EF; outline-offset: 2px; }"
     },
@@ -253,49 +276,81 @@
       "name": "Ghost Button",
       "kind": "button",
       "refersTo": "button-ghost",
-      "description": "Lowest-priority actions. Transparent until hover.",
+      "description": "Lowest-priority actions. Transparent until hover, then 5% white background and Pale Iris text.",
       "html": "<button class=\"ds-btn-ghost\">Edit</button>",
       "css": ".ds-btn-ghost { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-family: 'Inter', system-ui, sans-serif; font-weight: 500; font-size: 14px; line-height: 1; border: none; border-radius: 8px; cursor: pointer; padding: 10px 20px; background: transparent; color: rgba(243, 232, 255, 0.75); transition: background 150ms cubic-bezier(0.16, 1, 0.3, 1), color 150ms cubic-bezier(0.16, 1, 0.3, 1); white-space: nowrap; user-select: none; } .ds-btn-ghost:hover { background: rgba(255, 255, 255, 0.05); color: #F3E8FF; } .ds-btn-ghost:active { transform: scale(0.97); } .ds-btn-ghost:disabled { opacity: 0.4; cursor: not-allowed; transform: none; } .ds-btn-ghost:focus-visible { outline: 2px solid #D946EF; outline-offset: 2px; }"
+    },
+    {
+      "name": "Danger Button",
+      "kind": "button",
+      "refersTo": "button-danger",
+      "description": "Destructive actions. Coral Ember 10% background with Coral Ember text and border.",
+      "html": "<button class=\"ds-btn-danger\">Delete</button>",
+      "css": ".ds-btn-danger { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-family: 'Inter', system-ui, sans-serif; font-weight: 500; font-size: 14px; line-height: 1; border: 1px solid rgba(255, 107, 107, 0.2); border-radius: 8px; cursor: pointer; padding: 10px 20px; background: rgba(255, 107, 107, 0.1); color: #FF6B6B; transition: background 150ms cubic-bezier(0.16, 1, 0.3, 1), border-color 150ms cubic-bezier(0.16, 1, 0.3, 1); white-space: nowrap; user-select: none; } .ds-btn-danger:hover { background: rgba(255, 107, 107, 0.2); border-color: rgba(255, 107, 107, 0.3); } .ds-btn-danger:active { transform: scale(0.97); } .ds-btn-danger:disabled { opacity: 0.4; cursor: not-allowed; transform: none; } .ds-btn-danger:focus-visible { outline: 2px solid #D946EF; outline-offset: 2px; }"
     },
     {
       "name": "Card",
       "kind": "card",
       "refersTo": "card",
-      "description": "Glass container for grouping related content. Header with Space Grotesk title.",
+      "description": "Glass container floating on backdrop-blur. Top highlight glow bar. Optional header with Space Grotesk title. Hoverable cards lift 2px.",
       "html": "<div class=\"ds-card\"><div class=\"ds-card__header\"><h3 class=\"ds-card__title\">Monthly Summary</h3><p class=\"ds-card__subtitle\">June 2026</p></div><div class=\"ds-card__body\">Content here</div></div>",
-      "css": ".ds-card { position: relative; overflow: hidden; background: rgba(29, 20, 38, 0.72); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; transition: border-color 250ms cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 250ms cubic-bezier(0.25, 0.8, 0.25, 1), transform 250ms cubic-bezier(0.16, 1, 0.3, 1); } .ds-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.16), transparent); opacity: 0.5; } .ds-card__header { padding: 20px 24px 0; } .ds-card__title { font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 16px; font-weight: 600; color: #F3E8FF; margin: 0; } .ds-card__subtitle { font-size: 13px; color: rgba(243, 232, 255, 0.45); margin: 4px 0 0; } .ds-card__body { padding: 20px 24px; } .ds-card:hover { border-color: rgba(255, 255, 255, 0.16); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); transform: translateY(-2px); }"
+      "css": ".ds-card { position: relative; overflow: hidden; background: rgba(29, 20, 38, 0.72); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; transition: border-color 250ms cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 250ms cubic-bezier(0.25, 0.8, 0.25, 1), transform 250ms cubic-bezier(0.16, 1, 0.3, 1); } .ds-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(217, 70, 239, 0.35), transparent); opacity: 0.6; } .ds-card__header { padding: 20px 24px 0; } .ds-card__title { font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 16px; font-weight: 600; color: #F3E8FF; margin: 0; } .ds-card__subtitle { font-size: 13px; color: rgba(243, 232, 255, 0.45); margin: 4px 0 0; } .ds-card__body { padding: 20px 24px; } .ds-card:hover { border-color: rgba(255, 255, 255, 0.16); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); transform: translateY(-2px); }"
     },
     {
       "name": "Success Badge",
       "kind": "chip",
       "refersTo": "badge-success",
-      "description": "Semantic label for positive states. Non-interactive.",
+      "description": "Semantic label for positive states. 10% Verdant background, 20% border. Non-interactive.",
       "html": "<span class=\"ds-badge-success\">Active</span>",
       "css": ".ds-badge-success { display: inline-flex; align-items: center; justify-content: center; font-family: 'Inter', system-ui, sans-serif; font-weight: 500; font-size: 11px; line-height: 1; border-radius: 4px; padding: 3px 8px; background: rgba(6, 214, 160, 0.1); color: #06D6A0; border: 1px solid rgba(6, 214, 160, 0.2); }"
+    },
+    {
+      "name": "Danger Badge",
+      "kind": "chip",
+      "refersTo": "badge-danger",
+      "description": "Semantic label for negative states or errors. 10% Coral Ember background.",
+      "html": "<span class=\"ds-badge-danger\">Overdue</span>",
+      "css": ".ds-badge-danger { display: inline-flex; align-items: center; justify-content: center; font-family: 'Inter', system-ui, sans-serif; font-weight: 500; font-size: 11px; line-height: 1; border-radius: 4px; padding: 3px 8px; background: rgba(255, 107, 107, 0.1); color: #FF6B6B; border: 1px solid rgba(255, 107, 107, 0.2); }"
+    },
+    {
+      "name": "Warning Badge",
+      "kind": "chip",
+      "refersTo": "badge-warning",
+      "description": "Semantic label for attention or pending states.",
+      "html": "<span class=\"ds-badge-warning\">Pending</span>",
+      "css": ".ds-badge-warning { display: inline-flex; align-items: center; justify-content: center; font-family: 'Inter', system-ui, sans-serif; font-weight: 500; font-size: 11px; line-height: 1; border-radius: 4px; padding: 3px 8px; background: rgba(255, 217, 61, 0.1); color: #FFD93D; border: 1px solid rgba(255, 217, 61, 0.2); }"
     },
     {
       "name": "Text Input",
       "kind": "input",
       "refersTo": "input",
-      "description": "Primary data entry field. Glass-border with Amethyst Pulse focus glow.",
+      "description": "Primary data entry field. Clean glass-border with Amethyst Pulse focus glow. No inner shadows.",
       "html": "<input class=\"ds-input\" type=\"text\" placeholder=\"Enter amount\" value=\"\" />",
-      "css": ".ds-input { width: 100%; padding: 11px 14px; border: 1.5px solid rgba(255, 255, 255, 0.08); border-radius: 8px; font-size: 15px; font-family: 'Inter', system-ui, sans-serif; color: #F3E8FF; background: #1D1426; transition: border-color 150ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 150ms cubic-bezier(0.16, 1, 0.3, 1); box-sizing: border-box; } .ds-input::placeholder { color: rgba(243, 232, 255, 0.45); } .ds-input:focus { outline: none; border-color: #D946EF; box-shadow: 0 0 0 3px rgba(217, 70, 239, 0.18); }"
+      "css": ".ds-input { width: 100%; padding: 11px 14px; border: 1.5px solid rgba(255, 255, 255, 0.08); border-radius: 8px; font-size: 15px; font-family: 'Inter', system-ui, sans-serif; color: #F3E8FF; background: #1D1426; transition: border-color 150ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 150ms cubic-bezier(0.16, 1, 0.3, 1); box-sizing: border-box; } .ds-input::placeholder { color: rgba(243, 232, 255, 0.45); } .ds-input:focus { outline: none; border-color: #D946EF; box-shadow: 0 0 0 3px rgba(217, 70, 239, 0.18); } .ds-input.ds-input--error { border-color: #FF6B6B; }"
     },
     {
       "name": "Modal",
       "kind": "custom",
       "refersTo": "modal",
-      "description": "Centered glass dialog for confirmations, forms, and focused tasks.",
+      "description": "Centered glass dialog for confirmations, forms, and focused tasks. Bottom sheet on mobile (<640px).",
       "html": "<div class=\"ds-modal-overlay\"><div class=\"ds-modal\" role=\"dialog\" aria-modal=\"true\"><div class=\"ds-modal__header\"><h2 class=\"ds-modal__title\">Confirm Delete</h2><button class=\"ds-modal__close\" aria-label=\"Close\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\"><line x1=\"18\" y1=\"6\" x2=\"6\" y2=\"18\"></line><line x1=\"6\" y1=\"6\" x2=\"18\" y2=\"18\"></line></svg></button></div><div class=\"ds-modal__body\">Are you sure you want to delete this transaction?</div><div class=\"ds-modal__footer\"><button class=\"ds-btn-ghost\">Cancel</button><button class=\"ds-btn-primary\">Delete</button></div></div></div>",
-      "css": ".ds-modal-overlay { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; padding: 16px; background: rgba(0, 0, 0, 0.55); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); } .ds-modal { width: 100%; max-width: 480px; max-height: 90vh; display: flex; flex-direction: column; background: #1D1426; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 18px; box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5), 0 2px 6px rgba(0, 0, 0, 0.2); overflow: hidden; } .ds-modal__header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 20px 24px; border-bottom: 1px solid rgba(255, 255, 255, 0.06); } .ds-modal__title { margin: 0; font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 18px; font-weight: 600; color: #F3E8FF; line-height: 1.3; } .ds-modal__close { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border: none; background: transparent; border-radius: 8px; color: rgba(243, 232, 255, 0.45); cursor: pointer; transition: color 150ms ease, background 150ms ease; } .ds-modal__close:hover { color: #F3E8FF; background: rgba(255, 255, 255, 0.05); } .ds-modal__body { flex: 1 1 auto; overflow-y: auto; padding: 24px; color: rgba(243, 232, 255, 0.75); line-height: 1.55; } .ds-modal__footer { display: flex; align-items: center; justify-content: flex-end; gap: 12px; padding: 16px 24px; border-top: 1px solid rgba(255, 255, 255, 0.06); background: rgba(0, 0, 0, 0.15); }"
+      "css": ".ds-modal-overlay { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; padding: 16px; background: rgba(0, 0, 0, 0.55); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); z-index: 200; } .ds-modal { width: 100%; max-width: 480px; max-height: 90vh; display: flex; flex-direction: column; background: #1D1426; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 18px; box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5); overflow: hidden; } .ds-modal__header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 20px 24px; border-bottom: 1px solid rgba(255, 255, 255, 0.06); } .ds-modal__title { margin: 0; font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 18px; font-weight: 600; color: #F3E8FF; line-height: 1.3; } .ds-modal__close { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border: none; background: transparent; border-radius: 8px; color: rgba(243, 232, 255, 0.45); cursor: pointer; transition: color 150ms ease, background 150ms ease; } .ds-modal__close:hover { color: #F3E8FF; background: rgba(255, 255, 255, 0.05); } .ds-modal__body { flex: 1 1 auto; overflow-y: auto; padding: 24px; color: rgba(243, 232, 255, 0.75); line-height: 1.55; } .ds-modal__footer { display: flex; align-items: center; justify-content: flex-end; gap: 12px; padding: 16px 24px; border-top: 1px solid rgba(255, 255, 255, 0.06); background: rgba(0, 0, 0, 0.15); }"
     },
     {
       "name": "Topbar",
       "kind": "nav",
       "refersTo": "topbar",
-      "description": "Floating glass navigation bar. Transparent at top, glass-on-scroll.",
-      "html": "<header class=\"ds-topbar\"><div class=\"ds-topbar__inner\"><div class=\"ds-topbar__left\"><a class=\"ds-topbar__logo\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#D946EF\" stroke-width=\"2\" stroke-linecap=\"round\"><rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"4\"></rect><line x1=\"12\" y1=\"8\" x2=\"12\" y2=\"16\"></line><line x1=\"8\" y1=\"12\" x2=\"16\" y2=\"12\"></line></svg><span class=\"ds-topbar__logo-text\">Flowr</span></a></div><div class=\"ds-topbar__right\"><button class=\"ds-topbar__action\" aria-label=\"Notifications\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9\"></path><path d=\"M13.73 21a2 2 0 0 1-3.46 0\"></path></svg></button></div></div></header>",
-      "css": ".ds-topbar { position: sticky; top: 0; z-index: 100; background: rgba(29, 20, 38, 0.72); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255, 255, 255, 0.08); box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4); } .ds-topbar__inner { max-width: 1440px; margin: 0 auto; padding: 0 24px; height: 64px; display: flex; align-items: center; justify-content: space-between; } .ds-topbar__left { display: flex; align-items: center; gap: 32px; } .ds-topbar__logo { display: flex; align-items: center; gap: 8px; text-decoration: none; } .ds-topbar__logo-text { font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 18px; font-weight: 700; color: #F3E8FF; } .ds-topbar__right { display: flex; align-items: center; gap: 4px; } .ds-topbar__action { position: relative; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border: none; background: transparent; color: rgba(243, 232, 255, 0.75); border-radius: 8px; cursor: pointer; transition: background 150ms cubic-bezier(0.16, 1, 0.3, 1), color 150ms cubic-bezier(0.16, 1, 0.3, 1); } .ds-topbar__action:hover { background: rgba(255, 255, 255, 0.05); color: #F3E8FF; }"
+      "description": "Floating glass navigation bar. Transparent at page top, acquires glass morphism on scroll. 64px height, 1440px max-width.",
+      "html": "<header class=\"ds-topbar\"><div class=\"ds-topbar__inner\"><div class=\"ds-topbar__left\"><a class=\"ds-topbar__logo\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#D946EF\" stroke-width=\"2\" stroke-linecap=\"round\"><rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"4\"></rect><line x1=\"12\" y1=\"8\" x2=\"12\" y2=\"16\"></line><line x1=\"8\" y1=\"12\" x2=\"16\" y2=\"12\"></line></svg><span class=\"ds-topbar__logo-text\">Flowr</span></a></div><nav class=\"ds-topbar__nav\"><a class=\"ds-topbar__link ds-topbar__link--active\">Dashboard</a><a class=\"ds-topbar__link\">Transactions</a><a class=\"ds-topbar__link\">Analytics</a></nav><div class=\"ds-topbar__right\"><button class=\"ds-topbar__action\" aria-label=\"Notifications\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9\"></path><path d=\"M13.73 21a2 2 0 0 1-3.46 0\"></path></svg></button></div></div></header>",
+      "css": ".ds-topbar { position: sticky; top: 0; z-index: 100; background: rgba(29, 20, 38, 0.72); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255, 255, 255, 0.08); box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4); } .ds-topbar__inner { max-width: 1440px; margin: 0 auto; padding: 0 24px; height: 64px; display: flex; align-items: center; justify-content: space-between; } .ds-topbar__left { display: flex; align-items: center; gap: 32px; } .ds-topbar__logo { display: flex; align-items: center; gap: 8px; text-decoration: none; } .ds-topbar__logo-text { font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 18px; font-weight: 700; color: #F3E8FF; } .ds-topbar__nav { display: flex; align-items: center; gap: 4px; } .ds-topbar__link { display: inline-flex; align-items: center; padding: 8px 14px; font-size: 13px; font-weight: 500; color: rgba(243, 232, 255, 0.75); border-radius: 8px; text-decoration: none; transition: background 150ms cubic-bezier(0.16, 1, 0.3, 1), color 150ms cubic-bezier(0.16, 1, 0.3, 1); } .ds-topbar__link:hover { background: rgba(255, 255, 255, 0.05); color: #F3E8FF; } .ds-topbar__link--active { background: rgba(217, 70, 239, 0.12); color: #D946EF; } .ds-topbar__right { display: flex; align-items: center; gap: 4px; } .ds-topbar__action { position: relative; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border: none; background: transparent; color: rgba(243, 232, 255, 0.75); border-radius: 8px; cursor: pointer; transition: background 150ms cubic-bezier(0.16, 1, 0.3, 1), color 150ms cubic-bezier(0.16, 1, 0.3, 1); } .ds-topbar__action:hover { background: rgba(255, 255, 255, 0.05); color: #F3E8FF; }"
+    },
+    {
+      "name": "Stat Card (KPI)",
+      "kind": "card",
+      "refersTo": "stat-card",
+      "description": "Dashboard KPI card with glass surface, trend indicator, number reveal animation, and hover overlay with insight text. Compact variant for mobile.",
+      "html": "<div class=\"ds-stat-card\"><div class=\"ds-stat-card__glow\"></div><div class=\"ds-stat-card__header\"><span class=\"ds-stat-card__icon\">💰</span><span class=\"ds-stat-card__label\">Total Balance</span></div><div class=\"ds-stat-card__value\">$12,450.00</div><div class=\"ds-stat-card__footer\"><span class=\"ds-stat-card__trend ds-stat-card__trend--up\">↑ +8.3%</span></div></div>",
+      "css": ".ds-stat-card { position: relative; display: flex; flex-direction: column; height: 100%; background: rgba(29, 20, 38, 0.72); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 16px; overflow: hidden; transition: border-color 250ms cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 250ms cubic-bezier(0.25, 0.8, 0.25, 1), transform 250ms cubic-bezier(0.16, 1, 0.3, 1); } .ds-stat-card__glow { position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(217, 70, 239, 0.35), transparent); opacity: 0.6; } .ds-stat-card__header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; } .ds-stat-card__icon { display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 8px; background: rgba(217, 70, 239, 0.18); font-size: 14px; flex-shrink: 0; } .ds-stat-card__label { font-size: 12px; font-weight: 500; color: rgba(243, 232, 255, 0.75); letter-spacing: 0.01em; } .ds-stat-card__value { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 24px; font-weight: 600; color: #F3E8FF; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; line-height: 1.2; } .ds-stat-card__footer { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255, 255, 255, 0.06); } .ds-stat-card__trend { display: inline-flex; align-items: center; gap: 3px; font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 4px; } .ds-stat-card__trend--up { color: #06D6A0; background: rgba(6, 214, 160, 0.1); } .ds-stat-card__trend--down { color: #FF6B6B; background: rgba(255, 107, 107, 0.1); } .ds-stat-card:hover { border-color: rgba(255, 255, 255, 0.16); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); transform: translateY(-2px); }"
     }
   ],
   "narrative": {

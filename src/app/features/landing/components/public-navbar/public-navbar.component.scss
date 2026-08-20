@@ -33,6 +33,26 @@
   font-weight: 700;
 }
 
+.public-navbar__logo-mark {
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 0 18px rgba(124, 58, 237, 0.28);
+}
+
+.public-navbar__logo-mark--light {
+  display: none;
+}
+
+:host-context(html.light) .public-navbar__logo-mark--dark {
+  display: none;
+}
+
+:host-context(html.light) .public-navbar__logo-mark--light {
+  display: block;
+}
+
 .public-navbar__actions {
   display: flex;
   align-items: center;

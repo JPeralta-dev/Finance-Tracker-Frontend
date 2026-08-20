@@ -9,6 +9,7 @@ import { ToastService } from '../../../core/services/toast.service';
 import { TranslationService } from '../../../core/services/translation.service';
 import { TranslatePipe } from '../../../core/pipes/translate.pipe';
 import { CategoryTranslatePipe } from '../../../core/pipes/category-translate.pipe';
+import { categoryMark } from '../../utils/category-mark';
 
 @Component({
   selector: 'ft-category-modal',
@@ -148,7 +149,7 @@ export class CategoryModalComponent {
 
     const payload = {
       name: data.name,
-      icon: data.icon || this.categoryMark(data.name),
+      icon: data.icon || categoryMark(data.name),
       color: data.color,
       kind: data.kind,
     };
@@ -173,14 +174,5 @@ export class CategoryModalComponent {
         this.toast.error(err.error?.message || this.i18n.translate('common.toasts.category_save_failed'));
       },
     });
-  }
-
-  private categoryMark(name: string): string {
-    return name
-      .split(/[^A-Za-z0-9]+/)
-      .filter(Boolean)
-      .slice(0, 2)
-      .map((part) => part[0]!.toUpperCase())
-      .join('') || 'OT';
   }
 }

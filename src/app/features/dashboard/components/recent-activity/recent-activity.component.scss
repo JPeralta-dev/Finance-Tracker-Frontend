@@ -94,6 +94,14 @@
     min-width: 0;
   }
 
+  &__right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+
   &__desc {
     font-size: 14px;
     font-weight: 500;
@@ -125,6 +133,7 @@
   }
 
   &__amount {
+    font-family: var(--font-mono);
     font-size: 14px;
     font-weight: 600;
     font-variant-numeric: tabular-nums;
@@ -205,11 +214,11 @@
 .activity-row__type-badge {
   display: inline-flex;
   align-items: center;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  padding: 1px 6px;
+  padding: 3px 6px;
   border-radius: 4px;
   margin-right: 4px;
   vertical-align: middle;

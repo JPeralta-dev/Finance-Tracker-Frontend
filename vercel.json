@@ -11,7 +11,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://finance-tracker-backend-production-2573.up.railway.app/api/:path*"
+      "destination": "https://finance-tracker-backend-bor6.onrender.com/api/:path*"
     },
     {
       "source": "/robots.txt",
