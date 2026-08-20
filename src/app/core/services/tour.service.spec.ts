@@ -1,6 +1,7 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { FtTourService } from './tour.service';
 import { FtAnalyticsService } from './analytics.service';
+import { DEFAULT_TOUR_STATE } from '../../shared/models/tour.types';
 
 describe('FtTourService', () => {
   let service: FtTourService;
@@ -25,6 +26,43 @@ describe('FtTourService', () => {
   it('should not be active by default', () => {
     expect(service.isActive()).toBe(false);
     expect(service.shouldPromptForTour()).toBe(true);
+  });
+
+  it('should auto-start for brand new users', () => {
+    expect(service.shouldAutoStart()).toBe(true);
+    expect(service.shouldShowTriggerCard()).toBe(false);
+  });
+
+  it('should not auto-start after postpone', () => {
+    service.postpone();
+    expect(service.shouldAutoStart()).toBe(false);
+    expect(service.shouldShowTriggerCard()).toBe(false);
+  });
+
+  it('should show trigger card after postpone cooldown', fakeAsync(() => {
+    service.postpone();
+    // Advance time past the 1-hour cooldown
+    const future = Date.now() + 60 * 60 * 1000 + 1;
+    jasmine.clock().mockDate(new Date(future));
+    expect(service.shouldShowTriggerCard()).toBe(true);
+  }));
+
+  it('should not show trigger card while tour is active', () => {
+    service.start();
+    expect(service.shouldShowTriggerCard()).toBe(false);
+  });
+
+  it('should not show trigger card after completion', () => {
+    service.start();
+    for (let i = 0; i < 4; i++) service.next();
+    service.next(); // completes
+    expect(service.shouldShowTriggerCard()).toBe(false);
+  });
+
+  it('should not show trigger card after skip', () => {
+    service.start();
+    service.skip();
+    expect(service.shouldShowTriggerCard()).toBe(false);
   });
 
   it('should start the tour at step 1 and fire analytics', () => {
@@ -75,22 +113,41 @@ describe('FtTourService', () => {
     expect(service.hasFinishedTour()).toBe(true);
   });
 
+  it('should postpone without marking as skipped', () => {
+    service.postpone();
+    expect(service.tourState().status).toBe('not_started');
+    expect(service.hasFinishedTour()).toBe(false);
+    expect(service.tourState().postponedAt).toBeDefined();
+  });
+
   it('should resume from the last step on start() when status is in_progress', () => {
     service.start();
     service.next();
     service.next();
     service.stop();
-    // New service instance to force re-hydration from localStorage
     const fresh = TestBed.inject(FtTourService);
     fresh.start();
     expect(fresh.currentStepNumber()).toBe(3);
   });
 
-  it('should reset on resetTour()', () => {
+  it('should reset on resetTour() including postponedAt', () => {
     service.start();
     service.skip();
     service.resetTour();
     expect(service.tourState().status).toBe('not_started');
     expect(service.hasFinishedTour()).toBe(false);
+    expect(service.tourState().postponedAt).toBeUndefined();
+    expect(service.shouldAutoStart()).toBe(true);
+  });
+
+  it('shouldAutoStart returns false after start() is called', () => {
+    expect(service.shouldAutoStart()).toBe(true);
+    service.start();
+    expect(service.shouldAutoStart()).toBe(false);
+  });
+
+  it('should set postponedAt on postpone()', () => {
+    service.postpone();
+    expect(service.tourState().postponedAt).toBeGreaterThan(0);
   });
 });

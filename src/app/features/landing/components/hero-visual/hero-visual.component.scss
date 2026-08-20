@@ -6,6 +6,64 @@
   min-height: 380px;
 }
 
+.hero-visual__product-shot {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 820px);
+  margin: 0;
+  padding: clamp(12px, 2vw, 24px);
+  overflow: visible;
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.16),
+    rgba(255, 255, 255, 0.045) 42%,
+    rgba(124, 58, 237, 0.1)
+  );
+  backdrop-filter: blur(14px) saturate(115%);
+  -webkit-backdrop-filter: blur(14px) saturate(115%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 26px;
+  box-shadow:
+    0 24px 48px rgba(0, 0, 0, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  animation: product-shot-in 700ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.hero-visual__product-shot::after {
+  content: '';
+  position: absolute;
+  inset: 22% 8% 8%;
+  z-index: -1;
+  border-radius: 50%;
+  background: rgba(124, 58, 237, 0.22);
+  filter: blur(48px);
+}
+
+.hero-visual__product-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 18px;
+  box-shadow: 0 20px 36px rgba(0, 0, 0, 0.28);
+}
+
+@keyframes product-shot-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-visual__product-shot {
+    animation: none;
+  }
+}
+
 /* Main Dashboard Card */
 .hero-visual__main-card {
   width: 100%;

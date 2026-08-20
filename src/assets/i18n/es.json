@@ -844,37 +844,38 @@
     "skipTour": "Saltar tour",
     "previous": "Atrás",
     "next": "Siguiente",
-    "finish": "Listo",
+    "finish": "Entendido",
     "startExploring": "Empezar a explorar",
     "triggerCard": {
-      "title": "¿Hacés un tour rápido?",
-      "description": "Te mostramos lo esencial en menos de un minuto.",
-      "start": "Empezar tour",
-      "later": "Más tarde"
+      "title": "¿Sos nuevo por acá?",
+      "description": "Un tour de 30 segundos por tu centro de control financiero.",
+      "start": "Mostrame",
+      "later": "Ahora no"
     },
     "steps": {
       "welcome": {
-        "title": "¡Bienvenido a Flowr!",
-        "description": "Tu dinero, perfectamente organizado. Mirá lo que podés hacer desde el panel principal."
+        "title": "Bienvenido a Flowr",
+        "description": "Tu plata, perfectamente organizada. De acá ves tu panorama financiero completo — balance, ingresos, gastos, todo en un solo lugar."
       },
       "telegram": {
-        "title": "Conectá Telegram",
-        "description": "Registrá gastos enviando un mensaje a nuestro bot. Sin abrir la app.",
-        "cta": "Conectar ahora"
+        "title": "Registrá desde cualquier lado",
+        "description": "Conectá Telegram y registrá gastos con solo mandar un mensaje. Sin necesidad de abrir la app cada vez.",
+        "cta": "Conectar Telegram"
       },
       "categories": {
-        "title": "Creá categorías",
-        "description": "Personalizá cómo se organizan tus gastos. Comida, transporte, ocio — como vos quieras.",
-        "cta": "Crear categoría"
+        "title": "Organizalo a tu manera",
+        "description": "Las categorías te muestran exactamente en qué se va la plata. Comida, transporte, suscripciones — personalizalas como vos quieras.",
+        "cta": "Configurar categorías"
       },
       "logExpense": {
-        "title": "Registrá tu primer gasto",
-        "description": "Un click, un gasto registrado. Flowr se encarga del resto.",
-        "cta": "Cargar gasto"
+        "title": "Tu primer gasto",
+        "description": "Tocá el botón de abajo y registrá algo. Un café, las compras, eso que compraste online. Flowr se encarga del resto.",
+        "cta": "Registrar un gasto"
       },
       "done": {
-        "title": "¡Listo!",
-        "description": "Ya sabés lo esencial. Empezá a explorar y descubrí todo lo que Flowr puede hacer por vos."
+        "title": "✅ Ya estás listo",
+        "description": "Eso es lo esencial de Flowr. Registrá desde cualquier lado, ve todo acá — y este botón te lleva directo a tu primer gasto.",
+        "cta": "Registrar mi primer gasto"
       }
     }
   },

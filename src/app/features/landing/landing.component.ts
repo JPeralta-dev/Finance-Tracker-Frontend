@@ -78,10 +78,10 @@ export class LandingComponent implements OnInit {
   private setSeoTags(): void {
     const translations = this.translationService.translations();
     const t = (translations && translations['landing']) ?? {};
-    const title = `${t['heroBadge'] ?? 'Flowr'} — ${(t['heroTitle'] ?? 'Your money, perfectly organized').replace(/<[^>]+>/g, '')}`;
+    const title = `${t['heroBadge'] ?? 'Kipu'} — ${(t['heroTitle'] ?? 'Your money, perfectly organized').replace(/<[^>]+>/g, '')}`;
     const description = t['heroSubtitle'] ?? 'Track, analyze, and optimize your spending — free forever.';
     const keywords =
-      'personal finance, expense tracker, budget app, money management, financial insights, Flowr';
+      'personal finance, expense tracker, budget app, money management, financial insights, Kipu';
     const ogImage = `${this.siteUrl}${this.ogImagePath}`;
 
     this.title.setTitle(title);

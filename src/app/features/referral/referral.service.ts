@@ -258,11 +258,11 @@ export class FtReferralService {
   // ── Internals ────────────────────────────────────────────────
 
   private shareText(): string {
-    return `Probá Flowr — la app para organizar tus gastos. Con mi link te llevás 1 mes gratis: ${this.link()}`;
+    return `Probá Kipu — la app para organizar tus gastos. Con mi link te llevás 1 mes gratis: ${this.link()}`;
   }
 
   private shareSubject(): string {
-    return 'Te regalo 1 mes en Flowr';
+    return 'Te regalo 1 mes en Kipu';
   }
 
   private generateLocalCode(userId: string): ReferralCode {
