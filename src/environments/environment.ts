@@ -4,7 +4,7 @@ export const environment = {
   telegramBotUrl: "https://t.me/hormigaTrackerBot",
   posthog: {
     apiKey: '', // Loaded at runtime via PostHog init script in index.html for prod
-    apiHost: 'https://us.i.posthog.com',
+    apiHost: 'http://localhost:3010',
     enabled: false, // Disabled by default in dev
     debug: true,
     consentRequired: true,

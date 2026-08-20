@@ -36,6 +36,7 @@ export interface TourState {
   currentStep: number; // 1-based, 0 = not started
   completedAt: string | null;
   updatedAt: number;
+  postponedAt?: number;
 }
 
 export const DEFAULT_TOUR_STATE: TourState = {
@@ -43,4 +44,5 @@ export const DEFAULT_TOUR_STATE: TourState = {
   currentStep: 1,
   completedAt: null,
   updatedAt: 0,
+  postponedAt: undefined,
 };

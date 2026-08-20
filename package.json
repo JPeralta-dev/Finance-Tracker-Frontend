@@ -27,6 +27,7 @@
     "@fontsource/space-grotesk": "^5.2.10",
     "@ng-icons/core": "^26.5.0",
     "@ng-icons/heroicons": "^26.5.0",
+    "driver.js": "^1.8.0",
     "echarts": "^5.5.0",
     "esbuild": "^0.20.1",
     "rxjs": "~7.8.0",
@@ -52,4 +53,3 @@
     "typescript": "~5.4.2"
   }
 }
-

@@ -1,4 +1,4 @@
-import { Component, signal, inject, OnInit, computed, Injectable, ChangeDetectionStrategy } from '@angular/core';
+import { Component, signal, inject, OnInit, AfterViewInit, computed, Injectable, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { catchError, forkJoin, of } from 'rxjs';
@@ -76,7 +76,7 @@ class ChartColorCache {
   styleUrl: './dashboard.page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DashboardPage implements OnInit {
+export class DashboardPage implements OnInit, AfterViewInit {
   private readonly financeService = inject(FinanceService);
   private readonly toast = inject(ToastService);
   readonly i18n = inject(TranslationService);
@@ -127,6 +127,16 @@ export class DashboardPage implements OnInit {
 
   ngOnInit(): void {
     this.loadData();
+  }
+
+  ngAfterViewInit(): void {
+    if (this.authService.isAuthenticated()) {
+      setTimeout(() => {
+        if (this.tour.shouldAutoStart()) {
+          this.tour.start();
+        }
+      }, 1500);
+    }
   }
 
   private loadData(): void {
@@ -204,6 +214,6 @@ export class DashboardPage implements OnInit {
   }
 
   dismissTourPrompt(): void {
-    this.tour.skip();
+    this.tour.postpone();
   }
 }
