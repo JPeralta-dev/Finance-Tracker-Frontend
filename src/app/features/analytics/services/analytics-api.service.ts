@@ -12,7 +12,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError, timer } from 'rxjs';
-import { retry, catchError } from 'rxjs/operators';
+import { retry, catchError, map } from 'rxjs/operators';
 
 import { environment } from '../../../../environments/environment';
 
@@ -94,6 +94,41 @@ export interface AnalyticsTransaction {
   bank: string;
   category: string;
   icon: string;
+}
+
+interface AnalyticsTransactionPayload {
+  id: string;
+  amount: number;
+  type: 'income' | 'expense';
+  date: string;
+  category: string;
+  merchant?: string;
+  description?: string;
+  bank?: string | { name?: string };
+  icon?: string;
+}
+
+type RecentTransactionsResponse =
+  | AnalyticsTransactionPayload[]
+  | { transactions: AnalyticsTransactionPayload[] };
+
+function normalizeRecentTransactions(
+  response: RecentTransactionsResponse,
+): { transactions: AnalyticsTransaction[] } {
+  const transactions = Array.isArray(response) ? response : response.transactions;
+
+  return {
+    transactions: transactions.map(tx => ({
+      id: tx.id,
+      merchant: tx.merchant ?? tx.description ?? '',
+      amount: tx.amount,
+      type: tx.type,
+      date: tx.date,
+      bank: typeof tx.bank === 'string' ? tx.bank : tx.bank?.name ?? '',
+      category: tx.category,
+      icon: tx.icon || 'circle',
+    })),
+  };
 }
 
 /** Bank response from /api/analytics/banks */
@@ -273,9 +308,10 @@ export class AnalyticsApiService {
   getRecentTransactions(range?: DateRange, bankId?: string, type?: string, category?: string, limit: number = 10): Observable<{ transactions: AnalyticsTransaction[] }> {
     let params = this.buildParams(range, bankId, type, category).set('limit', limit);
     return this.http
-      .get<{ transactions: AnalyticsTransaction[] }>(`${this.base}/transactions`, { params })
+      .get<RecentTransactionsResponse>(`${this.base}/transactions`, { params })
       .pipe(
         retry(this.retryConfig),
+        map(normalizeRecentTransactions),
         catchError(this.handleError),
       );
   }

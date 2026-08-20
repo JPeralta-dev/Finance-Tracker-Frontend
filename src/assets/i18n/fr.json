@@ -81,6 +81,7 @@
     "transactions": "Transactions",
     "categories": "Catégories",
     "analytics": "Analytique",
+    "insights": "Perspectives",
     "settings": "Paramètres",
     "newTransaction": "Nouvelle Transaction",
     "profile": "Profil"
@@ -228,7 +229,15 @@
     }
   },
   "insights": {
-    "title": "Insights IA",
+    "title": "Perspectives du Mois",
+    "subtitle": "Résumé narratif de ce qui s'est passé avec vos finances ce mois-ci",
+    "loading": "Chargement des perspectives...",
+    "fetching": "Analyse de vos données financières",
+    "errorTitle": "Erreur lors du chargement",
+    "errorLoading": "Nous n'avons pas pu charger vos perspectives. Veuillez réessayer.",
+    "retry": "Réessayer",
+    "emptyTitle": "Pas de perspectives",
+    "emptyDesc": "Lorsque nous aurons suffisamment de données, nous vous montrerons un résumé de ce qui s'est passé ce mois-ci.",
     "empty": "Pas encore d'insights disponibles. Commencez à ajouter des transactions pour obtenir des recommandations personnalisées.",
     "mom_increase": {
       "title": "Dépenses en hausse",

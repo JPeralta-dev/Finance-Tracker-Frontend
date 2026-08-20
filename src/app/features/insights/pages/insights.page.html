@@ -1,0 +1,67 @@
+<div class="insights-page">
+  @switch (pageState()) {
+    @case ('loading') {
+      <div class="insights-loading" ftSubtleReveal="fade-up">
+        <h1 class="insights-loading__title">{{ 'insights.loading' | translate }}</h1>
+        <p class="insights-loading__subtitle">{{ 'insights.fetching' | translate }}</p>
+      </div>
+      <div class="insights-skeleton" ftSubtleReveal="fade-up" [delay]="100">
+        <div class="skeleton-card"></div>
+        <div class="skeleton-card"></div>
+        <div class="skeleton-card"></div>
+      </div>
+    }
+
+    @case ('error') {
+      <ft-empty-state
+        icon="warning"
+        [title]="'insights.errorTitle' | translate"
+        [description]="errorMessage()"
+        [actionLabel]="'insights.retry' | translate"
+        [showActionBtn]="true"
+        (action)="retry()"
+        ftSubtleReveal="fade-up"
+      />
+    }
+
+    @case ('ready') {
+      <!-- Header -->
+      <div class="insights-header" ftSubtleReveal="fade-up" [delay]="0">
+        <h1 class="insights-header__title">{{ 'insights.title' | translate }}</h1>
+        <p class="insights-header__subtitle">{{ 'insights.subtitle' | translate }}</p>
+      </div>
+
+      @if (insights().length === 0) {
+        <ft-empty-state
+          icon="star"
+          [title]="'insights.emptyTitle' | translate"
+          [description]="'insights.emptyDesc' | translate"
+          ftSubtleReveal="fade-up"
+          [delay]="100"
+        />
+      } @else {
+        <div class="insights-grid">
+          @for (insight of insights(); track $index; let i = $index) {
+            <div
+              class="insight-card"
+              [class.insight-card--success]="insight.type === 'success'"
+              [class.insight-card--warning]="insight.type === 'warning'"
+              [class.insight-card--info]="insight.type === 'info'"
+              [class.insight-card--trend]="insight.type === 'trend'"
+              ftSubtleReveal="fade-up"
+              [delay]="i * 50"
+            >
+              <div class="insight-card__icon">
+                <ng-icon [name]="insight.icon" size="1.25rem" />
+              </div>
+              <div class="insight-card__content">
+                <h3 class="insight-card__title">{{ insight.title }}</h3>
+                <p class="insight-card__message">{{ insight.message }}</p>
+              </div>
+            </div>
+          }
+        </div>
+      }
+    }
+  }
+</div>

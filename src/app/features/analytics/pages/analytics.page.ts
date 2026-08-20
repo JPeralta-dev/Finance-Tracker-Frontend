@@ -11,7 +11,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { NgIcon } from '@ng-icons/core';
-import { catchError, forkJoin, of, tap } from 'rxjs';
+import { catchError, forkJoin, of } from 'rxjs';
 
 // ─── ECharts ────────────────────────────────────────────────────────────────
 import { FtEChartComponent, ChartClickEvent } from '../../../shared/charts';
@@ -22,11 +22,7 @@ import type { EChartsOption } from 'echarts';
 import { AnalyticsHeaderComponent, PeriodOption } from '../components/analytics-header/analytics-header.component';
 import { AnalyticsKpisComponent } from '../components/analytics-kpis/analytics-kpis.component';
 import { AnalyticsFiltersComponent } from '../components/analytics-filters/analytics-filters.component';
-import { AnalyticsInsightsComponent } from '../components/analytics-insights/analytics-insights.component';
-import { AnalyticsComparisonComponent } from '../components/analytics-comparison/analytics-comparison.component';
 import { AnalyticsTransactionsComponent } from '../components/analytics-transactions/analytics-transactions.component';
-import { AnalyticsMonthStoryComponent } from '../components/analytics-month-story/analytics-month-story.component';
-import { AnalyticsCategoryBreakdownComponent } from '../components/analytics-category-breakdown/analytics-category-breakdown.component';
 import { AnalyticsChartCardComponent } from '../components/analytics-chart-card/analytics-chart-card.component';
 import { EmptyStateComponent } from '../../../shared/components/empty-state.component';
 import { FtSubtleRevealDirective } from '../../../shared/directives/ft-subtle-reveal.directive';
@@ -37,13 +33,13 @@ import { TranslatePipe } from '../../../core/pipes/translate.pipe';
 import { TranslationService } from '../../../core/services/translation.service';
 import { CurrencyService } from '../../../core/services/currency.service';
 import { ToastService } from '../../../core/services/toast.service';
-import { AnalyticsApiService, AnalyticsSummary, MonthlyTrend, CategoryBreakdown, DailySpending, AnalyticsInsight, AnalyticsTransaction, BankInfo, DateRange, HourlyActivityResponse, WeeklyPatternsResponse } from '../services/analytics-api.service';
+import { AnalyticsApiService, AnalyticsSummary, MonthlyTrend, CategoryBreakdown, DailySpending, AnalyticsTransaction, BankInfo, DateRange, HourlyActivityResponse, WeeklyPatternsResponse } from '../services/analytics-api.service';
 import { AnalyticsStore } from '../services/analytics.store';
 import { ICONS } from '../../../shared/icons/icon-registry';
 import { DateRangeService } from '../../../core/services/date-range.service';
 
 // ─── Types ──────────────────────────────────────────────────────────────────
-import type { KpiData, MonthStory, CategoryAnalysis, ComparisonData, InsightData as UiInsightData, RelevantTransaction } from '../analytics.types';
+import type { KpiData, MonthStory, CategoryAnalysis, RelevantTransaction } from '../analytics.types';
 
 // ─── Pure helpers ───────────────────────────────────────────────────────────
 
@@ -147,47 +143,6 @@ export function mapToCategoryAnalysis(
     }));
 }
 
-/** Map API summary to ComparisonData */
-export function mapToComparisons(
-  summary: AnalyticsSummary | null,
-  currencySymbol: string,
-  i18n: TranslationService,
-): ComparisonData[] {
-  const hasValidData = summary && typeof summary.totalIncome === 'number';
-  if (!hasValidData) {
-    return [
-      { labelKey: 'analytics.comparison.income', current: 0, previous: 0, percentChange: 0, trend: 'stable' },
-      { labelKey: 'analytics.comparison.expenses', current: 0, previous: 0, percentChange: 0, trend: 'stable' },
-    ];
-  }
-
-  const currentIncome = summary.totalIncome;
-  const prevIncome = summary.incomeChange !== 0
-    ? currentIncome / (1 + summary.incomeChange / 100)
-    : currentIncome;
-  const currentExpense = summary.totalExpenses;
-  const prevExpense = summary.expenseChange !== 0
-    ? currentExpense / (1 + summary.expenseChange / 100)
-    : currentExpense;
-
-  return [
-    {
-      labelKey: 'analytics.comparison.income',
-      current: currentIncome,
-      previous: Math.round(prevIncome),
-      percentChange: summary.incomeChange,
-      trend: summary.incomeChange >= 0 ? 'up' : 'down',
-    },
-    {
-      labelKey: 'analytics.comparison.expenses',
-      current: currentExpense,
-      previous: Math.round(prevExpense),
-      percentChange: summary.expenseChange,
-      trend: summary.expenseChange <= 0 ? 'down' : 'up',
-    },
-  ];
-}
-
 /** Map API transactions to UI RelevantTransaction */
 export function mapToRelevantTransactions(
   txs: AnalyticsTransaction[],
@@ -200,31 +155,6 @@ export function mapToRelevantTransactions(
     type: tx.type,
     date: tx.date,
     icon: tx.icon || 'circle',
-  }));
-}
-
-/** Map API insights to UI InsightData */
-export function mapToUiInsights(
-  insights: AnalyticsInsight[],
-  i18n: TranslationService,
-): UiInsightData[] {
-  const iconMap: Record<string, string> = {
-    spending: 'trendingUp', savings: 'wallet', anomaly: 'alertTriangle',
-    positive: 'star', subscription: 'repeat',
-    warning: 'alertTriangle', info: 'info', success: 'star', trend: 'trendingUp',
-  };
-  const typeMap: Record<string, 'success' | 'warning' | 'info' | 'trend'> = {
-    high: 'warning', medium: 'info', low: 'success',
-    warning: 'warning', info: 'info', success: 'success', trend: 'trend',
-  };
-
-  return insights.map(ins => ({
-    icon: iconMap[ins.type] ?? 'info',
-    titleKey: `analytics.insight.${ins.type}`,
-    messageKey: ins.messageKey,
-    params: ins.params || (ins.data as Record<string, number | string> | undefined),
-    type: typeMap[ins.severity] ?? typeMap[ins.type] ?? 'info',
-    severity: ins.severity,
   }));
 }
 
@@ -304,11 +234,7 @@ export function generateMonthStories(
     AnalyticsHeaderComponent,
     AnalyticsKpisComponent,
     AnalyticsFiltersComponent,
-    AnalyticsInsightsComponent,
-    AnalyticsComparisonComponent,
     AnalyticsTransactionsComponent,
-    AnalyticsMonthStoryComponent,
-    AnalyticsCategoryBreakdownComponent,
     AnalyticsChartCardComponent,
   ],
   templateUrl: './analytics.page.html',
@@ -352,24 +278,8 @@ export class AnalyticsPage implements OnInit {
     ),
   );
 
-  readonly comparisons = computed<ComparisonData[]>(() =>
-    mapToComparisons(
-      this.store.summary(),
-      this.currencyService.currencyConfig().symbol,
-      this.i18n,
-    ),
-  );
-
   readonly uiTransactions = computed<RelevantTransaction[]>(() =>
     mapToRelevantTransactions(this.store.transactions()),
-  );
-
-  readonly uiInsights = computed<UiInsightData[]>(() =>
-    mapToUiInsights(this.store.insights(), this.i18n),
-  );
-
-  readonly monthStories = computed<MonthStory[]>(() =>
-    generateMonthStories(this.store.summary(), this.store.monthlyTrend(), this.i18n),
   );
 
   readonly banks = computed<BankInfo[]>(() => this.store.banks());

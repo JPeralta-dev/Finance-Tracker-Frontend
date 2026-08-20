@@ -81,6 +81,7 @@
     "transactions": "Transacciones",
     "categories": "Categorías",
     "analytics": "Análisis",
+    "insights": "Insights",
     "settings": "Configuración",
     "newTransaction": "Nueva Transacción",
     "profile": "Perfil"
@@ -399,7 +400,15 @@
     }
   },
   "insights": {
-    "title": "Insights IA",
+    "title": "Insights del Mes",
+    "subtitle": "Resumen narrativo de lo que pasó con tus finanzas este mes",
+    "loading": "Cargando insights...",
+    "fetching": "Analizando tus datos financieros",
+    "errorTitle": "Error al cargar insights",
+    "errorLoading": "No pudimos cargar tus insights. Intentá de nuevo.",
+    "retry": "Reintentar",
+    "emptyTitle": "Sin insights por ahora",
+    "emptyDesc": "Cuando tengamos datos suficientes, te mostraremos un resumen de lo que pasó este mes.",
     "empty": "Aún no hay insights disponibles. Comienza a agregar transacciones para obtener recomendaciones personalizadas.",
     "mom_increase": {
       "title": "Gastos aumentaron",
