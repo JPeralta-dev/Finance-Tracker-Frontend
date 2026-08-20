@@ -41,7 +41,7 @@
         />
       } @else {
         <div class="insights-grid">
-          @for (insight of insights(); track $index; let i = $index) {
+          @for (insight of insights(); track insight; let i = $index) {
             <div
               class="insight-card"
               [class.insight-card--success]="insight.type === 'success'"

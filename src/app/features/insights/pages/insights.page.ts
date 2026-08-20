@@ -50,9 +50,9 @@ export class InsightsPage implements OnInit {
 
   private loadInsights(): void {
     this.pageState.set('loading');
-    const params = this.dateRange.apiParams();
+    const range = this.dateRange.getApiParams();
 
-    this.api.getInsights(params.range, params.bankId, params.type, params.category).pipe(
+    this.api.getInsights(range.startDate && range.endDate ? { startDate: range.startDate, endDate: range.endDate } : undefined).pipe(
       catchError((err) => {
         this.errorMessage.set(err?.message || this.i18n.translate('insights.errorLoading'));
         this.pageState.set('error');
@@ -73,7 +73,7 @@ export class InsightsPage implements OnInit {
           return {
             icon: iconMap[ins.type] ?? 'info',
             title: this.i18n.translate(`analytics.insight.${ins.type}`),
-            message: ins.messageKey ? this.i18n.translate(ins.messageKey, ins.params || ins.data || {}) : '',
+            message: ins.messageKey ? this.i18n.translate(ins.messageKey, (ins.params || (ins.data as Record<string, string | number>)) || {}) : '',
             type: typeMap[ins.severity] ?? typeMap[ins.type] ?? 'info',
             severity: ins.severity,
           };
