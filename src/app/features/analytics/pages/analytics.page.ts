@@ -18,12 +18,12 @@ import { FtEChartComponent, ChartClickEvent } from '../../../shared/charts';
 import { EchartsThemeMapper } from '../../../shared/charts/echarts/echarts-theme.mapper';
 import type { EChartsOption } from 'echarts';
 
-// ─── Orphaned Components ────────────────────────────────────────────────────
-import { AnalyticsHeaderComponent, PeriodOption } from '../components/analytics-header/analytics-header.component';
+// ─── Analytics Components ────────────────────────────────────────────────────
+import type { PeriodOption } from '../components/analytics-header/analytics-header.component';
 import { AnalyticsKpisComponent } from '../components/analytics-kpis/analytics-kpis.component';
 import { AnalyticsFiltersComponent } from '../components/analytics-filters/analytics-filters.component';
-import { AnalyticsTransactionsComponent } from '../components/analytics-transactions/analytics-transactions.component';
 import { AnalyticsChartCardComponent } from '../components/analytics-chart-card/analytics-chart-card.component';
+import { RecentActivityComponent, ActivityItem } from '../../../features/dashboard/components/recent-activity/recent-activity.component';
 import { EmptyStateComponent } from '../../../shared/components/empty-state.component';
 import { FtSubtleRevealDirective } from '../../../shared/directives/ft-subtle-reveal.directive';
 import { ClickOutsideDirective } from '../../../shared/directives/click-outside.directive';
@@ -39,7 +39,7 @@ import { ICONS } from '../../../shared/icons/icon-registry';
 import { DateRangeService } from '../../../core/services/date-range.service';
 
 // ─── Types ──────────────────────────────────────────────────────────────────
-import type { KpiData, MonthStory, CategoryAnalysis, RelevantTransaction } from '../analytics.types';
+import type { KpiData, MonthStory, CategoryAnalysis } from '../analytics.types';
 
 // ─── Pure helpers ───────────────────────────────────────────────────────────
 
@@ -143,10 +143,10 @@ export function mapToCategoryAnalysis(
     }));
 }
 
-/** Map API transactions to UI RelevantTransaction */
-export function mapToRelevantTransactions(
+/** Map API transactions to UI ActivityItem */
+export function mapToActivityItems(
   txs: AnalyticsTransaction[],
-): RelevantTransaction[] {
+): ActivityItem[] {
   return txs.map(tx => ({
     id: tx.id,
     description: tx.merchant,
@@ -154,7 +154,8 @@ export function mapToRelevantTransactions(
     amount: Math.abs(tx.amount),
     type: tx.type,
     date: tx.date,
-    icon: tx.icon || 'circle',
+    bankName: tx.bank || undefined,
+    origin: (tx as any).origin,
   }));
 }
 
@@ -231,10 +232,9 @@ export function generateMonthStories(
     EmptyStateComponent,
     ClickOutsideDirective,
     TranslatePipe,
-    AnalyticsHeaderComponent,
+    RecentActivityComponent,
     AnalyticsKpisComponent,
     AnalyticsFiltersComponent,
-    AnalyticsTransactionsComponent,
     AnalyticsChartCardComponent,
   ],
   templateUrl: './analytics.page.html',
@@ -250,6 +250,7 @@ export class AnalyticsPage implements OnInit {
   private readonly toast = inject(ToastService);
   private readonly destroyRef = inject(DestroyRef);
   readonly dateRange = inject(DateRangeService);
+  private readonly userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
   /** Period options for the header buttons */
   readonly periodOptions: { value: PeriodOption; labelKey: string }[] = [
@@ -278,8 +279,8 @@ export class AnalyticsPage implements OnInit {
     ),
   );
 
-  readonly uiTransactions = computed<RelevantTransaction[]>(() =>
-    mapToRelevantTransactions(this.store.transactions()),
+  readonly activityItems = computed<ActivityItem[]>(() =>
+    mapToActivityItems(this.store.transactions()),
   );
 
   readonly banks = computed<BankInfo[]>(() => this.store.banks());
@@ -346,7 +347,11 @@ export class AnalyticsPage implements OnInit {
     const expenseData = data.hours.map(h => h.expenses);
     const currencySymbol = this.currencyService.currencyConfig().symbol;
 
-    return this.themeMapper.buildHourlyBarOption(hours, incomeData, expenseData, currencySymbol);
+    const maxExpenseHour = expenseData.reduce((maxIdx, val, idx, arr) =>
+      val > arr[maxIdx] ? idx : maxIdx, 0);
+    const peakHour = maxExpenseHour;
+
+    return this.themeMapper.buildHourlyBarOptionWithPeak(hours, incomeData, expenseData, currencySymbol, peakHour);
   });
 
   // ─── Weekly Patterns Chart (with averages) ──────────────────────────────
@@ -358,25 +363,53 @@ export class AnalyticsPage implements OnInit {
     const data = this._weeklyPatterns();
     if (!data || !data.patterns || data.patterns.length === 0) return undefined;
 
-    // Map dayOfWeek (0=Sun, 1=Mon, ..., 6=Sat) to labels and sum averages
-    const DAY_LABELS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-    const dayMap = new Map<string, number>();
+    const categoryTotals = new Map<string, number>();
     for (const p of data.patterns) {
-      const label = DAY_LABELS[p.dayOfWeek] ?? 'Unknown';
-      const current = dayMap.get(label) ?? 0;
-      dayMap.set(label, current + p.average);
+      categoryTotals.set(p.category, (categoryTotals.get(p.category) ?? 0) + p.total);
     }
+
+    const topCategories = Array.from(categoryTotals.entries())
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 5)
+      .map(([cat]) => cat);
+
+    const otherKey = this.i18n.translate('analytics.otherCategories') || 'Otros';
 
     const dayOrder = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
     const labels = dayOrder.map(d => this.i18n.translate(DAY_KEY_MAP[d] ?? d));
-    const values = dayOrder.map(d => dayMap.get(d) ?? 0);
 
+    const datasets: { label: string; data: number[]; color: string }[] = [];
     const colors = this.themeMapper.categoryColors();
-    return this.themeMapper.buildWeeklyPatternsOption(
-      labels,
-      [{ label: this.i18n.translate('analytics.weeklyAverage'), data: values, color: colors[3] }],
-      this.i18n.translate('analytics.weeklyAverage'),
-    );
+
+    topCategories.forEach((cat, idx) => {
+      const dayData = dayOrder.map((_, dayIdx) => {
+        const dayOfWeek = dayIdx === 6 ? 0 : dayIdx + 1;
+        const pattern = data.patterns.find(p => p.dayOfWeek === dayOfWeek && p.category === cat);
+        return pattern?.average ?? 0;
+      });
+
+      datasets.push({
+        label: this.i18n.translate(cat),
+        data: dayData,
+        color: colors[idx % colors.length],
+      });
+    });
+
+    const othersData = dayOrder.map((_, dayIdx) => {
+      const dayOfWeek = dayIdx === 6 ? 0 : dayIdx + 1;
+      const dayPatterns = data.patterns.filter(p => p.dayOfWeek === dayOfWeek && !topCategories.includes(p.category));
+      return dayPatterns.reduce((sum, p) => sum + p.average, 0);
+    });
+
+    if (othersData.some(v => v > 0)) {
+      datasets.push({
+        label: otherKey,
+        data: othersData,
+        color: colors[5 % colors.length],
+      });
+    }
+
+    return this.themeMapper.buildWeeklyPatternsStackedOption(labels, datasets);
   });
 
   // ─── State helpers ──────────────────────────────────────────────────────
@@ -636,8 +669,8 @@ export class AnalyticsPage implements OnInit {
   /** Load new chart endpoints separately — safe to fail without breaking the page */
   private loadOptionalCharts(range?: DateRange, bankId?: string, type?: string, category?: string): void {
     forkJoin({
-      hourlyActivity: this.api.getHourlyActivity(range, bankId, type).pipe(catchError(() => of(null))),
-      weeklyPatterns: this.api.getWeeklyPatterns(range, bankId, type, category).pipe(catchError(() => of(null))),
+      hourlyActivity: this.api.getHourlyActivity(range, bankId, type, this.userTimezone).pipe(catchError(() => of(null))),
+      weeklyPatterns: this.api.getWeeklyPatterns(range, bankId, type, category, this.userTimezone).pipe(catchError(() => of(null))),
     }).subscribe({
       next: ({ hourlyActivity, weeklyPatterns }) => {
         // Validate response shape before setting signals (defense against malformed responses)

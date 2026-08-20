@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting, HttpTestingController } from '@angular/common/http/testing';
-import { AnalyticsPage, mapToKpis, mapToCategoryAnalysis, mapToRelevantTransactions, generateMonthStories } from './analytics.page';
+import { AnalyticsPage, mapToKpis, mapToCategoryAnalysis, mapToActivityItems, generateMonthStories } from './analytics.page';
 import { AnalyticsApiService, AnalyticsSummary, MonthlyTrend, CategoryBreakdown, DailySpending, AnalyticsInsight, AnalyticsTransaction } from '../services/analytics-api.service';
 import { AnalyticsStore } from '../services/analytics.store';
 import { RuleBasedInsightsService } from '../services/insights.service';
@@ -9,6 +9,7 @@ import { EchartsThemeMapper } from '../../../shared/charts/echarts/echarts-theme
 import { CurrencyService } from '../../../core/services/currency.service';
 import { TranslationService } from '../../../core/services/translation.service';
 import { ToastService } from '../../../core/services/toast.service';
+import { environment } from '../../../../environments/environment';
 
 describe('AnalyticsPage — Phase 3 Assembly', () => {
   let component: AnalyticsPage;
@@ -145,13 +146,14 @@ describe('AnalyticsPage — Phase 3 Assembly', () => {
       });
     });
 
-    describe('mapToRelevantTransactions()', () => {
-      it('should map API transactions to UI format', () => {
-        const result = mapToRelevantTransactions(mockTransactions);
+    describe('mapToActivityItems()', () => {
+      it('should map API transactions to UI ActivityItem format', () => {
+        const result = mapToActivityItems(mockTransactions);
         expect(result.length).toBe(3);
         expect(result[0].description).toBe('Uber');
         expect(result[0].type).toBe('expense');
         expect(result[1].type).toBe('income');
+        expect(result[0].bankName).toBeDefined();
       });
     });
 
@@ -220,7 +222,9 @@ describe('AnalyticsPage — Phase 3 Assembly', () => {
       fixture.detectChanges();
 
       // Flush all HTTP requests
-      const reqs = httpMock.match(req => req.url.includes('/api/analytics/'));
+      const reqs = httpMock.match(req =>
+        req.url.includes('/api/analytics/') || req.url === `${environment.apiUrl}/api/transactions`,
+      );
       expect(reqs.length).toBeGreaterThanOrEqual(1); // At least banks call
 
       // Respond to banks
@@ -237,7 +241,7 @@ describe('AnalyticsPage — Phase 3 Assembly', () => {
           req.flush(mockDailySpending);
         } else if (req.request.url.includes('/insights')) {
           req.flush({ insights: mockInsights });
-        } else if (req.request.url.includes('/transactions')) {
+        } else if (req.request.url === `${environment.apiUrl}/api/transactions`) {
           req.flush(mockRawTransactions);
         } else {
           req.flush({});
@@ -248,6 +252,7 @@ describe('AnalyticsPage — Phase 3 Assembly', () => {
       fixture.detectChanges();
 
       expect(store.summary()).not.toBeNull();
+      expect(store.transactions().length).toBe(3);
       expect(store.transactions()[0]).toEqual({
         id: '1',
         merchant: 'Uber',
@@ -258,21 +263,23 @@ describe('AnalyticsPage — Phase 3 Assembly', () => {
         category: 'Transport',
         icon: 'circle',
       });
-      expect(component.uiTransactions()[0]).toEqual(jasmine.objectContaining({
+      expect(component.activityItems()[0]).toEqual(jasmine.objectContaining({
         id: '1',
         description: 'Uber',
         amount: 15,
         type: 'expense',
         icon: 'circle',
       }));
-      expect(component.uiTransactions().length).toBe(3);
+      expect(component.activityItems().length).toBe(3);
       expect(store.loadState()).toBe('ready');
     }));
 
     it('should show error state when API fails', fakeAsync(() => {
       fixture.detectChanges();
 
-      const reqs = httpMock.match(req => req.url.includes('/api/analytics/'));
+      const reqs = httpMock.match(req =>
+        req.url.includes('/api/analytics/') || req.url === `${environment.apiUrl}/api/transactions`,
+      );
       reqs.forEach(req => {
         if (req.request.url.includes('/banks')) {
           req.flush(mockBanks);
@@ -310,7 +317,7 @@ describe('AnalyticsPage — Phase 3 Assembly', () => {
     });
 
     it('should compute uiTransactions from store data', () => {
-      const txs = component.uiTransactions();
+      const txs = component.activityItems();
       expect(txs.length).toBe(3);
     });
 

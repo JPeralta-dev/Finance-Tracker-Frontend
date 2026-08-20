@@ -23,6 +23,8 @@
 
 /* ═══ Header Row ═══ */
 .analytics-header-row {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -362,6 +364,13 @@
     min-height: 320px;
   }
 
+  &__transactions {
+    @include at-lg {
+      max-height: 320px;
+      overflow: hidden;
+    }
+  }
+
   &__hourly {
     @include at-md {
       grid-column: 1 / -1;
@@ -374,6 +383,43 @@
 
   &__weekly {
     min-height: 320px;
+  }
+}
+
+/* ═══ Recent Activity scroll override (inside charts-row transactions) ═══ */
+@media (min-width: 1024px) {
+  .analytics-charts-row__transactions {
+    ft-recent-activity {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    ::ng-deep .recent-activity {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    ::ng-deep .recent-activity__list {
+      flex: 1;
+      overflow-y: auto;
+      min-height: 0;
+      scrollbar-width: thin;
+    }
+
+    ::ng-deep .recent-activity__list::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    ::ng-deep .recent-activity__list::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::ng-deep .recent-activity__list::-webkit-scrollbar-thumb {
+      background: var(--glass-border);
+      border-radius: 4px;
+    }
   }
 }
 

@@ -692,6 +692,7 @@
     "noHourlyData": "No hourly spending data",
     "weeklyPatterns": "Weekly Patterns",
     "weeklyAverage": "Average daily spending",
+    "otherCategories": "Others",
     "noWeeklyData": "No weekly pattern data",
     "chartError": "Error loading chart",
     "welcomeTitle": "Welcome to Analytics",

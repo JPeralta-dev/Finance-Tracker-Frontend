@@ -550,6 +550,7 @@
     "noHourlyData": "Pas de données d'activité horaire",
     "weeklyPatterns": "Tendances Hebdomadaires",
     "weeklyAverage": "Dépense moyenne quotidienne",
+    "otherCategories": "Autres",
     "noWeeklyData": "Pas de données de tendances hebdomadaires",
     "chartError": "Erreur lors du chargement du graphique",
     "welcomeTitle": "Bienvenue dans Analytique",

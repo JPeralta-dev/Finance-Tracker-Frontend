@@ -12,12 +12,14 @@ import {
 } from '@angular/common/http/testing';
 import { AnalyticsApiService, AnalyticsTransaction, DateRange } from './analytics-api.service';
 import { fakeAsync, tick } from '@angular/core/testing';
+import { environment } from '../../../../environments/environment';
 
 describe('AnalyticsApiService', () => {
   let service: AnalyticsApiService;
   let httpMock: HttpTestingController;
 
-  const baseUrl = 'http://localhost:3000/api/analytics';
+  const baseUrl = `${environment.apiUrl}/api/analytics`;
+  const transactionsUrl = `${environment.apiUrl}/api/transactions`;
   const mockDateRange: DateRange = {
     startDate: '2024-01-01',
     endDate: '2024-06-30',
@@ -269,11 +271,11 @@ describe('AnalyticsApiService', () => {
   });
 
   describe('getRecentTransactions', () => {
-    it('should include limit param with default value 10', () => {
+    it('should include limit and newest-first sort params by default', () => {
       service.getRecentTransactions(mockDateRange).subscribe();
 
       const req = httpMock.expectOne(
-        `${baseUrl}/transactions?startDate=2024-01-01&endDate=2024-06-30&limit=10`,
+        `${transactionsUrl}?startDate=2024-01-01&endDate=2024-06-30&limit=10&sortBy=date&sortDir=desc`,
       );
       req.flush({ transactions: [] });
     });
@@ -286,7 +288,7 @@ describe('AnalyticsApiService', () => {
       });
 
       const req = httpMock.expectOne(
-        `${baseUrl}/transactions?startDate=2024-01-01&endDate=2024-06-30&bankId=bank-123&type=expense&category=Food&limit=5`,
+        `${transactionsUrl}?startDate=2024-01-01&endDate=2024-06-30&bankId=bank-123&type=expense&category=Food&limit=5&sortBy=date&sortDir=desc`,
       );
       req.flush([
         {
@@ -322,7 +324,7 @@ describe('AnalyticsApiService', () => {
         result = data;
       });
 
-      const req = httpMock.expectOne(`${baseUrl}/transactions?limit=10`);
+      const req = httpMock.expectOne(`${transactionsUrl}?limit=10&sortBy=date&sortDir=desc`);
       req.flush({
         transactions: [{
           id: 'wrapped-1',

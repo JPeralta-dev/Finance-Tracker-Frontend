@@ -692,6 +692,7 @@
     "noHourlyData": "Sin datos de actividad horaria",
     "weeklyPatterns": "Patrones Semanales",
     "weeklyAverage": "Gasto promedio diario",
+    "otherCategories": "Otros",
     "noWeeklyData": "Sin datos de patrones semanales",
     "chartError": "Error al cargar gráfico",
     "welcomeTitle": "Bienvenido a Análisis",

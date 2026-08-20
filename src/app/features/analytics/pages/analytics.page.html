@@ -205,9 +205,10 @@
 
         <!-- Recent Transactions (narrow) -->
         <div class="analytics-charts-row__transactions" ftSubtleReveal="fade-up" [delay]="250">
-          <ft-analytics-transactions
-            [transactions]="uiTransactions()"
-            [loading]="false"
+          <ft-recent-activity
+            [items]="activityItems()"
+            [loading]="isLoading()"
+            [pageSize]="5"
           />
         </div>
       </div>
