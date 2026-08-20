@@ -85,6 +85,13 @@
   --glow-success: 0 0 20px rgba(6, 214, 160, 0.2);
   --glow-danger: 0 0 20px rgba(255, 107, 107, 0.2);
 
+  /* Tour overlay */
+  --tour-overlay-bg: rgba(18, 11, 26, 0.85);
+  --tour-pulse-glow-dim: rgba(217, 70, 239, 0.15);
+  --tour-pulse-glow-mid: rgba(217, 70, 239, 0.3);
+  --tour-pulse-glow-strong: rgba(217, 70, 239, 0.5);
+  --tour-pulse-glow-bright: rgba(217, 70, 239, 0.25);
+
   /* Chart-specific (dark theme) */
   --chart-grid: rgba(255, 255, 255, 0.06);
 

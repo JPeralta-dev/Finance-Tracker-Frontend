@@ -3,10 +3,9 @@
     <!-- Left: Logo + Home Button + Title + Desktop Nav -->
     <div class="topbar__left">
       <a [routerLink]="getLogoLink()" class="topbar__logo">
-        <span class="topbar__logo-icon">
-          <ng-icon name="wallet" size="1.2rem" />
-        </span>
-        <span class="topbar__logo-text">Flowr</span>
+        <img class="topbar__logo-mark topbar__logo-mark--dark" src="/assets/kipu-mark.png" alt="" />
+        <img class="topbar__logo-mark topbar__logo-mark--light" src="/assets/kipu-mark-light.png" alt="" />
+        <span class="topbar__logo-text">Kipu</span>
       </a>
 
       <!-- Home button: visible only on private routes -->
