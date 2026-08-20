@@ -201,7 +201,7 @@ describe('AnalyticsApiService', () => {
     });
 
     it('should accept custom months value', () => {
-      service.getMonthlyTrend(mockDateRange, undefined, 12).subscribe();
+      service.getMonthlyTrend(mockDateRange, undefined, '12').subscribe();
 
       const req = httpMock.expectOne(
         `${baseUrl}/monthly-trend?startDate=2024-01-01&endDate=2024-06-30&months=12`,

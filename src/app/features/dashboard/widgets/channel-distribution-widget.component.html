@@ -1,0 +1,84 @@
+<div class="channel-distribution-widget" role="region" aria-labelledby="channel-distribution-title">
+  <!-- Header -->
+  <div class="channel-distribution-widget__header">
+    <h2 class="channel-distribution-widget__title" id="channel-distribution-title">
+      <span class="channel-distribution-widget__icon">
+        <ng-icon name="heroOutlineGlobeAlt" size="1.25rem" />
+      </span>
+      {{ 'dashboard.channels.title' | translate }}
+    </h2>
+    @if (state() === 'ready' && totalTransactions() > 0) {
+      <span class="channel-distribution-widget__total">
+        {{ totalTransactions() }} {{ 'dashboard.channels.transactions' | translate }}
+      </span>
+    }
+  </div>
+
+  <!-- Loading skeleton -->
+  @if (state() === 'loading') {
+    <div class="channel-distribution-widget__skeleton">
+      @for (_ of [1, 2, 3, 4]; track $index) {
+        <div class="skeleton-channel">
+          <div class="skeleton-channel__icon"></div>
+          <div class="skeleton-channel__content">
+            <div class="skeleton-channel__line skeleton-channel__line--short"></div>
+            <div class="skeleton-channel__bar"></div>
+          </div>
+        </div>
+      }
+    </div>
+  }
+
+  <!-- Empty state -->
+  @if (state() === 'empty') {
+    <div class="channel-distribution-widget__empty">
+      <div class="empty-icon">
+        <ng-icon name="heroOutlineGlobeAlt" size="2rem" />
+      </div>
+      <p class="empty-title">{{ 'dashboard.channels.emptyTitle' | translate }}</p>
+      <p class="empty-desc">{{ 'dashboard.channels.emptyDesc' | translate }}</p>
+      <a routerLink="/transactions/new" class="empty-cta">{{ 'dashboard.addTransaction' | translate }}</a>
+    </div>
+  }
+
+  <!-- Error state -->
+  @if (state() === 'error') {
+    <div class="channel-distribution-widget__empty">
+      <div class="empty-icon">
+        <ng-icon name="heroOutlineExclamationTriangle" size="2rem" />
+      </div>
+      <p class="empty-title">{{ 'dashboard.channels.errorTitle' | translate }}</p>
+      <p class="empty-desc">{{ 'dashboard.channels.errorDesc' | translate }}</p>
+      <button class="empty-cta" (click)="loadStats()">{{ 'common.retry' | translate }}</button>
+    </div>
+  }
+
+  <!-- Ready state -->
+  @if (state() === 'ready' && channels().length > 0) {
+    <div class="channel-distribution-widget__list">
+      @for (channel of channels(); track channel.origin) {
+        <div class="channel-row">
+          <div class="channel-row__icon">
+            <ng-icon [name]="channel.config.icon" size="1.1rem" [style.color]="channel.config.color" />
+          </div>
+          <div class="channel-row__content">
+            <div class="channel-row__header">
+              <span class="channel-row__name">{{ channel.config.labelKey | translate }}</span>
+              <span class="channel-row__stats">
+                <span class="channel-row__percentage">{{ formatPercentage(channel.percentage) }}%</span>
+                <span class="channel-row__count">({{ channel.count }})</span>
+              </span>
+            </div>
+            <div class="channel-row__bar">
+              <div
+                class="channel-row__bar-fill"
+                [style.width.%]="channel.percentage"
+                [style.background]="channel.config.color"
+              ></div>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

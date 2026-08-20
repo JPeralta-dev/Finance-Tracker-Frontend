@@ -21,6 +21,10 @@
 @import '@fontsource/space-grotesk/latin-ext-500.css';
 @import '@fontsource/space-grotesk/latin-ext-600.css';
 @import '@fontsource/space-grotesk/latin-ext-700.css';
+@import '@fontsource/jetbrains-mono/latin-400.css';
+@import '@fontsource/jetbrains-mono/latin-500.css';
+@import '@fontsource/jetbrains-mono/latin-ext-400.css';
+@import '@fontsource/jetbrains-mono/latin-ext-500.css';
 
 /* ─── Design Tokens & Responsive Utilities (SDD: frontend-ux-responsive-overhaul) */
 @import 'styles/tokens';
@@ -80,6 +84,13 @@
   --glow-accent: 0 0 30px rgba(217, 70, 239, 0.25);
   --glow-success: 0 0 20px rgba(6, 214, 160, 0.2);
   --glow-danger: 0 0 20px rgba(255, 107, 107, 0.2);
+
+  /* Tour overlay */
+  --tour-overlay-bg: rgba(18, 11, 26, 0.85);
+  --tour-pulse-glow-dim: rgba(217, 70, 239, 0.15);
+  --tour-pulse-glow-mid: rgba(217, 70, 239, 0.3);
+  --tour-pulse-glow-strong: rgba(217, 70, 239, 0.5);
+  --tour-pulse-glow-bright: rgba(217, 70, 239, 0.25);
 
   /* Chart-specific (dark theme) */
   --chart-grid: rgba(255, 255, 255, 0.06);

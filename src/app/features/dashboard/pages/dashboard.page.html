@@ -1,4 +1,5 @@
 <div class="dashboard-page" [class.dashboard-page--loading]="state() === 'loading'">
+  <a href="#dashboard-main" class="skip-link">Skip to dashboard content</a>
   @if (state() === 'error') {
     <ft-empty-state
       icon="warning"
@@ -8,14 +9,14 @@
       (action)="retry()"
     />
   } @else if (state() === 'ready') {
-    <div class="dashboard-content-layer dashboard-content-layer--ready">
+    <div id="dashboard-main" class="dashboard-content-layer dashboard-content-layer--ready">
       <!-- ROW 0: Trial countdown banner (only when active trial) -->
       <div class="dashboard-row dashboard-row--banner" ftSubtleReveal="fade-up" [delay]="25">
         <ft-trial-banner />
       </div>
 
       <!-- ROW 0b: Tour trigger card (new users who haven't completed tour) -->
-      @if (tour.shouldPromptForTour()) {
+      @if (tour.shouldShowTriggerCard()) {
         <div class="dashboard-row dashboard-row--banner" ftSubtleReveal="fade-up" [delay]="35">
           <article class="tour-trigger-card" aria-labelledby="tour-trigger-title">
             <div class="tour-trigger-card__body">
@@ -53,27 +54,6 @@
           <p class="dashboard-greeting__subtitle">{{ today() }}</p>
         </div>
         <div class="dashboard-greeting__actions">
-          <div class="month-selector">
-            <button class="month-selector__btn" (click)="toggleMonthDropdown()" type="button">
-              <ng-icon name="calendar" size="1rem" />
-              <span>{{ dateRange.currentMonthLabel() }}</span>
-              <ng-icon name="chevronDown" size="0.75rem" />
-            </button>
-            @if (monthOpen()) {
-              <div class="month-selector__dropdown" (clickOutside)="monthOpen.set(false)">
-                @for (month of dateRange.availableMonths(); track month.start) {
-                  <button
-                    class="month-selector__option"
-                    [class.month-selector__option--active]="dateRange.startDate() === month.start"
-                    (click)="onMonthSelect(month)"
-                    type="button"
-                  >
-                    {{ month.label }}
-                  </button>
-                }
-              </div>
-            }
-          </div>
           <a routerLink="/transactions/new" class="dashboard-greeting__cta" [ftHoverDepth]="8">
             {{ 'dashboard.newTransaction' | translate }}
           </a>
@@ -118,7 +98,7 @@
       </div>
 
       <!-- ROW 2: Gastos Mensuales + Tasa de Ahorro -->
-      <div class="dashboard-row dashboard-row--stats" ftSubtleReveal="fade-up" [delay]="100">
+      <div class="dashboard-row dashboard-row--stats" ftSubtleReveal="fade-up" [delay]="100" data-tour="categories">
         <div class="stats-grid stats-grid--2col">
           @for (stat of stats().slice(2, 4); track stat.id) {
             <div class="stat-card-large">
@@ -127,7 +107,21 @@
                 @if (stat.icon === 'subscription') { <ft-icon name="chart" [size]="22" /> }
               </div>
               <div class="stat-card-large__body">
-                <span class="stat-card-large__label">{{ stat.label | translate }}</span>
+                <span class="stat-card-large__label" id="savings-label">
+                  {{ stat.label | translate }}
+                  @if (stat.id === 'savings') {
+                    <span class="stat-card-large__tooltip-trigger" aria-describedby="savings-tooltip" tabindex="0" role="img" aria-label="Info">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="16" x2="12" y2="12"></line>
+                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                      </svg>
+                      <span id="savings-tooltip" class="stat-card-large__tooltip" role="tooltip">
+                        {{ 'dashboard.savingsRateTooltip' | translate }}
+                      </span>
+                    </span>
+                  }
+                </span>
                 <span class="stat-card-large__value">
                   @if (stat.id === 'savings') {
                     {{ stat.value }}%
@@ -188,6 +182,11 @@
           <ft-referral-widget />
         </div>
       }
+
+      <!-- ROW 4d: Channel Distribution Widget -->
+      <div class="dashboard-row dashboard-row--channels" ftSubtleReveal="fade-up" [delay]="170" data-tour="telegram-connect">
+        <ft-channel-distribution-widget />
+      </div>
 
       <!-- ROW 5: Chart + Recent Activity -->
       <div class="dashboard-row dashboard-row--content" ftSubtleReveal="fade-up" [delay]="175">

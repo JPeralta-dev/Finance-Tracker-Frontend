@@ -4,7 +4,14 @@
    - Connecting: shimmer skeleton + disabled spinner button
    - Connected: green tint, success check, action row, recent list
    First-connect flash: gold/green wave + checkmark pop (one-time)
+
+   Channel brand colors — per-platform identity, not design-system drift:
    ═══════════════════════════════════════════════════════════════════ */
+
+/* ── Channel brand tokens ─────────────────────────────────────── */
+$channel-telegram: #D946EF;   /* Amethyst Pulse Start — matches --accent-start */
+$channel-gmail: #ea4335;      /* Gmail brand red */
+$channel-whatsapp: #2DD4BF;   /* WhatsApp brand teal */
 
 :host {
   display: block;
@@ -91,15 +98,15 @@
   /* Per-channel accent tints */
   &--telegram {
     background: rgba(217, 70, 239, 0.18);
-    color: #D946EF;
+    color: $channel-telegram;
   }
   &--gmail {
     background: rgba(234, 67, 53, 0.16);
-    color: #ea4335;
+    color: $channel-gmail;
   }
   &--whatsapp {
     background: rgba(45, 212, 191, 0.16);
-    color: #2DD4BF;
+    color: $channel-whatsapp;
   }
   &--sms {
     background: rgba(167, 139, 250, 0.16);
@@ -288,7 +295,6 @@
     width: 100%;
     background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
     color: var(--text-inverse);
-    box-shadow: 0 2px 10px rgba(217, 70, 239, 0.2);
     height: 40px;
     font-weight: 600;
 
@@ -312,7 +318,6 @@
     }
 
     .theme-light & {
-      box-shadow: 0 2px 10px rgba(139, 92, 246, 0.25);
       &:hover:not(:disabled) { box-shadow: 0 4px 16px rgba(139, 92, 246, 0.35); }
     }
   }
@@ -484,5 +489,20 @@
   .channel-card__actions {
     animation: none !important;
     transition: none !important;
+  }
+}
+
+/* ─── Touch targets (44×44px) ──────────────────────────────────── */
+@media (max-width: 768px) {
+  .channel-card__btn {
+    height: auto;
+    min-height: 44px;
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .channel-card__btn--primary {
+    height: auto;
+    min-height: 44px;
   }
 }

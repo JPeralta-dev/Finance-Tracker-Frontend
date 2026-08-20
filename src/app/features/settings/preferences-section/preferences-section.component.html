@@ -41,8 +41,10 @@
             class="lang-btn"
             [class.lang-btn--active]="translationService.currentLang() === lang.code"
             (click)="translationService.setLanguage(lang.code)"
+            [attr.aria-label]="lang.label"
+            [attr.aria-pressed]="translationService.currentLang() === lang.code"
           >
-            <span class="lang-btn__flag">{{ lang.flag }}</span>
+            <span class="lang-btn__flag" aria-hidden="true">{{ lang.flag }}</span>
             <span>{{ lang.label }}</span>
           </button>
         }
@@ -63,8 +65,10 @@
             class="currency-btn"
             [class.currency-btn--active]="currencyService.currencyConfig().code === curr.code"
             (click)="currencyService.setCurrency(curr)"
+            [attr.aria-label]="curr.code + ' — ' + curr.displaySymbol"
+            [attr.aria-pressed]="currencyService.currencyConfig().code === curr.code"
           >
-            <span class="currency-btn__symbol">{{ curr.symbol }}</span>
+            <span class="currency-btn__symbol">{{ curr.displaySymbol }}</span>
             <span>{{ curr.code }}</span>
           </button>
         }

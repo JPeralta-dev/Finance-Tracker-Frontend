@@ -13,6 +13,7 @@ import { catchError, of } from 'rxjs';
 import { IconComponent } from '../../../../shared/icons/icon.component';
 import { GoalsService } from '../../../../core/services/goals.service';
 import { AuthService } from '../../../../core/services/auth.service';
+import { TranslatePipe } from '../../../../core/pipes/translate.pipe';
 import { Goal } from '../../../../core/models/goal.model';
 
 type GoalsState = 'loading' | 'ready' | 'empty' | 'error';
@@ -20,7 +21,7 @@ type GoalsState = 'loading' | 'ready' | 'empty' | 'error';
 @Component({
   selector: 'ft-goals-widget',
   standalone: true,
-  imports: [CommonModule, RouterLink, IconComponent],
+  imports: [CommonModule, RouterLink, IconComponent, TranslatePipe],
   templateUrl: './goals-widget.component.html',
   styleUrl: './goals-widget.component.scss',
 })

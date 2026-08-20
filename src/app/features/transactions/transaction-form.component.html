@@ -1,11 +1,11 @@
 <div class="tx-overlay">
-  <div class="form-page" ftSubtleReveal="fade-up">
-    <a routerLink="/transactions" class="back-link">
+  <div class="form-card" ftSubtleReveal="fade-up">
+    <a routerLink="/transactions" class="form-card__back">
       <ng-icon name="chevronLeft" size="1rem" />
       {{ 'transactions.form.back' | translate }}
     </a>
 
-    <div class="form-card" ftSubtleReveal="fade-up" [delay]="100">
+    <div class="form-card__body">
       <div class="form-header">
         <h1 class="form-title">
           {{ (isEdit() ? 'transactions.form.edit_title' : 'transactions.form.new_title') | translate }}
@@ -64,11 +64,12 @@
                 placeholder="0.00"
                 class="form-input currency-input"
                 [class.error]="isInvalid('amount')"
+                [attr.aria-describedby]="isInvalid('amount') ? 'amount-error' : null"
                 ftNumberFormat
               />
             </div>
             @if (isInvalid('amount')) {
-              <span class="error-msg">
+              <span id="amount-error" class="error-msg">
                 {{ 'transactions.form.errors.' + getErrorMessage('amount') | translate }}
               </span>
             }
@@ -85,11 +86,12 @@
                 [placeholder]="'transactions.form.description_placeholder' | translate"
                 class="form-input"
                 [class.error]="isInvalid('description')"
+                [attr.aria-describedby]="isInvalid('description') ? 'description-error' : null"
                 maxlength="140"
               />
             </div>
             @if (isInvalid('description')) {
-              <span class="error-msg">
+              <span id="description-error" class="error-msg">
                 {{ 'transactions.form.errors.' + getErrorMessage('description') | translate }}
               </span>
             }
@@ -102,10 +104,11 @@
               [categories]="filteredCategories()"
               [placeholder]="'transactions.form.category_placeholder' | translate"
               formControlName="category"
+              [attr.aria-describedby]="isInvalid('category') ? 'category-error' : null"
               (addCategory)="onAddCategoryFromForm()"
             />
             @if (isInvalid('category')) {
-              <span class="error-msg">
+              <span id="category-error" class="error-msg">
                 {{ 'transactions.form.errors.' + getErrorMessage('category') | translate }}
               </span>
             }
@@ -132,10 +135,11 @@
                 formControlName="date"
                 class="form-input"
                 [class.error]="isInvalid('date')"
+                [attr.aria-describedby]="isInvalid('date') ? 'date-error' : null"
               />
             </div>
             @if (isInvalid('date')) {
-              <span class="error-msg">
+              <span id="date-error" class="error-msg">
                 {{ 'transactions.form.errors.' + getErrorMessage('date') | translate }}
               </span>
             }
@@ -167,12 +171,12 @@
           </div>
 
           @if (successMsg()) {
-            <div class="success-banner" ftSubtleReveal="fade-up">
+            <div role="status" class="success-banner" ftSubtleReveal="fade-up">
               {{ 'transactions.form.success.' + successMsg() | translate }}
             </div>
           }
           @if (errorMsg()) {
-            <div class="error-banner" ftSubtleReveal="fade-up">
+            <div role="alert" class="error-banner" ftSubtleReveal="fade-up">
               {{ 'transactions.form.errors.' + errorMsg() | translate }}
             </div>
           }

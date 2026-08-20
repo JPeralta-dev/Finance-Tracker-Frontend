@@ -45,9 +45,18 @@ export class TransactionRowComponent {
     this.data().type === 'income' ? 'amount--income' : 'amount--expense'
   );
 
+  /**
+   * Formats an ISO date string for display.
+   *
+   * Uses noon UTC to avoid timezone shift: new Date('2026-07-01') is midnight UTC,
+   * which toLocaleDateString converts to June 30 in UTC-5 or earlier locales.
+   * Appending T12:00:00 keeps the date in the correct calendar day everywhere.
+   */
   formatDate(dateStr: string): string {
-    const date = new Date(dateStr);
-    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    // Build a noon-UTC ISO string from the date portion to avoid timezone rollback.
+    const noonUTC = dateStr.includes('T') ? dateStr : `${dateStr}T12:00:00.000Z`;
+    const date = new Date(noonUTC);
+    return date.toLocaleDateString(this.currencyService.currencyConfig().locale, { month: 'short', day: 'numeric' });
   }
 
   formatAmount(amount: number): string {

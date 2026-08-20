@@ -10,6 +10,10 @@
     "search": "Search",
     "filter": "Filter",
     "viewAll": "View all",
+    "month": "month",
+    "months": "months",
+    "monthsCount": "{{count}} months",
+    "more": "more",
     "toasts": {
       "categories_load_failed": "Failed to load categories.",
       "category_created": "Category created",
@@ -352,7 +356,47 @@
     "addExpense": "Add Expense",
     "addIncome": "Add Income",
     "manageCategories": "Manage Categories",
-    "viewAnalytics": "View Analytics"
+    "viewAnalytics": "View Analytics",
+    "aiInsights": {
+      "title": "Financial Insights",
+      "viewAll": "View all",
+      "preview1Title": "We detected a spending pattern",
+      "preview1Desc": "Your Friday spending went up 23%...",
+      "preview2Title": "Savings opportunity",
+      "preview2Desc": "You could save $45,000 by switching your plan...",
+      "upgradeTitle": "Unlock personalized AI insights",
+      "upgradeCta": "Activate Premium",
+      "emptyText": "Add more transactions to receive personalized insights.",
+      "errorText": "We couldn't load your insights. Please try again."
+    },
+    "goals": {
+      "title": "Savings Goals",
+      "viewAll": "View all",
+      "previewGoal": "Example goal",
+      "upgradeTitle": "Create savings goals and track your progress",
+      "upgradeCta": "Activate Premium",
+      "emptyText": "You don't have any goals yet. Create your first savings goal.",
+      "emptyCta": "Create first goal",
+      "errorText": "We couldn't load your goals. Please try again.",
+      "remaining": "Remaining"
+    },
+    "pockets": {
+      "title": "Pockets",
+      "viewAll": "View all",
+      "previewPocket": "Example pocket",
+      "upgradeTitle": "Organize your budget by categories with Pockets",
+      "upgradeCta": "Activate Premium",
+      "emptyText": "You don't have any pockets yet. Create your first pocket to organize your budget.",
+      "emptyCta": "Create first pocket",
+      "errorText": "We couldn't load your pockets. Please try again."
+    },
+    "savingsRateTooltip": "Percentage of your income you're saving this month",
+    "activity": {
+      "today": "Today",
+      "yesterday": "Yesterday",
+      "thisWeek": "This week",
+      "earlier": "Earlier"
+    }
   },
   "insights": {
     "title": "AI Insights",
@@ -458,7 +502,10 @@
       "date": "Date",
       "amount": "Amount",
       "category": "Category"
-    }
+    },
+    "deleteConfirmTitle": "Delete Transactions",
+    "deleteConfirmMessage": "Are you sure you want to permanently delete {{count}} transaction(s)? This cannot be undone.",
+    "deletedCount": "{{count}} transaction(s) deleted"
   },
   "categories": {
     "title": "Categories",
@@ -467,21 +514,29 @@
     "add": "Add",
     "edit": "Edit",
     "delete": "Delete",
+    "delete_title": "Delete category?",
+    "delete_message": "Transactions in this category will be moved to Other. This cannot be undone.",
     "default": "Default",
     "of_total": "of total",
     "view_transactions": "View transactions",
     "edit_title": "Edit Category",
     "new_title": "New Category",
     "stats": {
+      "title": "Category summary",
       "total": "Total tracked",
       "highest": "Highest spend",
       "total_expenses": "Total expenses"
     },
     "empty": {
       "title": "No categories yet",
-      "desc": "Add some transactions to see categories appear here.",
-      "action": "+ New Transaction",
+      "desc": "Create your first category to start organizing your spending.",
+      "action": "Create Category",
       "search": "No categories match your search"
+    },
+    "error": {
+      "title": "Could not load categories",
+      "desc": "Something went wrong while fetching your categories. Check your connection and try again.",
+      "retry": "Try again"
     },
     "form": {
       "name": "Name",
@@ -499,6 +554,11 @@
     "signOut": "Sign Out",
     "back_to_dashboard": "Back to dashboard",
     "coming_soon": "Coming Soon...",
+    "profile": {
+      "title": "Profile",
+      "display_name": "Display name",
+      "email": "Email"
+    },
     "security": {
       "title": "Security",
       "desc": "Configure your account security.",
@@ -592,6 +652,7 @@
     "expenseBreakdown": "Expense Breakdown",
     "dailySpending": "Daily Spending",
     "thisWeek": "This week",
+    "currentWeekNote": "Always shows the current week",
     "days": {
       "mon": "Mon",
       "tue": "Tue",
@@ -617,10 +678,20 @@
     "noCategoryData": "No category data yet",
     "noChartData": "No monthly data yet",
     "noDailyData": "No daily spending data",
+    "hourlyActivity": "Hourly Activity",
+    "hourlySubtitle": "When you spend throughout the day",
+    "noHourlyData": "No hourly spending data",
+    "weeklyPatterns": "Weekly Patterns",
+    "weeklyAverage": "Average daily spending",
+    "noWeeklyData": "No weekly pattern data",
     "chartError": "Error loading chart",
     "welcomeTitle": "Welcome to Analytics",
     "welcomeDesc": "Start by adding your first transaction to see insights.",
     "addFirstTransaction": "Add First Transaction",
+    "filtered": "Filtered by: {{name}}",
+    "clearFilter": "Clear filter",
+    "clearFilterTip": "Click the badge to clear",
+    "customRange": "Custom range...",
     "noDataTitle": "No Data for This Period",
     "noDataDesc": "Try adjusting your filters to see results.",
     "clearFilters": "Clear Filters",
@@ -639,7 +710,8 @@
       "more": "More filters",
       "category": "Category",
       "allCats": "All categories",
-      "reset": "Reset"
+      "reset": "Reset",
+      "removeCategory": "Remove {{name}} filter"
     },
     "insight": {
       "spending": "Spending Alert",
@@ -667,6 +739,12 @@
       "expenses": "Expenses",
       "current": "Current",
       "previous": "Previous"
+    },
+    "consent": {
+      "message": "We use cookies and analytics tools to understand how to improve Flowr. It's your call.",
+      "accept": "Accept",
+      "decline": "Decline",
+      "learnMore": "Learn more"
     }
   },
   "profile": {
@@ -704,14 +782,6 @@
   },
   "theme": {
     "toggle": "Toggle theme"
-  },
-  "analytics": {
-    "consent": {
-      "message": "We use cookies and analytics tools to understand how to improve Flowr. It's your call.",
-      "accept": "Accept",
-      "decline": "Decline",
-      "learnMore": "Learn more"
-    }
   },
   "modal": {
     "close": "Close"
@@ -774,37 +844,38 @@
     "skipTour": "Skip tour",
     "previous": "Back",
     "next": "Next",
-    "finish": "Done",
+    "finish": "Got it",
     "startExploring": "Start exploring",
     "triggerCard": {
-      "title": "Take a quick tour?",
-      "description": "We'll show you the essentials in under a minute.",
-      "start": "Start tour",
-      "later": "Maybe later"
+      "title": "New around here?",
+      "description": "Take a 30-second tour of your financial command center.",
+      "start": "Show me around",
+      "later": "Not now"
     },
     "steps": {
       "welcome": {
-        "title": "Welcome to Flowr!",
-        "description": "Your money, perfectly organized. Here's what you can do from the main panel."
+        "title": "Welcome to Flowr",
+        "description": "Your money, perfectly organized. From here you see your full financial picture — balance, income, expenses, all in one place."
       },
       "telegram": {
-        "title": "Connect Telegram",
-        "description": "Log expenses by sending a message to our bot. No need to open the app.",
-        "cta": "Connect now"
+        "title": "Log from anywhere",
+        "description": "Connect Telegram and register expenses by just sending a message. No need to open the app every time.",
+        "cta": "Connect Telegram"
       },
       "categories": {
-        "title": "Create categories",
-        "description": "Customize how your spending is organized. Food, transport, fun — your call.",
-        "cta": "Create category"
+        "title": "Organize your way",
+        "description": "Categories let you see exactly where your money goes. Food, transport, subscriptions — customize them to match your life.",
+        "cta": "Set up categories"
       },
       "logExpense": {
-        "title": "Log your first expense",
-        "description": "One click, one expense logged. Flowr handles the rest.",
-        "cta": "Log expense"
+        "title": "Your first expense",
+        "description": "Tap the button below and log something. Coffee, groceries, that thing you bought online. Flowr handles the rest.",
+        "cta": "Log an expense"
       },
       "done": {
-        "title": "You're all set!",
-        "description": "You know the essentials. Start exploring and see what Flowr can do for you."
+        "title": "✅ You're all set",
+        "description": "That's the core of Flowr. Log from anywhere, see everything here — and this button takes you straight to your first expense.",
+        "cta": "Log my first expense"
       }
     }
   },
@@ -929,6 +1000,21 @@
     "new": "Add new bank",
     "empty": {
       "search": "No banks match your search"
+    }
+  },
+  "channels": {
+    "whatsapp": "WhatsApp",
+    "telegram": "Telegram",
+    "gmail": "Gmail",
+    "manual": "Manual",
+    "from": "From {{ channel }}",
+    "dashboard": {
+      "title": "Channels",
+      "transactions": "transactions",
+      "emptyTitle": "No channel transactions",
+      "emptyDesc": "Record your first transaction to see channel distribution",
+      "errorTitle": "Error loading channels",
+      "errorDesc": "We couldn't load the channel distribution. Try again."
     }
   }
 }

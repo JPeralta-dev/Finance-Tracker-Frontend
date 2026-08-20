@@ -41,7 +41,7 @@ describe('FtAnalyticsService', () => {
 
   it('should flush queue immediately when consent is granted', (done) => {
     service.init();
-    service.trackEvent('test_event', { foo: 'bar' });
+    service.trackEvent('page_viewed', { foo: 'bar' });
     service.grantConsent();
     // The flush happens inside the bootstrap effect; give it a tick.
     setTimeout(() => {

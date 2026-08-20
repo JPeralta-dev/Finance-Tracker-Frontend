@@ -95,6 +95,9 @@ export class LinkedAccountsSectionComponent implements OnInit {
   }
 
   // ── Gmail actions ─────────────────────────────────────────────
+  /** Two-step confirmation guard for Gmail disconnect. */
+  readonly gmailDisconnectConfirm = signal(false);
+
   connectGmail(): void {
     if (this.gmailConnecting() || this.gmail.state() === 'connected') return;
     this.gmailConnecting.set(true);
@@ -109,7 +112,17 @@ export class LinkedAccountsSectionComponent implements OnInit {
   }
 
   onGmailDisconnect(): void {
+    // First click: show confirmation instead of disconnecting immediately.
+    this.gmailDisconnectConfirm.set(true);
+  }
+
+  confirmGmailDisconnect(): void {
     this.gmail.markDisconnected();
+    this.gmailDisconnectConfirm.set(false);
+  }
+
+  cancelGmailDisconnect(): void {
+    this.gmailDisconnectConfirm.set(false);
   }
 
   // ── Telegram actions (used in the template's connected state) ─
