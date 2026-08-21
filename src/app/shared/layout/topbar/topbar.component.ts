@@ -19,6 +19,7 @@ const NAV_ITEMS: NavItem[] = [
   { label: 'nav.transactions', path: '/transactions', icon: 'transactions' },
   { label: 'nav.categories', path: '/categories', icon: 'categories' },
   { label: 'nav.analytics', path: '/analytics', icon: 'analytics' },
+  { label: 'nav.insights', path: '/insights', icon: 'insights' },
 ];
 
 const NAV_ITEM_LABELS = NAV_ITEMS.map((item) => item.label);
@@ -30,6 +31,7 @@ const ROUTE_TITLES: Record<string, string> = {
   '/transactions/new': 'nav.newTransaction',
   '/categories': 'nav.categories',
   '/analytics': 'nav.analytics',
+  '/insights': 'nav.insights',
   '/settings': 'nav.settings',
   '/profile': 'nav.profile',
 };

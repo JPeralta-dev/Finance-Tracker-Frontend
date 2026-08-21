@@ -151,7 +151,7 @@
         <ft-analytics-kpis [kpis]="kpis()" [loading]="false" />
       </div>
 
-      <!-- 3. Charts Row: Trends (wide) + Category (narrow) + Daily (narrow) -->
+      <!-- 3. Charts Row: Trends (wide) + Daily (narrow) -->
       <div class="analytics-charts-row">
         <!-- Monthly Trends (wide) -->
         <div class="analytics-charts-row__trends" ftSubtleReveal="fade-up" [delay]="100">
@@ -168,31 +168,6 @@
             >
               <ng-container loading><div class="chart-skeleton"></div></ng-container>
               <ng-container empty><div class="chart-empty">{{ 'analytics.noChartData' | translate }}</div></ng-container>
-              <ng-container error>
-                <div class="chart-error">
-                  {{ 'analytics.chartError' | translate }}
-                  <button class="chart-retry-btn" (click)="retry()" type="button">{{ 'analytics.retry' | translate }}</button>
-                </div>
-              </ng-container>
-            </ft-echart>
-          </ft-analytics-chart-card>
-        </div>
-
-        <!-- Category Breakdown (narrow) -->
-        <div class="analytics-charts-row__category" ftSubtleReveal="fade-up" [delay]="150">
-          <ft-analytics-chart-card
-            [title]="'analytics.byCategory' | translate"
-            [subtitle]="'analytics.expenseBreakdown' | translate"
-            height="320px"
-          >
-            <ft-echart
-              [options]="donutChartOptions()"
-              [loading]="isLoading()"
-              height="280px"
-              (chartClick)="onChartClick($event, 'category')"
-            >
-              <ng-container loading><div class="chart-skeleton"></div></ng-container>
-              <ng-container empty><div class="chart-empty">{{ 'analytics.noCategoryData' | translate }}</div></ng-container>
               <ng-container error>
                 <div class="chart-error">
                   {{ 'analytics.chartError' | translate }}
@@ -227,9 +202,18 @@
             </ft-echart>
           </ft-analytics-chart-card>
         </div>
+
+        <!-- Recent Transactions (narrow) -->
+        <div class="analytics-charts-row__transactions" ftSubtleReveal="fade-up" [delay]="250">
+          <ft-recent-activity
+            [items]="activityItems()"
+            [loading]="isLoading()"
+            [pageSize]="5"
+          />
+        </div>
       </div>
 
-      <!-- 3b. Hourly Activity + Weekly Patterns Row -->
+      <!-- 3b. Hourly Activity + Weekly Patterns + Category Breakdown Row -->
       <div class="analytics-charts-row">
         <!-- Hourly Activity (wide) -->
         <div class="analytics-charts-row__hourly" ftSubtleReveal="fade-up" [delay]="250">
@@ -271,7 +255,12 @@
               (chartClick)="onChartClick($event, 'weekly')"
             >
               <ng-container loading><div class="chart-skeleton"></div></ng-container>
-              <ng-container empty><div class="chart-empty">{{ 'analytics.noWeeklyData' | translate }}</div></ng-container>
+              <ng-container empty>
+                <div class="chart-empty">
+                  <ng-icon name="calendar" size="2rem" class="chart-empty__icon" />
+                  <span>{{ 'analytics.noWeeklyData' | translate }}</span>
+                </div>
+              </ng-container>
               <ng-container error>
                 <div class="chart-error">
                   {{ 'analytics.chartError' | translate }}
@@ -281,32 +270,30 @@
             </ft-echart>
           </ft-analytics-chart-card>
         </div>
-      </div>
 
-      <!-- 4. Bottom Row: Insights + Transactions + Summary -->
-      <div class="analytics-bottom-row">
-        <!-- Insights Panel (wide) -->
-        <div class="analytics-bottom-row__insights" ftSubtleReveal="fade-up" [delay]="250">
-          <ft-analytics-insights
-            [insights]="uiInsights()"
-            [loading]="false"
-          />
-        </div>
-
-        <!-- Recent Transactions (narrow) -->
-        <div class="analytics-bottom-row__transactions" ftSubtleReveal="fade-up" [delay]="300">
-          <ft-analytics-transactions
-            [transactions]="uiTransactions()"
-            [loading]="false"
-          />
-        </div>
-
-        <!-- Financial Summary (narrow) -->
-        <div class="analytics-bottom-row__summary" ftSubtleReveal="fade-up" [delay]="350">
-          <ft-analytics-comparison
-            [comparisons]="comparisons()"
-            [loading]="false"
-          />
+        <!-- Category Breakdown (narrow) -->
+        <div class="analytics-charts-row__category" ftSubtleReveal="fade-up" [delay]="350">
+          <ft-analytics-chart-card
+            [title]="'analytics.byCategory' | translate"
+            [subtitle]="'analytics.expenseBreakdown' | translate"
+            height="320px"
+          >
+            <ft-echart
+              [options]="donutChartOptions()"
+              [loading]="isLoading()"
+              height="280px"
+              (chartClick)="onChartClick($event, 'category')"
+            >
+              <ng-container loading><div class="chart-skeleton"></div></ng-container>
+              <ng-container empty><div class="chart-empty">{{ 'analytics.noCategoryData' | translate }}</div></ng-container>
+              <ng-container error>
+                <div class="chart-error">
+                  {{ 'analytics.chartError' | translate }}
+                  <button class="chart-retry-btn" (click)="retry()" type="button">{{ 'analytics.retry' | translate }}</button>
+                </div>
+              </ng-container>
+            </ft-echart>
+          </ft-analytics-chart-card>
         </div>
       </div>
     }

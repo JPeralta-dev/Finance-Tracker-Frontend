@@ -10,14 +10,16 @@ import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
-import { AnalyticsApiService, DateRange } from './analytics-api.service';
+import { AnalyticsApiService, AnalyticsTransaction, DateRange } from './analytics-api.service';
 import { fakeAsync, tick } from '@angular/core/testing';
+import { environment } from '../../../../environments/environment';
 
 describe('AnalyticsApiService', () => {
   let service: AnalyticsApiService;
   let httpMock: HttpTestingController;
 
-  const baseUrl = 'http://localhost:3000/api/analytics';
+  const baseUrl = `${environment.apiUrl}/api/analytics`;
+  const transactionsUrl = `${environment.apiUrl}/api/transactions`;
   const mockDateRange: DateRange = {
     startDate: '2024-01-01',
     endDate: '2024-06-30',
@@ -269,13 +271,85 @@ describe('AnalyticsApiService', () => {
   });
 
   describe('getRecentTransactions', () => {
-    it('should include limit param with default value 10', () => {
+    it('should include limit and newest-first sort params by default', () => {
       service.getRecentTransactions(mockDateRange).subscribe();
 
       const req = httpMock.expectOne(
-        `${baseUrl}/transactions?startDate=2024-01-01&endDate=2024-06-30&limit=10`,
+        `${transactionsUrl}?startDate=2024-01-01&endDate=2024-06-30&limit=10&sortBy=date&sortDir=desc`,
       );
       req.flush({ transactions: [] });
+    });
+
+    it('should normalize a raw transaction array and preserve filters, limit, and amount sign', () => {
+      let result: { transactions: AnalyticsTransaction[] } | undefined;
+
+      service.getRecentTransactions(mockDateRange, 'bank-123', 'expense', 'Food', 5).subscribe(data => {
+        result = data;
+      });
+
+      const req = httpMock.expectOne(
+        `${transactionsUrl}?startDate=2024-01-01&endDate=2024-06-30&bankId=bank-123&type=expense&category=Food&limit=5&sortBy=date&sortDir=desc`,
+      );
+      req.flush([
+        {
+          id: 'raw-1',
+          amount: -25,
+          type: 'expense',
+          category: 'Food',
+          description: 'Market',
+          date: '2024-06-15T00:00:00.000Z',
+          createdAt: '2024-06-15T10:32:00.000Z',
+          bank: { id: 'bank-123', name: 'Bank A', logoUrl: null },
+        },
+      ]);
+
+      expect(result).toEqual({
+        transactions: [{
+          id: 'raw-1',
+          merchant: 'Market',
+          amount: -25,
+          type: 'expense',
+          date: '2024-06-15T00:00:00.000Z',
+          bank: 'Bank A',
+          category: 'Food',
+          icon: 'circle',
+        }],
+      });
+    });
+
+    it('should continue to normalize the existing wrapped response shape', () => {
+      let result: { transactions: AnalyticsTransaction[] } | undefined;
+
+      service.getRecentTransactions().subscribe(data => {
+        result = data;
+      });
+
+      const req = httpMock.expectOne(`${transactionsUrl}?limit=10&sortBy=date&sortDir=desc`);
+      req.flush({
+        transactions: [{
+          id: 'wrapped-1',
+          merchant: 'Salary',
+          amount: 5000,
+          type: 'income',
+          date: '2024-06-01',
+          bank: 'Santander',
+          category: 'Salary',
+          icon: 'briefcase',
+        }],
+      });
+
+      expect(result).toEqual({
+        transactions: [{
+          id: 'wrapped-1',
+          merchant: 'Salary',
+          amount: 5000,
+          type: 'income',
+          date: '2024-06-01',
+          bank: 'Santander',
+          category: 'Salary',
+          icon: 'briefcase',
+        }],
+      });
     });
   });
 
