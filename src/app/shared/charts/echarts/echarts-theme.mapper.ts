@@ -245,12 +245,14 @@ export class EchartsThemeMapper {
       xAxis: {
         type: 'category',
         data: labels,
+        boundaryGap: false,
         axisLabel: { color: css.textTertiary, fontFamily: "'Inter', sans-serif", fontSize: 11 },
         axisLine: { lineStyle: { color: css.borderColor } },
         splitLine: { show: false },
       },
       yAxis: {
         type: 'value',
+        scale: true,
         axisLabel: {
           color: css.textTertiary,
           fontFamily: "'Inter', sans-serif",
@@ -268,7 +270,8 @@ export class EchartsThemeMapper {
         type: 'line',
         data: ds.data,
         smooth: true,
-        symbol: 'none',
+        symbol: 'circle',
+        symbolSize: 6,
         lineStyle: { width: 2, color: ds.color },
         itemStyle: { color: ds.color },
         areaStyle: {
@@ -334,6 +337,8 @@ export class EchartsThemeMapper {
       },
       yAxis: {
         type: 'value',
+        scale: true,
+        minInterval: 1,
         axisLabel: {
           color: css.textTertiary,
           fontFamily: "'Inter', sans-serif",
@@ -521,6 +526,7 @@ export class EchartsThemeMapper {
       },
       yAxis: {
         type: 'value',
+        scale: true,
         axisLabel: {
           color: css.textTertiary,
           fontFamily: "'Inter', sans-serif",
@@ -780,16 +786,18 @@ export class EchartsThemeMapper {
       },
       legend: {
         orient: 'vertical',
-        right: 10,
+        right: 20,
         top: 'center',
+        itemWidth: 12,
+        itemHeight: 12,
+        itemGap: 14,
         textStyle: { color: css.textSecondary, fontFamily: "'Inter', sans-serif", fontSize: 12 },
-        itemGap: 12,
       },
       series: [
         {
           type: 'pie',
-          radius: ['55%', '75%'],
-          center: ['40%', '50%'],
+          radius: ['50%', '70%'],
+          center: ['35%', '50%'],
           avoidLabelOverlap: false,
           itemStyle: {
             borderRadius: 6,

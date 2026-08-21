@@ -255,7 +255,12 @@
               (chartClick)="onChartClick($event, 'weekly')"
             >
               <ng-container loading><div class="chart-skeleton"></div></ng-container>
-              <ng-container empty><div class="chart-empty">{{ 'analytics.noWeeklyData' | translate }}</div></ng-container>
+              <ng-container empty>
+                <div class="chart-empty">
+                  <ng-icon name="calendar" size="2rem" class="chart-empty__icon" />
+                  <span>{{ 'analytics.noWeeklyData' | translate }}</span>
+                </div>
+              </ng-container>
               <ng-container error>
                 <div class="chart-error">
                   {{ 'analytics.chartError' | translate }}

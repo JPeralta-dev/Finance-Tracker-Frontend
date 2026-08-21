@@ -11,14 +11,14 @@
 .analytics-page {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 16px;
   @include safe-padding;
   max-width: 1440px;
   margin: 0 auto;
   width: 100%;
 
-  @include at-md { gap: 28px; }
-  @include at-xl { gap: 32px; }
+  @include at-md { gap: 20px; }
+  @include at-xl { gap: 24px; }
 }
 
 /* ═══ Header Row ═══ */
@@ -364,39 +364,24 @@
     min-height: 320px;
   }
 
+  // Ensure all direct children stretch to equal height
+  > * {
+    display: flex;
+    flex-direction: column;
+  }
+
+  // Constrain transactions card to match chart cards height
   &__transactions {
-    @include at-lg {
-      max-height: 320px;
-      overflow: hidden;
-    }
-  }
-
-  &__hourly {
-    @include at-md {
-      grid-column: 1 / -1;
-    }
-
-    @include at-lg {
-      grid-column: auto;
-    }
-  }
-
-  &__weekly {
-    min-height: 320px;
-  }
-}
-
-/* ═══ Recent Activity scroll override (inside charts-row transactions) ═══ */
-@media (min-width: 1024px) {
-  .analytics-charts-row__transactions {
     ft-recent-activity {
       display: flex;
       flex-direction: column;
       height: 100%;
+      max-height: 360px;
     }
 
     ::ng-deep .recent-activity {
       height: 100%;
+      max-height: 360px;
       display: flex;
       flex-direction: column;
     }
@@ -420,6 +405,20 @@
       background: var(--glass-border);
       border-radius: 4px;
     }
+  }
+
+  &__hourly {
+    @include at-md {
+      grid-column: 1 / -1;
+    }
+
+    @include at-lg {
+      grid-column: auto;
+    }
+  }
+
+  &__weekly {
+    min-height: 320px;
   }
 }
 
@@ -548,11 +547,18 @@
   align-items: center;
   justify-content: center;
   height: 100%;
-  min-height: 200px;
-  gap: 8px;
+  min-height: 180px;
+  max-height: 280px;
+  gap: 12px;
   color: var(--text-tertiary, rgba(243, 232, 255, 0.4));
   font-size: 14px;
   text-align: center;
+  padding: 24px;
+
+  &__icon {
+    color: var(--text-tertiary, rgba(243, 232, 255, 0.3));
+    opacity: 0.6;
+  }
 }
 
 .chart-error {
