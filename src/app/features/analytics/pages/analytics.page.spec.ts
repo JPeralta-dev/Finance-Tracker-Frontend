@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting, HttpTestingController } from '@angular/common/http/testing';
-import { AnalyticsPage, mapToKpis, mapToCategoryAnalysis, mapToComparisons, mapToRelevantTransactions, mapToUiInsights, generateMonthStories } from './analytics.page';
+import { AnalyticsPage, mapToKpis, mapToCategoryAnalysis, mapToActivityItems, generateMonthStories } from './analytics.page';
 import { AnalyticsApiService, AnalyticsSummary, MonthlyTrend, CategoryBreakdown, DailySpending, AnalyticsInsight, AnalyticsTransaction } from '../services/analytics-api.service';
 import { AnalyticsStore } from '../services/analytics.store';
 import { RuleBasedInsightsService } from '../services/insights.service';
@@ -9,6 +9,7 @@ import { EchartsThemeMapper } from '../../../shared/charts/echarts/echarts-theme
 import { CurrencyService } from '../../../core/services/currency.service';
 import { TranslationService } from '../../../core/services/translation.service';
 import { ToastService } from '../../../core/services/toast.service';
+import { environment } from '../../../../environments/environment';
 
 describe('AnalyticsPage — Phase 3 Assembly', () => {
   let component: AnalyticsPage;
@@ -60,6 +61,24 @@ describe('AnalyticsPage — Phase 3 Assembly', () => {
     { id: '1', merchant: 'Uber', amount: -15, date: '2024-06-01', bank: 'Santander', category: 'Transport', icon: 'car', type: 'expense' },
     { id: '2', merchant: 'Salary', amount: 5000, date: '2024-06-01', bank: 'Santander', category: 'Salary', icon: 'briefcase', type: 'income' },
     { id: '3', merchant: 'Netflix', amount: -12, date: '2024-06-02', bank: 'Santander', category: 'Entertainment', icon: 'tv', type: 'expense' },
+  ];
+
+  const mockRawTransactions = [
+    {
+      id: '1', amount: -15, type: 'expense' as const, category: 'Transport', description: 'Uber',
+      date: '2024-06-01', createdAt: '2024-06-01T10:00:00.000Z',
+      bank: { id: 'santander', name: 'Santander', logoUrl: null },
+    },
+    {
+      id: '2', amount: 5000, type: 'income' as const, category: 'Salary', description: 'Salary',
+      date: '2024-06-01', createdAt: '2024-06-01T10:00:00.000Z',
+      bank: { id: 'santander', name: 'Santander', logoUrl: null },
+    },
+    {
+      id: '3', amount: -12, type: 'expense' as const, category: 'Entertainment', description: 'Netflix',
+      date: '2024-06-02', createdAt: '2024-06-02T10:00:00.000Z',
+      bank: { id: 'santander', name: 'Santander', logoUrl: null },
+    },
   ];
 
   const mockBanks = { banks: [{ id: 'santander', name: 'Santander', logo: '/santander.png' }] };
@@ -127,33 +146,14 @@ describe('AnalyticsPage — Phase 3 Assembly', () => {
       });
     });
 
-    describe('mapToComparisons()', () => {
-      it('should return income and expense comparisons', () => {
-        const comps = mapToComparisons(mockSummary, '$', mockTranslationService);
-        expect(comps.length).toBe(2);
-        expect(comps[0].labelKey).toBe('analytics.comparison.income');
-        expect(comps[0].percentChange).toBe(12);
-        expect(comps[1].labelKey).toBe('analytics.comparison.expenses');
-        expect(comps[1].percentChange).toBe(-5);
-      });
-    });
-
-    describe('mapToRelevantTransactions()', () => {
-      it('should map API transactions to UI format', () => {
-        const result = mapToRelevantTransactions(mockTransactions);
+    describe('mapToActivityItems()', () => {
+      it('should map API transactions to UI ActivityItem format', () => {
+        const result = mapToActivityItems(mockTransactions);
         expect(result.length).toBe(3);
         expect(result[0].description).toBe('Uber');
         expect(result[0].type).toBe('expense');
         expect(result[1].type).toBe('income');
-      });
-    });
-
-    describe('mapToUiInsights()', () => {
-      it('should map API insights to UI format', () => {
-        const result = mapToUiInsights(mockInsights, mockTranslationService);
-        expect(result.length).toBe(2);
-        expect(result[0].type).toBe('info'); // medium → info
-        expect(result[1].type).toBe('success'); // low → success
+        expect(result[0].bankName).toBeDefined();
       });
     });
 
@@ -222,7 +222,9 @@ describe('AnalyticsPage — Phase 3 Assembly', () => {
       fixture.detectChanges();
 
       // Flush all HTTP requests
-      const reqs = httpMock.match(req => req.url.includes('/api/analytics/'));
+      const reqs = httpMock.match(req =>
+        req.url.includes('/api/analytics/') || req.url === `${environment.apiUrl}/api/transactions`,
+      );
       expect(reqs.length).toBeGreaterThanOrEqual(1); // At least banks call
 
       // Respond to banks
@@ -239,8 +241,8 @@ describe('AnalyticsPage — Phase 3 Assembly', () => {
           req.flush(mockDailySpending);
         } else if (req.request.url.includes('/insights')) {
           req.flush({ insights: mockInsights });
-        } else if (req.request.url.includes('/transactions')) {
-          req.flush({ transactions: mockTransactions });
+        } else if (req.request.url === `${environment.apiUrl}/api/transactions`) {
+          req.flush(mockRawTransactions);
         } else {
           req.flush({});
         }
@@ -250,13 +252,34 @@ describe('AnalyticsPage — Phase 3 Assembly', () => {
       fixture.detectChanges();
 
       expect(store.summary()).not.toBeNull();
+      expect(store.transactions().length).toBe(3);
+      expect(store.transactions()[0]).toEqual({
+        id: '1',
+        merchant: 'Uber',
+        amount: -15,
+        type: 'expense',
+        date: '2024-06-01',
+        bank: 'Santander',
+        category: 'Transport',
+        icon: 'circle',
+      });
+      expect(component.activityItems()[0]).toEqual(jasmine.objectContaining({
+        id: '1',
+        description: 'Uber',
+        amount: 15,
+        type: 'expense',
+        icon: 'circle',
+      }));
+      expect(component.activityItems().length).toBe(3);
       expect(store.loadState()).toBe('ready');
     }));
 
     it('should show error state when API fails', fakeAsync(() => {
       fixture.detectChanges();
 
-      const reqs = httpMock.match(req => req.url.includes('/api/analytics/'));
+      const reqs = httpMock.match(req =>
+        req.url.includes('/api/analytics/') || req.url === `${environment.apiUrl}/api/transactions`,
+      );
       reqs.forEach(req => {
         if (req.request.url.includes('/banks')) {
           req.flush(mockBanks);
@@ -293,19 +316,9 @@ describe('AnalyticsPage — Phase 3 Assembly', () => {
       expect(cats.length).toBe(5);
     });
 
-    it('should compute comparisons from store data', () => {
-      const comps = component.comparisons();
-      expect(comps.length).toBe(2);
-    });
-
     it('should compute uiTransactions from store data', () => {
-      const txs = component.uiTransactions();
+      const txs = component.activityItems();
       expect(txs.length).toBe(3);
-    });
-
-    it('should compute uiInsights from store data', () => {
-      const insights = component.uiInsights();
-      expect(insights.length).toBeGreaterThan(0);
     });
 
     it('should compute trendChartOptions from store data', () => {
