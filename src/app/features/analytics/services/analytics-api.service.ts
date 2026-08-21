@@ -12,7 +12,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError, timer } from 'rxjs';
-import { retry, catchError } from 'rxjs/operators';
+import { retry, catchError, map } from 'rxjs/operators';
 
 import { environment } from '../../../../environments/environment';
 
@@ -84,7 +84,7 @@ export interface AnalyticsInsight {
   data?: Record<string, unknown>;
 }
 
-/** Transaction response from /api/analytics/transactions */
+/** Transaction response from /api/transactions */
 export interface AnalyticsTransaction {
   id: string;
   merchant: string;
@@ -94,6 +94,44 @@ export interface AnalyticsTransaction {
   bank: string;
   category: string;
   icon: string;
+  origin?: string;
+}
+
+interface AnalyticsTransactionPayload {
+  id: string;
+  amount: number;
+  type: 'income' | 'expense';
+  date: string;
+  category: string;
+  merchant?: string;
+  description?: string;
+  bank?: string | { name?: string };
+  icon?: string;
+  origin?: string;
+}
+
+type RecentTransactionsResponse =
+  | AnalyticsTransactionPayload[]
+  | { transactions: AnalyticsTransactionPayload[] };
+
+function normalizeRecentTransactions(
+  response: RecentTransactionsResponse,
+): { transactions: AnalyticsTransaction[] } {
+  const transactions = Array.isArray(response) ? response : response.transactions;
+
+  return {
+    transactions: transactions.map(tx => ({
+      id: tx.id,
+      merchant: tx.merchant ?? tx.description ?? '',
+      amount: tx.amount,
+      type: tx.type,
+      date: tx.date,
+      bank: typeof tx.bank === 'string' ? tx.bank : tx.bank?.name ?? '',
+      category: tx.category,
+      icon: tx.icon || 'circle',
+      origin: tx.origin,
+    })),
+  };
 }
 
 /** Bank response from /api/analytics/banks */
@@ -134,10 +172,13 @@ export interface HourlyActivityResponse {
 /** Weekly pattern entry */
 export interface WeeklyPatternEntry {
   dayOfWeek: number;   // 0=Sun, 1=Mon, ..., 6=Sat
+  categoryId: string | null;
   category: string;
   total: number;
   count: number;
+  occurrences: number;
   average: number;
+  averagePerTransaction: number;
 }
 
 /** Weekly patterns response */
@@ -152,6 +193,7 @@ export interface WeeklyPatternsResponse {
 export class AnalyticsApiService {
   private readonly http = inject(HttpClient);
   private readonly base = `${environment.apiUrl}/api/analytics`;
+  private readonly transactionsBase = `${environment.apiUrl}/api/transactions`;
 
   /** Retry config: 2 attempts with exponential backoff (1s, 2s). Only retries 5xx and network errors — 4xx (auth, premium, validation) are NOT retried. */
   private readonly retryConfig = {
@@ -267,15 +309,19 @@ export class AnalyticsApiService {
   }
 
   /**
-   * GET /api/analytics/transactions
+   * GET /api/transactions
    * Recent transactions for sidebar
    */
   getRecentTransactions(range?: DateRange, bankId?: string, type?: string, category?: string, limit: number = 10): Observable<{ transactions: AnalyticsTransaction[] }> {
-    let params = this.buildParams(range, bankId, type, category).set('limit', limit);
+    let params = this.buildParams(range, bankId, type, category)
+      .set('limit', limit)
+      .set('sortBy', 'date')
+      .set('sortDir', 'desc');
     return this.http
-      .get<{ transactions: AnalyticsTransaction[] }>(`${this.base}/transactions`, { params })
+      .get<RecentTransactionsResponse>(this.transactionsBase, { params })
       .pipe(
         retry(this.retryConfig),
+        map(normalizeRecentTransactions),
         catchError(this.handleError),
       );
   }
@@ -310,9 +356,13 @@ export class AnalyticsApiService {
    * GET /api/analytics/hourly-activity
    * Hourly income/expense aggregation (0-23 hours)
    */
-  getHourlyActivity(range?: DateRange, bankId?: string, type?: string): Observable<HourlyActivityResponse> {
+  getHourlyActivity(range?: DateRange, bankId?: string, type?: string, timezone?: string): Observable<HourlyActivityResponse> {
+    let params = this.buildParams(range, bankId, type);
+    if (timezone) {
+      params = params.set('timezone', timezone);
+    }
     return this.http
-      .get<HourlyActivityResponse>(`${this.base}/hourly-activity`, { params: this.buildParams(range, bankId, type) })
+      .get<HourlyActivityResponse>(`${this.base}/hourly-activity`, { params })
       .pipe(
         retry(this.retryConfig),
         catchError(this.handleError),
@@ -323,9 +373,13 @@ export class AnalyticsApiService {
    * GET /api/analytics/weekly-patterns
    * Weekly transaction patterns with averages
    */
-  getWeeklyPatterns(range?: DateRange, bankId?: string, type?: string, category?: string): Observable<WeeklyPatternsResponse> {
+  getWeeklyPatterns(range?: DateRange, bankId?: string, type?: string, category?: string, timezone?: string): Observable<WeeklyPatternsResponse> {
+    let params = this.buildParams(range, bankId, type, category);
+    if (timezone) {
+      params = params.set('timezone', timezone);
+    }
     return this.http
-      .get<WeeklyPatternsResponse>(`${this.base}/weekly-patterns`, { params: this.buildParams(range, bankId, type, category) })
+      .get<WeeklyPatternsResponse>(`${this.base}/weekly-patterns`, { params })
       .pipe(
         retry(this.retryConfig),
         catchError(this.handleError),

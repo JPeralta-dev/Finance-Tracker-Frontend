@@ -82,6 +82,12 @@ export const routes: Routes = [
       import('./features/analytics/pages/analytics.page').then(m => m.AnalyticsPage),
     canActivate: [authGuard],
   },
+  {
+    path: 'insights',
+    loadComponent: () =>
+      import('./features/insights/pages/insights.page').then(m => m.InsightsPage),
+    canActivate: [authGuard],
+  },
   // Premium routes
   {
     path: 'goals',
