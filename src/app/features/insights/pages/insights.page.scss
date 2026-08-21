@@ -1,0 +1,117 @@
+.insights-page {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.insights-loading {
+  text-align: center;
+  padding: 48px 0;
+
+  &__title {
+    font-family: var(--font-display);
+    font-size: 24px;
+    color: var(--text-primary);
+    margin: 0 0 8px;
+  }
+
+  &__subtitle {
+    color: var(--text-secondary);
+    font-size: 14px;
+  }
+}
+
+.insights-skeleton {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+  margin-top: 24px;
+
+  .skeleton-card {
+    height: 120px;
+    border-radius: 12px;
+    background: var(--surface-2);
+    animation: shimmer 1.5s infinite;
+  }
+}
+
+.insights-header {
+  margin-bottom: 24px;
+
+  &__title {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0 0 4px;
+  }
+
+  &__subtitle {
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin: 0;
+  }
+}
+
+.insights-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+}
+
+.insight-card {
+  display: flex;
+  gap: 16px;
+  padding: 20px;
+  border-radius: 12px;
+  background: var(--surface-2);
+  border: 1px solid var(--border-default);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  &--success { border-left: 3px solid var(--color-success, #22c55e); }
+  &--warning { border-left: 3px solid var(--color-warning, #f59e0b); }
+  &--info { border-left: 3px solid var(--color-info, #3b82f6); }
+  &--trend { border-left: 3px solid var(--color-accent, #8b5cf6); }
+
+  &__icon {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--surface-3);
+    color: var(--text-secondary);
+  }
+
+  &__content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0 0 4px;
+  }
+
+  &__message {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: 1.5;
+  }
+}
+
+@keyframes shimmer {
+  0% { opacity: 0.5; }
+  50% { opacity: 1; }
+  100% { opacity: 0.5; }
+}
