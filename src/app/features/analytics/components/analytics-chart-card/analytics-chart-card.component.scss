@@ -4,7 +4,7 @@
   -webkit-backdrop-filter: blur(var(--glass-blur));
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-md);
-  padding: 24px;
+  padding: 20px;
   transition: border-color var(--duration-normal) var(--ease-smooth),
     box-shadow var(--duration-normal) var(--ease-smooth);
 
@@ -18,7 +18,7 @@
   }
 
   &__header {
-    margin-bottom: 20px;
+    margin-bottom: 16px;
   }
 
   &__title {
@@ -38,5 +38,8 @@
   &__body {
     position: relative;
     width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
   }
 }

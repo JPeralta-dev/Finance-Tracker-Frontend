@@ -38,6 +38,7 @@ import {
   heroFunnel,
   heroArrowUp,
   heroArrowDown,
+  heroArrowRight,
   heroClipboardDocumentList,
   heroCog6Tooth,
   heroUser,
@@ -64,6 +65,7 @@ import {
   heroBookOpen,
   heroBriefcase,
   heroLink,
+  heroLightBulb,
 } from '@ng-icons/heroicons/outline';
 
 // ─── Icon Map ────────────────────────────────────────────────────────────────
@@ -75,6 +77,7 @@ export const ICONS = {
   transactions: heroCreditCard,
   categories: heroTag,
   analytics: heroChartBar,
+  insights: heroLightBulb,
   settings: heroCog6Tooth,
   logout: heroArrowRightOnRectangle,
 
@@ -92,6 +95,7 @@ export const ICONS = {
   filter: heroFunnel,
   arrowUp: heroArrowUp,
   arrowDown: heroArrowDown,
+  arrowRight: heroArrowRight,
   ellipsis: heroEllipsisHorizontal,
 
   // Finance / Categories

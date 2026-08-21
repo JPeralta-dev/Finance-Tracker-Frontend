@@ -245,12 +245,14 @@ export class EchartsThemeMapper {
       xAxis: {
         type: 'category',
         data: labels,
+        boundaryGap: false,
         axisLabel: { color: css.textTertiary, fontFamily: "'Inter', sans-serif", fontSize: 11 },
         axisLine: { lineStyle: { color: css.borderColor } },
         splitLine: { show: false },
       },
       yAxis: {
         type: 'value',
+        scale: true,
         axisLabel: {
           color: css.textTertiary,
           fontFamily: "'Inter', sans-serif",
@@ -268,7 +270,8 @@ export class EchartsThemeMapper {
         type: 'line',
         data: ds.data,
         smooth: true,
-        symbol: 'none',
+        symbol: 'circle',
+        symbolSize: 6,
         lineStyle: { width: 2, color: ds.color },
         itemStyle: { color: ds.color },
         areaStyle: {
@@ -334,6 +337,8 @@ export class EchartsThemeMapper {
       },
       yAxis: {
         type: 'value',
+        scale: true,
+        minInterval: 1,
         axisLabel: {
           color: css.textTertiary,
           fontFamily: "'Inter', sans-serif",
@@ -458,6 +463,139 @@ export class EchartsThemeMapper {
   }
 
   /**
+   * Build a complete ECharts option for an hourly activity bar chart with peak hour marking.
+   */
+  buildHourlyBarOptionWithPeak(
+    hours: number[],
+    incomeData: number[],
+    expenseData: number[],
+    currencySymbol: string,
+    peakHour: number,
+  ): EChartsOption {
+    const css = this.cssVars();
+    const labels = hours.map(h => `${h}:00`);
+
+    return {
+      ...this.buildTheme(css),
+      tooltip: {
+        trigger: 'axis',
+        confine: true,
+        backgroundColor: css.bgTertiary,
+        borderColor: css.borderColor,
+        borderWidth: 1,
+        textStyle: { color: css.textPrimary, fontFamily: "'Inter', sans-serif" },
+        extraCssText: 'border-radius: 8px; backdrop-filter: blur(12px);',
+        formatter: (params: unknown) => {
+          const items = params as Array<{ seriesName: string; data: number; axisValue: string }>;
+          if (!items || items.length === 0) return '';
+          const hour = items[0].axisValue;
+          let income = 0;
+          let expenses = 0;
+          for (const item of items) {
+            if (item.seriesName.toLowerCase().includes('income') || item.seriesName.toLowerCase().includes('ingreso')) {
+              income = item.data;
+            } else {
+              expenses = item.data;
+            }
+          }
+          const total = income + expenses;
+          return `<div style="font-weight:600;margin-bottom:6px">${hour}</div>
+            <div style="color:${css.success}">● Income: ${currencySymbol}${this.formatCurrency(income)}</div>
+            <div style="color:${css.danger}">● Expenses: ${currencySymbol}${this.formatCurrency(expenses)}</div>
+            <div style="border-top:1px solid ${css.borderColor};margin-top:6px;padding-top:6px;font-weight:600">
+              Total: ${currencySymbol}${this.formatCurrency(total)}
+            </div>`;
+        },
+      },
+      legend: {
+        bottom: 0,
+        textStyle: { color: css.textSecondary, fontFamily: "'Inter', sans-serif", fontSize: 11 },
+      },
+      grid: { top: 20, right: 16, bottom: 40, left: 48 },
+      xAxis: {
+        type: 'category',
+        data: labels,
+        axisLabel: {
+          color: css.textTertiary,
+          fontFamily: "'Inter', sans-serif",
+          fontSize: 10,
+          interval: 2,
+        },
+        axisLine: { lineStyle: { color: css.borderColor } },
+        splitLine: { show: false },
+      },
+      yAxis: {
+        type: 'value',
+        scale: true,
+        axisLabel: {
+          color: css.textTertiary,
+          fontFamily: "'Inter', sans-serif",
+          fontSize: 11,
+          formatter: (value: number) => {
+            if (value >= 1_000_000) return `${(value / 1_000_000).toFixed(1)}M`;
+            if (value >= 1_000) return `${(value / 1_000).toFixed(0)}k`;
+            return `${value}`;
+          },
+        },
+        splitLine: { lineStyle: { color: css.gridColor } },
+      },
+      series: [
+        {
+          name: 'Income',
+          type: 'bar',
+          data: incomeData,
+          itemStyle: {
+            color: css.success + 'CC',
+            borderColor: css.success,
+            borderWidth: 1,
+            borderRadius: [4, 4, 0, 0],
+          },
+          barMaxWidth: 20,
+        },
+        {
+          name: 'Expenses',
+          type: 'bar',
+          data: expenseData.map((val, idx) => ({
+            value: val,
+            itemStyle: idx === peakHour ? {
+              color: css.danger,
+              borderColor: css.danger,
+              borderWidth: 2,
+              borderRadius: [4, 4, 0, 0],
+              shadowColor: css.danger + '40',
+              shadowBlur: 8,
+            } : {
+              color: css.danger + 'CC',
+              borderColor: css.danger,
+              borderWidth: 1,
+              borderRadius: [4, 4, 0, 0],
+            },
+          })),
+          barMaxWidth: 20,
+          markPoint: {
+            data: [
+              {
+                name: 'Peak Hour',
+                coord: [peakHour, expenseData[peakHour]],
+                value: 'Pico',
+                symbol: 'pin',
+                symbolSize: 40,
+                itemStyle: { color: css.danger },
+                label: {
+                  show: true,
+                  formatter: 'Pico',
+                  color: '#fff',
+                  fontSize: 10,
+                },
+              },
+            ],
+          },
+        },
+      ],
+    };
+  }
+
+  /**
    * Build a complete ECharts option for a weekly patterns bar chart with averages.
    */
   buildWeeklyPatternsOption(
@@ -530,6 +668,91 @@ export class EchartsThemeMapper {
   }
 
   /**
+   * Build a complete ECharts option for a weekly patterns stacked bar chart by category.
+   */
+  buildWeeklyPatternsStackedOption(
+    labels: string[],
+    datasets: { label: string; data: number[]; color: string }[],
+  ): EChartsOption {
+    const css = this.cssVars();
+    return {
+      ...this.buildTheme(css),
+      tooltip: {
+        trigger: 'axis',
+        confine: true,
+        backgroundColor: css.bgTertiary,
+        borderColor: css.borderColor,
+        borderWidth: 1,
+        textStyle: { color: css.textPrimary, fontFamily: "'Inter', sans-serif" },
+        extraCssText: 'border-radius: 8px; backdrop-filter: blur(12px);',
+        formatter: (params: unknown) => {
+          const items = params as Array<{ seriesName: string; data: number; axisValue: string }>;
+          if (!items || items.length === 0) return '';
+          const day = items[0].axisValue;
+          let html = `<div style="font-weight:600;margin-bottom:6px">${day}</div>`;
+          let total = 0;
+          for (const item of items) {
+            if (item.data > 0) {
+              const formatted = this.formatCurrency(item.data);
+              html += `<div style="display:flex;justify-content:space-between;gap:12px">
+                <span style="color:${this.getSeriesColor(datasets, item.seriesName)}">●</span>
+                <span>${item.seriesName}: ${formatted}</span>
+              </div>`;
+              total += item.data;
+            }
+          }
+          html += `<div style="border-top:1px solid ${css.borderColor};margin-top:6px;padding-top:6px;font-weight:600">
+            Total: ${this.formatCurrency(total)}
+          </div>`;
+          return html;
+        },
+      },
+      legend: {
+        type: 'scroll',
+        bottom: 0,
+        textStyle: { color: css.textSecondary, fontFamily: "'Inter', sans-serif", fontSize: 11 },
+      },
+      grid: { top: 20, right: 16, bottom: 40, left: 48 },
+      xAxis: {
+        type: 'category',
+        data: labels,
+        axisLabel: {
+          color: css.textTertiary,
+          fontFamily: "'Inter', sans-serif",
+          fontSize: 11,
+        },
+        axisLine: { lineStyle: { color: css.borderColor } },
+        splitLine: { show: false },
+      },
+      yAxis: {
+        type: 'value',
+        axisLabel: {
+          color: css.textTertiary,
+          fontFamily: "'Inter', sans-serif",
+          fontSize: 11,
+          formatter: (value: number) => {
+            if (value >= 1_000_000) return `${(value / 1_000_000).toFixed(1)}M`;
+            if (value >= 1_000) return `${(value / 1_000).toFixed(0)}k`;
+            return `${value}`;
+          },
+        },
+        splitLine: { lineStyle: { color: css.gridColor } },
+      },
+      series: datasets.map(dataset => ({
+        name: dataset.label,
+        type: 'bar',
+        stack: 'total',
+        data: dataset.data,
+        itemStyle: {
+          color: dataset.color,
+          borderRadius: [0, 0, 0, 0],
+        },
+        barMaxWidth: 30,
+      })),
+    };
+  }
+
+  /**
    * Build a complete ECharts option for a donut/pie chart.
    */
   buildDonutOption(
@@ -563,16 +786,18 @@ export class EchartsThemeMapper {
       },
       legend: {
         orient: 'vertical',
-        right: 10,
+        right: 20,
         top: 'center',
+        itemWidth: 12,
+        itemHeight: 12,
+        itemGap: 14,
         textStyle: { color: css.textSecondary, fontFamily: "'Inter', sans-serif", fontSize: 12 },
-        itemGap: 12,
       },
       series: [
         {
           type: 'pie',
-          radius: ['55%', '75%'],
-          center: ['40%', '50%'],
+          radius: ['50%', '70%'],
+          center: ['35%', '50%'],
           avoidLabelOverlap: false,
           itemStyle: {
             borderRadius: 6,
