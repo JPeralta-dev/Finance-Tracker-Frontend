@@ -149,6 +149,11 @@ export class EchartsThemeMapper {
   /** Build ECharts theme option from CSS variables */
   private buildTheme(css: CssVars): EChartsOption {
     return {
+      animation: true,
+      animationDuration: 600,
+      animationEasing: 'cubicOut' as const,
+      animationDurationUpdate: 400,
+      animationEasingUpdate: 'cubicInOut' as const,
       textStyle: {
         fontFamily: "'Space Grotesk', sans-serif",
         color: css.textPrimary,

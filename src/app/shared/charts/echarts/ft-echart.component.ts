@@ -83,7 +83,12 @@ export interface ChartClickEvent {
         }
       }
       <!-- Always in DOM so ViewChild resolves; hidden until state === 'ready' -->
-      <div #chartContainer class="ft-echart-canvas" [class.ft-echart-canvas--hidden]="_state() !== 'ready'"></div>
+      <div
+        #chartContainer
+        class="ft-echart-canvas"
+        [class.ft-echart-canvas--hidden]="_state() !== 'ready'"
+        [class.ft-echart-canvas--appear]="_animating()"
+      ></div>
     </div>
   `,
   styles: `
@@ -105,6 +110,29 @@ export interface ChartClickEvent {
 
     .ft-echart-canvas--hidden {
       display: none;
+    }
+
+    .ft-echart-canvas--appear {
+      animation: ft-echart-appear 350ms cubic-bezier(0.32, 0.72, 0, 1) both;
+    }
+
+    @keyframes ft-echart-appear {
+      from {
+        opacity: 0;
+        transform: scale(0.98) translateY(6px);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .ft-echart-canvas--appear {
+        animation: none;
+        opacity: 1;
+        transform: none;
+      }
     }
 
     .ft-echart-skeleton {
@@ -204,6 +232,10 @@ export class FtEChartComponent implements OnInit, OnDestroy, OnChanges, AfterCon
   /** Current chart state */
   readonly state = output<EChartState>();
   readonly _state = signal<EChartState>('loading');
+
+  /** Controls the CSS appear animation — toggled independently from _state so
+   *  we can re-trigger the animation on data updates without hiding the canvas. */
+  readonly _animating = signal(false);
 
   // ─── Internal ────────────────────────────────────────────────────────────
 
@@ -377,6 +409,8 @@ export class FtEChartComponent implements OnInit, OnDestroy, OnChanges, AfterCon
     this.setupResizeObserver();
 
     this._state.set('ready');
+    // Trigger the appear animation on first init
+    this.triggerAppear();
   }
 
   private updateChart(opts: EChartsOption): void {
@@ -388,8 +422,23 @@ export class FtEChartComponent implements OnInit, OnDestroy, OnChanges, AfterCon
       return;
     }
 
-    this.chartInstance.setOption(opts, { notMerge: false });
+    // notMerge: true ensures stale series/labels from the previous filter are
+    // fully replaced — prevents ghost x-axis labels bleeding through on change.
+    this.chartInstance.setOption(opts, { notMerge: true });
     this._state.set('ready');
+
+    // Re-trigger the appear animation without hiding the canvas.
+    // Toggling false → true in consecutive frames forces the browser to
+    // restart the CSS keyframe from scratch.
+    this.triggerAppear();
+  }
+
+  /** Toggle _animating signal to replay the --appear CSS keyframe. */
+  private triggerAppear(): void {
+    this._animating.set(false);
+    requestAnimationFrame(() => {
+      this._animating.set(true);
+    });
   }
 
   private isEmptyOptions(opts: EChartsOption): boolean {
