@@ -15,30 +15,18 @@
       </a>
     </div>
     <div class="telegram-section__visual" ftSubtleReveal="fade-up" [delay]="200">
-      <div class="chat-preview">
-        <div class="chat-preview__header">
-          <div class="chat-preview__avatar">
-            <img src="/assets/telegram-bot-photo.png" alt="KipuBot" />
-          </div>
-          <div class="chat-preview__info">
-            <span class="chat-preview__name">{{ 'landing.telegram_section.chat_name' | translate }}</span>
-            <span class="chat-preview__status">{{ 'landing.telegram_section.chat_status' | translate }}</span>
-          </div>
-        </div>
-        <div class="chat-preview__messages">
-          <div class="chat-preview__message chat-preview__message--user">
-            {{ 'landing.telegram_section.demo_user_1' | translate }}
-          </div>
-          <div class="chat-preview__message chat-preview__message--bot" [innerHTML]="'landing.telegram_section.demo_bot_1' | translate"></div>
-          <div class="chat-preview__message chat-preview__message--user">
-            {{ 'landing.telegram_section.demo_user_2' | translate }}
-          </div>
-          <div class="chat-preview__message chat-preview__message--bot" [innerHTML]="'landing.telegram_section.demo_bot_2' | translate"></div>
-          <!-- Typing indicator -->
-          <div class="chat-preview__typing">
-            <span class="typing-dot"></span>
-            <span class="typing-dot"></span>
-            <span class="typing-dot"></span>
+      <div class="device-mockup">
+        <img
+          src="/assets/device-mockup_1.5x_postspark_2026-08-31_21-04-33.png"
+          alt="KipuBot en Telegram"
+          class="device-mockup__image"
+          fetchpriority="high"
+          decoding="async"
+        />
+        <!-- Screenshot placeholder — reemplazar mañana con captura real del bot -->
+        <div class="device-mockup__screen">
+          <div class="device-mockup__placeholder">
+            <span class="device-mockup__placeholder-text">Screenshot del bot</span>
           </div>
         </div>
       </div>

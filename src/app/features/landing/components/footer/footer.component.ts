@@ -17,4 +17,5 @@ export class FooterComponent {
   readonly currentYear = new Date().getFullYear();
   readonly contactEmail = 'support@flowr.finance';
   readonly telegramBotUrl = environment.telegramBotUrl;
+  readonly pricingEnabled = environment.pricingEnabled;
 }

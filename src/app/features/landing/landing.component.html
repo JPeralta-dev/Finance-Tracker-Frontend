@@ -53,9 +53,11 @@
     </section>
 
     <!-- Comparison Table -->
-    <section class="comparison-wrapper" id="compare-plans">
-      <ft-comparison-table [rows]="comparisonRows" />
-    </section>
+    @if (pricingEnabled) {
+      <section class="comparison-wrapper" id="compare-plans">
+        <ft-comparison-table [rows]="comparisonRows" />
+      </section>
+    }
 
     <!-- Testimonials -->
     <section class="testimonials-wrapper">

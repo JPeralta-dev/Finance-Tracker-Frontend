@@ -32,9 +32,11 @@
           <a routerLink="/#features" class="footer__link" fragment="features">
             {{ 'landing.legal.footer.features' | translate }}
           </a>
-          <a routerLink="/#pricing" class="footer__link" fragment="pricing">
-            {{ 'landing.cta.title' | translate }}
-          </a>
+          @if (pricingEnabled) {
+            <a routerLink="/#pricing" class="footer__link" fragment="pricing">
+              {{ 'landing.cta.title' | translate }}
+            </a>
+          }
           <a [href]="telegramBotUrl" target="_blank" rel="noopener" class="footer__link">
             {{ 'landing.legal.footer.telegram_bot' | translate }}
           </a>
