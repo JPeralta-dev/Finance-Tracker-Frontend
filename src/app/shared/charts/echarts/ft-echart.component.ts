@@ -299,9 +299,21 @@ export class FtEChartComponent implements OnInit, OnDestroy, OnChanges, AfterCon
   ngOnChanges(changes: SimpleChanges): void {
     if (!isPlatformBrowser(this.platformId)) return;
 
-    if (changes['loading'] && this.loading()) {
-      this._state.set('loading');
-      return;
+    if (changes['loading']) {
+      if (this.loading()) {
+        this._state.set('loading');
+        return;
+      } else {
+        const opts = this.options();
+        if (!opts || this.isEmptyOptions(opts)) {
+          this._state.set('empty');
+          if (this.chartInstance) this.disposeChart();
+          return;
+        } else if (!this.chartInstance && this.containerRef) {
+          this.initChart();
+          return;
+        }
+      }
     }
 
     if (changes['options']) {
@@ -314,9 +326,11 @@ export class FtEChartComponent implements OnInit, OnDestroy, OnChanges, AfterCon
           this.initChart();
         }
         // If containerRef is not yet available, ngAfterViewInit will call initChart()
-      } else if (this.chartInstance) {
+      } else {
         this._state.set('empty');
-        this.disposeChart();
+        if (this.chartInstance) {
+          this.disposeChart();
+        }
       }
     }
   }

@@ -298,11 +298,73 @@ export class AnalyticsPage implements OnInit {
 
   // ─── ECharts options (computed) ─────────────────────────────────────────
 
+  readonly isSingleMonthRange = computed<boolean>(() => {
+    const range = this.store.apiParams().range;
+    if (!range) return false;
+    const diffDays = (new Date(range.endDate).getTime() - new Date(range.startDate).getTime()) / (1000 * 60 * 60 * 24);
+    return diffDays <= 32;
+  });
+
+  readonly trendChartTitle = computed<string>(() => {
+    return this.isSingleMonthRange()
+      ? (this.i18n.translate('analytics.dailySpending') || 'Tendencias Diarias')
+      : this.i18n.translate('analytics.monthlyTrends');
+  });
+
+  readonly trendChartSubtitle = computed<string>(() => {
+    return this.isSingleMonthRange()
+      ? (this.i18n.translate('analytics.dailySpendingSubtitle') || 'Ingresos vs Gastos día a día')
+      : this.i18n.translate('analytics.incomeVsExpenses');
+  });
+
   readonly trendChartOptions = computed<EChartsOption | undefined>(() => {
+    const colors = this.themeMapper.categoryColors();
+    const range = this.store.apiParams().range;
+    const isSingleMonth = this.isSingleMonthRange();
+
+    // If viewing a single month (or <= 31 days), show daily granularity (day 1 to today/end of month)
+    if (isSingleMonth && range) {
+      const start = new Date(range.startDate);
+      const end = new Date(range.endDate);
+      const now = new Date();
+
+      const isCurrentMonth =
+        start.getUTCFullYear() === now.getUTCFullYear() &&
+        start.getUTCMonth() === now.getUTCMonth();
+      const lastDay = isCurrentMonth ? Math.min(now.getUTCDate(), end.getUTCDate()) : end.getUTCDate();
+      const txs = this.store.transactions();
+
+      const dailyLabels: string[] = [];
+      const dailyIncome: number[] = [];
+      const dailyExpense: number[] = [];
+
+      for (let day = 1; day <= lastDay; day++) {
+        const d = new Date(Date.UTC(start.getUTCFullYear(), start.getUTCMonth(), day, 12, 0, 0));
+        const dayKey = d.toISOString().split('T')[0];
+        dailyLabels.push(d.toLocaleDateString('es-CO', { day: 'numeric', month: 'short' }));
+
+        const dayTxs = txs.filter(t => t.date && t.date.startsWith(dayKey));
+        const inc = dayTxs.filter(t => t.type === 'income').reduce((sum, t) => sum + t.amount, 0);
+        const exp = dayTxs.filter(t => t.type === 'expense').reduce((sum, t) => sum + Math.abs(t.amount), 0);
+
+        dailyIncome.push(inc);
+        dailyExpense.push(exp);
+      }
+
+      if (dailyLabels.length > 0) {
+        return this.themeMapper.buildAreaOption(
+          dailyLabels,
+          [
+            { label: this.i18n.translate('transactions.form.income'), data: dailyIncome, color: colors[7] },
+            { label: this.i18n.translate('transactions.form.expense'), data: dailyExpense, color: colors[4] },
+          ],
+        );
+      }
+    }
+
+    // Default: monthly trend
     const trend = this.store.monthlyTrend();
     if (!trend || trend.labels.length === 0) return undefined;
-
-    const colors = this.themeMapper.categoryColors();
 
     // Transform "YYYY-MM" labels → "Mmm YYYY" (e.g. "2026-09" → "Sep 2026")
     const readableLabels = trend.labels.map(label => {
@@ -354,13 +416,19 @@ export class AnalyticsPage implements OnInit {
     const hours = data.hours.map(h => h.hour);
     const incomeData = data.hours.map(h => h.income);
     const expenseData = data.hours.map(h => h.expenses);
-    const currencySymbol = this.currencyService.currencyConfig().symbol;
 
     const maxExpenseHour = expenseData.reduce((maxIdx, val, idx, arr) =>
       val > arr[maxIdx] ? idx : maxIdx, 0);
-    const peakHour = maxExpenseHour;
 
-    return this.themeMapper.buildHourlyBarOptionWithPeak(hours, incomeData, expenseData, currencySymbol, peakHour);
+    // Pass the real currency formatter so the tooltip shows "$5,500.00" not "5.5k"
+    return this.themeMapper.buildHourlyBarOptionWithPeak(
+      hours,
+      incomeData,
+      expenseData,
+      this.currencyService.currencyConfig().symbol,
+      maxExpenseHour,
+      (v) => this.currencyService.format(v),
+    );
   });
 
   // ─── Weekly Patterns Chart (with averages) ──────────────────────────────
@@ -429,10 +497,17 @@ export class AnalyticsPage implements OnInit {
 
   readonly monthOpen = signal(false);
   readonly dailyChartSubtitle = computed<string>(() => {
-    const period = this.store.filters().period;
+    const filters = this.store.filters();
+    const period = filters.period;
     const thisWeek = this.i18n.translate('analytics.thisWeek');
-    // For periods longer than 1 month, clarify that daily spending is always current week
-    if (period === '90d' || period === '6m' || period === '1y' || period === 'custom') {
+    if (filters.dateRange) {
+      const start = new Date(filters.dateRange.startDate);
+      const end = new Date(filters.dateRange.endDate);
+      const startStr = start.toLocaleDateString('es-CO', { month: 'short', day: 'numeric' });
+      const endStr = end.toLocaleDateString('es-CO', { month: 'short', day: 'numeric' });
+      return `${startStr} — ${endStr}`;
+    }
+    if (period === '90d' || period === '6m' || period === '1y') {
       return thisWeek + ' · ' + this.i18n.translate('analytics.currentWeekNote');
     }
     return thisWeek;
@@ -638,19 +713,21 @@ export class AnalyticsPage implements OnInit {
   private loadData(range?: DateRange, bankId?: string, type?: string, category?: string, chartFilterType?: string, chartFilterValue?: string | number): void {
     this.store.setLoading();
 
-    // Daily spending always uses the current week, not the filter date range
+    // Daily spending range: use the filter range if it spans <= 32 days, otherwise fallback to current week
     const weekRange = this.getCurrentWeekRange();
+    const isShortRange = !!range && (new Date(range.endDate).getTime() - new Date(range.startDate).getTime()) <= 32 * 24 * 60 * 60 * 1000;
+    const targetDailyRange = isShortRange ? range : weekRange;
 
     // Core analytics only — new endpoints load separately
     forkJoin({
       summary: this.api.getSummary(range, bankId, type, category).pipe(catchError(() => of(null))),
       trend: this.api.getMonthlyTrend(range, bankId, type, category).pipe(catchError(() => of(null))),
       categoryBreakdown: this.api.getCategoryBreakdown(range, bankId, type, category).pipe(catchError(() => of(null))),
-      dailySpending: this.api.getDailySpending(weekRange, bankId, 'expense', category).pipe(catchError(() => of(null))),
+      dailySpending: this.api.getDailySpending(targetDailyRange, bankId, type, category).pipe(catchError(() => of(null))),
       insights: this.api.getInsights(range, bankId, type, category).pipe(
         catchError(() => of({ insights: [] })),
       ),
-      transactions: this.api.getRecentTransactions(range, bankId, type, category).pipe(
+      transactions: this.api.getRecentTransactions(range, bankId, type, category, 50).pipe(
         catchError(() => of({ transactions: [] })),
       ),
     }).subscribe({

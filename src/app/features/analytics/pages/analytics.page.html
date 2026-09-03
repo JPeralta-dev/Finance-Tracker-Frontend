@@ -156,8 +156,8 @@
         <!-- Monthly Trends (wide) -->
         <div class="analytics-charts-row__trends" ftSubtleReveal="fade-up" [delay]="100">
           <ft-analytics-chart-card
-            [title]="'analytics.monthlyTrends' | translate"
-            [subtitle]="'analytics.incomeVsExpenses' | translate"
+            [title]="trendChartTitle()"
+            [subtitle]="trendChartSubtitle()"
             [fullWidth]="true"
             height="320px"
           >
