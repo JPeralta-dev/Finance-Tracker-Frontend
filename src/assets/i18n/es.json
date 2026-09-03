@@ -73,7 +73,14 @@
       "strong": "Fuerte"
     },
     "showPassword": "Mostrar contraseña",
-    "hidePassword": "Ocultar contraseña"
+    "hidePassword": "Ocultar contraseña",
+    "consent": {
+      "terms": "Acepto los",
+      "terms_link": "Términos de Servicio",
+      "privacy": "Acepto la",
+      "privacy_link": "Política de Privacidad",
+      "required": "Debés aceptar ambos para crear una cuenta"
+    }
   },
   "nav": {
     "home": "Inicio",
@@ -82,6 +89,7 @@
     "categories": "Categorías",
     "analytics": "Análisis",
     "insights": "Insights",
+    "pockets": "Bolsillos",
     "settings": "Configuración",
     "newTransaction": "Nueva Transacción",
     "profile": "Perfil"

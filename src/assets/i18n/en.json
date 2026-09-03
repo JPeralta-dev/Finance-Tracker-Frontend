@@ -73,7 +73,14 @@
       "strong": "Strong"
     },
     "showPassword": "Show password",
-    "hidePassword": "Hide password"
+    "hidePassword": "Hide password",
+    "consent": {
+      "terms": "I agree to the",
+      "terms_link": "Terms of Service",
+      "privacy": "I agree to the",
+      "privacy_link": "Privacy Policy",
+      "required": "You must accept both to create an account"
+    }
   },
   "nav": {
     "home": "Home",
@@ -82,6 +89,7 @@
     "categories": "Categories",
     "analytics": "Analytics",
     "insights": "Insights",
+    "pockets": "Pockets",
     "settings": "Settings",
     "newTransaction": "New Transaction",
     "profile": "Profile"

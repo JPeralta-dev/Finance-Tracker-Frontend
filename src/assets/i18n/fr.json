@@ -73,7 +73,14 @@
       "strong": "Fort"
     },
     "showPassword": "Afficher le mot de passe",
-    "hidePassword": "Masquer le mot de passe"
+    "hidePassword": "Masquer le mot de passe",
+    "consent": {
+      "terms": "J'accepte les",
+      "terms_link": "Conditions d'utilisation",
+      "privacy": "J'accepte la",
+      "privacy_link": "Politique de confidentialité",
+      "required": "Vous devez accepter les deux pour créer un compte"
+    }
   },
   "nav": {
     "home": "Accueil",
@@ -82,6 +89,7 @@
     "categories": "Catégories",
     "analytics": "Analytique",
     "insights": "Perspectives",
+    "pockets": "Poches",
     "settings": "Paramètres",
     "newTransaction": "Nouvelle Transaction",
     "profile": "Profil"
