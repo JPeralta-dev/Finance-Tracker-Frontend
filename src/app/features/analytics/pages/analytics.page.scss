@@ -370,18 +370,17 @@
     flex-direction: column;
   }
 
-  // Constrain transactions card to match chart cards height
+  // Align transactions card to match sibling chart cards height
   &__transactions {
     ft-recent-activity {
       display: flex;
       flex-direction: column;
       height: 100%;
-      max-height: 360px;
+      flex: 1;
     }
 
     ::ng-deep .recent-activity {
       height: 100%;
-      max-height: 360px;
       display: flex;
       flex-direction: column;
     }
