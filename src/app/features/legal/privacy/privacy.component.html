@@ -11,17 +11,110 @@
     {{ 'landing.legal.last_updated' | translate: { year: updatedYear } }}
   </p>
 
-  <div class="legal__coming-soon">
-    <div class="legal__coming-soon-icon" aria-hidden="true">
-      <ng-icon name="shieldCheck" size="1.5rem" />
+  <div class="legal__content">
+    <div class="legal__highlight-box">
+      <p>
+        En <strong>Kipu Finance</strong> (<a href="https://kipufinance.online" target="_blank" rel="noopener">https://kipufinance.online</a>), la privacidad, confidencialidad y seguridad de tus datos son nuestra máxima prioridad. Esta Política de Privacidad describe de manera transparente qué datos recopilamos, cómo los utilizamos, las medidas de protección implementadas y los derechos que te asisten como usuario.
+      </p>
     </div>
-    <div class="legal__coming-soon-content">
-      <h2 class="legal__coming-soon-title">{{ 'landing.legal.coming_soon.title' | translate }}</h2>
-      <p class="legal__coming-soon-text">{{ 'landing.legal.privacy.coming_soon_text' | translate }}</p>
-      <a routerLink="/" class="legal__cta">
-        {{ 'landing.legal.back_to_home' | translate }}
-        <ng-icon name="chevronRight" size="0.875rem" />
-      </a>
-    </div>
+
+    <section>
+      <h2>1. Responsable del Tratamiento</h2>
+      <p>
+        El responsable del tratamiento de los datos recabados a través de la plataforma Kipu Finance es el equipo operador de Kipu Finance ("nosotros", "nuestro" o "la Plataforma"). Puedes comunicarte con nuestro equipo de privacidad y soporte en cualquier momento a través del correo: <strong>financetrackerinsight&#64;gmail.com</strong>.
+      </p>
+    </section>
+
+    <section>
+      <h2>2. Datos que Recopilamos</h2>
+      <p>Kipu Finance recopila únicamente la información estrictamente necesaria para brindarte el servicio de gestión y seguimiento financiero personal:</p>
+      <ul>
+        <li><strong>Información de Cuenta Directa:</strong> Correo electrónico, contraseña encriptada (con hash seguro) y nombre de visualización opcional al registrarte directamente.</li>
+        <li><strong>Información Financiera del Usuario:</strong> Montos, categorías, fechas y descripciones de ingresos y gastos que registras voluntariamente en la aplicación.</li>
+        <li><strong>Datos Técnicos de Uso:</strong> Información de sesión, tokens de acceso seguros y preferencias de configuración (idioma, divisa, modo visual).</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>3. Autenticación con Google (Google Sign-In) y Declaración de Uso Limitado</h2>
+      <p>
+        Nuestra plataforma permite el inicio de sesión y registro rápido mediante los servicios de autenticación de Google (OAuth 2.0). Al utilizar esta opción, solicitamos únicamente acceso a tu perfil básico:
+      </p>
+      <ul>
+        <li><strong>Dirección de correo electrónico:</strong> Utilizada como identificador principal único de tu cuenta.</li>
+        <li><strong>Nombre y foto de perfil:</strong> Utilizados para personalizar tu experiencia y saludo dentro de la plataforma.</li>
+        <li><strong>Identificador de usuario de Google:</strong> Clave única para verificar tu identidad de forma segura.</li>
+      </ul>
+      
+      <div class="legal__highlight-box" style="margin-top: 14px;">
+        <p>
+          <strong>Cumplimiento de la Política de Datos de Usuario de las APIs de Google:</strong><br />
+          El uso y la transferencia que hace Kipu Finance a cualquier otra aplicación de la información recibida a través de las APIs de Google se adhiere estrictamente a la <a href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank" rel="noopener"><strong>Google API Services User Data Policy</strong></a>, incluidos los requisitos de <strong>Uso Limitado (Limited Use)</strong>.
+        </p>
+      </div>
+
+      <p style="margin-top: 12px;">
+        En particular, garantizamos que:
+      </p>
+      <ul>
+        <li><strong>No vendemos ni alquilamos</strong> datos obtenidos de Google a terceros ni a intermediarios de datos.</li>
+        <li><strong>No utilizamos</strong> datos obtenidos de Google para fines publicitarios, creación de perfiles comerciales ni reorientación de anuncios.</li>
+        <li><strong>No transferimos</strong> tus datos a terceros, salvo que sea estrictamente necesario para proporcionar el servicio de autenticación técnica y bajo acuerdos de confidencialidad estrictos.</li>
+        <li><strong>No empleamos</strong> datos personales de Google para entrenar modelos de Inteligencia Artificial generales sin consentimiento explícito.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>4. Finalidad del Tratamiento de los Datos</h2>
+      <p>Utilizamos la información recopilada exclusivamente para:</p>
+      <ul>
+        <li>Crear, mantener y autenticar de forma segura tu cuenta de usuario.</li>
+        <li>Generar estadísticas, gráficos y resúmenes de tu situación financiera privada.</li>
+        <li>Brindar soporte técnico y responder a tus consultas.</li>
+        <li>Garantizar la seguridad de la plataforma y prevenir accesos no autorizados o fraudulentos.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>5. Seguridad y Almacenamiento de Datos</h2>
+      <p>
+        Implementamos rigurosos estándares de seguridad técnica y organizativa para salvaguardar tu información:
+      </p>
+      <ul>
+        <li><strong>Cifrado en tránsito:</strong> Todas las comunicaciones entre tu navegador y nuestros servidores están cifradas mediante protocolos TLS/HTTPS de última generación.</li>
+        <li><strong>Cifrado en reposo:</strong> Las contraseñas y datos sensibles se almacenan utilizando algoritmos de hashing criptográfico irreversibles.</li>
+        <li><strong>Tokens seguros:</strong> La autenticación se maneja mediante tokens de corta duración protegidos contra ataques CSRF y XSS.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>6. Derechos del Usuario y Revocación de Acceso</h2>
+      <p>Como usuario, tienes pleno control sobre tus datos personales:</p>
+      <ul>
+        <li><strong>Acceso y Rectificación:</strong> Puedes consultar y modificar tu información de perfil y datos financieros en cualquier momento desde la sección de configuración.</li>
+        <li><strong>Supresión de Datos (Derecho al Olvido):</strong> Puedes solicitar la eliminación definitiva de tu cuenta y de todos los registros asociados escribiéndonos a <strong>financetrackerinsight&#64;gmail.com</strong>. Al procesar la solicitud, eliminaremos permanentemente todos tus datos financieros de nuestras bases de datos activas.</li>
+        <li><strong>Revocación de Permisos de Google:</strong> Si iniciaste sesión con Google, puedes revocar el acceso de Kipu Finance en cualquier momento directamente desde el panel de seguridad de tu cuenta de Google en: <a href="https://myaccount.google.com/permissions" target="_blank" rel="noopener">https://myaccount.google.com/permissions</a>.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>7. Cambios a esta Política</h2>
+      <p>
+        Nos reservamos el derecho de actualizar esta Política de Privacidad para reflejar cambios legislativos, mejoras en nuestros servicios o actualizaciones en las directrices de seguridad. Te notificaremos sobre cambios significativos a través de la plataforma o por correo electrónico.
+      </p>
+    </section>
+
+    <section>
+      <h2>8. Contacto</h2>
+      <div class="legal__contact-card">
+        <p>
+          Si tienes alguna duda, inquietud o solicitud relativa a esta Política de Privacidad o al tratamiento de tus datos personales, puedes contactar a nuestro equipo de privacidad en:
+        </p>
+        <p style="margin-top: 8px;">
+          <strong>Correo Electrónico:</strong> <a href="mailto:financetrackerinsight@gmail.com">financetrackerinsight&#64;gmail.com</a><br />
+          <strong>Sitio Web:</strong> <a href="https://kipufinance.online" target="_blank" rel="noopener">https://kipufinance.online</a>
+        </p>
+      </div>
+    </section>
   </div>
 </div>

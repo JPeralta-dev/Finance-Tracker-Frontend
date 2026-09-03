@@ -11,13 +11,13 @@
   } @else if (state() === 'ready') {
     <div id="dashboard-main" class="dashboard-content-layer dashboard-content-layer--ready">
       <!-- ROW 0: Trial countdown banner (only when active trial) -->
-      <div class="dashboard-row dashboard-row--banner" ftSubtleReveal="fade-up" [delay]="25">
+      <div class="dashboard-row dashboard-row--banner" ftSubtleReveal="fade-up" [delay]="20">
         <ft-trial-banner />
       </div>
 
       <!-- ROW 0b: Tour trigger card (new users who haven't completed tour) -->
       @if (tour.shouldShowTriggerCard()) {
-        <div class="dashboard-row dashboard-row--banner" ftSubtleReveal="fade-up" [delay]="35">
+        <div class="dashboard-row dashboard-row--banner" ftSubtleReveal="fade-up" [delay]="30">
           <article class="tour-trigger-card" aria-labelledby="tour-trigger-title">
             <div class="tour-trigger-card__body">
               <h3 id="tour-trigger-title" class="tour-trigger-card__title">
@@ -47,196 +47,271 @@
         </div>
       }
 
-      <!-- Greeting -->
-      <div class="dashboard-greeting" ftSubtleReveal="fade-up">
-        <div>
-          <h1 class="dashboard-greeting__title">{{ greeting() | translate }}</h1>
-          <p class="dashboard-greeting__subtitle">{{ today() }}</p>
+      <!-- Header: Greeting & Quick Action Island -->
+      <header class="dashboard-header" ftSubtleReveal="fade-up">
+        <div class="dashboard-header__welcome">
+          <div class="dashboard-header__pill">
+            <span class="live-dot" aria-hidden="true"></span>
+            <span class="dashboard-header__date">{{ today() }}</span>
+          </div>
+          <h1 class="dashboard-header__title">
+            {{ greeting() | translate }}@if (userName()) {, <span class="dashboard-header__username">{{ userName() }}</span>}
+          </h1>
+          <p class="dashboard-header__subtitle">{{ 'dashboard.greetingSubtitle' | translate }}</p>
         </div>
-        <div class="dashboard-greeting__actions">
-          <a routerLink="/transactions/new" class="dashboard-greeting__cta" [ftHoverDepth]="8">
-            {{ 'dashboard.newTransaction' | translate }}
+
+        <div class="dashboard-header__actions">
+          <a routerLink="/transactions/new" class="quick-btn quick-btn--primary" [ftHoverDepth]="4">
+            <span class="quick-btn__icon-disc">
+              <ft-icon name="plus" [size]="15" />
+            </span>
+            <span>{{ 'dashboard.newTransaction' | translate }}</span>
+          </a>
+          <a routerLink="/categories" class="quick-btn quick-btn--ghost" [ftHoverDepth]="3">
+            <ft-icon name="tag" [size]="15" />
+            <span>{{ 'dashboard.manageCategories' | translate }}</span>
+          </a>
+          <a routerLink="/analytics" class="quick-btn quick-btn--ghost" [ftHoverDepth]="3">
+            <ft-icon name="chart" [size]="15" />
+            <span>{{ 'dashboard.viewAnalytics' | translate }}</span>
           </a>
         </div>
-      </div>
+      </header>
 
-      <!-- Welcome banner -->
+      <!-- Welcome banner (zero-data onboarding) -->
       @if (!hasData()) {
         <div class="dashboard-welcome-banner" ftSubtleReveal="fade-up" [delay]="25">
-          <span>{{ 'dashboard.welcomeBanner' | translate }}</span>
+          <div class="dashboard-welcome-banner__info">
+            <div class="dashboard-welcome-banner__icon">
+              <ft-icon name="sparkles" [size]="20" />
+            </div>
+            <div>
+              <span class="dashboard-welcome-banner__title">{{ 'dashboard.welcomeBanner' | translate }}</span>
+              <p class="dashboard-welcome-banner__desc">{{ 'dashboard.welcomeSubtitle' | translate }}</p>
+            </div>
+          </div>
           <a routerLink="/transactions/new" class="dashboard-welcome-banner__cta">
             {{ 'dashboard.addTransaction' | translate }}
           </a>
         </div>
       }
 
-      <!-- ROW 1: Balance Total + Ingreso Mensual -->
-      <div class="dashboard-row dashboard-row--stats" ftSubtleReveal="fade-up" [delay]="75">
-        <div class="stats-grid stats-grid--2col">
-          @for (stat of stats().slice(0, 2); track stat.id) {
-            <div class="stat-card-large">
-              <div class="stat-card-large__icon">
-                @if (stat.icon === 'wallet') { <ft-icon name="wallet" [size]="22" /> }
-                @if (stat.icon === 'income') { <ft-icon name="arrow-up" [size]="22" /> }
+      <!-- ZONE 1: HERO KPI BENTO (4 Cards in unified responsive row) -->
+      <section class="dashboard-kpis" ftSubtleReveal="fade-up" [delay]="60" data-tour="categories" aria-label="Indicadores Principales">
+        @for (stat of stats(); track stat.id) {
+          <article
+            class="kpi-card"
+            [class.kpi-card--hero]="stat.id === 'balance'"
+            [class.kpi-card--income]="stat.id === 'income'"
+            [class.kpi-card--expense]="stat.id === 'expenses'"
+            [class.kpi-card--savings]="stat.id === 'savings'"
+          >
+            <div class="kpi-card__ambient"></div>
+
+            <div class="kpi-card__top">
+              <div class="kpi-card__icon-shell">
+                @if (stat.icon === 'wallet') { <ft-icon name="wallet" [size]="20" /> }
+                @if (stat.icon === 'income') { <ft-icon name="arrow-up" [size]="20" /> }
+                @if (stat.icon === 'expense') { <ft-icon name="arrow-down" [size]="20" /> }
+                @if (stat.icon === 'subscription') { <ft-icon name="chart" [size]="20" /> }
               </div>
-              <div class="stat-card-large__body">
-                <span class="stat-card-large__label">{{ stat.label | translate }}</span>
-                <span class="stat-card-large__value" [class.stat-card-large__value--accent]="stat.id === 'balance'">
-                  @if (stat.id === 'savings') {
-                    {{ stat.value }}%
-                  } @else {
-                    {{ stat.value | number: '1.0-0' }}
-                  }
+              <div class="kpi-card__label-group">
+                <span class="kpi-card__label" [id]="stat.id === 'savings' ? 'savings-label' : null">
+                  {{ stat.label | translate }}
                 </span>
-                @if (stat.insight) {
-                  <span class="stat-card-large__insight">{{ stat.insight | translate }}</span>
+                @if (stat.id === 'savings') {
+                  <span class="kpi-card__tooltip-trigger" aria-describedby="savings-tooltip" tabindex="0" role="img" aria-label="Info">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <line x1="12" y1="16" x2="12" y2="12"></line>
+                      <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                    </svg>
+                    <span id="savings-tooltip" class="kpi-card__tooltip" role="tooltip">
+                      {{ 'dashboard.savingsRateTooltip' | translate }}
+                    </span>
+                  </span>
                 }
               </div>
             </div>
-          }
-        </div>
-      </div>
 
-      <!-- ROW 2: Gastos Mensuales + Tasa de Ahorro -->
-      <div class="dashboard-row dashboard-row--stats" ftSubtleReveal="fade-up" [delay]="100" data-tour="categories">
-        <div class="stats-grid stats-grid--2col">
-          @for (stat of stats().slice(2, 4); track stat.id) {
-            <div class="stat-card-large">
-              <div class="stat-card-large__icon">
-                @if (stat.icon === 'expense') { <ft-icon name="arrow-down" [size]="22" /> }
-                @if (stat.icon === 'subscription') { <ft-icon name="chart" [size]="22" /> }
-              </div>
-              <div class="stat-card-large__body">
-                <span class="stat-card-large__label" id="savings-label">
-                  {{ stat.label | translate }}
-                  @if (stat.id === 'savings') {
-                    <span class="stat-card-large__tooltip-trigger" aria-describedby="savings-tooltip" tabindex="0" role="img" aria-label="Info">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <line x1="12" y1="16" x2="12" y2="12"></line>
-                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
-                      </svg>
-                      <span id="savings-tooltip" class="stat-card-large__tooltip" role="tooltip">
-                        {{ 'dashboard.savingsRateTooltip' | translate }}
-                      </span>
-                    </span>
-                  }
+            <div class="kpi-card__figure">
+              <span class="kpi-card__value">
+                @if (stat.id === 'savings') {
+                  {{ stat.value }}%
+                } @else {
+                  {{ stat.value | ftCurrency }}
+                }
+              </span>
+            </div>
+
+            <div class="kpi-card__bottom">
+              @if (stat.insight) {
+                <span class="kpi-badge kpi-badge--insight">
+                  <span class="kpi-badge__dot"></span>
+                  {{ stat.insight | translate }}
                 </span>
-                <span class="stat-card-large__value">
-                  @if (stat.id === 'savings') {
-                    {{ stat.value }}%
-                  } @else {
-                    {{ stat.value | number: '1.0-0' }}
-                  }
+              } @else if (stat.id === 'income') {
+                <span class="kpi-badge kpi-badge--positive">
+                  <ft-icon name="trending-up" [size]="12" />
+                  <span>Flujo positivo</span>
+                </span>
+              } @else if (stat.id === 'expenses') {
+                <span class="kpi-badge kpi-badge--expense">
+                  <ft-icon name="trending-down" [size]="12" />
+                  <span>Salidas del período</span>
+                </span>
+              }
+            </div>
+          </article>
+        }
+      </section>
+
+      <!-- ZONE 2: CORE PULSE BENTO (Chart 65% + Recent Activity 35%) -->
+      <section class="dashboard-pulse" ftSubtleReveal="fade-up" [delay]="110">
+        <!-- Monthly Flow Chart Card -->
+        <article class="pulse-card pulse-card--chart">
+          <div class="pulse-card__container">
+            <div class="pulse-card__header">
+              <div>
+                <h2 class="pulse-card__title">{{ 'dashboard.monthlyOverview' | translate }}</h2>
+                <span class="pulse-card__subtitle">{{ 'dashboard.last6Months' | translate }}</span>
+              </div>
+              <div class="pulse-card__legend">
+                <span class="legend-badge legend-badge--income">
+                  <span class="legend-badge__dot"></span>
+                  {{ 'transactions.form.income' | translate }}
+                </span>
+                <span class="legend-badge legend-badge--expense">
+                  <span class="legend-badge__dot"></span>
+                  {{ 'transactions.form.expense' | translate }}
                 </span>
               </div>
             </div>
-          }
-        </div>
-      </div>
 
-      <!-- ROW 3: AI Insights Card (premium gated, with upgrade prompt for free users) -->
-      <div class="dashboard-row dashboard-row--premium" ftSubtleReveal="fade-up" [delay]="125">
-        @if (isPremium()) {
-          <ft-ai-insights-card />
-        } @else {
-          <ft-upgrade-prompt
-            feature="insights"
-            titleKey="emptyState.premiumUpsell.insights.title"
-            descriptionKey="emptyState.premiumUpsell.insights.description"
-            ctaKey="emptyState.premiumUpsell.insights.cta"
-          >
-            <div upgradePreview>
-              <ft-ai-insights-card />
+            <div class="pulse-card__body">
+              <ft-echart [options]="areaChartOptions()" [loading]="false" height="290px">
+                <ng-container loading><div class="chart-skeleton"></div></ng-container>
+                <ng-container empty><div class="chart-empty">{{ 'dashboard.noChartData' | translate }}</div></ng-container>
+                <ng-container error>
+                  <div class="chart-error">
+                    {{ 'dashboard.chartError' | translate }}
+                    <button class="chart-retry-btn" (click)="retry()" type="button">{{ 'dashboard.retry' | translate }}</button>
+                  </div>
+                </ng-container>
+              </ft-echart>
             </div>
-          </ft-upgrade-prompt>
-        }
-      </div>
-
-      <!-- ROW 4: Goals Widget (premium gated, with upgrade prompt for free users) -->
-      <div class="dashboard-row dashboard-row--premium" ftSubtleReveal="fade-up" [delay]="150">
-        @if (isPremium()) {
-          <ft-goals-widget />
-        } @else {
-          <ft-upgrade-prompt
-            feature="goals"
-            titleKey="emptyState.premiumUpsell.goals.title"
-            descriptionKey="emptyState.premiumUpsell.goals.description"
-            ctaKey="emptyState.premiumUpsell.goals.cta"
-          >
-            <div upgradePreview>
-              <ft-goals-widget />
-            </div>
-          </ft-upgrade-prompt>
-        }
-      </div>
-
-      <!-- ROW 4b: Pocket Progress Widget (premium gated) -->
-      <div class="dashboard-row dashboard-row--premium" ftSubtleReveal="fade-up" [delay]="160">
-        <ft-pocket-progress-widget />
-      </div>
-
-      <!-- ROW 4c: Referral Widget (premium users only) -->
-      @if (isPremium()) {
-        <div class="dashboard-row dashboard-row--premium" ftSubtleReveal="fade-up" [delay]="165">
-          <ft-referral-widget />
-        </div>
-      }
-
-      <!-- ROW 4d: Channel Distribution Widget -->
-      <div class="dashboard-row dashboard-row--channels" ftSubtleReveal="fade-up" [delay]="170" data-tour="telegram-connect">
-        <ft-channel-distribution-widget />
-      </div>
-
-      <!-- ROW 5: Chart + Recent Activity -->
-      <div class="dashboard-row dashboard-row--content" ftSubtleReveal="fade-up" [delay]="175">
-        <div class="dashboard-content">
-          <div class="dashboard-content__chart">
-            <div class="chart-header">
-              <h2 class="chart-header__title">{{ 'dashboard.monthlyOverview' | translate }}</h2>
-            </div>
-            <ft-echart [options]="areaChartOptions()" [loading]="false" height="280px">
-              <ng-container loading><div class="chart-skeleton"></div></ng-container>
-              <ng-container empty><div class="chart-empty">{{ 'dashboard.noChartData' | translate }}</div></ng-container>
-              <ng-container error>
-                <div class="chart-error">{{ 'dashboard.chartError' | translate }}<button class="chart-retry-btn" (click)="retry()" type="button">{{ 'dashboard.retry' | translate }}</button></div>
-              </ng-container>
-            </ft-echart>
           </div>
-          <div class="dashboard-content__sidebar">
+        </article>
+
+        <!-- Recent Activity Card -->
+        <article class="pulse-card pulse-card--activity">
+          <div class="pulse-card__container">
             <ft-recent-activity [items]="activity()" [pageSize]="5" />
           </div>
+        </article>
+      </section>
+
+      <!-- ZONE 3: STRATEGIC INTELLIGENCE & GOALS (Side-by-side 2 equal columns) -->
+      <section class="dashboard-intelligence" ftSubtleReveal="fade-up" [delay]="150">
+        <!-- AI Insights (Left) -->
+        <div class="intelligence-card">
+          @if (isPremium()) {
+            <ft-ai-insights-card />
+          } @else {
+            <ft-upgrade-prompt
+              feature="insights"
+              titleKey="emptyState.premiumUpsell.insights.title"
+              descriptionKey="emptyState.premiumUpsell.insights.description"
+              ctaKey="emptyState.premiumUpsell.insights.cta"
+            >
+              <div upgradePreview>
+                <ft-ai-insights-card />
+              </div>
+            </ft-upgrade-prompt>
+          }
         </div>
-      </div>
+
+        <!-- Goals (Right) -->
+        <div class="intelligence-card">
+          @if (isPremium()) {
+            <ft-goals-widget />
+          } @else {
+            <ft-upgrade-prompt
+              feature="goals"
+              titleKey="emptyState.premiumUpsell.goals.title"
+              descriptionKey="emptyState.premiumUpsell.goals.description"
+              ctaKey="emptyState.premiumUpsell.goals.cta"
+            >
+              <div upgradePreview>
+                <ft-goals-widget />
+              </div>
+            </ft-upgrade-prompt>
+          }
+        </div>
+      </section>
+
+      <!-- ZONE 4: ECOSYSTEM & DISTRIBUTION (Pockets, Channels, Referral) -->
+      <section class="dashboard-ecosystem" ftSubtleReveal="fade-up" [delay]="180">
+        <div class="ecosystem-card">
+          <ft-pocket-progress-widget />
+        </div>
+
+        <div class="ecosystem-card" data-tour="telegram-connect">
+          <ft-channel-distribution-widget />
+        </div>
+
+        @if (isPremium()) {
+          <div class="ecosystem-card ecosystem-card--full">
+            <ft-referral-widget />
+          </div>
+        }
+      </section>
+
     </div>
   }
 
-  <!-- Loading -->
+  <!-- Loading State (Mirrors the Bento Geometry) -->
   @if (state() === 'loading') {
-    <div class="dashboard-content-layer dashboard-content-layer--loading">
-      <div class="dashboard-greeting" ftSubtleReveal="fade-up">
-        <div>
-          <h1 class="dashboard-greeting__title">{{ 'dashboard.loading' | translate }}</h1>
-          <p class="dashboard-greeting__subtitle">{{ 'dashboard.fetchingData' | translate }}</p>
+    <div class="dashboard-content-layer dashboard-content-layer--loading" aria-busy="true" aria-label="Cargando panel financiero">
+      <!-- Header Skeleton -->
+      <div class="dashboard-header" ftSubtleReveal="fade-up">
+        <div class="dashboard-header__welcome">
+          <div class="skeleton-pill"></div>
+          <div class="skeleton-title"></div>
+          <div class="skeleton-subtitle"></div>
+        </div>
+        <div class="dashboard-header__actions">
+          <div class="skeleton-btn"></div>
+          <div class="skeleton-btn"></div>
         </div>
       </div>
-      <div class="stats-grid stats-grid--2col" ftSubtleReveal="fade-up" [delay]="100">
+
+      <!-- KPI Grid Skeleton -->
+      <div class="dashboard-kpis" ftSubtleReveal="fade-up" [delay]="50">
         @for (_ of [1, 2, 3, 4]; track $index) {
-          <div class="stat-card-large stat-card-large--skeleton">
-            <div class="stat-card-large__icon"></div>
-            <div class="stat-card-large__body">
-              <div class="skeleton-line skeleton-line--short"></div>
-              <div class="skeleton-line skeleton-line--wide"></div>
+          <div class="kpi-card kpi-card--skeleton">
+            <div class="kpi-card__top">
+              <div class="skeleton-icon-box"></div>
+              <div class="skeleton-label-line"></div>
             </div>
+            <div class="skeleton-value-line"></div>
+            <div class="skeleton-footer-line"></div>
           </div>
         }
       </div>
-      <div class="dashboard-content">
-        <div class="dashboard-content__chart" ftSubtleReveal="fade-up" [delay]="200">
-          <div class="chart-placeholder chart-placeholder--loading"><div class="skeleton-bar"></div></div>
+
+      <!-- Pulse Skeleton -->
+      <div class="dashboard-pulse" ftSubtleReveal="fade-up" [delay]="100">
+        <div class="pulse-card pulse-card--chart pulse-card--skeleton">
+          <div class="pulse-card__container">
+            <div class="skeleton-chart-header"></div>
+            <div class="skeleton-chart-body"></div>
+          </div>
         </div>
-        <div class="dashboard-content__sidebar" ftSubtleReveal="fade-up" [delay]="300">
-          <ft-recent-activity [loading]="true" [items]="[]" />
+        <div class="pulse-card pulse-card--activity pulse-card--skeleton">
+          <div class="pulse-card__container">
+            <ft-recent-activity [loading]="true" [items]="[]" />
+          </div>
         </div>
       </div>
     </div>

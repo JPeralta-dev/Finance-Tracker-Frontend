@@ -24,6 +24,8 @@ const ICONS: Record<string, string> = {
   x: 'M18 6L6 18 M6 6l12 12',
   'circle-dollar': 'M12 2a10 10 0 100 20 10 10 0 000-20z M16 8h-6a2 2 0 000 4h4a2 2 0 010 4H8 M12 18v2 M12 4v2',
   'plus-circle': 'M12 8v8 M8 12h8 M22 12a10 10 0 11-20 0 10 10 0 0120 0z',
+  plus: 'M12 5v14 M5 12h14',
+  tag: 'M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z M7 7h.01',
 };
 
 export type IconName = keyof typeof ICONS;

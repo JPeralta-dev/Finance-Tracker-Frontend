@@ -26,6 +26,7 @@ export class RegisterComponent {
   loading = false;
   error = '';
   showPassword = false;
+  readonly currentYear = new Date().getFullYear();
   readonly strengthLevels = [0, 1, 2, 3];
 
   readonly strengthScore = computed(() => {
@@ -49,6 +50,8 @@ export class RegisterComponent {
     email: ['', [Validators.required, Validators.email]],
     displayName: [''],
     password: ['', [Validators.required, Validators.minLength(8)]],
+    acceptTerms: [false, [Validators.requiredTrue]],
+    acceptPrivacy: [false, [Validators.requiredTrue]],
   });
 
   get email() {
@@ -63,6 +66,14 @@ export class RegisterComponent {
     return this.form.get('password')!;
   }
 
+  get acceptTerms() {
+    return this.form.get('acceptTerms')!;
+  }
+
+  get acceptPrivacy() {
+    return this.form.get('acceptPrivacy')!;
+  }
+
   onSubmit(): void {
     if (this.form.invalid) return;
 
@@ -72,7 +83,10 @@ export class RegisterComponent {
     const displayName = this.displayName.value?.trim() || undefined;
 
     this.authService
-      .register(this.email.value!, this.password.value!, displayName)
+      .register(this.email.value!, this.password.value!, displayName, {
+        terms: this.acceptTerms.value === true,
+        privacy: this.acceptPrivacy.value === true,
+      })
       .pipe(
         finalize(() => {
           this.loading = false;

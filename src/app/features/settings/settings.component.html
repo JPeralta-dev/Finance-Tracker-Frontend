@@ -11,9 +11,74 @@
     </button>
   </div>
 
-  <!-- Order: Profile → Linked Accounts → Session → Back link -->
+  <!-- Order: Profile → Linked Accounts → Data → Session → Back link -->
   <app-profile-section [delay]="25" />
   <app-linked-accounts-section [delay]="50" />
+
+  <!-- ── My Data (GDPR) ──────────────────────────────────────────────── -->
+  <div class="settings-section" ftSubtleReveal="fade-up" [delay]="150">
+    <div class="section-header">
+      <div class="section-icon section-icon--info">
+        <ng-icon name="documentArrowDown" size="1.5rem" />
+      </div>
+      <div class="section-info">
+        <h2 class="section-title">{{ 'settings.data.title' | translate }}</h2>
+        <p class="section-subtitle">{{ 'settings.data.subtitle' | translate }}</p>
+      </div>
+    </div>
+
+    <!-- Export Data -->
+    <div class="data-actions">
+      <button class="btn-data btn-data--export" (click)="onExportData()" [disabled]="exportLoading()">
+        @if (exportLoading()) {
+          <span class="spinner-sm"></span>
+        } @else {
+          <ng-icon name="documentArrowDown" size="1rem" />
+        }
+        {{ 'settings.data.export_button' | translate }}
+      </button>
+      @if (exportError()) {
+        <p class="data-error">{{ exportError() | translate }}</p>
+      }
+    </div>
+
+    <!-- Delete Account -->
+    <div class="data-actions data-actions--danger">
+      @if (!confirmDelete()) {
+        <button class="btn-data btn-data--delete" (click)="onRequestDelete()">
+          <ng-icon name="trash" size="1rem" />
+          {{ 'settings.data.delete_button' | translate }}
+        </button>
+      } @else {
+        <div class="delete-confirm">
+          <p class="delete-confirm__warning">{{ 'settings.data.delete_warning' | translate }}</p>
+          <p class="delete-confirm__instruction">{{ 'settings.data.delete_instruction' | translate }}</p>
+          <input
+            type="text"
+            class="delete-confirm__input"
+            [placeholder]="'settings.data.delete_placeholder' | translate"
+            [(ngModel)]="deleteConfirmText"
+            (keydown.enter)="onConfirmDelete()"
+          />
+          @if (deleteError()) {
+            <p class="delete-confirm__error">{{ deleteError() | translate }}</p>
+          }
+          <div class="delete-confirm__actions">
+            <button class="btn-cancel" (click)="onCancelDelete()">
+              {{ 'common.cancel' | translate }}
+            </button>
+            <button class="btn-confirm-delete" (click)="onConfirmDelete()" [disabled]="deleteLoading()">
+              @if (deleteLoading()) {
+                <span class="spinner-sm"></span>
+              } @else {
+                {{ 'settings.data.delete_confirm_button' | translate }}
+              }
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
 
   <!-- Session / Account section -->
   <div class="settings-section settings-section--danger" ftSubtleReveal="fade-up" [delay]="300">

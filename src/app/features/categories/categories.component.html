@@ -1,4 +1,5 @@
 <div class="cat-page" ftSubtleReveal="fade-up">
+<div class="cat-page" ftSubtleReveal="fade-up">
   <!-- Header -->
   <div class="page-header">
     <div>
@@ -6,10 +7,10 @@
       <p class="page-subtitle">{{ 'categories.subtitle' | translate }}</p>
     </div>
     <button class="btn-new" (click)="openCreateForm()" data-blendy-from="category-modal">
-      <span>
-        <ng-icon name="plus" size="1rem" />
-        {{ 'categories.new' | translate }}
+      <span class="btn-new__disc">
+        <ng-icon name="plus" size="0.875rem" />
       </span>
+      <span>{{ 'categories.new' | translate }}</span>
     </button>
   </div>
 
