@@ -1,7 +1,7 @@
 export const environment = {
   production: false,
   apiUrl: "http://localhost:3010",
-  telegramBotUrl: "https://t.me/hormigaTrackerBot",
+  telegramBotUrl: "https://t.me/kipufinancebot",
   pricingEnabled: false,
   posthog: {
     apiKey: '', // Loaded at runtime via PostHog init script in index.html for prod
