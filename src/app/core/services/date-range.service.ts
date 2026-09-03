@@ -13,6 +13,13 @@ export class DateRangeService {
   readonly startDate = signal('');
   readonly endDate = signal('');
 
+  /**
+   * Earliest date the user has data for (e.g., first transaction date or
+   * account creation date). When set, the month dropdown only shows months
+   * from this date forward — no phantom months before the account existed.
+   */
+  readonly minDate = signal<Date | null>(null);
+
   readonly currentMonthLabel = computed(() => {
     const s = this.startDate();
     if (!s) return '';
@@ -23,7 +30,20 @@ export class DateRangeService {
   readonly availableMonths = computed(() => {
     const months: { label: string; start: string; end: string }[] = [];
     const now = new Date();
-    for (let i = 0; i < 24; i++) {
+    const min = this.minDate();
+
+    // Determine how many months back we should show.
+    // If minDate is set: use it. Otherwise fall back to 12 months max.
+    let maxMonthsBack = 12;
+    if (min) {
+      const nowYear = now.getUTCFullYear();
+      const nowMonth = now.getUTCMonth();
+      const minYear = min.getUTCFullYear();
+      const minMonth = min.getUTCMonth();
+      maxMonthsBack = (nowYear - minYear) * 12 + (nowMonth - minMonth);
+    }
+
+    for (let i = 0; i <= maxMonthsBack; i++) {
       const year = now.getUTCFullYear();
       const month = now.getUTCMonth() - i;
       // Use noon UTC so toLocaleDateString stays in the same calendar month
@@ -52,6 +72,11 @@ export class DateRangeService {
     this.endDate.set(toUTCDateString(lastDay.getUTCFullYear(), lastDay.getUTCMonth(), lastDay.getUTCDate()));
   }
 
+  /** Set the earliest date the user has data — limits the month dropdown. */
+  setMinDate(date: Date): void {
+    this.minDate.set(date);
+  }
+
   setMonth(start: string, end: string): void {
     this.startDate.set(start);
     this.endDate.set(end);
@@ -76,3 +101,4 @@ export class DateRangeService {
     };
   }
 }
+

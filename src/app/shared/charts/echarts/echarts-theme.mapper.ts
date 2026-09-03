@@ -149,6 +149,11 @@ export class EchartsThemeMapper {
   /** Build ECharts theme option from CSS variables */
   private buildTheme(css: CssVars): EChartsOption {
     return {
+      animation: true,
+      animationDuration: 600,
+      animationEasing: 'cubicOut' as const,
+      animationDurationUpdate: 400,
+      animationEasingUpdate: 'cubicInOut' as const,
       textStyle: {
         fontFamily: "'Space Grotesk', sans-serif",
         color: css.textPrimary,
@@ -464,6 +469,9 @@ export class EchartsThemeMapper {
 
   /**
    * Build a complete ECharts option for an hourly activity bar chart with peak hour marking.
+   * @param valueFormatter Optional function to format monetary values in the tooltip.
+   *   Pass `(v) => currencyService.format(v)` for full currency formatting.
+   *   Defaults to the internal abbreviated formatter (e.g. "5.5k").
    */
   buildHourlyBarOptionWithPeak(
     hours: number[],
@@ -471,9 +479,12 @@ export class EchartsThemeMapper {
     expenseData: number[],
     currencySymbol: string,
     peakHour: number,
+    valueFormatter?: (value: number) => string,
   ): EChartsOption {
     const css = this.cssVars();
     const labels = hours.map(h => `${h}:00`);
+    // Use the provided formatter if available, fall back to abbreviated internal one.
+    const fmt = valueFormatter ?? ((v: number) => `${currencySymbol}${this.formatCurrency(v)}`);
 
     return {
       ...this.buildTheme(css),
@@ -500,10 +511,10 @@ export class EchartsThemeMapper {
           }
           const total = income + expenses;
           return `<div style="font-weight:600;margin-bottom:6px">${hour}</div>
-            <div style="color:${css.success}">● Income: ${currencySymbol}${this.formatCurrency(income)}</div>
-            <div style="color:${css.danger}">● Expenses: ${currencySymbol}${this.formatCurrency(expenses)}</div>
+            <div style="color:${css.success}">● Ingresos: ${fmt(income)}</div>
+            <div style="color:${css.danger}">● Gastos: ${fmt(expenses)}</div>
             <div style="border-top:1px solid ${css.borderColor};margin-top:6px;padding-top:6px;font-weight:600">
-              Total: ${currencySymbol}${this.formatCurrency(total)}
+              Total: ${fmt(total)}
             </div>`;
         },
       },
@@ -541,7 +552,7 @@ export class EchartsThemeMapper {
       },
       series: [
         {
-          name: 'Income',
+          name: 'Ingresos',
           type: 'bar',
           data: incomeData,
           itemStyle: {
@@ -553,7 +564,7 @@ export class EchartsThemeMapper {
           barMaxWidth: 20,
         },
         {
-          name: 'Expenses',
+          name: 'Gastos',
           type: 'bar',
           data: expenseData.map((val, idx) => ({
             value: val,
@@ -561,14 +572,14 @@ export class EchartsThemeMapper {
               color: css.danger,
               borderColor: css.danger,
               borderWidth: 2,
-              borderRadius: [4, 4, 0, 0],
+              borderRadius: [4, 4, 0, 0] as [number, number, number, number],
               shadowColor: css.danger + '40',
               shadowBlur: 8,
             } : {
               color: css.danger + 'CC',
               borderColor: css.danger,
               borderWidth: 1,
-              borderRadius: [4, 4, 0, 0],
+              borderRadius: [4, 4, 0, 0] as [number, number, number, number],
             },
           })),
           barMaxWidth: 20,
@@ -593,6 +604,7 @@ export class EchartsThemeMapper {
         },
       ],
     };
+
   }
 
   /**
