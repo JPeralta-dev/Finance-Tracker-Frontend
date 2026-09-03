@@ -488,6 +488,20 @@
       "default_category": "Catégorie par défaut",
       "select_category": "Sélectionner une catégorie...",
       "saved": "Préférence enregistrée"
+    },
+    "data": {
+      "title": "Mes Données",
+      "subtitle": "Exportez ou supprimez définitivement les données de votre compte.",
+      "export_button": "Exporter mes données",
+      "export_loading": "Préparation de l'export...",
+      "export_error": "Échec de l'export des données. Veuillez réessayer.",
+      "delete_button": "Supprimer mon compte",
+      "delete_warning": "Cette action est permanente et ne peut pas être annulée.",
+      "delete_instruction": "Tapez DELETE pour confirmer :",
+      "delete_placeholder": "DELETE",
+      "delete_confirm_button": "Supprimer définitivement",
+      "delete_confirm_mismatch": "Vous devez taper DELETE exactement pour confirmer.",
+      "delete_error": "Échec de la suppression du compte. Veuillez réessayer."
     }
   },
   "tour": {

@@ -657,6 +657,20 @@
       "default_category": "Default category",
       "select_category": "Select a category...",
       "saved": "Preference saved"
+    },
+    "data": {
+      "title": "My Data",
+      "subtitle": "Export or permanently delete your account data.",
+      "export_button": "Export my data",
+      "export_loading": "Preparing export...",
+      "export_error": "Failed to export data. Please try again.",
+      "delete_button": "Delete my account",
+      "delete_warning": "This action is permanent and cannot be undone.",
+      "delete_instruction": "Type DELETE to confirm:",
+      "delete_placeholder": "DELETE",
+      "delete_confirm_button": "Permanently delete",
+      "delete_confirm_mismatch": "You must type DELETE exactly to confirm.",
+      "delete_error": "Failed to delete account. Please try again."
     }
   },
   "analytics": {

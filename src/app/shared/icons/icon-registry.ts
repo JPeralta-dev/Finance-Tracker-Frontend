@@ -66,6 +66,8 @@ import {
   heroBriefcase,
   heroLink,
   heroLightBulb,
+  heroArrowDownOnSquareStack,
+  heroTrash,
 } from '@ng-icons/heroicons/outline';
 
 // ─── Icon Map ────────────────────────────────────────────────────────────────
@@ -175,6 +177,10 @@ export const ICONS = {
   codeBracket: heroCodeBracket,
   buildingOffice: heroBuildingOffice,
   link: heroLink,
+
+  // Data management
+  documentArrowDown: heroArrowDownOnSquareStack,
+  trash: heroTrash,
 };
 
 // ─── Category Icon Mapping ───────────────────────────────────────────────────

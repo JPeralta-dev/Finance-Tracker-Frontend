@@ -657,6 +657,20 @@
       "default_category": "Categoría por defecto",
       "select_category": "Seleccionar categoría...",
       "saved": "Preferencia guardada"
+    },
+    "data": {
+      "title": "Mis Datos",
+      "subtitle": "Exportá o eliminá permanentemente los datos de tu cuenta.",
+      "export_button": "Exportar mis datos",
+      "export_loading": "Preparando exportación...",
+      "export_error": "No se pudieron exportar los datos. Intentá de nuevo.",
+      "delete_button": "Eliminar mi cuenta",
+      "delete_warning": "Esta acción es permanente y no se puede deshacer.",
+      "delete_instruction": "Escribí DELETE para confirmar:",
+      "delete_placeholder": "DELETE",
+      "delete_confirm_button": "Eliminar permanentemente",
+      "delete_confirm_mismatch": "Debés escribir DELETE exactamente para confirmar.",
+      "delete_error": "No se pudo eliminar la cuenta. Intentá de nuevo."
     }
   },
   "analytics": {

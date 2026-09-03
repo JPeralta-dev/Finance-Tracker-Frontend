@@ -1,11 +1,13 @@
 import { Component, signal, inject, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { NgIcon } from '@ng-icons/core';
 import { ICONS } from '../../shared/icons/icon-registry';
 import { TranslatePipe } from '../../core/pipes/translate.pipe';
 import { FtSubtleRevealDirective } from '../../shared/directives/ft-subtle-reveal.directive';
 import { AuthService } from '../../core/services/auth.service';
+import { UserDataService } from '../../core/services/user-data.service';
 import { finalize } from 'rxjs';
 import { ProfileSectionComponent } from './profile-section/profile-section.component';
 import { PreferencesSectionComponent } from './preferences-section/preferences-section.component';
@@ -16,6 +18,7 @@ import { LinkedAccountsSectionComponent } from './linked-accounts-section/linked
   standalone: true,
   imports: [
     CommonModule,
+    FormsModule,
     RouterLink,
     NgIcon,
     TranslatePipe,
@@ -29,11 +32,20 @@ import { LinkedAccountsSectionComponent } from './linked-accounts-section/linked
 })
 export class SettingsComponent {
   private readonly authService = inject(AuthService);
+  private readonly userDataService = inject(UserDataService);
   private readonly router = inject(Router);
 
   logoutLoading = signal(false);
   confirmLogout = signal(false);
   logoutError = signal('');
+
+  /** Data management */
+  exportLoading = signal(false);
+  exportError = signal('');
+  confirmDelete = signal(false);
+  deleteLoading = signal(false);
+  deleteError = signal('');
+  deleteConfirmText = signal('');
 
   /** Inline preferences drawer visibility. */
   showPreferencesDrawer = signal(false);
@@ -81,6 +93,65 @@ export class SettingsComponent {
         this.logoutError.set(
           'Sign out failed. Please check your connection and try again.',
         );
+      },
+    });
+  }
+
+  // ── Data Management (GDPR) ──────────────────────────────────────────
+
+  onExportData(): void {
+    this.exportLoading.set(true);
+    this.exportError.set('');
+
+    this.userDataService.exportData().pipe(
+      finalize(() => this.exportLoading.set(false)),
+    ).subscribe({
+      next: (blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `kipu-export-${Date.now()}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+      },
+      error: () => {
+        this.exportError.set('settings.data.export_error');
+      },
+    });
+  }
+
+  onRequestDelete(): void {
+    this.confirmDelete.set(true);
+    this.deleteError.set('');
+    this.deleteConfirmText.set('');
+  }
+
+  onCancelDelete(): void {
+    this.confirmDelete.set(false);
+    this.deleteError.set('');
+    this.deleteConfirmText.set('');
+  }
+
+  onConfirmDelete(): void {
+    if (this.deleteConfirmText().toLowerCase() !== 'delete') {
+      this.deleteError.set('settings.data.delete_confirm_mismatch');
+      return;
+    }
+
+    this.deleteLoading.set(true);
+    this.deleteError.set('');
+
+    this.userDataService.deleteAccount().pipe(
+      finalize(() => this.deleteLoading.set(false)),
+    ).subscribe({
+      next: () => {
+        this.authService.clearSession();
+        this.router.navigate(['/login']);
+      },
+      error: () => {
+        this.deleteError.set('settings.data.delete_error');
       },
     });
   }
