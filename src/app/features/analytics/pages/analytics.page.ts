@@ -303,11 +303,20 @@ export class AnalyticsPage implements OnInit {
     if (!trend || trend.labels.length === 0) return undefined;
 
     const colors = this.themeMapper.categoryColors();
+
+    // Transform "YYYY-MM" labels → "Mmm YYYY" (e.g. "2026-09" → "Sep 2026")
+    const readableLabels = trend.labels.map(label => {
+      const [year, month] = label.split('-');
+      if (!year || !month) return label;
+      const d = new Date(Date.UTC(+year, +month - 1, 1, 12));
+      return d.toLocaleDateString('es-CO', { month: 'short', year: 'numeric' });
+    });
+
     return this.themeMapper.buildAreaOption(
-      trend.labels,
+      readableLabels,
       [
-        { label: this.i18n.translate('transactions.form.income'), data: trend.income, color: colors[7] }, // success green
-        { label: this.i18n.translate('transactions.form.expense'), data: trend.expenses.map(e => Math.abs(e)), color: colors[4] }, // danger red
+        { label: this.i18n.translate('transactions.form.income'), data: trend.income, color: colors[7] },
+        { label: this.i18n.translate('transactions.form.expense'), data: trend.expenses.map(e => Math.abs(e)), color: colors[4] },
       ],
     );
   });
@@ -646,7 +655,18 @@ export class AnalyticsPage implements OnInit {
       ),
     }).subscribe({
       next: ({ summary, trend, categoryBreakdown, dailySpending, insights, transactions }) => {
-        if (summary) this.store.setSummary(summary);
+        if (summary) {
+          this.store.setSummary(summary);
+          // Limit the month dropdown to months where the user has data.
+          // If the backend exposes firstTransactionDate, use it; otherwise
+          // fall back to the start of the current filter range.
+          const firstTxDate = (summary as any).firstTransactionDate;
+          if (firstTxDate) {
+            this.dateRange.setMinDate(new Date(firstTxDate));
+          } else if (range?.startDate) {
+            this.dateRange.setMinDate(new Date(range.startDate));
+          }
+        }
         if (trend) this.store.setMonthlyTrend(trend);
         if (categoryBreakdown) this.store.setCategoryBreakdown(categoryBreakdown);
         if (dailySpending) this.store.setDailySpending(dailySpending);
