@@ -26,6 +26,7 @@ export class ForgotPasswordComponent {
 
   state = signal<ForgotPasswordState>('idle');
   error = '';
+  readonly currentYear = new Date().getFullYear();
 
   form = this.fb.group({
     email: ['', [Validators.required, Validators.email]],

@@ -11,7 +11,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://finance-tracker-backend-bor6.onrender.com/api/:path*"
+      "destination": "https://api.kipufinance.online/api/:path*"
     },
     {
       "source": "/robots.txt",

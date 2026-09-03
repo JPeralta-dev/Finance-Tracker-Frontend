@@ -105,7 +105,7 @@ export const routes: Routes = [
     path: 'pockets',
     loadComponent: () =>
       import('./features/pockets/pages/pockets.page').then(m => m.PocketsPage),
-    canActivate: [authGuard, premiumGuard],
+    canActivate: [authGuard],
   },
   {
     path: 'subscription',
@@ -121,14 +121,29 @@ export const routes: Routes = [
   },
   // Legal pages (public)
   {
+    path: 'privacy',
+    loadComponent: () =>
+      import('./features/legal/privacy/privacy.component').then(m => m.PrivacyComponent),
+  },
+  {
+    path: 'privacidad',
+    redirectTo: 'privacy',
+    pathMatch: 'full',
+  },
+  {
+    path: 'terms',
+    redirectTo: 'legal/terms',
+    pathMatch: 'full',
+  },
+  {
     path: 'legal/terms',
     loadComponent: () =>
       import('./features/legal/terms/terms.component').then(m => m.TermsComponent),
   },
   {
     path: 'legal/privacy',
-    loadComponent: () =>
-      import('./features/legal/privacy/privacy.component').then(m => m.PrivacyComponent),
+    redirectTo: 'privacy',
+    pathMatch: 'full',
   },
   {
     path: 'legal/cookies',

@@ -25,6 +25,7 @@ import { PocketProgressWidget } from '../widgets/pocket-progress.widget';
 import { ChannelDistributionWidgetComponent } from '../widgets/channel-distribution-widget.component';
 import { FtReferralWidgetComponent } from '../../referral/components/referral-widget.component';
 import { IconComponent } from '../../../shared/icons/icon.component';
+import { FtCurrencyPipe } from '../../../core/pipes/ft-currency.pipe';
 import type { EChartsOption } from 'echarts';
 
 type DashboardState = 'loading' | 'ready' | 'error';
@@ -65,6 +66,7 @@ class ChartColorCache {
     FtTrialBannerComponent,
     FtUpgradePromptComponent,
     TranslatePipe,
+    FtCurrencyPipe,
     AiInsightsCardComponent,
     GoalsWidgetComponent,
     PocketProgressWidget,
@@ -109,6 +111,13 @@ export class DashboardPage implements OnInit, AfterViewInit {
     if (hour < 12) return 'dashboard.greeting_morning';
     if (hour < 18) return 'dashboard.greeting_afternoon';
     return 'dashboard.greeting_evening';
+  });
+
+  readonly userName = computed(() => {
+    const user = this.authService.currentUser();
+    if (user?.displayName?.trim()) return user.displayName.trim();
+    if (user?.email) return user.email.split('@')[0];
+    return '';
   });
 
   readonly today = computed(() => {

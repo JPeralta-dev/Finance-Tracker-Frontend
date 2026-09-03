@@ -170,6 +170,7 @@ export class AuthService {
     email: string,
     password: string,
     displayName?: string,
+    consent?: { terms: boolean; privacy: boolean },
   ): Observable<User> {
     return this.http
       .post<{
@@ -179,6 +180,8 @@ export class AuthService {
         email,
         password,
         name: displayName,
+        consentTermsAt: consent?.terms ? new Date().toISOString() : undefined,
+        consentPrivacyAt: consent?.privacy ? new Date().toISOString() : undefined,
       }, { withCredentials: true })
       .pipe(
         tap((res) => {

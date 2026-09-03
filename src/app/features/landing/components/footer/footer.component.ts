@@ -15,7 +15,7 @@ import { environment } from '../../../../../environments/environment';
 })
 export class FooterComponent {
   readonly currentYear = new Date().getFullYear();
-  readonly contactEmail = 'support@flowr.finance';
+  readonly contactEmail = 'financetrackerinsight@gmail.com';
   readonly telegramBotUrl = environment.telegramBotUrl;
   readonly pricingEnabled = environment.pricingEnabled;
 }

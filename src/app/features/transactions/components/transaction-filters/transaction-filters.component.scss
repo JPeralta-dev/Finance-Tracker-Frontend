@@ -19,24 +19,24 @@
     left: 12px;
     top: 50%;
     transform: translateY(-50%);
-    font-size: 14px;
     pointer-events: none;
-    opacity: 0.5;
+    color: var(--text-tertiary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   &__input {
     width: 100%;
-    padding: 8px 12px 8px 36px;
+    padding: 8px 14px 8px 34px;
     font-size: 13px;
     font-family: var(--font-body);
     color: var(--text-primary);
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-sm);
+    background: var(--bg-tertiary);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-full);
     outline: none;
-    transition:
-      border-color var(--duration-fast) var(--ease-out),
-      box-shadow var(--duration-fast) var(--ease-out);
+    transition: all var(--duration-fast) var(--ease-out);
 
     &::placeholder {
       color: var(--text-tertiary);
@@ -45,12 +45,13 @@
     &:focus {
       border-color: var(--accent-start);
       box-shadow: 0 0 0 3px var(--accent-glow);
+      background: var(--bg-elevated);
     }
   }
 
   &__pills {
     display: flex;
-    gap: 4px;
+    gap: 6px;
   }
 
   &__pill {
@@ -60,29 +61,27 @@
     font-family: var(--font-body);
     color: var(--text-secondary);
     background: transparent;
-    border: 1px solid var(--border-subtle);
+    border: 1px solid var(--glass-border);
     border-radius: var(--radius-full);
     cursor: pointer;
-    transition:
-      background var(--duration-fast) var(--ease-out),
-      color var(--duration-fast) var(--ease-out),
-      border-color var(--duration-fast) var(--ease-out);
+    transition: all var(--duration-fast) var(--ease-out);
 
     &:hover {
-      background: rgba(255, 255, 255, 0.05);
+      background: var(--bg-elevated);
       color: var(--text-primary);
     }
 
     &--active {
-      background: rgba(255, 255, 255, 0.08);
-      color: var(--text-primary);
-      border-color: var(--glass-border-hover);
+      background: var(--accent-glow);
+      color: var(--accent-start);
+      border-color: rgba(124, 58, 237, 0.35);
+      font-weight: 600;
     }
   }
 
   &__sort {
     display: flex;
-    gap: 4px;
+    gap: 6px;
     margin-left: auto;
   }
 
@@ -90,31 +89,31 @@
     display: flex;
     align-items: center;
     gap: 4px;
-    padding: 6px 10px;
+    padding: 6px 12px;
     font-size: 12px;
     font-weight: 500;
     font-family: var(--font-body);
     color: var(--text-tertiary);
     background: transparent;
-    border: none;
-    border-radius: var(--radius-sm);
+    border: 1px solid transparent;
+    border-radius: var(--radius-full);
     cursor: pointer;
-    transition:
-      background var(--duration-fast) var(--ease-out),
-      color var(--duration-fast) var(--ease-out);
+    transition: all var(--duration-fast) var(--ease-out);
 
     &:hover {
-      background: rgba(255, 255, 255, 0.05);
-      color: var(--text-primary);
+      background: var(--bg-elevated);
+      color: var(--text-secondary);
     }
 
     &--active {
-      color: var(--text-primary);
       background: var(--bg-elevated);
+      color: var(--text-primary);
+      border-color: var(--glass-border);
+      font-weight: 600;
     }
 
     ng-icon {
-      opacity: 0.6;
+      opacity: 0.7;
     }
   }
 
