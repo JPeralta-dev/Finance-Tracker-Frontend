@@ -257,9 +257,9 @@ export class LandingComponent implements OnInit {
   readonly trustBadges: TrustBadge[] = [
     { icon: 'lockClosed', labelKey: 'landing.trust.badges.encryption.label' },
     { icon: 'shieldCheck', labelKey: 'landing.trust.badges.no_selling.label' },
-    { icon: 'check', labelKey: 'landing.trust.badges.local_data.label' },
+    { icon: 'circle', labelKey: 'landing.trust.badges.database.label' },
     { icon: 'codeBracket', labelKey: 'landing.trust.badges.open_source.label' },
-    { icon: 'user', labelKey: 'landing.trust.badges.two_factor.label' },
+    { icon: 'check', labelKey: 'landing.trust.badges.data_control.label' },
     { icon: 'globe', labelKey: 'landing.trust.badges.gdpr.label' },
   ];
 }

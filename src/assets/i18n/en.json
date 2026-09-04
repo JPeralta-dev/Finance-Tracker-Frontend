@@ -259,7 +259,7 @@
         },
         "data_safety": {
           "question": "Is my financial data safe?",
-          "answer": "Absolutely. We use 256-bit encryption, never sell your data, and your transaction history stays on your device. You can export or delete everything at any time."
+          "answer": "Completely. We use 256-bit encryption, never sell your data, and safeguard your information in secure, protected databases. You can export or delete your account and data at any time."
         },
         "telegram": {
           "question": "Do I need to use the Telegram bot?",
@@ -274,20 +274,20 @@
         "encryption": {
           "label": "256-bit encryption"
         },
-        "local_data": {
-          "label": "Your data stays on your device"
-        },
         "no_selling": {
           "label": "We never sell your data"
         },
-        "open_source": {
-          "label": "Open source and auditable"
+        "database": {
+          "label": "Secure encrypted database"
         },
-        "two_factor": {
-          "label": "Two-factor authentication"
+        "open_source": {
+          "label": "Open source & auditable"
+        },
+        "data_control": {
+          "label": "Full control: export or delete anytime"
         },
         "gdpr": {
-          "label": "GDPR & CCPA compliant"
+          "label": "GDPR Compliant"
         }
       }
     },
