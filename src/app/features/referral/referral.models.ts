@@ -30,7 +30,7 @@ export interface ReferralRedemption {
 
 export interface ReferralInfo {
   code: ReferralCode;
-  /** Full shareable URL — e.g. https://flowr.finance/ref/ABC123XY */
+  /** Full shareable URL — e.g. https://kipufinance.online/ref/ABC123XY */
   link: string;
   stats: ReferralStats;
 }

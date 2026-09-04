@@ -37,7 +37,7 @@
               {{ 'landing.cta.title' | translate }}
             </a>
           }
-          <a [href]="telegramBotUrl" target="_blank" rel="noopener" class="footer__link">
+          <a routerLink="/" fragment="telegram" class="footer__link">
             {{ 'landing.legal.footer.telegram_bot' | translate }}
           </a>
         </nav>
@@ -67,7 +67,7 @@
             {{ contactEmail }}
           </a>
           <div class="footer__contact-icons">
-            <a [href]="telegramBotUrl" target="_blank" rel="noopener" class="footer__contact-icon" aria-label="Telegram">
+            <a routerLink="/" fragment="telegram" class="footer__contact-icon" aria-label="Telegram">
               <ng-icon name="telegram" size="0.875rem" />
             </a>
             <a [href]="'mailto:' + contactEmail" class="footer__contact-icon" aria-label="Email">

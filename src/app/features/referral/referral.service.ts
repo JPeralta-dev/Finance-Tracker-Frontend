@@ -65,7 +65,7 @@ export class FtReferralService {
   readonly link = computed<string>(() => {
     const c = this._code();
     if (!c) return '';
-    const base = typeof window !== 'undefined' ? window.location.origin : 'https://flowr.finance';
+    const base = typeof window !== 'undefined' ? window.location.origin : 'https://kipufinance.online';
     return `${base}/ref/${c.code}`;
   });
 

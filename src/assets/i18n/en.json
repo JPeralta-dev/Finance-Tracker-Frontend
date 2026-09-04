@@ -137,16 +137,18 @@
       "open_bot": "Open Bot"
     },
     "telegram_section": {
-      "badge": "Powered by FlowrBot",
+      "badge": "Powered by KipuBot",
       "title": "Track expenses directly<br />from <span class=\"telegram-section__accent\">Telegram</span>",
-      "description": "Log transactions on the go with FlowrBot. Just send a message like \"Coffee $5\" and it's tracked automatically. No app opening required.",
-      "open_bot": "Open FlowrBot",
-      "chat_name": "FlowrBot",
+      "description": "Log transactions on the go with KipuBot. Just send a message like \"Coffee $5\" and it's tracked automatically. No app opening required.",
+      "open_bot": "Open KipuBot",
+      "chat_name": "KipuBot",
       "chat_status": "Online",
       "demo_user_1": "Coffee $5.50",
       "demo_bot_1": "Logged: <strong>$5.50</strong> in <strong>Food & Dining</strong><br /><span class=\"chat-preview__meta\">Today, 10:42 AM</span>",
       "demo_user_2": "Uber $12.00",
-      "demo_bot_2": "Logged: <strong>$12.00</strong> in <strong>Transport</strong><br /><span class=\"chat-preview__meta\">Today, 11:15 AM</span>"
+      "demo_bot_2": "Logged: <strong>$12.00</strong> in <strong>Transport</strong><br /><span class=\"chat-preview__meta\">Today, 11:15 AM</span>",
+      "account_hint": "Links in seconds directly from your account settings",
+      "get_started": "Create account to connect"
     },
     "cta": {
       "title": "Start tracking your money in 30 seconds",
@@ -221,17 +223,17 @@
       "section_subtitle": "Real stories from real users",
       "items": {
         "maria": {
-          "text": "Flowr helped me save $2,400 in 3 months. The AI insights pointed out subscriptions I'd forgotten about.",
+          "text": "Kipu helped me save over $2,000 in 3 months. The dashboard immediately highlighted forgotten subscriptions and micro-expenses.",
           "name": "María G.",
           "role": "Designer, Buenos Aires"
         },
         "carlos": {
-          "text": "Logging expenses from Telegram is a game changer. I track every coffee in 5 seconds without opening the app.",
+          "text": "The Telegram bot changed how I track expenses. I just send a quick text right after paying, and it's organized in Kipu automatically.",
           "name": "Carlos R.",
           "role": "Engineer, Madrid"
         },
         "ana": {
-          "text": "I've tried 4 finance apps. Flowr is the only one I actually stick with. The interface makes it feel easy.",
+          "text": "I've tried multiple finance apps. Kipu is the only one I actually stick with because it eliminates friction and makes financial tracking intuitive.",
           "name": "Ana L.",
           "role": "Freelancer, Mexico City"
         }
@@ -244,8 +246,8 @@
       "section_subtitle": "Everything you need to know to get started",
       "items": {
         "pricing": {
-          "question": "How much does Flowr cost?",
-          "answer": "Flowr is free forever for the essentials. Premium is $14.900/month (or $119.000/year) and Premium Plus is $24.900/month (or $199.000/year). You can start a 30-day free trial of any paid plan with no credit card required."
+          "question": "How much does Kipu cost?",
+          "answer": "Kipu is free forever for the essentials. Premium is $14.900/month (or $119.000/year) and Premium Plus is $24.900/month (or $199.000/year). You can start a 30-day free trial of any paid plan with no credit card required."
         },
         "cancel": {
           "question": "Can I cancel anytime?",
@@ -257,7 +259,7 @@
         },
         "data_safety": {
           "question": "Is my financial data safe?",
-          "answer": "Absolutely. We use 256-bit encryption, never sell your data, and your transaction history stays on your device. You can export or delete everything at any time."
+          "answer": "Completely. We use 256-bit encryption, never sell your data, and safeguard your information in secure, protected databases. You can export or delete your account and data at any time."
         },
         "telegram": {
           "question": "Do I need to use the Telegram bot?",
@@ -272,20 +274,20 @@
         "encryption": {
           "label": "256-bit encryption"
         },
-        "local_data": {
-          "label": "Your data stays on your device"
-        },
         "no_selling": {
           "label": "We never sell your data"
         },
-        "open_source": {
-          "label": "Open source and auditable"
+        "database": {
+          "label": "Secure encrypted database"
         },
-        "two_factor": {
-          "label": "Two-factor authentication"
+        "open_source": {
+          "label": "Open source & auditable"
+        },
+        "data_control": {
+          "label": "Full control: export or delete anytime"
         },
         "gdpr": {
-          "label": "GDPR & CCPA compliant"
+          "label": "GDPR Compliant"
         }
       }
     },
@@ -299,7 +301,7 @@
       "terms": {
         "eyebrow": "Legal",
         "title": "Terms of Service",
-        "coming_soon_text": "Our full Terms of Service are being drafted by our legal team. In the meantime, by using Flowr you agree to use the service responsibly and respect other users."
+        "coming_soon_text": "Our full Terms of Service are being drafted by our legal team. In the meantime, by using Kipu you agree to use the service responsibly and respect other users."
       },
       "privacy": {
         "eyebrow": "Legal",
@@ -405,7 +407,10 @@
       "yesterday": "Yesterday",
       "thisWeek": "This week",
       "earlier": "Earlier"
-    }
+    },
+    "mainIndicators": "Key Indicators",
+    "positiveFlow": "Positive cashflow",
+    "periodOutflows": "Period outflows"
   },
   "insights": {
     "title": "Monthly Insights",
@@ -522,7 +527,18 @@
     },
     "deleteConfirmTitle": "Delete Transactions",
     "deleteConfirmMessage": "Are you sure you want to permanently delete {{count}} transaction(s)? This cannot be undone.",
-    "deletedCount": "{{count}} transaction(s) deleted"
+    "deletedCount": "{{count}} transaction(s) deleted",
+    "count_single": "{{count}} transaction",
+    "count_multiple": "{{count}} transactions",
+    "select_all": "Select all",
+    "deselect_all": "Deselect all",
+    "selected_count": "{{count}} selected",
+    "export": "Export",
+    "delete": "Delete",
+    "clear_filter": "Clear filter",
+    "clear_search": "Clear search",
+    "empty_start_desc": "Start tracking your finances by adding your first transaction.",
+    "empty_add_cta": "Add transaction"
   },
   "categories": {
     "title": "Categories",
@@ -773,7 +789,7 @@
       "previous": "Previous"
     },
     "consent": {
-      "message": "We use cookies and analytics tools to understand how to improve Flowr. It's your call.",
+      "message": "We use cookies and analytics tools to understand how to improve Kipu. It's your call.",
       "accept": "Accept",
       "decline": "Decline",
       "learnMore": "Learn more"
@@ -819,7 +835,7 @@
     "close": "Close"
   },
   "upgradeModal": {
-    "headline": "Unlock the full potential of Flowr",
+    "headline": "Unlock the full potential of Kipu",
     "subhead": "Compare the plans and pick the one that fits your pace.",
     "featureCol": "Feature",
     "currentTier": "Your plan",
@@ -886,7 +902,7 @@
     },
     "steps": {
       "welcome": {
-        "title": "Welcome to Flowr",
+        "title": "Welcome to Kipu",
         "description": "Your money, perfectly organized. From here you see your full financial picture — balance, income, expenses, all in one place."
       },
       "telegram": {
@@ -901,12 +917,12 @@
       },
       "logExpense": {
         "title": "Your first expense",
-        "description": "Tap the button below and log something. Coffee, groceries, that thing you bought online. Flowr handles the rest.",
+        "description": "Tap the button below and log something. Coffee, groceries, that thing you bought online. Kipu handles the rest.",
         "cta": "Log an expense"
       },
       "done": {
         "title": "✅ You're all set",
-        "description": "That's the core of Flowr. Log from anywhere, see everything here — and this button takes you straight to your first expense.",
+        "description": "That's the core of Kipu. Log from anywhere, see everything here — and this button takes you straight to your first expense.",
         "cta": "Log my first expense"
       }
     }
@@ -945,7 +961,7 @@
       },
       "goals": {
         "title": "Your first goal",
-        "description": "Set a financial target and Flowr will help you reach it. Start with something concrete.",
+        "description": "Set a financial target and Kipu will help you reach it. Start with something concrete.",
         "cta": "Create my first goal"
       },
       "transactions": {

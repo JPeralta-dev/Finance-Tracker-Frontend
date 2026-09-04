@@ -3,7 +3,7 @@
  *
  * Responsibilities
  * ────────────────
- * - Owns the tour definition (5 onboarding steps for Flowr).
+ * - Owns the tour definition (5 onboarding steps for Kipu).
  * - Tracks active step via a signal.
  * - Persists state to localStorage so the tour resumes from the
  *   last viewed step on next visit.

@@ -3,17 +3,19 @@
   [class.tx-row--compact]="compact()"
   [class.tx-row--selectable]="selectable()"
   [class.tx-row--selected]="selected()"
-  [attr.aria-selected]="selected()"
+  [attr.role]="selectable() ? 'checkbox' : 'button'"
+  [attr.aria-checked]="selectable() ? selected() : null"
+  [attr.aria-selected]="selectable() ? selected() : null"
   (click)="onClick()"
-  role="button"
+  (keydown.enter)="onClick()"
+  (keydown.space)="$event.preventDefault(); onClick()"
   tabindex="0"
 >
   <!-- Selection checkbox -->
   @if (selectable()) {
     <div
       class="tx-row__checkbox"
-      role="checkbox"
-      [attr.aria-checked]="selected()"
+      aria-hidden="true"
     >
       <ng-icon [name]="selected() ? 'check' : 'plus'" size="1rem" />
     </div>
@@ -35,6 +37,7 @@
       @if (data().bankName) {
         · 
         @if (data().bankLogoUrl?.length) {
+          <!-- impeccable-disable-next-line broken-image -->
           <img class="tx-row__bank-logo" [src]="data().bankLogoUrl" [alt]="data().bankName" />
         }
         {{ data().bankName }}
