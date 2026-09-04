@@ -1,4 +1,4 @@
-import { Component, signal, computed, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, signal, computed, inject, OnInit, ChangeDetectionStrategy, HostListener } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterLink, Router } from '@angular/router';
@@ -54,6 +54,41 @@ export class TransactionsPage implements OnInit {
 
   ngOnInit(): void {
     this.loadData();
+  }
+
+  @HostListener('window:keydown', ['$event'])
+  onGlobalKeydown(event: KeyboardEvent): void {
+    const target = event.target as HTMLElement | null;
+    const isEditing = target && (
+      target.tagName === 'INPUT' ||
+      target.tagName === 'TEXTAREA' ||
+      target.tagName === 'SELECT' ||
+      target.isContentEditable
+    );
+
+    if (event.key === 'Escape') {
+      if (this.monthOpen()) {
+        this.monthOpen.set(false);
+        event.preventDefault();
+      } else if (this.showDeleteConfirm()) {
+        this.onCancelDelete();
+        event.preventDefault();
+      }
+      return;
+    }
+
+    if (isEditing) return;
+
+    if (event.key === 'n' || event.key === 'N') {
+      event.preventDefault();
+      this.router.navigate(['/transactions/new']);
+    } else if (event.key === '/') {
+      const searchInput = document.querySelector<HTMLInputElement>('.tx-filters__input');
+      if (searchInput) {
+        event.preventDefault();
+        searchInput.focus();
+      }
+    }
   }
 
   private loadData(): void {

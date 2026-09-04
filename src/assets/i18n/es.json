@@ -137,16 +137,18 @@
       "open_bot": "Abrir Bot"
     },
     "telegram_section": {
-      "badge": "Impulsado por FlowrBot",
+      "badge": "Impulsado por KipuBot",
       "title": "Registra gastos directamente<br />desde <span class=\"telegram-section__accent\">Telegram</span>",
-      "description": "Registra transacciones al instante con FlowrBot. Solo envía un mensaje como \"Café $5\" y se registra automáticamente. Sin abrir la app.",
-      "open_bot": "Abrir FlowrBot",
-      "chat_name": "FlowrBot",
+      "description": "Registra transacciones al instante con KipuBot. Solo envía un mensaje como \"Café $5\" y se registra automáticamente. Sin abrir la app.",
+      "open_bot": "Abrir KipuBot",
+      "chat_name": "KipuBot",
       "chat_status": "En línea",
       "demo_user_1": "Café $5.50",
       "demo_bot_1": "Registrado: <strong>$5.50</strong> en <strong>Comida</strong><br /><span class=\"chat-preview__meta\">Hoy, 10:42 AM</span>",
       "demo_user_2": "Uber $12.00",
-      "demo_bot_2": "Registrado: <strong>$12.00</strong> en <strong>Transporte</strong><br /><span class=\"chat-preview__meta\">Hoy, 11:15 AM</span>"
+      "demo_bot_2": "Registrado: <strong>$12.00</strong> en <strong>Transporte</strong><br /><span class=\"chat-preview__meta\">Hoy, 11:15 AM</span>",
+      "account_hint": "Se vincula en segundos desde los ajustes de tu cuenta",
+      "get_started": "Crear cuenta para vincular"
     },
     "cta": {
       "title": "Empieza a trackear tu dinero en 30 segundos",
@@ -221,17 +223,17 @@
       "section_subtitle": "Historias reales de usuarios reales",
       "items": {
         "maria": {
-          "text": "Recibo mis gastos por WhatsApp y aparecen automáticamente en Flowr. No necesito abrir la app para registrar nada. En 3 meses ahorré $2.400 porque vi suscripciones que había olvidado.",
+          "text": "Registro mis gastos al instante por Telegram y se sincronizan de inmediato en Kipu. En 3 meses ahorré más de $2.000 porque pude identificar suscripciones y gastos hormiga que pasaban desapercibidos.",
           "name": "María González",
           "role": "Diseñadora UX, Buenos Aires"
         },
         "carlos": {
-          "text": "Soy freelancer con ingresos variables. Flowr me muestra exactamente cuánto puedo gastar cada semana sin pasarme. El bot de Telegram es perfecto: le mando 'Café $3.50' y listo.",
+          "text": "Soy freelancer con ingresos variables. Kipu me muestra con claridad mi balance real semana a semana. El bot de Telegram es comodísimo: le mando 'Almuerzo $8' y queda categorizado al instante.",
           "name": "Carlos Rodríguez",
           "role": "Desarrollador freelance, Madrid"
         },
         "ana": {
-          "text": "Probé Mint, YNAB, Wallet. Todas requieren abrir la app. Flowr es la única donde registro gastos sin interrumpir mi día. La vista de categorías me muestra dónde se va el dinero.",
+          "text": "Probé varias aplicaciones financieras pero todas requerían navegar menús lentos. Kipu es la única donde llevo el control sin fricción y su panel analítico me da claridad total sobre mis finanzas.",
           "name": "Ana López",
           "role": "Product Manager, Ciudad de México"
         }
@@ -244,8 +246,8 @@
       "section_subtitle": "Todo lo que necesitas saber para empezar",
       "items": {
         "pricing": {
-          "question": "¿Cuánto cuesta Flowr?",
-          "answer": "Flowr es gratis para siempre en su versión esencial. Premium cuesta $14.900/mes (o $119.000/año) y Premium Plus cuesta $24.900/mes (o $199.000/año). Puedes empezar una prueba gratis de 30 días de cualquier plan pago sin tarjeta de crédito."
+          "question": "¿Cuánto cuesta Kipu?",
+          "answer": "Kipu es gratis para siempre en su versión esencial. Premium cuesta $14.900/mes (o $119.000/año) y Premium Plus cuesta $24.900/mes (o $199.000/año). Puedes empezar una prueba gratis de 30 días de cualquier plan pago sin tarjeta de crédito."
         },
         "cancel": {
           "question": "¿Puedo cancelar cuando quiera?",
@@ -257,7 +259,7 @@
         },
         "data_safety": {
           "question": "¿Están seguros mis datos financieros?",
-          "answer": "Totalmente. Usamos encriptación de 256 bits, nunca vendemos tus datos y tu historial queda en tu dispositivo. Puedes exportar o eliminar todo cuando quieras."
+          "answer": "Totalmente. Usamos encriptación de 256 bits, nunca vendemos tus datos y tu información se resguarda en bases de datos seguras y protegidas. Puedes exportar o eliminar tu cuenta y datos cuando quieras."
         },
         "telegram": {
           "question": "¿Tengo que usar el bot de Telegram?",
@@ -272,20 +274,20 @@
         "encryption": {
           "label": "Encriptación 256-bit"
         },
-        "local_data": {
-          "label": "Tus datos quedan en tu dispositivo"
-        },
         "no_selling": {
           "label": "Nunca vendemos tus datos"
+        },
+        "database": {
+          "label": "Base de datos segura y encriptada"
         },
         "open_source": {
           "label": "Open source y auditable"
         },
-        "two_factor": {
-          "label": "Autenticación de dos factores"
+        "data_control": {
+          "label": "Control total: exporta o borra tus datos"
         },
         "gdpr": {
-          "label": "Cumple GDPR y CCPA"
+          "label": "Cumplimiento normativo GDPR"
         }
       }
     },
@@ -299,7 +301,7 @@
       "terms": {
         "eyebrow": "Legal",
         "title": "Términos del Servicio",
-        "coming_soon_text": "Nuestros Términos del Servicio completos están siendo redactados por nuestro equipo legal. Mientras tanto, al usar Flowr aceptás usar el servicio de forma responsable y respetar a otros usuarios."
+        "coming_soon_text": "Nuestros Términos del Servicio completos están siendo redactados por nuestro equipo legal. Mientras tanto, al usar Kipu aceptás usar el servicio de forma responsable y respetar a otros usuarios."
       },
       "privacy": {
         "eyebrow": "Legal",
@@ -405,7 +407,10 @@
       "yesterday": "Ayer",
       "thisWeek": "Esta semana",
       "earlier": "Anterior"
-    }
+    },
+    "mainIndicators": "Indicadores Principales",
+    "positiveFlow": "Flujo positivo",
+    "periodOutflows": "Salidas del período"
   },
   "insights": {
     "title": "Insights del Mes",
@@ -522,7 +527,18 @@
     },
     "deleteConfirmTitle": "Eliminar Transacciones",
     "deleteConfirmMessage": "¿Estás seguro de eliminar permanentemente {{count}} transacción(es)? Esta acción no se puede deshacer.",
-    "deletedCount": "{{count}} transacción(es) eliminada(s)"
+    "deletedCount": "{{count}} transacción(es) eliminada(s)",
+    "count_single": "{{count}} transacción",
+    "count_multiple": "{{count}} transacciones",
+    "select_all": "Seleccionar todo",
+    "deselect_all": "Deseleccionar todo",
+    "selected_count": "{{count}} seleccionada(s)",
+    "export": "Exportar",
+    "delete": "Eliminar",
+    "clear_filter": "Limpiar filtro",
+    "clear_search": "Limpiar búsqueda",
+    "empty_start_desc": "Comenzá a rastrear tus finanzas agregando tu primera transacción.",
+    "empty_add_cta": "Agregar transacción"
   },
   "categories": {
     "title": "Categorías",
@@ -773,7 +789,7 @@
       "previous": "Anterior"
     },
     "consent": {
-      "message": "Usamos cookies y herramientas de análisis para entender cómo mejoramos Flowr. Vos decidís.",
+      "message": "Usamos cookies y herramientas de análisis para entender cómo mejoramos Kipu. Vos decidís.",
       "accept": "Aceptar",
       "decline": "Rechazar",
       "learnMore": "Más información"
@@ -819,7 +835,7 @@
     "close": "Cerrar"
   },
   "upgradeModal": {
-    "headline": "Desbloqueá todo el potencial de Flowr",
+    "headline": "Desbloqueá todo el potencial de Kipu",
     "subhead": "Compará los planes y elegí el que mejor se adapta a tu ritmo.",
     "featureCol": "Función",
     "currentTier": "Tu plan",
@@ -886,7 +902,7 @@
     },
     "steps": {
       "welcome": {
-        "title": "Bienvenido a Flowr",
+        "title": "Bienvenido a Kipu",
         "description": "Tu plata, perfectamente organizada. De acá ves tu panorama financiero completo — balance, ingresos, gastos, todo en un solo lugar."
       },
       "telegram": {
@@ -901,12 +917,12 @@
       },
       "logExpense": {
         "title": "Tu primer gasto",
-        "description": "Tocá el botón de abajo y registrá algo. Un café, las compras, eso que compraste online. Flowr se encarga del resto.",
+        "description": "Tocá el botón de abajo y registrá algo. Un café, las compras, eso que compraste online. Kipu se encarga del resto.",
         "cta": "Registrar un gasto"
       },
       "done": {
         "title": "✅ Ya estás listo",
-        "description": "Eso es lo esencial de Flowr. Registrá desde cualquier lado, ve todo acá — y este botón te lleva directo a tu primer gasto.",
+        "description": "Eso es lo esencial de Kipu. Registrá desde cualquier lado, ve todo acá — y este botón te lleva directo a tu primer gasto.",
         "cta": "Registrar mi primer gasto"
       }
     }
@@ -945,7 +961,7 @@
       },
       "goals": {
         "title": "Tu primera meta",
-        "description": "Marcá un objetivo financiero y Flowr te ayuda a llegar. Empezá con algo concreto.",
+        "description": "Marcá un objetivo financiero y Kipu te ayuda a llegar. Empezá con algo concreto.",
         "cta": "Crear mi primera meta"
       },
       "transactions": {

@@ -137,16 +137,18 @@
       "open_bot": "Ouvrir le Bot"
     },
     "telegram_section": {
-      "badge": "Propulsé par FlowrBot",
+      "badge": "Propulsé par KipuBot",
       "title": "Suivez vos dépenses directement<br />depuis <span class=\"telegram-section__accent\">Telegram</span>",
-      "description": "Enregistrez vos transactions en déplacement avec FlowrBot. Envoyez simplement un message comme \"Café 5€\" et c'est suivi automatiquement. Sans ouvrir l'app.",
-      "open_bot": "Ouvrir FlowrBot",
-      "chat_name": "FlowrBot",
+      "description": "Enregistrez vos transactions en déplacement avec KipuBot. Envoyez simplement un message comme \"Café 5€\" et c'est suivi automatiquement. Sans ouvrir l'app.",
+      "open_bot": "Ouvrir KipuBot",
+      "chat_name": "KipuBot",
       "chat_status": "En ligne",
       "demo_user_1": "Café 5,50€",
       "demo_bot_1": "Enregistré : <strong>5,50€</strong> dans <strong>Alimentation</strong><br /><span class=\"chat-preview__meta\">Aujourd'hui, 10h42</span>",
       "demo_user_2": "Uber 12,00€",
-      "demo_bot_2": "Enregistré : <strong>12,00€</strong> dans <strong>Transport</strong><br /><span class=\"chat-preview__meta\">Aujourd'hui, 11h15</span>"
+      "demo_bot_2": "Enregistré : <strong>12,00€</strong> dans <strong>Transport</strong><br /><span class=\"chat-preview__meta\">Aujourd'hui, 11h15</span>",
+      "account_hint": "Se connecte en quelques secondes depuis les paramètres de votre compte",
+      "get_started": "Créer un compte pour connecter"
     },
     "cta": {
       "title": "Commencez à suivre votre argent en 30 secondes",
@@ -428,7 +430,7 @@
     },
     "whatsapp": {
       "title": "WhatsApp",
-      "desc": "Recevez vos transactions directement sur WhatsApp.",
+      "desc": "Liez votre compte WhatsApp.",
       "coming_soon": "Bientôt disponible",
       "link_whatsapp": "Lier WhatsApp"
     },
@@ -442,14 +444,8 @@
       "title": "Connecter Gmail",
       "desc": "Connectez votre Gmail pour importer automatiquement les notifications bancaires comme transactions.",
       "connect": "Connecter Gmail",
-      "connecting": "Connexion à Gmail...",
-      "connect_failed": "Impossible de démarrer la connexion Gmail. Veuillez réessayer.",
-      "sync_failed": "Impossible de synchroniser Gmail. Veuillez réessayer.",
-      "connected_status": "Connecté — {{email}}",
-      "last_sync": "Dernière sync : {{when}}",
-      "last_sync_just_now": "Dernière sync : à l'instant",
-      "recent": "Importations récentes",
-      "no_email": "Connecté"
+      "connecting": "Connexion...",
+      "connect_failed": "Impossible de démarrer la connexion Gmail. Veuillez réessayer."
     },
     "linked": {
       "connected_pill": "Connecté",
@@ -457,19 +453,6 @@
       "sync": "Synchroniser",
       "disconnect": "Déconnecter",
       "open": "Ouvrir"
-    },
-    "whatsapp": {
-      "title": "WhatsApp",
-      "desc": "Liez votre compte WhatsApp.",
-      "coming_soon": "Bientôt disponible",
-      "link_whatsapp": "Lier WhatsApp"
-    },
-    "gmail": {
-      "title": "Connecter Gmail",
-      "desc": "Connectez votre Gmail pour importer automatiquement les notifications bancaires comme transactions.",
-      "connect": "Connecter Gmail",
-      "connecting": "Connexion...",
-      "connect_failed": "Impossible de démarrer la connexion Gmail. Veuillez réessayer."
     },
     "profile": {
       "title": "Profil",
@@ -519,7 +502,7 @@
     },
     "steps": {
       "welcome": {
-        "title": "Bienvenue sur Flowr",
+        "title": "Bienvenue sur Kipu",
         "description": "Votre argent, parfaitement organisé. Ici, vous voyez votre situation financière complète — solde, revenus, dépenses, tout au même endroit."
       },
       "telegram": {
@@ -534,12 +517,12 @@
       },
       "logExpense": {
         "title": "Votre première dépense",
-        "description": "Appuyez sur le bouton ci-dessous et enregistrez quelque chose. Un café, les courses, cet achat en ligne. Flowr s'occupe du reste.",
+        "description": "Appuyez sur le bouton ci-dessous et enregistrez quelque chose. Un café, les courses, cet achat en ligne. Kipu s'occupe du reste.",
         "cta": "Enregistrer une dépense"
       },
       "done": {
         "title": "✅ Vous êtes prêt",
-        "description": "C'est l'essentiel de Flowr. Enregistrez de n'importe où, voyez tout ici — et ce bouton vous emmène directement à votre première dépense.",
+        "description": "C'est l'essentiel de Kipu. Enregistrez de n'importe où, voyez tout ici — et ce bouton vous emmène directement à votre première dépense.",
         "cta": "Enregistrer ma première dépense"
       }
     }
@@ -601,7 +584,6 @@
       "category": "Catégorie",
       "allCats": "Toutes les catégories",
       "reset": "Réinitialiser",
-      "removeCategory": "Retirer le filtre {{name}}",
       "removeCategory": "Retirer le filtre {{name}}"
     },
     "insight": {

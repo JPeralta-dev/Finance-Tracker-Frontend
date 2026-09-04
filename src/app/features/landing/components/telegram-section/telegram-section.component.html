@@ -9,26 +9,26 @@
       <p class="telegram-section__description">
         {{ 'landing.telegram_section.description' | translate }}
       </p>
-      <a [href]="telegramBotUrl" target="_blank" class="telegram-section__btn">
-        <ng-icon name="telegram" size="1.125rem" />
-        {{ 'landing.telegram_section.open_bot' | translate }}
-      </a>
+      <div class="telegram-section__action-container">
+        <div class="telegram-section__hint">
+          <ng-icon name="telegram" size="1.25rem" class="telegram-section__hint-icon" />
+          <span>{{ 'landing.telegram_section.account_hint' | translate }}</span>
+        </div>
+        <a routerLink="/register" class="telegram-section__btn">
+          {{ 'landing.telegram_section.get_started' | translate }}
+          <ng-icon name="chevronRight" size="1rem" />
+        </a>
+      </div>
     </div>
     <div class="telegram-section__visual" ftSubtleReveal="fade-up" [delay]="200">
       <div class="device-mockup">
         <img
-          src="/assets/device-mockup_1.5x_postspark_2026-08-31_21-04-33.png"
+          src="/assets/device-mockup_1.5x_postspark_2026-09-04_15-09-00.png"
           alt="KipuBot en Telegram"
           class="device-mockup__image"
           fetchpriority="high"
           decoding="async"
         />
-        <!-- Screenshot placeholder — reemplazar mañana con captura real del bot -->
-        <div class="device-mockup__screen">
-          <div class="device-mockup__placeholder">
-            <span class="device-mockup__placeholder-text">Screenshot del bot</span>
-          </div>
-        </div>
       </div>
     </div>
   </div>

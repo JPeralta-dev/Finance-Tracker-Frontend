@@ -182,8 +182,9 @@
   align-items: flex-start;
   gap: 12px;
   padding: 14px 16px;
-  border-left: 3px solid var(--accent-start);
-  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
   background: var(--bg-tertiary);
   transition: background var(--duration-fast) var(--ease-out);
 

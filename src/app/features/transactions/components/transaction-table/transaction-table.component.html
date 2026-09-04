@@ -17,7 +17,7 @@
       @if (filter() !== 'all') {
         <span class="filter-chip">
           {{ filter() }}
-          <button class="filter-chip__dismiss" (click)="onFilterChange('all')" aria-label="Clear filter">
+          <button class="filter-chip__dismiss" (click)="onFilterChange('all')" [attr.aria-label]="'transactions.clear_filter' | translate">
             <ng-icon name="close" size="0.75rem" />
           </button>
         </span>
@@ -25,7 +25,7 @@
       @if (search()) {
         <span class="filter-chip">
           "{{ search() }}"
-          <button class="filter-chip__dismiss" (click)="onSearchChange('')" aria-label="Clear search">
+          <button class="filter-chip__dismiss" (click)="onSearchChange('')" [attr.aria-label]="'transactions.clear_search' | translate">
             <ng-icon name="close" size="0.75rem" />
           </button>
         </span>
@@ -37,7 +37,7 @@
   @if (!loading() && totalFiltered() > 0) {
     <div aria-live="polite" aria-atomic="true">
       <div class="tx-table__count">
-        {{ totalFiltered() }} transaction{{ totalFiltered() === 1 ? '' : 's' }}
+        {{ totalFiltered() === 1 ? ('transactions.count_single' | translate: { count: 1 }) : ('transactions.count_multiple' | translate: { count: totalFiltered() }) }}
       </div>
     </div>
   }
@@ -66,9 +66,11 @@
       </div>
       <p class="tx-table__empty-title">{{ emptyMessage() }}</p>
       <p class="tx-table__empty-desc">
-        Start tracking your finances by adding your first transaction.
+        {{ 'transactions.empty_start_desc' | translate }}
       </p>
-      <a routerLink="/transactions/new" class="tx-table__empty-cta">Add transaction</a>
+      <a routerLink="/transactions/new" class="tx-table__empty-cta">
+        {{ 'transactions.empty_add_cta' | translate }}
+      </a>
     </div>
   }
 
@@ -92,12 +94,12 @@
   @if (selectionMode()) {
     <div class="tx-table__bulk-bar">
       <button class="bulk-bar__select-all" (click)="toggleSelectAll()" [disabled]="deleting()">
-        {{ selectedIds().size === pagedItems().length ? 'Deselect all' : 'Select all' }}
+        {{ selectedIds().size === pagedItems().length ? ('transactions.deselect_all' | translate) : ('transactions.select_all' | translate) }}
       </button>
-      <span class="bulk-bar__count">{{ selectedIds().size }} selected</span>
+      <span class="bulk-bar__count">{{ 'transactions.selected_count' | translate: { count: selectedIds().size } }}</span>
       <div class="bulk-bar__actions">
         <button class="bulk-bar__btn" (click)="onBulkExport()" [disabled]="deleting()">
-          <ng-icon name="chevronRight" size="0.875rem" /> Export
+          <ng-icon name="chevronRight" size="0.875rem" /> {{ 'transactions.export' | translate }}
         </button>
         <button class="bulk-bar__btn bulk-bar__btn--danger" (click)="onBulkDelete()" [disabled]="deleting()">
           @if (deleting()) {
@@ -105,7 +107,7 @@
           } @else {
             <ng-icon name="close" size="0.875rem" />
           }
-          Delete
+          {{ 'transactions.delete' | translate }}
         </button>
       </div>
     </div>

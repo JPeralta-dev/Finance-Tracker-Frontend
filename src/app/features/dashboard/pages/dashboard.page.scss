@@ -108,10 +108,7 @@
   }
 
   &__username {
-    background: linear-gradient(135deg, var(--accent-start), var(--accent-mid));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--accent-start);
   }
 
   &__subtitle {
@@ -321,10 +318,8 @@
     }
 
     .kpi-card__value {
-      background: linear-gradient(135deg, var(--accent-start), var(--accent-mid));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      color: var(--text-primary);
+      text-shadow: 0 0 20px rgba(124, 58, 237, 0.25);
     }
   }
 

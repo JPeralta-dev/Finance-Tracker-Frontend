@@ -7,11 +7,12 @@ import { TransactionFiltersComponent } from '../transaction-filters/transaction-
 import { PaginationComponent } from '../../../../shared/ui/pagination/pagination.component';
 import { TransactionRowData, TransactionFilter, SortField, SortDirection, SortConfig } from '../../transaction.types';
 import { ICONS } from '../../../../shared/icons/icon-registry';
+import { TranslatePipe } from '../../../../core/pipes/translate.pipe';
 
 @Component({
   selector: 'ft-transaction-table',
   standalone: true,
-  imports: [CommonModule, RouterLink, NgIcon, TransactionRowComponent, TransactionFiltersComponent, PaginationComponent],
+  imports: [CommonModule, RouterLink, NgIcon, TransactionRowComponent, TransactionFiltersComponent, PaginationComponent, TranslatePipe],
   templateUrl: './transaction-table.component.html',
   styleUrl: './transaction-table.component.scss',
 })
