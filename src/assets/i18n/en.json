@@ -146,7 +146,9 @@
       "demo_user_1": "Coffee $5.50",
       "demo_bot_1": "Logged: <strong>$5.50</strong> in <strong>Food & Dining</strong><br /><span class=\"chat-preview__meta\">Today, 10:42 AM</span>",
       "demo_user_2": "Uber $12.00",
-      "demo_bot_2": "Logged: <strong>$12.00</strong> in <strong>Transport</strong><br /><span class=\"chat-preview__meta\">Today, 11:15 AM</span>"
+      "demo_bot_2": "Logged: <strong>$12.00</strong> in <strong>Transport</strong><br /><span class=\"chat-preview__meta\">Today, 11:15 AM</span>",
+      "account_hint": "Links in seconds directly from your account settings",
+      "get_started": "Create account to connect"
     },
     "cta": {
       "title": "Start tracking your money in 30 seconds",

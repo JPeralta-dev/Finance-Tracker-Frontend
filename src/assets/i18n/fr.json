@@ -146,7 +146,9 @@
       "demo_user_1": "Café 5,50€",
       "demo_bot_1": "Enregistré : <strong>5,50€</strong> dans <strong>Alimentation</strong><br /><span class=\"chat-preview__meta\">Aujourd'hui, 10h42</span>",
       "demo_user_2": "Uber 12,00€",
-      "demo_bot_2": "Enregistré : <strong>12,00€</strong> dans <strong>Transport</strong><br /><span class=\"chat-preview__meta\">Aujourd'hui, 11h15</span>"
+      "demo_bot_2": "Enregistré : <strong>12,00€</strong> dans <strong>Transport</strong><br /><span class=\"chat-preview__meta\">Aujourd'hui, 11h15</span>",
+      "account_hint": "Se connecte en quelques secondes depuis les paramètres de votre compte",
+      "get_started": "Créer un compte pour connecter"
     },
     "cta": {
       "title": "Commencez à suivre votre argent en 30 secondes",
@@ -428,7 +430,7 @@
     },
     "whatsapp": {
       "title": "WhatsApp",
-      "desc": "Recevez vos transactions directement sur WhatsApp.",
+      "desc": "Liez votre compte WhatsApp.",
       "coming_soon": "Bientôt disponible",
       "link_whatsapp": "Lier WhatsApp"
     },
@@ -442,14 +444,8 @@
       "title": "Connecter Gmail",
       "desc": "Connectez votre Gmail pour importer automatiquement les notifications bancaires comme transactions.",
       "connect": "Connecter Gmail",
-      "connecting": "Connexion à Gmail...",
-      "connect_failed": "Impossible de démarrer la connexion Gmail. Veuillez réessayer.",
-      "sync_failed": "Impossible de synchroniser Gmail. Veuillez réessayer.",
-      "connected_status": "Connecté — {{email}}",
-      "last_sync": "Dernière sync : {{when}}",
-      "last_sync_just_now": "Dernière sync : à l'instant",
-      "recent": "Importations récentes",
-      "no_email": "Connecté"
+      "connecting": "Connexion...",
+      "connect_failed": "Impossible de démarrer la connexion Gmail. Veuillez réessayer."
     },
     "linked": {
       "connected_pill": "Connecté",
@@ -457,19 +453,6 @@
       "sync": "Synchroniser",
       "disconnect": "Déconnecter",
       "open": "Ouvrir"
-    },
-    "whatsapp": {
-      "title": "WhatsApp",
-      "desc": "Liez votre compte WhatsApp.",
-      "coming_soon": "Bientôt disponible",
-      "link_whatsapp": "Lier WhatsApp"
-    },
-    "gmail": {
-      "title": "Connecter Gmail",
-      "desc": "Connectez votre Gmail pour importer automatiquement les notifications bancaires comme transactions.",
-      "connect": "Connecter Gmail",
-      "connecting": "Connexion...",
-      "connect_failed": "Impossible de démarrer la connexion Gmail. Veuillez réessayer."
     },
     "profile": {
       "title": "Profil",
@@ -601,7 +584,6 @@
       "category": "Catégorie",
       "allCats": "Toutes les catégories",
       "reset": "Réinitialiser",
-      "removeCategory": "Retirer le filtre {{name}}",
       "removeCategory": "Retirer le filtre {{name}}"
     },
     "insight": {

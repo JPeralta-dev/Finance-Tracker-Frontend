@@ -146,7 +146,9 @@
       "demo_user_1": "Café $5.50",
       "demo_bot_1": "Registrado: <strong>$5.50</strong> en <strong>Comida</strong><br /><span class=\"chat-preview__meta\">Hoy, 10:42 AM</span>",
       "demo_user_2": "Uber $12.00",
-      "demo_bot_2": "Registrado: <strong>$12.00</strong> en <strong>Transporte</strong><br /><span class=\"chat-preview__meta\">Hoy, 11:15 AM</span>"
+      "demo_bot_2": "Registrado: <strong>$12.00</strong> en <strong>Transporte</strong><br /><span class=\"chat-preview__meta\">Hoy, 11:15 AM</span>",
+      "account_hint": "Se vincula en segundos desde los ajustes de tu cuenta",
+      "get_started": "Crear cuenta para vincular"
     },
     "cta": {
       "title": "Empieza a trackear tu dinero en 30 segundos",
