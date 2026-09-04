@@ -97,7 +97,7 @@
       }
 
       <!-- ZONE 1: HERO KPI BENTO (4 Cards in unified responsive row) -->
-      <section class="dashboard-kpis" ftSubtleReveal="fade-up" [delay]="60" data-tour="categories" aria-label="Indicadores Principales">
+      <section class="dashboard-kpis" ftSubtleReveal="fade-up" [delay]="60" data-tour="categories" [attr.aria-label]="'dashboard.mainIndicators' | translate">
         @for (stat of stats(); track stat.id) {
           <article
             class="kpi-card"
@@ -153,12 +153,12 @@
               } @else if (stat.id === 'income') {
                 <span class="kpi-badge kpi-badge--positive">
                   <ft-icon name="trending-up" [size]="12" />
-                  <span>Flujo positivo</span>
+                  <span>{{ 'dashboard.positiveFlow' | translate }}</span>
                 </span>
               } @else if (stat.id === 'expenses') {
                 <span class="kpi-badge kpi-badge--expense">
                   <ft-icon name="trending-down" [size]="12" />
-                  <span>Salidas del período</span>
+                  <span>{{ 'dashboard.periodOutflows' | translate }}</span>
                 </span>
               }
             </div>

@@ -407,7 +407,10 @@
       "yesterday": "Yesterday",
       "thisWeek": "This week",
       "earlier": "Earlier"
-    }
+    },
+    "mainIndicators": "Key Indicators",
+    "positiveFlow": "Positive cashflow",
+    "periodOutflows": "Period outflows"
   },
   "insights": {
     "title": "Monthly Insights",
@@ -524,7 +527,18 @@
     },
     "deleteConfirmTitle": "Delete Transactions",
     "deleteConfirmMessage": "Are you sure you want to permanently delete {{count}} transaction(s)? This cannot be undone.",
-    "deletedCount": "{{count}} transaction(s) deleted"
+    "deletedCount": "{{count}} transaction(s) deleted",
+    "count_single": "{{count}} transaction",
+    "count_multiple": "{{count}} transactions",
+    "select_all": "Select all",
+    "deselect_all": "Deselect all",
+    "selected_count": "{{count}} selected",
+    "export": "Export",
+    "delete": "Delete",
+    "clear_filter": "Clear filter",
+    "clear_search": "Clear search",
+    "empty_start_desc": "Start tracking your finances by adding your first transaction.",
+    "empty_add_cta": "Add transaction"
   },
   "categories": {
     "title": "Categories",

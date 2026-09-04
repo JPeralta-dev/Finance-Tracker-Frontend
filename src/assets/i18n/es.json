@@ -407,7 +407,10 @@
       "yesterday": "Ayer",
       "thisWeek": "Esta semana",
       "earlier": "Anterior"
-    }
+    },
+    "mainIndicators": "Indicadores Principales",
+    "positiveFlow": "Flujo positivo",
+    "periodOutflows": "Salidas del período"
   },
   "insights": {
     "title": "Insights del Mes",
@@ -524,7 +527,18 @@
     },
     "deleteConfirmTitle": "Eliminar Transacciones",
     "deleteConfirmMessage": "¿Estás seguro de eliminar permanentemente {{count}} transacción(es)? Esta acción no se puede deshacer.",
-    "deletedCount": "{{count}} transacción(es) eliminada(s)"
+    "deletedCount": "{{count}} transacción(es) eliminada(s)",
+    "count_single": "{{count}} transacción",
+    "count_multiple": "{{count}} transacciones",
+    "select_all": "Seleccionar todo",
+    "deselect_all": "Deseleccionar todo",
+    "selected_count": "{{count}} seleccionada(s)",
+    "export": "Exportar",
+    "delete": "Eliminar",
+    "clear_filter": "Limpiar filtro",
+    "clear_search": "Limpiar búsqueda",
+    "empty_start_desc": "Comenzá a rastrear tus finanzas agregando tu primera transacción.",
+    "empty_add_cta": "Agregar transacción"
   },
   "categories": {
     "title": "Categorías",
