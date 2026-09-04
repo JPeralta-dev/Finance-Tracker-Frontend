@@ -59,7 +59,7 @@ export class LandingComponent implements OnInit {
 
   /** Public site URL — used as og:url and twitter:url. */
   readonly siteUrl = environment.production
-    ? 'https://flowr.finance'
+    ? 'https://kipufinance.online'
     : 'http://localhost:4200';
 
   /** Path to the OG image — 1200×630 SVG placeholder. */

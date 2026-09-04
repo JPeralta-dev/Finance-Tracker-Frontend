@@ -137,11 +137,11 @@
       "open_bot": "Open Bot"
     },
     "telegram_section": {
-      "badge": "Powered by FlowrBot",
+      "badge": "Powered by KipuBot",
       "title": "Track expenses directly<br />from <span class=\"telegram-section__accent\">Telegram</span>",
-      "description": "Log transactions on the go with FlowrBot. Just send a message like \"Coffee $5\" and it's tracked automatically. No app opening required.",
-      "open_bot": "Open FlowrBot",
-      "chat_name": "FlowrBot",
+      "description": "Log transactions on the go with KipuBot. Just send a message like \"Coffee $5\" and it's tracked automatically. No app opening required.",
+      "open_bot": "Open KipuBot",
+      "chat_name": "KipuBot",
       "chat_status": "Online",
       "demo_user_1": "Coffee $5.50",
       "demo_bot_1": "Logged: <strong>$5.50</strong> in <strong>Food & Dining</strong><br /><span class=\"chat-preview__meta\">Today, 10:42 AM</span>",
@@ -244,8 +244,8 @@
       "section_subtitle": "Everything you need to know to get started",
       "items": {
         "pricing": {
-          "question": "How much does Flowr cost?",
-          "answer": "Flowr is free forever for the essentials. Premium is $14.900/month (or $119.000/year) and Premium Plus is $24.900/month (or $199.000/year). You can start a 30-day free trial of any paid plan with no credit card required."
+          "question": "How much does Kipu cost?",
+          "answer": "Kipu is free forever for the essentials. Premium is $14.900/month (or $119.000/year) and Premium Plus is $24.900/month (or $199.000/year). You can start a 30-day free trial of any paid plan with no credit card required."
         },
         "cancel": {
           "question": "Can I cancel anytime?",
@@ -299,7 +299,7 @@
       "terms": {
         "eyebrow": "Legal",
         "title": "Terms of Service",
-        "coming_soon_text": "Our full Terms of Service are being drafted by our legal team. In the meantime, by using Flowr you agree to use the service responsibly and respect other users."
+        "coming_soon_text": "Our full Terms of Service are being drafted by our legal team. In the meantime, by using Kipu you agree to use the service responsibly and respect other users."
       },
       "privacy": {
         "eyebrow": "Legal",
@@ -773,7 +773,7 @@
       "previous": "Previous"
     },
     "consent": {
-      "message": "We use cookies and analytics tools to understand how to improve Flowr. It's your call.",
+      "message": "We use cookies and analytics tools to understand how to improve Kipu. It's your call.",
       "accept": "Accept",
       "decline": "Decline",
       "learnMore": "Learn more"
@@ -819,7 +819,7 @@
     "close": "Close"
   },
   "upgradeModal": {
-    "headline": "Unlock the full potential of Flowr",
+    "headline": "Unlock the full potential of Kipu",
     "subhead": "Compare the plans and pick the one that fits your pace.",
     "featureCol": "Feature",
     "currentTier": "Your plan",
@@ -886,7 +886,7 @@
     },
     "steps": {
       "welcome": {
-        "title": "Welcome to Flowr",
+        "title": "Welcome to Kipu",
         "description": "Your money, perfectly organized. From here you see your full financial picture — balance, income, expenses, all in one place."
       },
       "telegram": {
@@ -901,12 +901,12 @@
       },
       "logExpense": {
         "title": "Your first expense",
-        "description": "Tap the button below and log something. Coffee, groceries, that thing you bought online. Flowr handles the rest.",
+        "description": "Tap the button below and log something. Coffee, groceries, that thing you bought online. Kipu handles the rest.",
         "cta": "Log an expense"
       },
       "done": {
         "title": "✅ You're all set",
-        "description": "That's the core of Flowr. Log from anywhere, see everything here — and this button takes you straight to your first expense.",
+        "description": "That's the core of Kipu. Log from anywhere, see everything here — and this button takes you straight to your first expense.",
         "cta": "Log my first expense"
       }
     }
@@ -945,7 +945,7 @@
       },
       "goals": {
         "title": "Your first goal",
-        "description": "Set a financial target and Flowr will help you reach it. Start with something concrete.",
+        "description": "Set a financial target and Kipu will help you reach it. Start with something concrete.",
         "cta": "Create my first goal"
       },
       "transactions": {

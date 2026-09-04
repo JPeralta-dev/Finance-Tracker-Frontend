@@ -137,11 +137,11 @@
       "open_bot": "Ouvrir le Bot"
     },
     "telegram_section": {
-      "badge": "Propulsé par FlowrBot",
+      "badge": "Propulsé par KipuBot",
       "title": "Suivez vos dépenses directement<br />depuis <span class=\"telegram-section__accent\">Telegram</span>",
-      "description": "Enregistrez vos transactions en déplacement avec FlowrBot. Envoyez simplement un message comme \"Café 5€\" et c'est suivi automatiquement. Sans ouvrir l'app.",
-      "open_bot": "Ouvrir FlowrBot",
-      "chat_name": "FlowrBot",
+      "description": "Enregistrez vos transactions en déplacement avec KipuBot. Envoyez simplement un message comme \"Café 5€\" et c'est suivi automatiquement. Sans ouvrir l'app.",
+      "open_bot": "Ouvrir KipuBot",
+      "chat_name": "KipuBot",
       "chat_status": "En ligne",
       "demo_user_1": "Café 5,50€",
       "demo_bot_1": "Enregistré : <strong>5,50€</strong> dans <strong>Alimentation</strong><br /><span class=\"chat-preview__meta\">Aujourd'hui, 10h42</span>",
@@ -519,7 +519,7 @@
     },
     "steps": {
       "welcome": {
-        "title": "Bienvenue sur Flowr",
+        "title": "Bienvenue sur Kipu",
         "description": "Votre argent, parfaitement organisé. Ici, vous voyez votre situation financière complète — solde, revenus, dépenses, tout au même endroit."
       },
       "telegram": {
@@ -534,12 +534,12 @@
       },
       "logExpense": {
         "title": "Votre première dépense",
-        "description": "Appuyez sur le bouton ci-dessous et enregistrez quelque chose. Un café, les courses, cet achat en ligne. Flowr s'occupe du reste.",
+        "description": "Appuyez sur le bouton ci-dessous et enregistrez quelque chose. Un café, les courses, cet achat en ligne. Kipu s'occupe du reste.",
         "cta": "Enregistrer une dépense"
       },
       "done": {
         "title": "✅ Vous êtes prêt",
-        "description": "C'est l'essentiel de Flowr. Enregistrez de n'importe où, voyez tout ici — et ce bouton vous emmène directement à votre première dépense.",
+        "description": "C'est l'essentiel de Kipu. Enregistrez de n'importe où, voyez tout ici — et ce bouton vous emmène directement à votre première dépense.",
         "cta": "Enregistrer ma première dépense"
       }
     }

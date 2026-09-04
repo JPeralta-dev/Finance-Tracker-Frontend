@@ -137,11 +137,11 @@
       "open_bot": "Abrir Bot"
     },
     "telegram_section": {
-      "badge": "Impulsado por FlowrBot",
+      "badge": "Impulsado por KipuBot",
       "title": "Registra gastos directamente<br />desde <span class=\"telegram-section__accent\">Telegram</span>",
-      "description": "Registra transacciones al instante con FlowrBot. Solo envía un mensaje como \"Café $5\" y se registra automáticamente. Sin abrir la app.",
-      "open_bot": "Abrir FlowrBot",
-      "chat_name": "FlowrBot",
+      "description": "Registra transacciones al instante con KipuBot. Solo envía un mensaje como \"Café $5\" y se registra automáticamente. Sin abrir la app.",
+      "open_bot": "Abrir KipuBot",
+      "chat_name": "KipuBot",
       "chat_status": "En línea",
       "demo_user_1": "Café $5.50",
       "demo_bot_1": "Registrado: <strong>$5.50</strong> en <strong>Comida</strong><br /><span class=\"chat-preview__meta\">Hoy, 10:42 AM</span>",
@@ -244,8 +244,8 @@
       "section_subtitle": "Todo lo que necesitas saber para empezar",
       "items": {
         "pricing": {
-          "question": "¿Cuánto cuesta Flowr?",
-          "answer": "Flowr es gratis para siempre en su versión esencial. Premium cuesta $14.900/mes (o $119.000/año) y Premium Plus cuesta $24.900/mes (o $199.000/año). Puedes empezar una prueba gratis de 30 días de cualquier plan pago sin tarjeta de crédito."
+          "question": "¿Cuánto cuesta Kipu?",
+          "answer": "Kipu es gratis para siempre en su versión esencial. Premium cuesta $14.900/mes (o $119.000/año) y Premium Plus cuesta $24.900/mes (o $199.000/año). Puedes empezar una prueba gratis de 30 días de cualquier plan pago sin tarjeta de crédito."
         },
         "cancel": {
           "question": "¿Puedo cancelar cuando quiera?",
@@ -299,7 +299,7 @@
       "terms": {
         "eyebrow": "Legal",
         "title": "Términos del Servicio",
-        "coming_soon_text": "Nuestros Términos del Servicio completos están siendo redactados por nuestro equipo legal. Mientras tanto, al usar Flowr aceptás usar el servicio de forma responsable y respetar a otros usuarios."
+        "coming_soon_text": "Nuestros Términos del Servicio completos están siendo redactados por nuestro equipo legal. Mientras tanto, al usar Kipu aceptás usar el servicio de forma responsable y respetar a otros usuarios."
       },
       "privacy": {
         "eyebrow": "Legal",
@@ -773,7 +773,7 @@
       "previous": "Anterior"
     },
     "consent": {
-      "message": "Usamos cookies y herramientas de análisis para entender cómo mejoramos Flowr. Vos decidís.",
+      "message": "Usamos cookies y herramientas de análisis para entender cómo mejoramos Kipu. Vos decidís.",
       "accept": "Aceptar",
       "decline": "Rechazar",
       "learnMore": "Más información"
@@ -819,7 +819,7 @@
     "close": "Cerrar"
   },
   "upgradeModal": {
-    "headline": "Desbloqueá todo el potencial de Flowr",
+    "headline": "Desbloqueá todo el potencial de Kipu",
     "subhead": "Compará los planes y elegí el que mejor se adapta a tu ritmo.",
     "featureCol": "Función",
     "currentTier": "Tu plan",
@@ -886,7 +886,7 @@
     },
     "steps": {
       "welcome": {
-        "title": "Bienvenido a Flowr",
+        "title": "Bienvenido a Kipu",
         "description": "Tu plata, perfectamente organizada. De acá ves tu panorama financiero completo — balance, ingresos, gastos, todo en un solo lugar."
       },
       "telegram": {
@@ -901,12 +901,12 @@
       },
       "logExpense": {
         "title": "Tu primer gasto",
-        "description": "Tocá el botón de abajo y registrá algo. Un café, las compras, eso que compraste online. Flowr se encarga del resto.",
+        "description": "Tocá el botón de abajo y registrá algo. Un café, las compras, eso que compraste online. Kipu se encarga del resto.",
         "cta": "Registrar un gasto"
       },
       "done": {
         "title": "✅ Ya estás listo",
-        "description": "Eso es lo esencial de Flowr. Registrá desde cualquier lado, ve todo acá — y este botón te lleva directo a tu primer gasto.",
+        "description": "Eso es lo esencial de Kipu. Registrá desde cualquier lado, ve todo acá — y este botón te lleva directo a tu primer gasto.",
         "cta": "Registrar mi primer gasto"
       }
     }
@@ -945,7 +945,7 @@
       },
       "goals": {
         "title": "Tu primera meta",
-        "description": "Marcá un objetivo financiero y Flowr te ayuda a llegar. Empezá con algo concreto.",
+        "description": "Marcá un objetivo financiero y Kipu te ayuda a llegar. Empezá con algo concreto.",
         "cta": "Crear mi primera meta"
       },
       "transactions": {
