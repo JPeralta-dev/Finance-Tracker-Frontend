@@ -7,20 +7,32 @@ export interface PocketResponse {
   currentSpending: number;
   percentageConsumed: number;
   isBotOriginated: boolean;
+  linkedGoalId?: string | null;
+  targetAmount?: number | null;
+  currentBalance?: number;
+  autoAllocateEnabled?: boolean;
   createdAt: string;
   updatedAt: string;
 }
+
+export type Pocket = PocketResponse;
 
 export interface CreatePocketDto {
   name: string;
   percentage: number;
   monthlyLimit?: number | null;
+  linkedGoalId?: string | null;
+  targetAmount?: number | null;
+  autoAllocateEnabled?: boolean;
 }
 
 export interface UpdatePocketDto {
   name?: string;
   percentage?: number;
   monthlyLimit?: number | null;
+  linkedGoalId?: string | null;
+  targetAmount?: number | null;
+  autoAllocateEnabled?: boolean;
 }
 
 export interface PocketSpending {
@@ -29,3 +41,4 @@ export interface PocketSpending {
   monthlyLimit: number | null;
   percentageConsumed: number;
 }
+
