@@ -223,17 +223,17 @@
       "section_subtitle": "Historias reales de usuarios reales",
       "items": {
         "maria": {
-          "text": "Recibo mis gastos por WhatsApp y aparecen automáticamente en Flowr. No necesito abrir la app para registrar nada. En 3 meses ahorré $2.400 porque vi suscripciones que había olvidado.",
+          "text": "Registro mis gastos al instante por Telegram y se sincronizan de inmediato en Kipu. En 3 meses ahorré más de $2.000 porque pude identificar suscripciones y gastos hormiga que pasaban desapercibidos.",
           "name": "María González",
           "role": "Diseñadora UX, Buenos Aires"
         },
         "carlos": {
-          "text": "Soy freelancer con ingresos variables. Flowr me muestra exactamente cuánto puedo gastar cada semana sin pasarme. El bot de Telegram es perfecto: le mando 'Café $3.50' y listo.",
+          "text": "Soy freelancer con ingresos variables. Kipu me muestra con claridad mi balance real semana a semana. El bot de Telegram es comodísimo: le mando 'Almuerzo $8' y queda categorizado al instante.",
           "name": "Carlos Rodríguez",
           "role": "Desarrollador freelance, Madrid"
         },
         "ana": {
-          "text": "Probé Mint, YNAB, Wallet. Todas requieren abrir la app. Flowr es la única donde registro gastos sin interrumpir mi día. La vista de categorías me muestra dónde se va el dinero.",
+          "text": "Probé varias aplicaciones financieras pero todas requerían navegar menús lentos. Kipu es la única donde llevo el control sin fricción y su panel analítico me da claridad total sobre mis finanzas.",
           "name": "Ana López",
           "role": "Product Manager, Ciudad de México"
         }

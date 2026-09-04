@@ -223,17 +223,17 @@
       "section_subtitle": "Real stories from real users",
       "items": {
         "maria": {
-          "text": "Flowr helped me save $2,400 in 3 months. The AI insights pointed out subscriptions I'd forgotten about.",
+          "text": "Kipu helped me save over $2,000 in 3 months. The dashboard immediately highlighted forgotten subscriptions and micro-expenses.",
           "name": "María G.",
           "role": "Designer, Buenos Aires"
         },
         "carlos": {
-          "text": "Logging expenses from Telegram is a game changer. I track every coffee in 5 seconds without opening the app.",
+          "text": "The Telegram bot changed how I track expenses. I just send a quick text right after paying, and it's organized in Kipu automatically.",
           "name": "Carlos R.",
           "role": "Engineer, Madrid"
         },
         "ana": {
-          "text": "I've tried 4 finance apps. Flowr is the only one I actually stick with. The interface makes it feel easy.",
+          "text": "I've tried multiple finance apps. Kipu is the only one I actually stick with because it eliminates friction and makes financial tracking intuitive.",
           "name": "Ana L.",
           "role": "Freelancer, Mexico City"
         }
