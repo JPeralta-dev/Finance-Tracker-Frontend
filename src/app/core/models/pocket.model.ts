@@ -23,6 +23,7 @@ export interface CreatePocketDto {
   monthlyLimit?: number | null;
   linkedGoalId?: string | null;
   targetAmount?: number | null;
+  currentBalance?: number;
   autoAllocateEnabled?: boolean;
 }
 
@@ -32,8 +33,10 @@ export interface UpdatePocketDto {
   monthlyLimit?: number | null;
   linkedGoalId?: string | null;
   targetAmount?: number | null;
+  currentBalance?: number;
   autoAllocateEnabled?: boolean;
 }
+
 
 export interface PocketSpending {
   pocketId: string;
