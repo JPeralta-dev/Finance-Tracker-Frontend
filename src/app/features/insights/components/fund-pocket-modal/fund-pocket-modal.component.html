@@ -1,0 +1,73 @@
+@if (isOpen()) {
+  <div class="modal-backdrop" (click)="onBackdropClick($event)">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div class="modal-header__title-wrap">
+          <div class="modal-icon">
+            <ng-icon name="wallet" size="1.25rem" />
+          </div>
+          <div>
+            <h3 class="modal-title">{{ 'insights.fundModal.title' | translate }}</h3>
+            <p class="modal-subtitle">{{ 'insights.fundModal.desc' | translate }}</p>
+          </div>
+        </div>
+        <button type="button" class="btn-close" (click)="close.emit()">
+          <ng-icon name="close" size="1.25rem" />
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Pocket Select -->
+        <div class="form-group">
+          <label class="form-label">{{ 'insights.fundModal.pocketLabel' | translate }}</label>
+          <select
+            class="form-control"
+            [ngModel]="selectedPocketId()"
+            (ngModelChange)="selectedPocketId.set($event)"
+          >
+            @for (p of pockets(); track p.id) {
+              <option [value]="p.id">{{ p.name }} (Saldo: {{ (p.currentBalance || 0) | ftCurrency }})</option>
+            }
+          </select>
+        </div>
+
+        <!-- Amount Input -->
+        <div class="form-group">
+          <label class="form-label">{{ 'insights.fundModal.amountLabel' | translate }}</label>
+          <div class="input-currency-wrap">
+            <span class="currency-symbol">$</span>
+            <input
+              type="number"
+              class="form-control form-control--currency"
+              [ngModel]="amount()"
+              (ngModelChange)="amount.set($event)"
+              placeholder="0"
+              min="1000"
+              step="5000"
+            />
+          </div>
+          @if (suggestedAmount() && suggestedAmount()! > 0) {
+            <span class="suggested-hint">
+              {{ 'insights.fundModal.suggested' | translate }}: {{ suggestedAmount() | ftCurrency }}
+            </span>
+          }
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn-cancel" (click)="close.emit()">
+          {{ 'common.cancel' | translate }}
+        </button>
+        <button
+          type="button"
+          class="btn-confirm"
+          [disabled]="amount() <= 0 || !selectedPocketId()"
+          (click)="onSubmit()"
+        >
+          <ng-icon name="check" size="1rem" />
+          {{ 'insights.fundModal.confirm' | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+}

@@ -1,0 +1,87 @@
+<div class="health-hero" [attr.data-level]="level()">
+  <div class="health-hero__glow"></div>
+
+  <div class="health-hero__main">
+    <!-- Health Ring Gauge -->
+    <div class="health-hero__gauge">
+      <svg class="health-hero__ring" viewBox="0 0 100 100">
+        <circle
+          class="health-hero__ring-bg"
+          cx="50"
+          cy="50"
+          r="42"
+        />
+        <circle
+          class="health-hero__ring-progress"
+          cx="50"
+          cy="50"
+          r="42"
+          [style.strokeDashoffset]="strokeDashoffset()"
+        />
+      </svg>
+
+      <div class="health-hero__score-content">
+        <span class="health-hero__score-num">{{ score() }}</span>
+        <span class="health-hero__score-max">/100</span>
+      </div>
+    </div>
+
+    <!-- Health Narrative & Status -->
+    <div class="health-hero__narrative">
+      <div class="health-hero__badge-row">
+        <span class="health-hero__badge" [class.badge--excellent]="level() === 'excellent'" [class.badge--good]="level() === 'good'" [class.badge--fair]="level() === 'fair'" [class.badge--critical]="level() === 'critical'">
+          <ng-icon [name]="level() === 'excellent' || level() === 'good' ? 'shieldCheck' : 'warning'" size="1rem" />
+          {{ 'insights.health.' + level() | translate }}
+        </span>
+        <span class="health-hero__sub-badge">{{ 'insights.health.title' | translate }}</span>
+      </div>
+
+      <h2 class="health-hero__headline">
+        {{ headline() || ('insights.fetching' | translate) }}
+      </h2>
+    </div>
+  </div>
+
+  <!-- KPI Chips / Sub-metrics -->
+  <div class="health-hero__kpis">
+    <div class="health-hero__kpi-card">
+      <div class="kpi-card__icon kpi-card__icon--goals">
+        <ng-icon name="star" size="1.25rem" />
+      </div>
+      <div class="kpi-card__info">
+        <span class="kpi-card__label">{{ 'insights.health.goalsOnTrack' | translate }}</span>
+        <div class="kpi-card__val">
+          <span class="val-highlight">{{ goalsSummary().onTrack }}</span>
+          <span class="val-sub">/ {{ goalsSummary().totalGoals }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="health-hero__kpi-card">
+      <div class="kpi-card__icon kpi-card__icon--savings">
+        <ng-icon name="trendingUp" size="1.25rem" />
+      </div>
+      <div class="kpi-card__info">
+        <span class="kpi-card__label">{{ 'insights.health.savingsRate' | translate }}</span>
+        <div class="kpi-card__val">
+          <span class="val-highlight">{{ savingsMetrics().monthlySavingsRate }}%</span>
+          <span class="val-sub">({{ 'insights.health.targetSavingsRate' | translate }}: {{ savingsMetrics().targetSavingsRate }}%)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="health-hero__kpi-card">
+      <div class="kpi-card__icon kpi-card__icon--net">
+        <ng-icon name="wallet" size="1.25rem" />
+      </div>
+      <div class="kpi-card__info">
+        <span class="kpi-card__label">{{ 'insights.health.netSaved' | translate }}</span>
+        <div class="kpi-card__val">
+          <span class="val-highlight" [class.val-negative]="savingsMetrics().netSavedThisMonth < 0">
+            {{ savingsMetrics().netSavedThisMonth | ftCurrency }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
