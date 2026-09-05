@@ -413,16 +413,89 @@
     "periodOutflows": "Period outflows"
   },
   "insights": {
-    "title": "Monthly Insights",
-    "subtitle": "Narrative summary of what happened with your finances this month",
-    "loading": "Loading insights...",
-    "fetching": "Analyzing your financial data",
+    "title": "Insights & Goals Radar",
+    "subtitle": "Actionable financial intelligence and objective pacing projections",
+    "loading": "Loading financial intelligence...",
+    "fetching": "Analyzing spending patterns, pacing and goals",
     "errorTitle": "Error loading insights",
     "errorLoading": "We couldn't load your insights. Please try again.",
     "retry": "Retry",
     "emptyTitle": "No insights yet",
-    "emptyDesc": "When we have enough data, we'll show you a summary of what happened this month.",
+    "emptyDesc": "Add transactions or set goals to start receiving real-time diagnostics and alerts.",
     "empty": "No insights available yet. Start adding transactions to get personalized recommendations.",
+    "health": {
+      "title": "Financial Health",
+      "score": "Health Score",
+      "excellent": "Excellent",
+      "good": "Healthy",
+      "fair": "Attention Required",
+      "critical": "High Risk",
+      "goalsOnTrack": "Goals on track",
+      "savingsRate": "Actual savings rate",
+      "targetSavingsRate": "Target savings rate",
+      "netSaved": "Net savings this month",
+      "alertsCount": "Pacing alerts"
+    },
+    "radar": {
+      "title": "Goals & Limits Radar",
+      "subtitle": "Track spending pace vs. elapsed days of the month",
+      "noGoals": "No active goals registered",
+      "noGoalsDesc": "Create a savings goal or set a monthly ceiling to activate the pacing radar.",
+      "createGoalBtn": "Create Goal",
+      "pacingProgress": "Current progress",
+      "timeElapsed": "Month elapsed",
+      "dailySafe": "Daily safe allowance",
+      "projected": "Month-end projection",
+      "projectedDate": "Estimated date",
+      "daysLeft": "days left",
+      "linkedPocket": "Linked pocket",
+      "fundAction": "Fund"
+    },
+    "goalTypes": {
+      "savings": "Savings",
+      "monthly_ceiling": "Monthly Ceiling",
+      "category_cap": "Category Cap"
+    },
+    "goalHealth": {
+      "on_track": "On track",
+      "at_risk": "At risk",
+      "critical": "Critical",
+      "achieved": "Achieved",
+      "paused": "Paused"
+    },
+    "filters": {
+      "all": "All",
+      "pacing": "Pacing & Caps",
+      "goals": "Goal Impact",
+      "opportunities": "Opportunities"
+    },
+    "categories": {
+      "pacing_alert": "Pacing Alert",
+      "goal_impact": "Goal Impact",
+      "smart_allocation": "Smart Allocation",
+      "leak_optimization": "Optimization",
+      "positive_milestone": "Milestone Achieved",
+      "spending": "Spending",
+      "savings": "Savings",
+      "anomaly": "Unusual Spending"
+    },
+    "actions": {
+      "filter_transactions": "View Transactions",
+      "fund_pocket": "Fund Pocket",
+      "adjust_goal_limit": "Adjust Limit",
+      "simulate_savings": "Simulate Savings",
+      "dismiss": "Dismiss"
+    },
+    "fundModal": {
+      "title": "Fund Pocket",
+      "desc": "Transfer balance to your linked pocket to keep your goal on schedule.",
+      "pocketLabel": "Target pocket",
+      "amountLabel": "Amount to transfer",
+      "suggested": "Suggested",
+      "confirm": "Confirm Deposit",
+      "success": "Deposit completed successfully",
+      "error": "Error completing deposit"
+    },
     "mom_increase": {
       "title": "Spending increased",
       "message": "You spent {{percentage}}% more this month compared to last month."

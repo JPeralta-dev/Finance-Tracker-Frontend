@@ -6,9 +6,11 @@
         <p class="insights-loading__subtitle">{{ 'insights.fetching' | translate }}</p>
       </div>
       <div class="insights-skeleton" ftSubtleReveal="fade-up" [delay]="100">
-        <div class="skeleton-card"></div>
-        <div class="skeleton-card"></div>
-        <div class="skeleton-card"></div>
+        <div class="skeleton-card skeleton-card--hero"></div>
+        <div class="skeleton-grid">
+          <div class="skeleton-card"></div>
+          <div class="skeleton-card"></div>
+        </div>
       </div>
     }
 
@@ -25,43 +27,112 @@
     }
 
     @case ('ready') {
-      <!-- Header -->
+      <!-- Page Header -->
       <div class="insights-header" ftSubtleReveal="fade-up" [delay]="0">
         <h1 class="insights-header__title">{{ 'insights.title' | translate }}</h1>
         <p class="insights-header__subtitle">{{ 'insights.subtitle' | translate }}</p>
       </div>
 
-      @if (insights().length === 0) {
-        <ft-empty-state
-          icon="star"
-          [title]="'insights.emptyTitle' | translate"
-          [description]="'insights.emptyDesc' | translate"
-          ftSubtleReveal="fade-up"
-          [delay]="100"
-        />
-      } @else {
-        <div class="insights-grid">
-          @for (insight of insights(); track insight; let i = $index) {
-            <div
-              class="insight-card"
-              [class.insight-card--success]="insight.type === 'success'"
-              [class.insight-card--warning]="insight.type === 'warning'"
-              [class.insight-card--info]="insight.type === 'info'"
-              [class.insight-card--trend]="insight.type === 'trend'"
-              ftSubtleReveal="fade-up"
-              [delay]="i * 50"
-            >
-              <div class="insight-card__icon">
-                <ng-icon [name]="insight.icon" size="1.25rem" />
-              </div>
-              <div class="insight-card__content">
-                <h3 class="insight-card__title">{{ insight.title }}</h3>
-                <p class="insight-card__message">{{ insight.message }}</p>
-              </div>
+      <!-- Financial Health Hero -->
+      <ft-financial-health-hero
+        [overview]="healthOverview()"
+        ftSubtleReveal="fade-up"
+        [delay]="50"
+      />
+
+      <!-- Active Goals Radar -->
+      <ft-active-goals-radar
+        [goals]="goals()"
+        [pockets]="pockets()"
+        (fundPocket)="openFundPocketModal($event)"
+        (createGoal)="navigateToCreateGoal()"
+        ftSubtleReveal="fade-up"
+        [delay]="100"
+      />
+
+      <!-- Actionable Insights Section -->
+      <div class="insights-feed-section" ftSubtleReveal="fade-up" [delay]="150">
+        <div class="feed-header">
+          <div class="feed-title-wrap">
+            <div class="feed-icon">
+              <ng-icon name="insights" size="1.25rem" />
             </div>
-          }
+            <div>
+              <h3 class="feed-title">Diagnósticos y Oportunidades</h3>
+              <p class="feed-subtitle">Recomendaciones inteligentes generadas en base a tu ritmo y metas</p>
+            </div>
+          </div>
+
+          <!-- Category Filter Tabs -->
+          <div class="feed-filters">
+            <button
+              type="button"
+              class="filter-pill"
+              [class.filter-pill--active]="activeFilter() === 'all'"
+              (click)="setFilter('all')"
+            >
+              {{ 'insights.filters.all' | translate }}
+            </button>
+            <button
+              type="button"
+              class="filter-pill"
+              [class.filter-pill--active]="activeFilter() === 'pacing'"
+              (click)="setFilter('pacing')"
+            >
+              {{ 'insights.filters.pacing' | translate }}
+            </button>
+            <button
+              type="button"
+              class="filter-pill"
+              [class.filter-pill--active]="activeFilter() === 'goals'"
+              (click)="setFilter('goals')"
+            >
+              {{ 'insights.filters.goals' | translate }}
+            </button>
+            <button
+              type="button"
+              class="filter-pill"
+              [class.filter-pill--active]="activeFilter() === 'opportunities'"
+              (click)="setFilter('opportunities')"
+            >
+              {{ 'insights.filters.opportunities' | translate }}
+            </button>
+          </div>
         </div>
-      }
+
+        <!-- Insights Grid / Empty State -->
+        @if (filteredInsights().length === 0) {
+          <ft-empty-state
+            icon="star"
+            [title]="'insights.emptyTitle' | translate"
+            [description]="'insights.emptyDesc' | translate"
+            ftSubtleReveal="fade-up"
+            [delay]="100"
+          />
+        } @else {
+          <div class="insights-grid">
+            @for (insight of filteredInsights(); track insight.id; let i = $index) {
+              <ft-actionable-insight-card
+                [insight]="insight"
+                (actionClick)="handleActionClick($event)"
+                (dismiss)="handleDismiss($event)"
+                ftSubtleReveal="fade-up"
+                [delay]="i * 40"
+              />
+            }
+          </div>
+        }
+      </div>
     }
   }
+
+  <!-- Fund Pocket Modal -->
+  <ft-fund-pocket-modal
+    [isOpen]="isFundModalOpen()"
+    [pocketId]="modalPocketId()"
+    [suggestedAmount]="modalSuggestedAmount()"
+    [pockets]="pockets()"
+    (close)="closeFundPocketModal()"
+    (fund)="handleConfirmFund($event)"
+  />
 </div>

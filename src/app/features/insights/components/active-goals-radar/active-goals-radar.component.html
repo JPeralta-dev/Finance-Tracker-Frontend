@@ -1,0 +1,157 @@
+<div class="goals-radar">
+  <div class="goals-radar__header">
+    <div class="goals-radar__title-wrap">
+      <div class="goals-radar__icon">
+        <ng-icon name="chart" size="1.25rem" />
+      </div>
+      <div>
+        <h3 class="goals-radar__title">{{ 'insights.radar.title' | translate }}</h3>
+        <p class="goals-radar__subtitle">{{ 'insights.radar.subtitle' | translate }}</p>
+      </div>
+    </div>
+  </div>
+
+  @if (goals().length === 0) {
+    <div class="goals-radar__empty">
+      <div class="empty-icon">
+        <ng-icon name="wallet" size="2rem" />
+      </div>
+      <h4>{{ 'insights.radar.noGoals' | translate }}</h4>
+      <p>{{ 'insights.radar.noGoalsDesc' | translate }}</p>
+      <button type="button" class="btn-create-goal" (click)="createGoal.emit()">
+        <ng-icon name="plus" size="1rem" />
+        {{ 'insights.radar.createGoalBtn' | translate }}
+      </button>
+    </div>
+  } @else {
+    <div class="goals-radar__grid">
+      @for (goal of goals(); track goal.id) {
+        <div
+          class="goal-radar-card"
+          [attr.data-health]="goal.health || 'on_track'"
+          [attr.data-type]="goal.type || 'savings'"
+        >
+          <!-- Card Header -->
+          <div class="goal-radar-card__header">
+            <div class="goal-radar-card__name-row">
+              <span class="goal-type-badge" [attr.data-type]="goal.type || 'savings'">
+                {{ 'insights.goalTypes.' + (goal.type || 'savings') | translate }}
+              </span>
+              <h4 class="goal-radar-card__name">{{ goal.name }}</h4>
+            </div>
+
+            <span
+              class="goal-health-badge"
+              [class.badge--on-track]="goal.health === 'on_track' || goal.health === 'achieved'"
+              [class.badge--at-risk]="goal.health === 'at_risk'"
+              [class.badge--critical]="goal.health === 'critical'"
+            >
+              <ng-icon [name]="getHealthIcon(goal.health)" size="0.875rem" />
+              {{ 'insights.goalHealth.' + (goal.health || 'on_track') | translate }}
+            </span>
+          </div>
+
+          <!-- Amounts Display -->
+          <div class="goal-radar-card__amounts">
+            <div class="amount-current">
+              <span class="amount-label">
+                {{ goal.type === 'savings' ? ('insights.radar.pacingProgress' | translate) : 'Gastado' }}
+              </span>
+              <span class="amount-val">{{ goal.currentAmount | ftCurrency }}</span>
+            </div>
+            <div class="amount-target">
+              <span class="amount-label">
+                {{ goal.type === 'savings' ? 'Meta' : 'Límite' }}
+              </span>
+              <span class="amount-val">{{ goal.targetAmount | ftCurrency }}</span>
+            </div>
+          </div>
+
+          <!-- Pacing & Progress Bars (Dual track) -->
+          <div class="goal-radar-card__pacing">
+            <div class="pacing-track">
+              <!-- Progress bar -->
+              <div
+                class="pacing-bar pacing-bar--progress"
+                [style.width.%]="goal.pacing?.currentProgressPercent || 0"
+                [class.bar--danger]="goal.health === 'critical'"
+                [class.bar--warning]="goal.health === 'at_risk'"
+                [class.bar--success]="goal.health === 'on_track' || goal.health === 'achieved'"
+              ></div>
+
+              <!-- Time elapsed marker/indicator if available -->
+              @if (goal.pacing?.timeElapsedPercent) {
+                <div
+                  class="pacing-marker"
+                  [style.left.%]="goal.pacing?.timeElapsedPercent"
+                  [title]="('insights.radar.timeElapsed' | translate) + ': ' + goal.pacing?.timeElapsedPercent + '%'"
+                ></div>
+              }
+            </div>
+
+            <div class="pacing-labels">
+              <span class="pacing-label">
+                {{ goal.pacing?.currentProgressPercent || 0 }}% {{ goal.type === 'savings' ? 'ahorrado' : 'consumido' }}
+              </span>
+              @if (goal.pacing?.timeElapsedPercent) {
+                <span class="pacing-time-label">
+                  {{ 'insights.radar.timeElapsed' | translate }}: {{ goal.pacing?.timeElapsedPercent }}%
+                </span>
+              }
+            </div>
+          </div>
+
+          <!-- Footer Metrics / Details -->
+          <div class="goal-radar-card__footer">
+            @if (goal.type === 'category_cap' || goal.type === 'monthly_ceiling') {
+              @if (goal.pacing?.dailyAllowanceRemaining !== undefined) {
+                <div class="footer-chip">
+                  <span class="chip-label">{{ 'insights.radar.dailySafe' | translate }}</span>
+                  <span class="chip-val">{{ goal.pacing?.dailyAllowanceRemaining | ftCurrency }}/día</span>
+                </div>
+              }
+              @if (goal.pacing?.projectedEndAmount) {
+                <div class="footer-chip">
+                  <span class="chip-label">{{ 'insights.radar.projected' | translate }}</span>
+                  <span class="chip-val" [class.val-danger]="(goal.pacing?.projectedEndAmount || 0) > goal.targetAmount">
+                    {{ goal.pacing?.projectedEndAmount | ftCurrency }}
+                  </span>
+                </div>
+              }
+            } @else {
+              @if (goal.pacing?.projectedCompletionDate) {
+                <div class="footer-chip">
+                  <span class="chip-label">{{ 'insights.radar.projectedDate' | translate }}</span>
+                  <span class="chip-val">{{ goal.pacing?.projectedCompletionDate }}</span>
+                </div>
+              }
+              @if (goal.pacing?.daysRemaining) {
+                <div class="footer-chip">
+                  <span class="chip-label">{{ goal.pacing?.daysRemaining }} {{ 'insights.radar.daysLeft' | translate }}</span>
+                </div>
+              }
+            }
+          </div>
+
+          <!-- Linked Pocket Button (if exists) -->
+          @if (goal.pocketId) {
+            <div class="goal-radar-card__pocket-action">
+              <span class="pocket-name">
+                <ng-icon name="wallet" size="0.875rem" />
+                {{ getPocketName(goal.pocketId) || ('insights.radar.linkedPocket' | translate) }}
+              </span>
+              <button
+                type="button"
+                class="btn-fund-pocket"
+                (click)="onFundClicked(goal)"
+              >
+                <ng-icon name="plus" size="0.875rem" />
+                {{ 'insights.radar.fundAction' | translate }}
+              </button>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  }
+</div>

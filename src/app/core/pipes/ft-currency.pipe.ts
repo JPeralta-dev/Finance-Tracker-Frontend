@@ -21,9 +21,11 @@ export class FtCurrencyPipe implements PipeTransform {
     });
   }
 
-  transform(value: number, format: 'full' | 'short' = 'full'): string {
+  transform(value: number | null | undefined, format: 'full' | 'short' = 'full'): string {
+    const num = value ?? 0;
     return format === 'short'
-      ? this.currencyService.formatShort(value)
-      : this.currencyService.format(value);
+      ? this.currencyService.formatShort(num)
+      : this.currencyService.format(num);
   }
 }
+

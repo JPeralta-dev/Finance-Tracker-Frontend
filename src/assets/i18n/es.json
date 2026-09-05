@@ -413,16 +413,89 @@
     "periodOutflows": "Salidas del período"
   },
   "insights": {
-    "title": "Insights del Mes",
-    "subtitle": "Resumen narrativo de lo que pasó con tus finanzas este mes",
-    "loading": "Cargando insights...",
-    "fetching": "Analizando tus datos financieros",
+    "title": "Insights & Radar de Metas",
+    "subtitle": "Inteligencia financiera accionable y proyección de tus objetivos",
+    "loading": "Cargando inteligencia financiera...",
+    "fetching": "Analizando patrones de consumo, ritmo y metas",
     "errorTitle": "Error al cargar insights",
     "errorLoading": "No pudimos cargar tus insights. Intentá de nuevo.",
     "retry": "Reintentar",
     "emptyTitle": "Sin insights por ahora",
-    "emptyDesc": "Cuando tengamos datos suficientes, te mostraremos un resumen de lo que pasó este mes.",
+    "emptyDesc": "Agrega transacciones o define metas para comenzar a recibir diagnósticos y alertas en tiempo real.",
     "empty": "Aún no hay insights disponibles. Comienza a agregar transacciones para obtener recomendaciones personalizadas.",
+    "health": {
+      "title": "Salud Financiera",
+      "score": "Puntuación de Salud",
+      "excellent": "Excelente",
+      "good": "Saludable",
+      "fair": "Atención requerida",
+      "critical": "Riesgo alto",
+      "goalsOnTrack": "Metas al día",
+      "savingsRate": "Tasa de ahorro real",
+      "targetSavingsRate": "Objetivo de ahorro",
+      "netSaved": "Ahorro neto este mes",
+      "alertsCount": "Alertas de ritmo"
+    },
+    "radar": {
+      "title": "Radar de Metas y Límites",
+      "subtitle": "Monitoreo del ritmo de gasto vs. tiempo transcurrido del mes",
+      "noGoals": "No tienes metas activas registradas",
+      "noGoalsDesc": "Crea una meta de ahorro o establece un techo mensual para activar el radar de ritmo.",
+      "createGoalBtn": "Crear Meta",
+      "pacingProgress": "Consumo actual",
+      "timeElapsed": "Tiempo del mes",
+      "dailySafe": "Presupuesto diario seguro",
+      "projected": "Proyección fin de mes",
+      "projectedDate": "Fecha estimada",
+      "daysLeft": "días restantes",
+      "linkedPocket": "Bolsillo vinculado",
+      "fundAction": "Aportar"
+    },
+    "goalTypes": {
+      "savings": "Ahorro",
+      "monthly_ceiling": "Techo Mensual",
+      "category_cap": "Límite Categoría"
+    },
+    "goalHealth": {
+      "on_track": "Al día",
+      "at_risk": "En riesgo",
+      "critical": "Crítico",
+      "achieved": "Cumplida",
+      "paused": "Pausada"
+    },
+    "filters": {
+      "all": "Todos",
+      "pacing": "Ritmo y Límites",
+      "goals": "Impacto en Metas",
+      "opportunities": "Oportunidades"
+    },
+    "categories": {
+      "pacing_alert": "Alerta de Ritmo",
+      "goal_impact": "Impacto en Meta",
+      "smart_allocation": "Distribución Inteligente",
+      "leak_optimization": "Optimización",
+      "positive_milestone": "Hito Logrado",
+      "spending": "Gasto",
+      "savings": "Ahorro",
+      "anomaly": "Gasto Inusual"
+    },
+    "actions": {
+      "filter_transactions": "Ver Transacciones",
+      "fund_pocket": "Aportar a Bolsillo",
+      "adjust_goal_limit": "Ajustar Límite",
+      "simulate_savings": "Simular Ahorro",
+      "dismiss": "Descartar"
+    },
+    "fundModal": {
+      "title": "Aportar a Bolsillo",
+      "desc": "Transfiere saldo a tu bolsillo vinculado para mantener tu meta al día.",
+      "pocketLabel": "Bolsillo destino",
+      "amountLabel": "Monto a transferir",
+      "suggested": "Sugerido",
+      "confirm": "Confirmar Aporte",
+      "success": "Aporte realizado con éxito",
+      "error": "Error al realizar el aporte"
+    },
     "mom_increase": {
       "title": "Gastos aumentaron",
       "message": "Gastaste un {{percentage}}% más este mes comparado con el mes pasado."
