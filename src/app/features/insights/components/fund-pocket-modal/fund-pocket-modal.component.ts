@@ -44,8 +44,9 @@ export class FundPocketModalComponent {
       if (suggested && suggested > 0) {
         this.amount.set(suggested);
       }
-    });
+    }, { allowSignalWrites: true });
   }
+
 
   onBackdropClick(event: MouseEvent): void {
     if ((event.target as HTMLElement).classList.contains('modal-backdrop')) {

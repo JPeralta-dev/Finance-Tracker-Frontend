@@ -157,8 +157,9 @@ export class FtModalComponent {
       } else if (this.mounted()) {
         this.closeModal('programmatic');
       }
-    });
+    }, { allowSignalWrites: true });
   }
+
 
   // ── Open / close lifecycle ──────────────────────────────────────
 
