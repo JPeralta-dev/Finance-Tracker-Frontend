@@ -136,10 +136,17 @@ export class TelegramLinkService implements OnDestroy {
 
   openTelegramWithCode(code: string): void {
     const message = encodeURIComponent(`/link ${code}`);
+    const botUsername = environment.telegramBotUrl.split('/').pop() || 'hormigaTrackerBot';
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
     const url = isIOS
-      ? `tg://resolve?domain=hormigaTrackerBot&text=${message}`
+      ? `tg://resolve?domain=${botUsername}&text=${message}`
       : `${environment.telegramBotUrl}?text=${message}`;
+
+    // Silent safeguard: ensure command is in clipboard in case Telegram suppresses pre-fill on first start
+    if (typeof navigator !== 'undefined' && navigator.clipboard?.writeText) {
+      navigator.clipboard.writeText(`/link ${code}`).catch(() => {});
+    }
+
     window.open(url, '_blank');
   }
 }

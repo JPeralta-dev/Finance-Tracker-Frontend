@@ -423,10 +423,13 @@
       "code_expires": "Expire",
       "code_instructions": "Envoyez ce code au bot Telegram pour lier votre compte.",
       "open_with_code": "Ouvrir Telegram avec le code",
-      "generating": "Génération du code...",
-      "generate_code": "Générer le code de liaison",
+      "generate_code": "Lier Telegram",
       "connected_status": "Connecté — @{{handle}}",
-      "last_sync": "Prêt à enregistrer des transactions"
+      "last_sync": "Prêt à enregistrer des transactions",
+      "copy_code": "Copier le code",
+      "copied": "Copié !",
+      "copy_command": "Copier la commande /link",
+      "step_hint": "Appuyez pour ouvrir le bot avec votre commande prête à être envoyée."
     },
     "whatsapp": {
       "title": "WhatsApp",

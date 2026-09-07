@@ -686,21 +686,25 @@
       "desc": "conecta tus cuentas de mensajería."
     },
     "telegram": {
-      "title": "vincula Telegram",
-      "desc": "conecta tu cuenta de Telegram para registrar transacciones desde el bot.",
+      "title": "Vincular Telegram",
+      "desc": "Conecta tu cuenta de Telegram para registrar transacciones desde el bot.",
       "loading": "Verificando estado de vinculación...",
       "linked_success": "¡Cuenta vinculada exitosamente!",
       "already_linked": "Cuenta vinculada",
-      "linked_desc": "Tu cuenta de Telegram está vinculada. puedes registrar transacciones desde el bot.",
+      "linked_desc": "Tu cuenta de Telegram está vinculada. Puedes registrar transacciones desde el bot.",
       "link_telegram": "Abrir Telegram",
       "code_label": "Tu código de vinculación",
       "code_expires": "Expira",
-      "code_instructions": "envía este código al bot de Telegram para vincular tu cuenta.",
+      "code_instructions": "Envía este código al bot de Telegram para vincular tu cuenta.",
       "open_with_code": "Abrir Telegram con código",
       "generating": "Generando código...",
-      "generate_code": "Generar código de vinculación",
+      "generate_code": "Vincular Telegram",
       "connected_status": "Conectado — @{{handle}}",
-      "last_sync": "Listo para registrar transacciones"
+      "last_sync": "Listo para registrar transacciones",
+      "copy_code": "Copiar código",
+      "copied": "¡Copiado!",
+      "copy_command": "Copiar comando /link",
+      "step_hint": "Tocá para abrir el bot y enviar el comando de vinculación."
     },
     "whatsapp": {
       "title": "WhatsApp",

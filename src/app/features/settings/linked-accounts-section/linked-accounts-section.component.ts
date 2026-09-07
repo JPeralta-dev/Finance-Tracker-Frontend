@@ -125,7 +125,31 @@ export class LinkedAccountsSectionComponent implements OnInit {
     this.gmailDisconnectConfirm.set(false);
   }
 
-  // ── Telegram actions (used in the template's connected state) ─
+  // ── Telegram actions (used in the template's connected/disconnected states) ─
+  readonly codeCopied = signal(false);
+  readonly commandCopied = signal(false);
+
+  copyCode(code: string): void {
+    if (!code || typeof navigator === 'undefined' || !navigator.clipboard) return;
+    navigator.clipboard.writeText(code).then(() => {
+      this.codeCopied.set(true);
+      setTimeout(() => this.codeCopied.set(false), 2500);
+    }).catch(() => {});
+  }
+
+  copyCommand(code: string): void {
+    if (!code || typeof navigator === 'undefined' || !navigator.clipboard) return;
+    navigator.clipboard.writeText(`/link ${code}`).then(() => {
+      this.commandCopied.set(true);
+      setTimeout(() => this.commandCopied.set(false), 2500);
+    }).catch(() => {});
+  }
+
+  openTelegramFlow(code: string): void {
+    this.copyCommand(code);
+    this.svc.openTelegramWithCode(code);
+  }
+
   onTelegramDisconnect(): void {
     // Disconnect is a future feature — gracefully no-op for now
     // so the click is at least handled.
