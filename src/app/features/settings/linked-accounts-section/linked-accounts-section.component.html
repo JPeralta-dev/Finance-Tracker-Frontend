@@ -33,34 +33,64 @@
       <div slot="disconnected">
         @if (svc.linkCode(); as code) {
           <div class="code-display">
-            <span class="code-label">{{ 'settings.telegram.code_label' | translate }}</span>
-            <div class="code-value">{{ code }}</div>
-            <div class="code-timer">
-              <ng-icon name="clock" size="0.875rem" />
-              {{ 'settings.telegram.code_expires' | translate }}:
-              {{ countdownMinutes }}:{{ countdownSeconds.toString().padStart(2, '0') }}
+            <div class="code-header">
+              <span class="code-label">{{ 'settings.telegram.code_label' | translate }}</span>
+              <span class="code-timer">
+                <ng-icon name="clock" size="0.8rem" />
+                {{ 'settings.telegram.code_expires' | translate }}:
+                {{ countdownMinutes }}:{{ countdownSeconds.toString().padStart(2, '0') }}
+              </span>
             </div>
-            <p class="code-instructions">{{ 'settings.telegram.code_instructions' | translate }}</p>
-            <button class="btn-telegram-auto" (click)="svc.openTelegramWithCode(code)">
-              <ng-icon name="telegram" size="1rem" />
-              {{ 'settings.telegram.open_with_code' | translate }}
+
+            <div class="code-value-row">
+              <span class="code-value">{{ code }}</span>
+              <button
+                type="button"
+                class="btn-copy-chip"
+                [class.btn-copy-chip--copied]="codeCopied()"
+                (click)="copyCode(code)"
+                [attr.aria-label]="'settings.telegram.copy_code' | translate"
+              >
+                @if (codeCopied()) {
+                  <ng-icon name="check" size="0.875rem" />
+                  <span>{{ 'settings.telegram.copied' | translate }}</span>
+                } @else {
+                  <ng-icon name="copy" size="0.875rem" />
+                  <span>{{ 'settings.telegram.copy_code' | translate }}</span>
+                }
+              </button>
+            </div>
+
+            <button
+              type="button"
+              class="btn-telegram-direct"
+              (click)="openTelegramFlow(code)"
+            >
+              <ng-icon name="telegram" size="1.125rem" />
+              <span>{{ 'settings.telegram.open_with_code' | translate }}</span>
             </button>
+
+            <p class="code-instructions">{{ 'settings.telegram.step_hint' | translate }}</p>
+
+            <div class="command-fallback">
+              <span>{{ 'settings.telegram.code_instructions' | translate }}</span>
+              <code>/link {{ code }}</code>
+            </div>
           </div>
         } @else {
           <button
+            type="button"
             class="channel-card__btn channel-card__btn--primary"
             (click)="onTelegramConnect()"
             [disabled]="svc.state() === 'generating'"
           >
-            <ng-icon name="telegram" size="0.875rem" />
-            <span class="channel-card__btn-text">
-              @if (svc.state() === 'generating') {
-                <span class="spinner-sm"></span>
-                {{ 'settings.telegram.generating' | translate }}
-              } @else {
-                {{ 'settings.telegram.generate_code' | translate }}
-              }
-            </span>
+            @if (svc.state() === 'generating') {
+              <span class="spinner-sm"></span>
+              <span class="channel-card__btn-text">{{ 'settings.telegram.generating' | translate }}</span>
+            } @else {
+              <ng-icon name="telegram" size="1rem" />
+              <span class="channel-card__btn-text">{{ 'settings.telegram.generate_code' | translate }}</span>
+            }
           </button>
         }
         @if (svc.error(); as err) {
@@ -110,7 +140,7 @@
     <!-- ── WhatsApp (coming soon) ────────────────────────────────── -->
     <app-linked-channel-card
       [state]="whatsappState"
-      [iconKey]="'chatBubble'"
+      [iconKey]="'whatsapp'"
       [iconBgClass]="'whatsapp'"
       [title]="'settings.whatsapp.title'"
       [description]="'settings.whatsapp.desc'"
@@ -121,7 +151,7 @@
     <!-- ── SMS (not a priority) ──────────────────────────────────── -->
     <app-linked-channel-card
       [state]="smsState"
-      [iconKey]="'chatBubble'"
+      [iconKey]="'sms'"
       [iconBgClass]="'sms'"
       [title]="'settings.sms.title'"
       [description]="'settings.sms.desc'"

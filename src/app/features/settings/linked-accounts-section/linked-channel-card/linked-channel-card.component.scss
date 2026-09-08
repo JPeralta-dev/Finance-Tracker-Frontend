@@ -9,9 +9,10 @@
    ═══════════════════════════════════════════════════════════════════ */
 
 /* ── Channel brand tokens ─────────────────────────────────────── */
-$channel-telegram: #D946EF;   /* Amethyst Pulse Start — matches --accent-start */
-$channel-gmail: #ea4335;      /* Gmail brand red */
-$channel-whatsapp: #2DD4BF;   /* WhatsApp brand teal */
+$channel-telegram: #24A1DE;   /* Official Telegram sky blue */
+$channel-gmail: #EA4335;      /* Official Gmail brand red */
+$channel-whatsapp: #25D366;   /* Official WhatsApp brand green */
+$channel-sms: #6366F1;        /* Messaging indigo */
 
 :host {
   display: block;
@@ -95,9 +96,9 @@ $channel-whatsapp: #2DD4BF;   /* WhatsApp brand teal */
   position: relative;
   overflow: hidden;
 
-  /* Per-channel accent tints */
+  /* Per-channel authentic accent tints */
   &--telegram {
-    background: rgba(217, 70, 239, 0.18);
+    background: rgba(36, 161, 222, 0.16);
     color: $channel-telegram;
   }
   &--gmail {
@@ -105,12 +106,12 @@ $channel-whatsapp: #2DD4BF;   /* WhatsApp brand teal */
     color: $channel-gmail;
   }
   &--whatsapp {
-    background: rgba(45, 212, 191, 0.16);
+    background: rgba(37, 211, 102, 0.16);
     color: $channel-whatsapp;
   }
   &--sms {
-    background: rgba(167, 139, 250, 0.16);
-    color: var(--accent-mid);
+    background: rgba(99, 102, 241, 0.16);
+    color: $channel-sms;
   }
   &--default {
     background: var(--bg-elevated);
