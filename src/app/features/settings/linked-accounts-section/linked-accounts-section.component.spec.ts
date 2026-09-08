@@ -157,4 +157,23 @@ describe('LinkedAccountsSectionComponent', () => {
     );
     expect(component.gmailRecent().length).toBe(3);
   });
+
+  it('copyCode should copy code to clipboard and toggle codeCopied', async () => {
+    const clipboardSpy = spyOn(navigator.clipboard, 'writeText').and.returnValue(Promise.resolve());
+    component.copyCode('123456');
+    expect(clipboardSpy).toHaveBeenCalledWith('123456');
+  });
+
+  it('copyCommand should copy /link command to clipboard', async () => {
+    const clipboardSpy = spyOn(navigator.clipboard, 'writeText').and.returnValue(Promise.resolve());
+    component.copyCommand('123456');
+    expect(clipboardSpy).toHaveBeenCalledWith('/link 123456');
+  });
+
+  it('openTelegramFlow should copy command and delegate to service', () => {
+    spyOn(component, 'copyCommand');
+    component.openTelegramFlow('123456');
+    expect(component.copyCommand).toHaveBeenCalledWith('123456');
+    expect(svcSpy.openTelegramWithCode).toHaveBeenCalledWith('123456');
+  });
 });

@@ -698,9 +698,13 @@
       "code_instructions": "Send this code to the Telegram bot to link your account.",
       "open_with_code": "Open Telegram with code",
       "generating": "Generating code...",
-      "generate_code": "Generate linking code",
+      "generate_code": "Link Telegram",
       "connected_status": "Connected — @{{handle}}",
-      "last_sync": "Ready to log transactions"
+      "last_sync": "Ready to log transactions",
+      "copy_code": "Copy code",
+      "copied": "Copied!",
+      "copy_command": "Copy /link command",
+      "step_hint": "Tap to open the bot with your link command ready to send."
     },
     "whatsapp": {
       "title": "WhatsApp",
