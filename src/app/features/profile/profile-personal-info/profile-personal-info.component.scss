@@ -42,3 +42,38 @@
 
 .form-hint { display: block; margin-top: 4px; font-size: 0.8rem; color: var(--text-secondary); }
 .form-error { display: block; margin-top: 4px; font-size: 0.8rem; color: var(--danger); }
+
+.password-field { position: relative; }
+
+.password-field .form-control {
+  padding-right: 44px;
+}
+
+.password-toggle {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: color var(--duration-fast) var(--ease-smooth),
+              background var(--duration-fast) var(--ease-smooth);
+
+  &:hover {
+    color: var(--accent-start);
+    background: var(--accent-glow);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--accent-start);
+    outline-offset: 2px;
+  }
+}
