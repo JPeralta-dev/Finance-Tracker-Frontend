@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup } from '@angular/forms';
 import { NgIcon } from '@ng-icons/core';
@@ -16,6 +16,13 @@ import { FtSubtleRevealDirective } from '../../../shared/directives/ft-subtle-re
 export class ProfilePersonalInfoComponent {
   profileForm = input.required<FormGroup>();
   delay = input<number>(0);
+
+  /** Visual-only toggle: lock hides the password, check reveals it. */
+  showPassword = signal(false);
+
+  togglePassword(): void {
+    this.showPassword.set(!this.showPassword());
+  }
 
   onSubmit(): void {
     // Delegate to parent via form submit event

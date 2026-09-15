@@ -115,6 +115,7 @@
       [recentTitle]="'settings.gmail.recent'"
       [connectedStatus]="gmailConnectedStatus()"
       [connectedMeta]="gmailLastSync()"
+      [connectedMetaExtra]="'settings.gmail.ready_line'"
       (connect)="connectGmail()"
       (sync)="onGmailSync()"
       (disconnect)="onGmailDisconnect()"
