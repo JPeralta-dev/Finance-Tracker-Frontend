@@ -47,6 +47,8 @@ export class LinkedChannelCardComponent {
   readonly connectedStatus = input<string>('');
   /** Meta line shown under the status (e.g. "Last sync: 15 min ago"). */
   readonly connectedMeta = input<string>('');
+  /** Optional extra grey meta line shown under connectedMeta. */
+  readonly connectedMetaExtra = input<string>('');
 
   readonly connectLabel = input<string>('Connect');
   readonly connectingLabel = input<string>('Connecting...');

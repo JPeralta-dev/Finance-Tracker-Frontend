@@ -729,7 +729,8 @@
       "last_sync": "Last sync: {{when}}",
       "last_sync_just_now": "Last sync: just now",
       "recent": "Recent imports",
-      "no_email": "Connected"
+      "no_email": "Connected",
+      "ready_line": "Ready to log Gmail transactions"
     },
     "linked": {
       "connected_pill": "Connected",
@@ -877,6 +878,7 @@
     "subtitle": "Manage your personal information",
     "displayName": "Display Name",
     "email": "Email",
+    "password": "Password",
     "save": "Save Changes",
     "cancel": "Cancel",
     "signingOut": "Signing out...",

@@ -448,7 +448,8 @@
       "desc": "Connectez votre Gmail pour importer automatiquement les notifications bancaires comme transactions.",
       "connect": "Connecter Gmail",
       "connecting": "Connexion...",
-      "connect_failed": "Impossible de démarrer la connexion Gmail. Veuillez réessayer."
+      "connect_failed": "Impossible de démarrer la connexion Gmail. Veuillez réessayer.",
+      "ready_line": "Prêt à enregistrer des transactions Gmail"
     },
     "linked": {
       "connected_pill": "Connecté",
@@ -635,6 +636,7 @@
     "subtitle": "Gérez vos informations personnelles",
     "displayName": "Nom d'affichage",
     "email": "E-mail",
+    "password": "Mot de passe",
     "save": "Sauvegarder les modifications",
     "cancel": "Annuler",
     "signingOut": "Déconnexion en cours...",

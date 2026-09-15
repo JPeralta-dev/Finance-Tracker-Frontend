@@ -16,6 +16,7 @@ $channel-sms: #6366F1;        /* Messaging indigo */
 
 :host {
   display: block;
+  height: 100%;
 }
 
 .channel-card {
@@ -23,6 +24,7 @@ $channel-sms: #6366F1;        /* Messaging indigo */
   display: flex;
   flex-direction: column;
   gap: 18px;
+  height: 100%;
   padding: 20px;
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
@@ -182,13 +184,23 @@ $channel-sms: #6366F1;        /* Messaging indigo */
   display: flex;
   flex-direction: column;
   gap: 14px;
+  flex: 1;
 }
 
 .channel-card__state {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  flex: 1;
   animation: stateEnter var(--duration-normal) var(--ease-smooth);
+}
+
+.channel-card__state--disconnected {
+  justify-content: flex-end;
+}
+
+.channel-card__state--connected {
+  justify-content: flex-end;
 }
 
 .channel-card__state-text {

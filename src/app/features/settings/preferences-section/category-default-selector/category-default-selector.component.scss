@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 0;
+  padding: 20px 0;
   border-bottom: 1px solid var(--glass-border);
 
   &:last-child { border-bottom: none; padding-bottom: 0; }
@@ -11,9 +11,9 @@
 .pref-label {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   color: var(--text-primary);
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 500;
 
   ng-icon { color: var(--text-secondary); }
@@ -42,7 +42,7 @@
 .save-btn {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  margin-top: 20px;
   padding: 8px 16px;
   background: linear-gradient(135deg, var(--accent-start), var(--accent-mid));
   border: none;
