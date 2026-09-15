@@ -32,5 +32,29 @@
       />
       <small class="form-hint">{{ 'profile.emailReadonly' | translate }}</small>
     </div>
+
+    <div class="form-group">
+      <label for="password" class="form-label">{{ 'profile.password' | translate }}</label>
+      <div class="password-field">
+        <input
+          id="password"
+          [type]="showPassword() ? 'text' : 'password'"
+          class="form-control"
+          placeholder="*********"
+        />
+        <button
+          type="button"
+          class="password-toggle"
+          [attr.aria-label]="showPassword() ? 'Ocultar contraseña' : 'Mostrar contraseña'"
+          (click)="togglePassword()"
+        >
+          @if (showPassword()) {
+            <ng-icon name="check" size="1.125rem" />
+          } @else {
+            <ng-icon name="lockClosed" size="1.125rem" />
+          }
+        </button>
+      </div>
+    </div>
   </form>
 </div>

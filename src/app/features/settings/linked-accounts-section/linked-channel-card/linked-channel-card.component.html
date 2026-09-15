@@ -57,6 +57,9 @@
               @if (connectedMeta()) {
                 <span class="channel-card__meta">{{ connectedMeta() | translate }}</span>
               }
+              @if (connectedMetaExtra()) {
+                <span class="channel-card__meta">{{ connectedMetaExtra() | translate }}</span>
+              }
             </div>
           }
 
