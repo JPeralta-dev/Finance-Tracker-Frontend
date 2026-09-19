@@ -291,6 +291,23 @@
         }
       }
     },
+    "resources": {
+      "title": "Resources for the road ahead",
+      "subtitle": "An editorial layer for clearer, more confident money decisions.",
+      "status": "Coming soon",
+      "blog": {
+        "title": "Blog",
+        "description": "Practical notes for building a clearer relationship with your money."
+      },
+      "guides": {
+        "title": "Guides",
+        "description": "Clear, focused explainers for everyday financial decisions."
+      },
+      "calculators": {
+        "title": "Calculators",
+        "description": "Simple tools for exploring financial choices, when they are ready."
+      }
+    },
     "legal": {
       "back": "Back to home",
       "back_to_home": "Back to home",
@@ -319,6 +336,7 @@
         "contact": "Contact",
         "security": "Security",
         "features": "Features",
+        "resources": "Resources",
         "telegram_bot": "Telegram Bot",
         "api_docs": "API Documentation",
         "terms": "Terms of Service",

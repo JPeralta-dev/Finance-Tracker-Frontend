@@ -291,6 +291,23 @@
         }
       }
     },
+    "resources": {
+      "title": "Recursos para el camino que sigue",
+      "subtitle": "Una capa editorial para tomar decisiones financieras más claras y seguras.",
+      "status": "Próximamente",
+      "blog": {
+        "title": "Blog",
+        "description": "Notas prácticas para construir una relación más clara con tu dinero."
+      },
+      "guides": {
+        "title": "Guías",
+        "description": "Explicaciones claras y enfocadas para las decisiones financieras cotidianas."
+      },
+      "calculators": {
+        "title": "Calculadoras",
+        "description": "Herramientas simples para explorar decisiones financieras, cuando estén listas."
+      }
+    },
     "legal": {
       "back": "Volver al inicio",
       "back_to_home": "Volver al inicio",
@@ -319,6 +336,7 @@
         "contact": "Contacto",
         "security": "Seguridad",
         "features": "Funciones",
+        "resources": "Recursos",
         "telegram_bot": "Bot de Telegram",
         "api_docs": "Documentación de la API",
         "terms": "Términos del Servicio",

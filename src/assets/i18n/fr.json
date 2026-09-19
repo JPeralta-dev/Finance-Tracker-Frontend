@@ -155,6 +155,23 @@
       "subtitle": "Gratuit pour toujours. Sans carte de crédit. Inscrivez-vous et reprenez le contrôle.",
       "button": "Commencer Gratuitement"
     },
+    "resources": {
+      "title": "Des ressources pour la suite",
+      "subtitle": "Un espace éditorial pour prendre des décisions financières plus claires et plus sereines.",
+      "status": "Bientôt disponible",
+      "blog": {
+        "title": "Blog",
+        "description": "Des notes pratiques pour construire une relation plus claire avec votre argent."
+      },
+      "guides": {
+        "title": "Guides",
+        "description": "Des explications claires et ciblées pour les décisions financières du quotidien."
+      },
+      "calculators": {
+        "title": "Calculateurs",
+        "description": "Des outils simples pour explorer vos choix financiers, lorsqu'ils seront prêts."
+      }
+    },
     "legal": {
       "footer": {
         "platform": "Plateforme",
@@ -162,6 +179,7 @@
         "contact": "Contact",
         "security": "Sécurité",
         "features": "Fonctionnalités",
+        "resources": "Ressources",
         "telegram_bot": "Bot Telegram",
         "api_docs": "Documentation de l'API",
         "terms": "Conditions d'utilisation",
