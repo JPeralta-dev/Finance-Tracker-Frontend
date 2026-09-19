@@ -82,17 +82,10 @@
 
   <!-- Session / Account section -->
   <div class="settings-section settings-section--danger" ftSubtleReveal="fade-up" [delay]="300">
-    <div class="section-header">
-      <div class="section-icon section-icon--danger">
-        <ng-icon name="logout" size="1.5rem" />
-      </div>
-      <div class="section-info">
-        <h2 class="section-title">{{ 'settings.session.title' | translate }}</h2>
-      </div>
-    </div>
     <div class="session-actions">
       @if (!confirmLogout()) {
         <button class="btn-sign-out" (click)="onRequestSignOut()">
+          <ng-icon name="logout" size="1.25rem" />
           {{ 'settings.session.sign_out' | translate }}
         </button>
       } @else {
