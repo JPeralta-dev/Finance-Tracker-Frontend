@@ -62,8 +62,8 @@ export class LandingComponent implements OnInit {
     ? 'https://kipufinance.online'
     : 'http://localhost:4200';
 
-  /** Path to the OG image — 1200×630 SVG placeholder. */
-  readonly ogImagePath = '/assets/og/og-image.svg';
+  /** Absolute 1200×630 PNG used by social link-preview crawlers. */
+  readonly ogImageUrl = 'https://kipufinance.online/assets/og/og-image.png';
 
   private scrollTicking = false;
 
@@ -83,8 +83,6 @@ export class LandingComponent implements OnInit {
     const description = t['heroSubtitle'] ?? 'Track, analyze, and optimize your spending — free forever.';
     const keywords =
       'personal finance, expense tracker, budget app, money management, financial insights, Kipu';
-    const ogImage = `${this.siteUrl}${this.ogImagePath}`;
-
     this.title.setTitle(title);
 
     this.meta.updateTag({ name: 'description', content: description });
@@ -95,16 +93,20 @@ export class LandingComponent implements OnInit {
     this.meta.updateTag({ property: 'og:description', content: description });
     this.meta.updateTag({ property: 'og:type', content: 'website' });
     this.meta.updateTag({ property: 'og:url', content: this.siteUrl });
-    this.meta.updateTag({ property: 'og:image', content: ogImage });
+    this.meta.updateTag({ property: 'og:image', content: this.ogImageUrl });
+    this.meta.updateTag({ property: 'og:image:secure_url', content: this.ogImageUrl });
+    this.meta.updateTag({ property: 'og:image:type', content: 'image/png' });
     this.meta.updateTag({ property: 'og:image:width', content: '1200' });
     this.meta.updateTag({ property: 'og:image:height', content: '630' });
+    this.meta.updateTag({ property: 'og:image:alt', content: 'Kipu personal finance tracker' });
     this.meta.updateTag({ property: 'og:locale', content: this.translationService.currentLang() });
 
     // Twitter Card
     this.meta.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
     this.meta.updateTag({ name: 'twitter:title', content: title });
     this.meta.updateTag({ name: 'twitter:description', content: description });
-    this.meta.updateTag({ name: 'twitter:image', content: ogImage });
+    this.meta.updateTag({ name: 'twitter:image', content: this.ogImageUrl });
+    this.meta.updateTag({ name: 'twitter:image:alt', content: 'Kipu personal finance tracker' });
   }
 
   @HostListener('window:scroll', [])
