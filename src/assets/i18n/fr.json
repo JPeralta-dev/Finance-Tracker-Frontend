@@ -154,6 +154,22 @@
       "title": "Commencez à suivre votre argent en 30 secondes",
       "subtitle": "Gratuit pour toujours. Sans carte de crédit. Inscrivez-vous et reprenez le contrôle.",
       "button": "Commencer Gratuitement"
+    },
+    "legal": {
+      "footer": {
+        "platform": "Plateforme",
+        "legal": "Juridique",
+        "contact": "Contact",
+        "security": "Sécurité",
+        "features": "Fonctionnalités",
+        "telegram_bot": "Bot Telegram",
+        "api_docs": "Documentation de l'API",
+        "terms": "Conditions d'utilisation",
+        "privacy": "Politique de confidentialité",
+        "cookies": "Politique relative aux cookies",
+        "suggestions": "Partager une suggestion",
+        "creator_credit": "Créé par l'équipe Kipu"
+      }
     }
   },
   "dashboard": {

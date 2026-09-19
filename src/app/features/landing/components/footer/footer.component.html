@@ -66,6 +66,9 @@
           <a [href]="'mailto:' + contactEmail" class="footer__contact-email">
             {{ contactEmail }}
           </a>
+          <a [href]="feedbackMailtoUrl" class="footer__link">
+            {{ 'landing.legal.footer.suggestions' | translate }}
+          </a>
           <div class="footer__contact-icons">
             <a routerLink="/" fragment="telegram" class="footer__contact-icon" aria-label="Telegram">
               <ng-icon name="telegram" size="0.875rem" />
@@ -81,7 +84,7 @@
     <!-- Bottom Bar -->
     <div class="footer__bottom">
       <p class="footer__brand-name">Kipu © {{ currentYear }}</p>
-
+      <p class="footer__creator">{{ 'landing.legal.footer.creator_credit' | translate }}</p>
     </div>
   </div>
 </footer>

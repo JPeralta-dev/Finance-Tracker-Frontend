@@ -242,6 +242,13 @@ ft-footer {
   margin: 0;
 }
 
+.footer__creator {
+  font-size: 13px;
+  color: var(--text-tertiary);
+  margin: 0;
+  text-align: right;
+}
+
 .footer__status {
   display: flex;
   align-items: center;
@@ -326,6 +333,10 @@ ft-footer {
 
   .footer__bottom {
     flex-direction: column;
+    text-align: center;
+  }
+
+  .footer__creator {
     text-align: center;
   }
 }

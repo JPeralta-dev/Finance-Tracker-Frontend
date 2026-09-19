@@ -323,7 +323,9 @@
         "api_docs": "Documentación de la API",
         "terms": "Términos del Servicio",
         "privacy": "Política de Privacidad",
-        "cookies": "Política de Cookies"
+        "cookies": "Política de Cookies",
+        "suggestions": "Compartir una sugerencia",
+        "creator_credit": "Creado por el equipo de Kipu"
       }
     }
   },
