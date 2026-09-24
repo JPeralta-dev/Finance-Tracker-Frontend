@@ -16,6 +16,7 @@ import { ComparisonTableComponent } from './components/comparison-table/comparis
 import { TestimonialsComponent } from './components/testimonials/testimonials.component';
 import { FaqComponent } from './components/faq/faq.component';
 import { TrustSignalsComponent } from './components/trust-signals/trust-signals.component';
+import { ResourcesSectionComponent } from './components/resources-section/resources-section.component';
 import { FtSubtleRevealDirective } from '../../shared/directives/ft-subtle-reveal.directive';
 import { TranslatePipe } from '../../core/pipes/translate.pipe';
 import { TranslationService } from '../../core/services/translation.service';
@@ -41,6 +42,7 @@ import { environment } from '../../../environments/environment';
     TestimonialsComponent,
     FaqComponent,
     TrustSignalsComponent,
+    ResourcesSectionComponent,
     FtSubtleRevealDirective,
     TranslatePipe,
   ],
