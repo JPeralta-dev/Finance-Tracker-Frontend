@@ -332,7 +332,7 @@
     "greeting_afternoon": "Good afternoon",
     "greeting_evening": "Good evening",
     "greetingSubtitle": "Here's your financial overview for this month.",
-    "newTransaction": "+ New Transaction",
+    "newTransaction": "New Transaction",
     "totalBalance": "Total Balance",
     "monthlyIncome": "Monthly Income",
     "monthlyExpenses": "Monthly Expenses",
@@ -553,7 +553,7 @@
     "emptyDesc": "Your transaction history will appear here once you start logging expenses and income.",
     "startTracking": "Start tracking your finances by adding your first transaction.",
     "addFirstTransaction": "Add Transaction",
-    "newTransaction": "+ New Transaction",
+    "newTransaction": "New Transaction",
     "form": {
       "back": "Back to transactions",
       "new_title": "New Transaction",

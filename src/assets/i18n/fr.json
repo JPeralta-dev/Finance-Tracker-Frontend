@@ -161,7 +161,7 @@
     "greeting_afternoon": "Bon après-midi",
     "greeting_evening": "Bonsoir",
     "greetingSubtitle": "Voici votre aperçu financier pour ce mois-ci.",
-    "newTransaction": "+ Nouvelle Transaction",
+    "newTransaction": "Nouvelle Transaction",
     "totalBalance": "Solde Total",
     "monthlyIncome": "Revenu Mensuel",
     "monthlyExpenses": "Dépenses Mensuelles",
@@ -306,7 +306,7 @@
     "emptyDesc": "Votre historique de transactions apparaîtra ici une fois que vous commencerez à enregistrer des dépenses et des revenus.",
     "startTracking": "Commencez à suivre vos finances en ajoutant votre première transaction.",
     "addFirstTransaction": "Ajouter Transaction",
-    "newTransaction": "+ Nouvelle Transaction",
+    "newTransaction": "Nouvelle Transaction",
     "form": {
       "back": "Retour aux transactions",
       "new_title": "Nouvelle Transaction",

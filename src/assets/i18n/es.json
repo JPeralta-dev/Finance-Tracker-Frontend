@@ -332,7 +332,7 @@
     "greeting_afternoon": "Buenas tardes",
     "greeting_evening": "Buenas noches",
     "greetingSubtitle": "Aquí tienes tu resumen financiero de este mes.",
-    "newTransaction": "+ Nueva Transacción",
+    "newTransaction": "Nueva Transacción",
     "totalBalance": "Balance Total",
     "monthlyIncome": "Ingreso Mensual",
     "monthlyExpenses": "Gastos Mensuales",
@@ -553,7 +553,7 @@
     "emptyDesc": "Tu historial de transacciones aparecerá aquí una vez que comiences a registrar gastos e ingresos.",
     "startTracking": "Comenzá a rastrear tus finanzas agregando tu primera transacción.",
     "addFirstTransaction": "Agregar Transacción",
-    "newTransaction": "+ Nueva Transacción",
+    "newTransaction": "Nueva Transacción",
     "form": {
       "back": "Volver a transacciones",
       "new_title": "Nueva Transacción",
