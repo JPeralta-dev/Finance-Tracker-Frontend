@@ -291,23 +291,6 @@
         }
       }
     },
-    "resources": {
-      "title": "Recursos para el camino que sigue",
-      "subtitle": "Una capa editorial para tomar decisiones financieras más claras y seguras.",
-      "status": "Próximamente",
-      "blog": {
-        "title": "Blog",
-        "description": "Notas prácticas para construir una relación más clara con tu dinero."
-      },
-      "guides": {
-        "title": "Guías",
-        "description": "Explicaciones claras y enfocadas para las decisiones financieras cotidianas."
-      },
-      "calculators": {
-        "title": "Calculadoras",
-        "description": "Herramientas simples para explorar decisiones financieras, cuando estén listas."
-      }
-    },
     "legal": {
       "back": "Volver al inicio",
       "back_to_home": "Volver al inicio",
@@ -336,14 +319,11 @@
         "contact": "Contacto",
         "security": "Seguridad",
         "features": "Funciones",
-        "resources": "Recursos",
         "telegram_bot": "Bot de Telegram",
         "api_docs": "Documentación de la API",
         "terms": "Términos del Servicio",
         "privacy": "Política de Privacidad",
-        "cookies": "Política de Cookies",
-        "suggestions": "Compartir una sugerencia",
-        "creator_credit": "Creado por el equipo de Kipu"
+        "cookies": "Política de Cookies"
       }
     }
   },
@@ -352,7 +332,7 @@
     "greeting_afternoon": "Buenas tardes",
     "greeting_evening": "Buenas noches",
     "greetingSubtitle": "Aquí tienes tu resumen financiero de este mes.",
-    "newTransaction": "+ Nueva Transacción",
+    "newTransaction": "Nueva Transacción",
     "totalBalance": "Balance Total",
     "monthlyIncome": "Ingreso Mensual",
     "monthlyExpenses": "Gastos Mensuales",
@@ -573,7 +553,7 @@
     "emptyDesc": "Tu historial de transacciones aparecerá aquí una vez que comiences a registrar gastos e ingresos.",
     "startTracking": "Comenzá a rastrear tus finanzas agregando tu primera transacción.",
     "addFirstTransaction": "Agregar Transacción",
-    "newTransaction": "+ Nueva Transacción",
+    "newTransaction": "Nueva Transacción",
     "form": {
       "back": "Volver a transacciones",
       "new_title": "Nueva Transacción",

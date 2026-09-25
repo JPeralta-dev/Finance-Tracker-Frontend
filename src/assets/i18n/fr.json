@@ -154,40 +154,6 @@
       "title": "Commencez à suivre votre argent en 30 secondes",
       "subtitle": "Gratuit pour toujours. Sans carte de crédit. Inscrivez-vous et reprenez le contrôle.",
       "button": "Commencer Gratuitement"
-    },
-    "resources": {
-      "title": "Des ressources pour la suite",
-      "subtitle": "Un espace éditorial pour prendre des décisions financières plus claires et plus sereines.",
-      "status": "Bientôt disponible",
-      "blog": {
-        "title": "Blog",
-        "description": "Des notes pratiques pour construire une relation plus claire avec votre argent."
-      },
-      "guides": {
-        "title": "Guides",
-        "description": "Des explications claires et ciblées pour les décisions financières du quotidien."
-      },
-      "calculators": {
-        "title": "Calculateurs",
-        "description": "Des outils simples pour explorer vos choix financiers, lorsqu'ils seront prêts."
-      }
-    },
-    "legal": {
-      "footer": {
-        "platform": "Plateforme",
-        "legal": "Juridique",
-        "contact": "Contact",
-        "security": "Sécurité",
-        "features": "Fonctionnalités",
-        "resources": "Ressources",
-        "telegram_bot": "Bot Telegram",
-        "api_docs": "Documentation de l'API",
-        "terms": "Conditions d'utilisation",
-        "privacy": "Politique de confidentialité",
-        "cookies": "Politique relative aux cookies",
-        "suggestions": "Partager une suggestion",
-        "creator_credit": "Créé par l'équipe Kipu"
-      }
     }
   },
   "dashboard": {
@@ -195,7 +161,7 @@
     "greeting_afternoon": "Bon après-midi",
     "greeting_evening": "Bonsoir",
     "greetingSubtitle": "Voici votre aperçu financier pour ce mois-ci.",
-    "newTransaction": "+ Nouvelle Transaction",
+    "newTransaction": "Nouvelle Transaction",
     "totalBalance": "Solde Total",
     "monthlyIncome": "Revenu Mensuel",
     "monthlyExpenses": "Dépenses Mensuelles",
@@ -340,7 +306,7 @@
     "emptyDesc": "Votre historique de transactions apparaîtra ici une fois que vous commencerez à enregistrer des dépenses et des revenus.",
     "startTracking": "Commencez à suivre vos finances en ajoutant votre première transaction.",
     "addFirstTransaction": "Ajouter Transaction",
-    "newTransaction": "+ Nouvelle Transaction",
+    "newTransaction": "Nouvelle Transaction",
     "form": {
       "back": "Retour aux transactions",
       "new_title": "Nouvelle Transaction",
