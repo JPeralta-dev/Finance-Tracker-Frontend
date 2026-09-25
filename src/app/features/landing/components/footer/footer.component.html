@@ -32,6 +32,9 @@
           <a routerLink="/#features" class="footer__link" fragment="features">
             {{ 'landing.legal.footer.features' | translate }}
           </a>
+          <a href="/#resources" class="footer__link">
+            {{ 'landing.legal.footer.resources' | translate }}
+          </a>
           @if (pricingEnabled) {
             <a routerLink="/#pricing" class="footer__link" fragment="pricing">
               {{ 'landing.cta.title' | translate }}
@@ -66,6 +69,9 @@
           <a [href]="'mailto:' + contactEmail" class="footer__contact-email">
             {{ contactEmail }}
           </a>
+          <a [href]="feedbackMailtoUrl" class="footer__link">
+            {{ 'landing.legal.footer.suggestions' | translate }}
+          </a>
           <div class="footer__contact-icons">
             <a routerLink="/" fragment="telegram" class="footer__contact-icon" aria-label="Telegram">
               <ng-icon name="telegram" size="0.875rem" />
@@ -81,7 +87,7 @@
     <!-- Bottom Bar -->
     <div class="footer__bottom">
       <p class="footer__brand-name">Kipu © {{ currentYear }}</p>
-
+      <p class="footer__creator">{{ 'landing.legal.footer.creator_credit' | translate }}</p>
     </div>
   </div>
 </footer>
