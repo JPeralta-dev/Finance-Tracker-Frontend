@@ -797,6 +797,8 @@
     "byCategory": "Por Categoría",
     "expenseBreakdown": "Desglose de Gastos",
     "dailySpending": "Gastos por Día",
+    "dailySpendingSubtitle": "Ingresos vs Gastos día a día",
+    "monthTrend": "Evolución del Mes",
     "thisWeek": "Esta semana",
     "currentWeekNote": "Siempre muestra la semana actual",
     "days": {
@@ -829,6 +831,7 @@
     "noHourlyData": "Sin datos de actividad horaria",
     "weeklyPatterns": "Patrones Semanales",
     "weeklyAverage": "Gasto promedio diario",
+    "weekdayAverage": "Promedio por día de la semana",
     "otherCategories": "Otros",
     "noWeeklyData": "Sin datos de patrones semanales",
     "chartError": "Error al cargar gráfico",
