@@ -81,9 +81,11 @@ import { TranslatePipe } from '../../core/pipes/translate.pipe';
     .upgrade-prompt {
       position: relative;
       display: block;
+      height: 100%;
     }
 
     .upgrade-prompt__preview {
+      height: 100%;
       filter: blur(6px) grayscale(0.4);
       opacity: 0.55;
       pointer-events: none;
