@@ -19,6 +19,8 @@ export interface GoalPacing {
   projectedCompletionDate?: string;  // Para 'savings': fecha estimada calculada
   dailyAllowanceRemaining?: number;  // Para 'caps': presupuesto restante por día
   daysRemaining: number;             // Días restantes en el periodo o plazo
+  monthsRemaining?: number | null;   // Meses restantes al plazo
+  suggestedMonthlySavings?: number | null; // Cuota mensual de ahorro requerida
 }
 
 export interface Goal {

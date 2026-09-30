@@ -138,13 +138,13 @@ export class GoalsPage implements OnInit {
     if (goal.deadline) {
       const now = new Date();
       const deadline = new Date(goal.deadline);
-      const diffMs = deadline.getTime() - now.getTime();
-      const daysLeft = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+      const isPast = deadline.getTime() < now.getTime();
+      const daysLeft = goal.pacing?.daysRemaining ?? Math.ceil((deadline.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
 
-      if (daysLeft < 0) {
+      if (isPast && daysLeft <= 0) {
         return {
           badgeText: 'Plazo vencido',
-          subText: `Finalizó hace ${Math.abs(daysLeft)} días`,
+          subText: `Faltan ${this.formatCurrency(remaining)} para completar`,
           isExpired: true,
           isCompleted: false,
         };
@@ -159,9 +159,8 @@ export class GoalsPage implements OnInit {
         };
       }
 
-      const monthsLeft = Math.max(1, Math.round(daysLeft / 30));
-      const monthsFloat = Math.max(0.5, daysLeft / 30);
-      const suggestedMonthly = Math.round(remaining / monthsFloat);
+      const monthsLeft = goal.pacing?.monthsRemaining ?? (daysLeft > 0 ? Math.max(1, Math.ceil(daysLeft / 30.4375)) : 0);
+      const suggestedMonthly = goal.pacing?.suggestedMonthlySavings ?? (monthsLeft > 0 ? Math.round(remaining / monthsLeft) : remaining);
 
       const timeText = daysLeft <= 45
         ? `Quedan ${daysLeft} días`
