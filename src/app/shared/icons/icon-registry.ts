@@ -75,6 +75,7 @@ import {
   heroLightBulb,
   heroArrowDownOnSquareStack,
   heroTrash,
+  heroFlag,
 } from '@ng-icons/heroicons/outline';
 
 // ─── Icon Map ────────────────────────────────────────────────────────────────
@@ -87,6 +88,7 @@ export const ICONS = {
   categories: heroTag,
   analytics: heroChartBar,
   insights: heroLightBulb,
+  goals: heroFlag,
   settings: heroCog6Tooth,
   logout: heroArrowRightOnRectangle,
 

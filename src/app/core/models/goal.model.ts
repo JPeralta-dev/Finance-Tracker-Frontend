@@ -48,7 +48,7 @@ export interface CreateGoalDto {
   currentAmount?: number;
   deadline?: string;
   period?: 'monthly' | 'weekly';
-  pocketId?: string;
+  pocketId?: string | null;
   categoryId?: string;
   categoryIds?: string[];
   autoAllocatePercent?: number;
@@ -59,9 +59,9 @@ export interface UpdateGoalDto {
   type?: GoalType;
   targetAmount?: number;
   currentAmount?: number;
-  deadline?: string;
+  deadline?: string | null;
   period?: 'monthly' | 'weekly';
-  pocketId?: string;
+  pocketId?: string | null;
   categoryId?: string;
   categoryIds?: string[];
   autoAllocatePercent?: number;
@@ -69,9 +69,12 @@ export interface UpdateGoalDto {
 }
 
 export interface GoalProjection {
-  projectedBalance: number;
-  projectedSavings: number;
-  monthsUntilGoal: number | null;
-  confidence: 'low' | 'medium' | 'high';
+  projectedBalance?: number;
+  projectedSavings?: number;
+  monthsUntilGoal?: number | null;
+  monthsToGoal?: number | null;
+  insufficientSavings?: boolean;
+  alreadyCompleted?: boolean;
+  confidence?: 'low' | 'medium' | 'high';
 }
 

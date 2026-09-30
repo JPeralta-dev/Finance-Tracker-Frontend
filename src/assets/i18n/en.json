@@ -65,7 +65,7 @@
     },
     "or": "or",
     "signInWithGoogle": "Sign in with Google",
-    "backToHome": "← Back to Home",
+    "backToHome": "Back to Home",
     "passwordStrength": {
       "weak": "Weak",
       "fair": "Fair",
@@ -92,7 +92,8 @@
     "pockets": "Pockets",
     "settings": "Settings",
     "newTransaction": "New Transaction",
-    "profile": "Profile"
+    "profile": "Profile",
+    "goals": "Goals"
   },
   "landing": {
     "heroBadge": "Smart Categorization",
@@ -462,7 +463,7 @@
       "noGoals": "No active goals registered",
       "noGoalsDesc": "Create a savings goal or set a monthly ceiling to activate the pacing radar.",
       "createGoalBtn": "Create Goal",
-      "pacingProgress": "Current progress",
+      "pacingProgress": "Total saved",
       "timeElapsed": "Month elapsed",
       "dailySafe": "Daily safe allowance",
       "projected": "Month-end projection",

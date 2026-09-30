@@ -65,7 +65,7 @@
     },
     "or": "ou",
     "signInWithGoogle": "Se connecter avec Google",
-    "backToHome": "← Retour à l'Accueil",
+    "backToHome": "Retour à l'Accueil",
     "passwordStrength": {
       "weak": "Faible",
       "fair": "Moyen",
@@ -92,7 +92,8 @@
     "pockets": "Poches",
     "settings": "Paramètres",
     "newTransaction": "Nouvelle Transaction",
-    "profile": "Profil"
+    "profile": "Profil",
+    "goals": "Objectifs"
   },
   "landing": {
     "heroBadge": "Catégorisation Intelligente",

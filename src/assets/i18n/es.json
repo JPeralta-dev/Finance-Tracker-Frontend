@@ -65,7 +65,7 @@
     },
     "or": "o",
     "signInWithGoogle": "Ingresar con Google",
-    "backToHome": "← Volver al Inicio",
+    "backToHome": "Volver al Inicio",
     "passwordStrength": {
       "weak": "Débil",
       "fair": "Regular",
@@ -92,7 +92,8 @@
     "pockets": "Bolsillos",
     "settings": "Configuración",
     "newTransaction": "Nueva Transacción",
-    "profile": "Perfil"
+    "profile": "Perfil",
+    "goals": "Metas"
   },
   "landing": {
     "heroBadge": "Categorización Inteligente",
@@ -462,7 +463,7 @@
       "noGoals": "No tienes metas activas registradas",
       "noGoalsDesc": "Crea una meta de ahorro o establece un techo mensual para activar el radar de ritmo.",
       "createGoalBtn": "Crear Meta",
-      "pacingProgress": "Consumo actual",
+      "pacingProgress": "Ahorro acumulado",
       "timeElapsed": "Tiempo del mes",
       "dailySafe": "Presupuesto diario seguro",
       "projected": "Proyección fin de mes",
