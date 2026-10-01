@@ -30,22 +30,22 @@ export class DateRangeService {
   readonly availableMonths = computed(() => {
     const months: { label: string; start: string; end: string }[] = [];
     const now = new Date();
+    const nowYear = now.getFullYear();
+    const nowMonth = now.getMonth();
     const min = this.minDate();
 
     // Determine how many months back we should show.
     // If minDate is set: use it. Otherwise fall back to 12 months max.
     let maxMonthsBack = 12;
     if (min) {
-      const nowYear = now.getUTCFullYear();
-      const nowMonth = now.getUTCMonth();
-      const minYear = min.getUTCFullYear();
-      const minMonth = min.getUTCMonth();
+      const minYear = min.getFullYear();
+      const minMonth = min.getMonth();
       maxMonthsBack = (nowYear - minYear) * 12 + (nowMonth - minMonth);
     }
 
     for (let i = 0; i <= maxMonthsBack; i++) {
-      const year = now.getUTCFullYear();
-      const month = now.getUTCMonth() - i;
+      const year = nowYear;
+      const month = nowMonth - i;
       // Use noon UTC so toLocaleDateString stays in the same calendar month
       // across all timezones (midnight UTC can roll back to the previous day
       // in UTC-5 or earlier, shifting the label by one month).
@@ -66,8 +66,10 @@ export class DateRangeService {
 
   setCurrentMonth(): void {
     const now = new Date();
-    const firstDay = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1));
-    const lastDay = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + 1, 0));
+    const year = now.getFullYear();
+    const month = now.getMonth();
+    const firstDay = new Date(Date.UTC(year, month, 1));
+    const lastDay = new Date(Date.UTC(year, month + 1, 0));
     this.startDate.set(toUTCDateString(firstDay.getUTCFullYear(), firstDay.getUTCMonth(), firstDay.getUTCDate()));
     this.endDate.set(toUTCDateString(lastDay.getUTCFullYear(), lastDay.getUTCMonth(), lastDay.getUTCDate()));
   }
