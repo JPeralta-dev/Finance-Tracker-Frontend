@@ -8,47 +8,65 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { catchError, of, finalize } from 'rxjs';
-
-import { IconComponent } from '../../../shared/icons/icon.component';
+import { catchError, of } from 'rxjs';
+import { NgIcon } from '@ng-icons/core';
 
 import { GoalsService } from '../../../core/services/goals.service';
+import { PocketsService } from '../../../core/services/pockets.service';
 import { CurrencyService } from '../../../core/services/currency.service';
 import { ToastService } from '../../../core/services/toast.service';
-import { Goal, CreateGoalDto, UpdateGoalDto, GoalProjection } from '../../../core/models/goal.model';
+import { Goal, CreateGoalDto, UpdateGoalDto } from '../../../core/models/goal.model';
+import { PocketResponse } from '../../../core/models/pocket.model';
+import { DatepickerComponent } from '../../../shared/ui/datepicker/datepicker.component';
 
 type PageState = 'loading' | 'ready' | 'empty' | 'error';
 type ModalMode = 'create' | 'edit' | 'add-amount' | null;
 
-interface GoalWithProjection extends Goal {
-  projection?: GoalProjection;
-  monthsEstimate?: number | null;
+export interface GoalTimeInfo {
+  badgeText: string;
+  subText: string;
+  isExpired: boolean;
+  isCompleted: boolean;
+}
+
+export interface GoalWithTimeInfo extends Goal {
+  timeInfo: GoalTimeInfo;
 }
 
 @Component({
   selector: 'ft-goals-page',
   standalone: true,
-  imports: [CommonModule, FormsModule, IconComponent],
+  imports: [CommonModule, FormsModule, NgIcon, DatepickerComponent],
   templateUrl: './goals.page.html',
   styleUrl: './goals.page.scss',
 })
 export class GoalsPage implements OnInit {
   private readonly goalsService = inject(GoalsService);
+  private readonly pocketsService = inject(PocketsService);
   private readonly currencyService = inject(CurrencyService);
   private readonly toast = inject(ToastService);
   private readonly destroyRef = inject(DestroyRef);
 
-  readonly goals = signal<GoalWithProjection[]>([]);
+  readonly goals = signal<Goal[]>([]);
+  readonly pockets = signal<PocketResponse[]>([]);
   readonly state = signal<PageState>('loading');
+
+  readonly goalsWithTimeInfo = computed<GoalWithTimeInfo[]>(() =>
+    this.goals().map((g) => ({
+      ...g,
+      timeInfo: this.getGoalTimeInfo(g),
+    })),
+  );
 
   // Modal state
   readonly modalMode = signal<ModalMode>(null);
-  readonly selectedGoal = signal<GoalWithProjection | null>(null);
+  readonly selectedGoal = signal<Goal | null>(null);
 
   // Form fields
   readonly formName = signal('');
   readonly formTargetAmount = signal<number | null>(null);
   readonly formDeadline = signal('');
+  readonly formPocketId = signal<string | null>(null);
   readonly formAddAmount = signal<number | null>(null);
   readonly formError = signal('');
 
@@ -60,9 +78,10 @@ export class GoalsPage implements OnInit {
 
   ngOnInit(): void {
     this.loadGoals();
+    this.loadPockets();
   }
 
-  // ─── Load goals ────────────────────────────────────────────────
+  // ─── Load data ─────────────────────────────────────────────────
 
   loadGoals(): void {
     this.state.set('loading');
@@ -72,23 +91,29 @@ export class GoalsPage implements OnInit {
         return of([]);
       }),
     ).subscribe({
-      next: (data) => {
+      next: (data: Goal[]) => {
         if (!data || data.length === 0) {
           this.state.set('empty');
           this.goals.set([]);
         } else {
-          const goalsWithProjection = data.map(g => ({
-            ...g,
-            monthsEstimate: this.estimateMonths(g),
-          }));
-          this.goals.set(goalsWithProjection);
+          this.goals.set(data);
           this.state.set('ready');
         }
       },
     });
   }
 
-  // ─── Progress helpers ──────────────────────────────────────────
+  loadPockets(): void {
+    this.pocketsService.list().pipe(
+      catchError(() => of([] as PocketResponse[])),
+    ).subscribe({
+      next: (data: PocketResponse[]) => {
+        this.pockets.set(data || []);
+      },
+    });
+  }
+
+  // ─── Progress & Time Helpers ───────────────────────────────────
 
   progress(goal: Goal): number {
     if (goal.targetAmount <= 0) return 0;
@@ -99,45 +124,100 @@ export class GoalsPage implements OnInit {
     return Math.max(0, goal.targetAmount - goal.currentAmount);
   }
 
-  estimateMonths(goal: Goal): number | null {
+  getGoalTimeInfo(goal: Goal): GoalTimeInfo {
     const remaining = this.remaining(goal);
-    if (remaining <= 0) return 0;
-    const created = new Date(goal.createdAt);
-    const now = new Date();
-    const monthsElapsed = Math.max(1, (now.getTime() - created.getTime()) / (30 * 24 * 60 * 60 * 1000));
-    const monthlyRate = goal.currentAmount / monthsElapsed;
-    if (monthlyRate <= 0) return null;
-    return Math.ceil(remaining / monthlyRate);
+    if (remaining <= 0 || goal.status === 'achieved') {
+      return {
+        badgeText: '¡Meta alcanzada!',
+        subText: 'Objetivo completado con éxito',
+        isExpired: false,
+        isCompleted: true,
+      };
+    }
+
+    if (goal.deadline) {
+      const now = new Date();
+      const deadline = new Date(goal.deadline);
+      const isPast = deadline.getTime() < now.getTime();
+      const daysLeft = goal.pacing?.daysRemaining ?? Math.ceil((deadline.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
+
+      if (isPast && daysLeft <= 0) {
+        return {
+          badgeText: 'Plazo vencido',
+          subText: `Faltan ${this.formatCurrency(remaining)} para completar`,
+          isExpired: true,
+          isCompleted: false,
+        };
+      }
+
+      if (daysLeft === 0) {
+        return {
+          badgeText: 'Vence hoy',
+          subText: `Faltan ${this.formatCurrency(remaining)} para completar`,
+          isExpired: false,
+          isCompleted: false,
+        };
+      }
+
+      const monthsLeft = goal.pacing?.monthsRemaining ?? (daysLeft > 0 ? Math.max(1, Math.ceil(daysLeft / 30.4375)) : 0);
+      const suggestedMonthly = goal.pacing?.suggestedMonthlySavings ?? (monthsLeft > 0 ? Math.round(remaining / monthsLeft) : remaining);
+
+      const timeText = daysLeft <= 45
+        ? `Quedan ${daysLeft} días`
+        : `Quedan ~${monthsLeft} ${monthsLeft === 1 ? 'mes' : 'meses'} (${daysLeft} días)`;
+
+      return {
+        badgeText: timeText,
+        subText: `Aporte sugerido: ${this.formatCurrency(suggestedMonthly)}/mes`,
+        isExpired: false,
+        isCompleted: false,
+      };
+    }
+
+    return {
+      badgeText: 'Sin fecha límite',
+      subText: `Faltan ${this.formatCurrency(remaining)} para completar`,
+      isExpired: false,
+      isCompleted: false,
+    };
+  }
+
+  getPocketName(pocketId?: string | null): string | null {
+    if (!pocketId) return null;
+    const p = this.pockets().find((item) => item.id === pocketId);
+    return p ? p.name : null;
   }
 
   formatCurrency(value: number): string {
     return this.currencyService.format(value);
   }
 
-  // ─── Modal: Create ─────────────────────────────────────────────
+  // ─── Modal: Create ─────────────────────────────────────
 
   openCreateModal(): void {
     this.modalMode.set('create');
     this.formName.set('');
     this.formTargetAmount.set(null);
     this.formDeadline.set('');
+    this.formPocketId.set(null);
     this.formError.set('');
   }
 
-  // ─── Modal: Edit ───────────────────────────────────────────────
+  // ─── Modal: Edit ───────────────────────────────────────
 
-  openEditModal(goal: GoalWithProjection): void {
+  openEditModal(goal: Goal): void {
     this.selectedGoal.set(goal);
     this.modalMode.set('edit');
     this.formName.set(goal.name);
     this.formTargetAmount.set(goal.targetAmount);
     this.formDeadline.set(goal.deadline ? goal.deadline.split('T')[0] : '');
+    this.formPocketId.set(goal.pocketId || null);
     this.formError.set('');
   }
 
-  // ─── Modal: Add amount ─────────────────────────────────────────
+  // ─── Modal: Add amount ─────────────────────────────────
 
-  openAddAmountModal(goal: GoalWithProjection): void {
+  openAddAmountModal(goal: Goal): void {
     this.selectedGoal.set(goal);
     this.modalMode.set('add-amount');
     this.formAddAmount.set(null);
@@ -150,7 +230,7 @@ export class GoalsPage implements OnInit {
     this.formError.set('');
   }
 
-  // ─── Form submission ───────────────────────────────────────────
+  // ─── Form submission ───────────────────────────────────
 
   validateForm(): boolean {
     const name = this.formName().trim();
@@ -174,7 +254,8 @@ export class GoalsPage implements OnInit {
       name: this.formName().trim(),
       targetAmount: this.formTargetAmount()!,
       currentAmount: 0,
-      deadline: this.formDeadline() || '',
+      deadline: this.formDeadline() || undefined,
+      pocketId: this.formPocketId() || undefined,
     };
 
     this.goalsService.createGoal(dto).pipe(
@@ -201,9 +282,12 @@ export class GoalsPage implements OnInit {
     const dto: UpdateGoalDto = {
       name: this.formName().trim(),
       targetAmount: this.formTargetAmount()!,
+      pocketId: this.formPocketId() || undefined,
     };
     if (this.formDeadline()) {
       dto.deadline = this.formDeadline();
+    } else {
+      dto.deadline = null;
     }
 
     this.goalsService.updateGoal(goal.id, dto).pipe(
@@ -250,7 +334,7 @@ export class GoalsPage implements OnInit {
     });
   }
 
-  // ─── Delete ────────────────────────────────────────────────────
+  // ─── Delete ────────────────────────────────────────────
 
   confirmDelete(goal: Goal): void {
     this.goalToDelete.set(goal);
@@ -280,26 +364,7 @@ export class GoalsPage implements OnInit {
     });
   }
 
-  // ─── Retry ─────────────────────────────────────────────────────
-
   retry(): void {
     this.loadGoals();
-  }
-
-  // ─── Emoji helper ──────────────────────────────────────────────
-
-  /** Return an emoji icon based on goal name keywords */
-  getGoalEmoji(goal: Goal): string {
-    const name = goal.name.toLowerCase();
-    if (name.includes('moto') || name.includes('auto') || name.includes('carro')) return '🏍️';
-    if (name.includes('viaje') || name.includes('vacacion') || name.includes('europa')) return '✈️';
-    if (name.includes('casa') || name.includes('depa') || name.includes('apartamento')) return '🏠';
-    if (name.includes('educa') || name.includes('curso') || name.includes('master')) return '📚';
-    if (name.includes('emergencia') || name.includes('fondo') || name.includes('reserva')) return '🛡️';
-    if (name.includes('tech') || name.includes('compu') || name.includes('laptop') || name.includes('celular')) return '💻';
-    if (name.includes('inversion') || name.includes('invertir') || name.includes('crypto')) return '📈';
-    if (name.includes('boda') || name.includes('casamiento')) return '💍';
-    if (name.includes('salud') || name.includes('dentista') || name.includes('medico')) return '🏥';
-    return '🎯';
   }
 }

@@ -16,7 +16,9 @@ export type InsightActionType =
   | 'adjust_goal_limit'       // Abre modal para calibrar la meta
   | 'filter_transactions'     // Navega a transacciones filtradas por categoría/fecha
   | 'simulate_savings'        // Abre simulador de impacto
-  | 'dismiss';                // Ocultar insight
+  | 'dismiss'
+  | 'review_category'
+  | 'view_goal';                // Ocultar insight
 
 export interface InsightAction {
   id: string;

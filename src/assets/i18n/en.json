@@ -65,7 +65,7 @@
     },
     "or": "or",
     "signInWithGoogle": "Sign in with Google",
-    "backToHome": "← Back to Home",
+    "backToHome": "Back to Home",
     "passwordStrength": {
       "weak": "Weak",
       "fair": "Fair",
@@ -92,7 +92,8 @@
     "pockets": "Pockets",
     "settings": "Settings",
     "newTransaction": "New Transaction",
-    "profile": "Profile"
+    "profile": "Profile",
+    "goals": "Goals"
   },
   "landing": {
     "heroBadge": "Smart Categorization",
@@ -291,6 +292,23 @@
         }
       }
     },
+    "resources": {
+      "title": "Resources for the road ahead",
+      "subtitle": "An editorial layer for clearer, more confident money decisions.",
+      "status": "Coming soon",
+      "blog": {
+        "title": "Blog",
+        "description": "Practical notes for building a clearer relationship with your money."
+      },
+      "guides": {
+        "title": "Guides",
+        "description": "Clear, focused explainers for everyday financial decisions."
+      },
+      "calculators": {
+        "title": "Calculators",
+        "description": "Simple tools for exploring financial choices, when they are ready."
+      }
+    },
     "legal": {
       "back": "Back to home",
       "back_to_home": "Back to home",
@@ -319,11 +337,14 @@
         "contact": "Contact",
         "security": "Security",
         "features": "Features",
+        "resources": "Resources",
         "telegram_bot": "Telegram Bot",
         "api_docs": "API Documentation",
         "terms": "Terms of Service",
         "privacy": "Privacy Policy",
-        "cookies": "Cookie Policy"
+        "cookies": "Cookie Policy",
+        "suggestions": "Share a suggestion",
+        "creator_credit": "Created by the Kipu team"
       }
     }
   },
@@ -442,7 +463,7 @@
       "noGoals": "No active goals registered",
       "noGoalsDesc": "Create a savings goal or set a monthly ceiling to activate the pacing radar.",
       "createGoalBtn": "Create Goal",
-      "pacingProgress": "Current progress",
+      "pacingProgress": "Total saved",
       "timeElapsed": "Month elapsed",
       "dailySafe": "Daily safe allowance",
       "projected": "Month-end projection",
@@ -1144,4 +1165,8 @@
       "errorDesc": "We couldn't load the channel distribution. Try again."
     }
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> b2a3fd2656239240a21bbc5523ecc312e171c116

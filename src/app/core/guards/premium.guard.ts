@@ -12,48 +12,9 @@ import { FtAnalyticsService } from '../services/analytics.service';
  * If the user dismisses the modal they stay on the previous page; the
  * route is NOT activated.
  */
-export const premiumGuard: CanActivateFn = (_route, state) => {
-  const router = inject(Router);
-  const authService = inject(AuthService);
-  const upgradeModal = inject(UpgradeModalService);
-  const analytics = inject(FtAnalyticsService);
-
-  // Trigger session check (idempotent)
-  authService.initAuthCheck();
-
-  return authService.authReady$.pipe(
-    filter((ready) => ready),
-    take(1),
-    map(() => {
-      if (authService.isPremium()) {
-        return true;
-      }
-
-      // Track the attempt and open the modal. We DON'T redirect — the
-      // modal gives the user a clear path to upgrade and respects their
-      // choice to stay where they were.
-      analytics.trackEvent('premium_access_attempted', {
-        route: state.url,
-        trigger: 'premium_guard',
-        tier: authService.subscriptionTier(),
-      });
-      analytics.trackEvent('paywall_modal_shown', {
-        route: state.url,
-        trigger: 'premium_guard',
-      });
-
-      const trialDays = computeTrialDaysRemaining(authService.currentSubscription()?.trialEnd);
-      upgradeModal.openModal({
-        trigger: 'premium_guard',
-        route: state.url,
-        currentTier: authService.subscriptionTier(),
-        trialDaysRemaining: trialDays,
-        onCta: () => router.navigate(['/subscription'], { queryParams: { upgrade: 'true' } }),
-      });
-
-      return false;
-    }),
-  );
+export const premiumGuard: CanActivateFn = (_route, _state) => {
+  // Free access while payment gateway is being finalized
+  return true;
 };
 
 function computeTrialDaysRemaining(trialEnd: string | null | undefined): number | undefined {
