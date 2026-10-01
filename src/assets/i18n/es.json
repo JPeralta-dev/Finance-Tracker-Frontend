@@ -65,7 +65,7 @@
     },
     "or": "o",
     "signInWithGoogle": "Ingresar con Google",
-    "backToHome": "← Volver al Inicio",
+    "backToHome": "Volver al Inicio",
     "passwordStrength": {
       "weak": "Débil",
       "fair": "Regular",
@@ -92,7 +92,8 @@
     "pockets": "Bolsillos",
     "settings": "Configuración",
     "newTransaction": "Nueva Transacción",
-    "profile": "Perfil"
+    "profile": "Perfil",
+    "goals": "Metas"
   },
   "landing": {
     "heroBadge": "Categorización Inteligente",
@@ -291,6 +292,23 @@
         }
       }
     },
+    "resources": {
+      "title": "Recursos para el camino que sigue",
+      "subtitle": "Una capa editorial para tomar decisiones financieras más claras y seguras.",
+      "status": "Próximamente",
+      "blog": {
+        "title": "Blog",
+        "description": "Notas prácticas para construir una relación más clara con tu dinero."
+      },
+      "guides": {
+        "title": "Guías",
+        "description": "Explicaciones claras y enfocadas para las decisiones financieras cotidianas."
+      },
+      "calculators": {
+        "title": "Calculadoras",
+        "description": "Herramientas simples para explorar decisiones financieras, cuando estén listas."
+      }
+    },
     "legal": {
       "back": "Volver al inicio",
       "back_to_home": "Volver al inicio",
@@ -319,11 +337,14 @@
         "contact": "Contacto",
         "security": "Seguridad",
         "features": "Funciones",
+        "resources": "Recursos",
         "telegram_bot": "Bot de Telegram",
         "api_docs": "Documentación de la API",
         "terms": "Términos del Servicio",
         "privacy": "Política de Privacidad",
-        "cookies": "Política de Cookies"
+        "cookies": "Política de Cookies",
+        "suggestions": "Compartir una sugerencia",
+        "creator_credit": "Creado por el equipo de Kipu"
       }
     }
   },
@@ -332,7 +353,7 @@
     "greeting_afternoon": "Buenas tardes",
     "greeting_evening": "Buenas noches",
     "greetingSubtitle": "Aquí tienes tu resumen financiero de este mes.",
-    "newTransaction": "+ Nueva Transacción",
+    "newTransaction": "Nueva Transacción",
     "totalBalance": "Balance Total",
     "monthlyIncome": "Ingreso Mensual",
     "monthlyExpenses": "Gastos Mensuales",
@@ -442,7 +463,7 @@
       "noGoals": "No tienes metas activas registradas",
       "noGoalsDesc": "Crea una meta de ahorro o establece un techo mensual para activar el radar de ritmo.",
       "createGoalBtn": "Crear Meta",
-      "pacingProgress": "Consumo actual",
+      "pacingProgress": "Ahorro acumulado",
       "timeElapsed": "Tiempo del mes",
       "dailySafe": "Presupuesto diario seguro",
       "projected": "Proyección fin de mes",
@@ -553,7 +574,7 @@
     "emptyDesc": "Tu historial de transacciones aparecerá aquí una vez que comiences a registrar gastos e ingresos.",
     "startTracking": "Comenzá a rastrear tus finanzas agregando tu primera transacción.",
     "addFirstTransaction": "Agregar Transacción",
-    "newTransaction": "+ Nueva Transacción",
+    "newTransaction": "Nueva Transacción",
     "form": {
       "back": "Volver a transacciones",
       "new_title": "Nueva Transacción",
@@ -615,7 +636,7 @@
   },
   "categories": {
     "title": "Categorías",
-    "subtitle": "Desglose de gastos por categoría",
+    "subtitle": "Gestión y desglose de ingresos y gastos por categoría",
     "new": "Nueva Categoría",
     "add": "Agregar",
     "edit": "Editar",
@@ -624,19 +645,42 @@
     "delete_message": "Las transacciones de esta categoría se moverán a Otros. Esto no se puede deshacer.",
     "default": "Por defecto",
     "of_total": "del total",
+    "of_income_total": "del total de ingresos",
+    "of_expense_total": "del total de gastos",
     "view_transactions": "Ver transacciones",
     "edit_title": "Editar Categoría",
     "new_title": "Nueva Categoría",
+    "tabs": {
+      "all": "Todas",
+      "expenses": "Gastos",
+      "income": "Ingresos"
+    },
+    "sections": {
+      "expenses_title": "Categorías de Gastos",
+      "expenses_subtitle": "Distribución sobre tus gastos totales",
+      "new_expense": "Nuevo Gasto",
+      "income_title": "Categorías de Ingresos",
+      "income_subtitle": "Distribución sobre tus ingresos totales",
+      "new_income": "Nuevo Ingreso",
+      "mixed_title": "Categorías Mixtas",
+      "mixed_subtitle": "Categorías aplicables a ingresos y gastos"
+    },
     "stats": {
       "title": "Resumen de categorías",
       "total": "Total rastreadas",
       "highest": "Mayor gasto",
-      "total_expenses": "Gastos totales"
+      "total_expenses": "Gastos totales",
+      "total_income": "Ingresos totales",
+      "highest_income": "Mayor ingreso",
+      "expenses_count": "Categorías de gasto",
+      "income_count": "Categorías de ingreso"
     },
     "empty": {
       "title": "No hay categorías todavía",
-      "desc": "Creá tu primera categoría para empezar a organizar tus gastos.",
+      "desc": "Creá tu primera categoría para empezar a organizar tus finanzas.",
       "action": "Crear categoría",
+      "empty_expenses": "No tienes categorías de gastos aún.",
+      "empty_income": "No tienes categorías de ingresos aún.",
       "search": "No hay categorías que coincidan con tu búsqueda"
     },
     "error": {
@@ -776,6 +820,8 @@
     "byCategory": "Por Categoría",
     "expenseBreakdown": "Desglose de Gastos",
     "dailySpending": "Gastos por Día",
+    "dailySpendingSubtitle": "Ingresos vs Gastos día a día",
+    "monthTrend": "Evolución del Mes",
     "thisWeek": "Esta semana",
     "currentWeekNote": "Siempre muestra la semana actual",
     "days": {
@@ -808,6 +854,7 @@
     "noHourlyData": "Sin datos de actividad horaria",
     "weeklyPatterns": "Patrones Semanales",
     "weeklyAverage": "Gasto promedio diario",
+    "weekdayAverage": "Promedio por día de la semana",
     "otherCategories": "Otros",
     "noWeeklyData": "Sin datos de patrones semanales",
     "chartError": "Error al cargar gráfico",

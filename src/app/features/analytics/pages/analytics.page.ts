@@ -134,8 +134,8 @@ export function mapToCategoryAnalysis(
     .map((cat, i) => ({
       id: cat.categoryId,
       name: i18n.translate(cat.category),
-      icon: icons[cat.category.toLowerCase()] ?? 'other',
-      color: colors[i % colors.length],
+      icon: (cat as any).icon || icons[cat.category.toLowerCase()] || 'other',
+      color: (cat as any).color || colors[i % colors.length],
       total: cat.amount,
       percentage: cat.percentage,
       change: 0, // Would need historical data; placeholder for now
@@ -307,7 +307,7 @@ export class AnalyticsPage implements OnInit {
 
   readonly trendChartTitle = computed<string>(() => {
     return this.isSingleMonthRange()
-      ? (this.i18n.translate('analytics.dailySpending') || 'Tendencias Diarias')
+      ? (this.i18n.translate('analytics.monthTrend') || 'Evolución del Mes')
       : this.i18n.translate('analytics.monthlyTrends');
   });
 
@@ -322,41 +322,47 @@ export class AnalyticsPage implements OnInit {
     const range = this.store.apiParams().range;
     const isSingleMonth = this.isSingleMonthRange();
 
-    // If viewing a single month (or <= 31 days), show daily granularity (day 1 to today/end of month)
+    // If viewing a single month (or <= 32 days), show daily granularity across the actual date range
     if (isSingleMonth && range) {
       const start = new Date(range.startDate);
       const end = new Date(range.endDate);
-      const now = new Date();
-
-      const isCurrentMonth =
-        start.getUTCFullYear() === now.getUTCFullYear() &&
-        start.getUTCMonth() === now.getUTCMonth();
-      const lastDay = isCurrentMonth ? Math.min(now.getUTCDate(), end.getUTCDate()) : end.getUTCDate();
       const txs = this.store.transactions();
 
       const dailyLabels: string[] = [];
       const dailyIncome: number[] = [];
       const dailyExpense: number[] = [];
 
-      for (let day = 1; day <= lastDay; day++) {
-        const d = new Date(Date.UTC(start.getUTCFullYear(), start.getUTCMonth(), day, 12, 0, 0));
-        const dayKey = d.toISOString().split('T')[0];
-        dailyLabels.push(d.toLocaleDateString('es-CO', { day: 'numeric', month: 'short' }));
+      const cur = new Date(start);
+      // Anchor to noon UTC so toLocaleDateString stays on the correct day across UTC-5 and all timezones
+      cur.setUTCHours(12, 0, 0, 0);
+      const endLimit = new Date(end);
+      endLimit.setUTCHours(23, 59, 59, 999);
 
-        const dayTxs = txs.filter(t => t.date && t.date.startsWith(dayKey));
+      while (cur <= endLimit) {
+        const dayKey = cur.toISOString().split('T')[0];
+        dailyLabels.push(cur.toLocaleDateString('es-CO', { day: 'numeric', month: 'short' }));
+
+        const dayTxs = txs.filter(t => {
+          if (!t.date) return false;
+          if (t.date.startsWith(dayKey)) return true;
+          const tDate = new Date(t.date);
+          return tDate.toISOString().split('T')[0] === dayKey;
+        });
         const inc = dayTxs.filter(t => t.type === 'income').reduce((sum, t) => sum + t.amount, 0);
         const exp = dayTxs.filter(t => t.type === 'expense').reduce((sum, t) => sum + Math.abs(t.amount), 0);
 
         dailyIncome.push(inc);
         dailyExpense.push(exp);
+
+        cur.setUTCDate(cur.getUTCDate() + 1);
       }
 
       if (dailyLabels.length > 0) {
         return this.themeMapper.buildAreaOption(
           dailyLabels,
           [
-            { label: this.i18n.translate('transactions.form.income'), data: dailyIncome, color: colors[7] },
-            { label: this.i18n.translate('transactions.form.expense'), data: dailyExpense, color: colors[4] },
+            { label: this.i18n.translate('transactions.form.income') || 'Ingresos', data: dailyIncome, color: colors[7] },
+            { label: this.i18n.translate('transactions.form.expense') || 'Gastos', data: dailyExpense, color: colors[4] },
           ],
         );
       }
@@ -387,10 +393,27 @@ export class AnalyticsPage implements OnInit {
     const breakdown = this.store.categoryBreakdown();
     if (!breakdown?.categories || breakdown.categories.length === 0) return undefined;
 
-    return this.themeMapper.buildDonutOption(
-      breakdown.categories.filter(c => c.category).map(c => this.i18n.translate(c.category)),
-      breakdown.categories.filter(c => c.category).map(c => c.amount),
-    );
+    const validCategories = breakdown.categories.filter(c => c.category && c.amount > 0);
+    if (validCategories.length === 0) return undefined;
+
+    // Group categories beyond top 5 into 'Otros' so donut chart isn't cramped
+    const topCount = 5;
+    const top = validCategories.slice(0, topCount);
+    const rest = validCategories.slice(topCount);
+    const defaultColors = this.themeMapper.categoryColors();
+
+    const labels: string[] = top.map(c => this.i18n.translate(c.category));
+    const data: number[] = top.map(c => c.amount);
+    const colors: string[] = top.map((c, i) => (c as any).color || defaultColors[i % defaultColors.length]);
+
+    if (rest.length > 0) {
+      const restTotal = rest.reduce((sum, c) => sum + c.amount, 0);
+      labels.push(this.i18n.translate('analytics.otherCategories') || 'Otros');
+      data.push(restTotal);
+      colors.push('#9CA3AF');
+    }
+
+    return this.themeMapper.buildDonutOption(labels, data, undefined, colors);
   });
 
   readonly dailyChartOptions = computed<EChartsOption | undefined>(() => {
@@ -462,7 +485,7 @@ export class AnalyticsPage implements OnInit {
       const dayData = dayOrder.map((_, dayIdx) => {
         const dayOfWeek = dayIdx === 6 ? 0 : dayIdx + 1;
         const pattern = data.patterns.find(p => p.dayOfWeek === dayOfWeek && p.category === cat);
-        return pattern?.average ?? 0;
+        return pattern?.total ?? 0;
       });
 
       datasets.push({
@@ -475,7 +498,7 @@ export class AnalyticsPage implements OnInit {
     const othersData = dayOrder.map((_, dayIdx) => {
       const dayOfWeek = dayIdx === 6 ? 0 : dayIdx + 1;
       const dayPatterns = data.patterns.filter(p => p.dayOfWeek === dayOfWeek && !topCategories.includes(p.category));
-      return dayPatterns.reduce((sum, p) => sum + p.average, 0);
+      return dayPatterns.reduce((sum, p) => sum + (p.total ?? 0), 0);
     });
 
     if (othersData.some(v => v > 0)) {
@@ -500,6 +523,9 @@ export class AnalyticsPage implements OnInit {
     const filters = this.store.filters();
     const period = filters.period;
     const thisWeek = this.i18n.translate('analytics.thisWeek');
+    if (this.isSingleMonthRange()) {
+      return this.i18n.translate('analytics.weekdayAverage') || 'Promedio por día de la semana';
+    }
     if (filters.dateRange) {
       const start = new Date(filters.dateRange.startDate);
       const end = new Date(filters.dateRange.endDate);
@@ -727,7 +753,7 @@ export class AnalyticsPage implements OnInit {
       insights: this.api.getInsights(range, bankId, type, category).pipe(
         catchError(() => of({ insights: [] })),
       ),
-      transactions: this.api.getRecentTransactions(range, bankId, type, category, 50).pipe(
+      transactions: this.api.getRecentTransactions(range, bankId, type, category, 200).pipe(
         catchError(() => of({ transactions: [] })),
       ),
     }).subscribe({

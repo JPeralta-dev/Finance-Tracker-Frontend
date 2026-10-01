@@ -37,10 +37,6 @@ export class GoalsWidgetComponent implements OnInit {
   readonly displayGoals = computed(() => this.goals().slice(0, 3));
 
   ngOnInit(): void {
-    if (!this.isPremium()) {
-      this.state.set('ready');
-      return;
-    }
     this.loadGoals();
   }
 

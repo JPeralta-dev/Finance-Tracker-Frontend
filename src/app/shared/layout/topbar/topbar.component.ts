@@ -19,6 +19,7 @@ const NAV_ITEMS: NavItem[] = [
   { label: 'nav.transactions', path: '/transactions', icon: 'transactions' },
   { label: 'nav.categories', path: '/categories', icon: 'categories' },
   { label: 'nav.pockets', path: '/pockets', icon: 'wallet' },
+  { label: 'nav.goals', path: '/goals', icon: 'goals' },
   { label: 'nav.analytics', path: '/analytics', icon: 'analytics' },
   { label: 'nav.insights', path: '/insights', icon: 'insights' },
 ];
@@ -32,6 +33,7 @@ const ROUTE_TITLES: Record<string, string> = {
   '/transactions/new': 'nav.newTransaction',
   '/categories': 'nav.categories',
   '/pockets': 'nav.pockets',
+  '/goals': 'nav.goals',
   '/analytics': 'nav.analytics',
   '/insights': 'nav.insights',
   '/settings': 'nav.settings',

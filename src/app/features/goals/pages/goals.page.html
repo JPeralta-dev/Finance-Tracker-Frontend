@@ -7,7 +7,7 @@
     </div>
     @if (state() === 'ready' || state() === 'empty') {
       <button class="btn-primary" (click)="openCreateModal()">
-        <span class="btn-primary__icon">+</span>
+        <ng-icon name="plus" size="1rem" />
         Nueva Meta
       </button>
     }
@@ -39,12 +39,15 @@
   <!-- Empty state -->
   @if (state() === 'empty') {
     <div class="empty-state">
-      <span class="empty-state__icon"><ft-icon name="target" [size]="40" /></span>
+      <div class="empty-state__icon-wrap">
+        <ng-icon name="goals" size="2.5rem" />
+      </div>
       <h2 class="empty-state__title">No tenés metas todavía</h2>
       <p class="empty-state__text">
         Creá tu primera meta de ahorro y empezá hoy a construir tu futuro financiero.
       </p>
       <button class="btn-primary" (click)="openCreateModal()">
+        <ng-icon name="plus" size="1rem" />
         Crear mi primera meta
       </button>
     </div>
@@ -53,7 +56,9 @@
   <!-- Error state -->
   @if (state() === 'error') {
     <div class="error-state">
-      <span class="error-state__icon"><ft-icon name="alert-triangle" [size]="40" /></span>
+      <div class="empty-state__icon-wrap error-state__icon-wrap">
+        <ng-icon name="warning" size="2.5rem" />
+      </div>
       <h2 class="error-state__title">No pudimos cargar tus metas</h2>
       <p class="error-state__text">Hubo un problema al conectar con el servidor. Intentá de nuevo.</p>
       <button class="btn-secondary" (click)="retry()">Reintentar</button>
@@ -63,12 +68,22 @@
   <!-- Goals list -->
   @if (state() === 'ready') {
     <div class="goals-list">
-      @for (goal of goals(); track goal.id) {
-        <div class="goal-card">
+      @for (goal of goalsWithTimeInfo(); track goal.id) {
+        <div class="goal-card" [class.goal-card--achieved]="goal.timeInfo.isCompleted">
           <div class="goal-card__header">
             <div class="goal-card__title-row">
-              <span class="goal-card__emoji">{{ getGoalEmoji(goal) }}</span>
-              <h3 class="goal-card__name">{{ goal.name }}</h3>
+              <div class="goal-card__icon-badge" [class.goal-card__icon-badge--complete]="progress(goal) >= 100">
+                <ng-icon [name]="progress(goal) >= 100 ? 'check' : 'goals'" size="1.1rem" />
+              </div>
+              <div class="goal-card__titles">
+                <h3 class="goal-card__name">{{ goal.name }}</h3>
+                @if (goal.pocketId) {
+                  <span class="goal-card__pocket-badge">
+                    <ng-icon name="wallet" size="0.75rem" />
+                    {{ getPocketName(goal.pocketId) || 'Bolsillo vinculado' }}
+                  </span>
+                }
+              </div>
             </div>
             <span class="goal-card__percent" [class.goal-card__percent--complete]="progress(goal) >= 100">
               {{ progress(goal) }}%
@@ -76,9 +91,15 @@
           </div>
 
           <div class="goal-card__amounts">
-            <span class="goal-card__current">{{ formatCurrency(goal.currentAmount) }}</span>
+            <div class="amount-group">
+              <span class="amount-label">Ahorrado</span>
+              <span class="amount-val amount-val--current">{{ formatCurrency(goal.currentAmount) }}</span>
+            </div>
             <span class="goal-card__separator">/</span>
-            <span class="goal-card__target">{{ formatCurrency(goal.targetAmount) }}</span>
+            <div class="amount-group">
+              <span class="amount-label">Objetivo</span>
+              <span class="amount-val amount-val--target">{{ formatCurrency(goal.targetAmount) }}</span>
+            </div>
           </div>
 
           <div class="goal-card__bar">
@@ -90,29 +111,26 @@
           </div>
 
           <div class="goal-card__footer">
-            @if (goal.monthsEstimate === 0) {
-              <span class="goal-card__projection goal-card__projection--complete">
-                ¡Meta alcanzada!
+            <div class="goal-card__time-info">
+              <span
+                class="time-badge"
+                [class.time-badge--complete]="goal.timeInfo.isCompleted"
+                [class.time-badge--expired]="goal.timeInfo.isExpired"
+              >
+                {{ goal.timeInfo.badgeText }}
               </span>
-            } @else if ((goal.monthsEstimate ?? 0) > 0) {
-              <span class="goal-card__projection">
-                Te faltan ~{{ goal.monthsEstimate }} {{ goal.monthsEstimate === 1 ? 'mes' : 'meses' }}
-              </span>
-            } @else {
-              <span class="goal-card__projection goal-card__projection--insufficient">
-                Sin datos suficientes para proyectar
-              </span>
-            }
+              <span class="time-sub">{{ goal.timeInfo.subText }}</span>
+            </div>
 
             <div class="goal-card__actions">
-              <button class="btn-icon" (click)="openAddAmountModal(goal)" title="Agregar monto">
-                +
+              <button class="btn-icon" (click)="openAddAmountModal(goal)" title="Agregar aporte">
+                <ng-icon name="plus" size="0.875rem" />
               </button>
               <button class="btn-icon" (click)="openEditModal(goal)" title="Editar">
-                <ft-icon name="pencil" [size]="16" />
+                <ng-icon name="settings" size="0.875rem" />
               </button>
               <button class="btn-icon btn-icon--danger" (click)="confirmDelete(goal)" title="Eliminar">
-                <ft-icon name="x" [size]="16" />
+                <ng-icon name="close" size="0.875rem" />
               </button>
             </div>
           </div>
@@ -130,20 +148,23 @@
         <h2 class="modal__title">
           {{ modalMode() === 'create' ? 'Nueva Meta' : 'Editar Meta' }}
         </h2>
-        <button class="modal__close" (click)="closeModal()"><ft-icon name="x" [size]="18" /></button>
+        <button class="modal__close" (click)="closeModal()">
+          <ng-icon name="close" size="1.1rem" />
+        </button>
       </div>
 
       <form class="modal__form" (ngSubmit)="modalMode() === 'create' ? onSubmitCreate() : onSubmitEdit()">
         <div class="form-group">
-          <label class="form-label" for="goal-name">Nombre</label>
+          <label class="form-label" for="goal-name">Nombre de la meta</label>
           <input
             id="goal-name"
             class="form-input"
             type="text"
             [(ngModel)]="formName"
             name="name"
-            placeholder="Ej: Moto Yamaha, Viaje a Europa"
+            placeholder="Ej: Comprar gafas de sol, Fondo de emergencia"
             required
+            autocomplete="off"
           />
         </div>
 
@@ -155,21 +176,37 @@
             type="number"
             [(ngModel)]="formTargetAmount"
             name="targetAmount"
-            placeholder="12000000"
+            placeholder="800000"
             min="1"
             required
           />
         </div>
 
         <div class="form-group">
-          <label class="form-label" for="goal-deadline">Fecha límite (opcional)</label>
-          <input
-            id="goal-deadline"
-            class="form-input"
-            type="date"
+          <label class="form-label">Fecha límite (opcional)</label>
+          <ft-datepicker
             [(ngModel)]="formDeadline"
             name="deadline"
+            placeholder="Seleccionar fecha límite..."
           />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="goal-pocket">Vincular a un Bolsillo (opcional)</label>
+          <select
+            id="goal-pocket"
+            class="form-select"
+            [(ngModel)]="formPocketId"
+            name="pocketId"
+          >
+            <option [ngValue]="null">Sin vincular</option>
+            @for (p of pockets(); track p.id) {
+              <option [value]="p.id">{{ p.name }} ({{ p.percentage }}% apartado)</option>
+            }
+          </select>
+          <span class="form-hint">
+            Al vincularla, los ingresos apartados en este bolsillo sumarán automáticamente al progreso de tu meta.
+          </span>
         </div>
 
         @if (formError()) {
@@ -192,8 +229,10 @@
   <div class="modal-overlay" (click)="closeModal()">
     <div class="modal modal--small" (click)="$event.stopPropagation()">
       <div class="modal__header">
-        <h2 class="modal__title">Agregar a "{{ selectedGoal()?.name }}"</h2>
-        <button class="modal__close" (click)="closeModal()"><ft-icon name="x" [size]="18" /></button>
+        <h2 class="modal__title">Agregar aporte a "{{ selectedGoal()?.name }}"</h2>
+        <button class="modal__close" (click)="closeModal()">
+          <ng-icon name="close" size="1.1rem" />
+        </button>
       </div>
 
       <form class="modal__form" (ngSubmit)="onSubmitAddAmount()">
@@ -205,7 +244,7 @@
             type="number"
             [(ngModel)]="formAddAmount"
             name="addAmount"
-            placeholder="500000"
+            placeholder="80000"
             min="1"
             required
             autofocus
@@ -225,7 +264,7 @@
 
         <div class="modal__actions">
           <button type="button" class="btn-secondary" (click)="closeModal()">Cancelar</button>
-          <button type="submit" class="btn-primary">Agregar</button>
+          <button type="submit" class="btn-primary">Agregar Aporte</button>
         </div>
       </form>
     </div>
@@ -238,7 +277,9 @@
     <div class="modal modal--small" (click)="$event.stopPropagation()">
       <div class="modal__header">
         <h2 class="modal__title">Eliminar meta</h2>
-        <button class="modal__close" (click)="cancelDelete()"><ft-icon name="x" [size]="18" /></button>
+        <button class="modal__close" (click)="cancelDelete()">
+          <ng-icon name="close" size="1.1rem" />
+        </button>
       </div>
 
       <div class="modal__body">

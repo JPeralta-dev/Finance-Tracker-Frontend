@@ -79,7 +79,26 @@
   &__title-row {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
+  }
+
+  &__icon-badge {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-lg);
+    background: rgba(124, 58, 237, 0.12);
+    border: 1px solid rgba(124, 58, 237, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent-start);
+    flex-shrink: 0;
+  }
+
+  &__titles {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
   }
 
   &__name {
@@ -88,6 +107,20 @@
     font-weight: 700;
     color: var(--text-primary);
     letter-spacing: -0.01em;
+  }
+
+  &__goal-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    font-weight: 500;
+    color: #38bdf8;
+    background: rgba(56, 189, 248, 0.1);
+    border: 1px solid rgba(56, 189, 248, 0.2);
+    border-radius: var(--radius-full);
+    padding: 1px 7px;
+    width: fit-content;
   }
 
   &__badge {
@@ -116,11 +149,26 @@
 
   &__amounts {
     display: flex;
-    align-items: baseline;
-    gap: 6px;
+    align-items: flex-end;
+    gap: 12px;
     margin-bottom: 12px;
     font-family: var(--font-mono);
     font-variant-numeric: tabular-nums;
+  }
+
+  .amount-group {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .amount-label {
+    font-family: var(--font-body);
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
   }
 
   &__current {
@@ -131,12 +179,13 @@
   }
 
   &__separator {
-    font-size: 14px;
+    font-size: 16px;
     color: var(--text-tertiary);
+    margin-bottom: 2px;
   }
 
   &__target {
-    font-size: 14px;
+    font-size: 15px;
     color: var(--text-secondary);
   }
 
@@ -296,6 +345,37 @@
   font-size: 13px;
   color: var(--danger);
   font-weight: 500;
+}
+
+.btn-icon--primary {
+  color: var(--accent-start);
+  background: rgba(124, 58, 237, 0.1);
+  border: 1px solid rgba(124, 58, 237, 0.2);
+
+  &:hover {
+    background: rgba(124, 58, 237, 0.2);
+    border-color: rgba(124, 58, 237, 0.4);
+    transform: scale(1.05);
+  }
+}
+
+.add-amount__current {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  margin-bottom: 14px;
+  font-variant-numeric: tabular-nums;
+}
+
+.form-hint {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  margin-bottom: 14px;
+  line-height: 1.4;
 }
 
 /* ─── Responsive ────────────────────────────────────────────────── */

@@ -55,7 +55,7 @@
           <div class="goal-radar-card__amounts">
             <div class="amount-current">
               <span class="amount-label">
-                {{ goal.type === 'savings' ? ('insights.radar.pacingProgress' | translate) : 'Gastado' }}
+                {{ goal.type === 'savings' ? 'Ahorro acumulado' : 'Consumo actual' }}
               </span>
               <span class="amount-val">{{ goal.currentAmount | ftCurrency }}</span>
             </div>

@@ -16,6 +16,7 @@ import { environment } from '../../../../../environments/environment';
 export class FooterComponent {
   readonly currentYear = new Date().getFullYear();
   readonly contactEmail = 'financetrackerinsight@gmail.com';
+  readonly feedbackMailtoUrl = `mailto:${this.contactEmail}?subject=${encodeURIComponent('Kipu feedback')}`;
   readonly telegramBotUrl = environment.telegramBotUrl;
   readonly pricingEnabled = environment.pricingEnabled;
 }
