@@ -333,14 +333,21 @@ export class AnalyticsPage implements OnInit {
       const dailyExpense: number[] = [];
 
       const cur = new Date(start);
-      cur.setUTCHours(0, 0, 0, 0);
+      // Anchor to noon UTC so toLocaleDateString stays on the correct day across UTC-5 and all timezones
+      cur.setUTCHours(12, 0, 0, 0);
       const endLimit = new Date(end);
+      endLimit.setUTCHours(23, 59, 59, 999);
 
       while (cur <= endLimit) {
         const dayKey = cur.toISOString().split('T')[0];
         dailyLabels.push(cur.toLocaleDateString('es-CO', { day: 'numeric', month: 'short' }));
 
-        const dayTxs = txs.filter(t => t.date && t.date.startsWith(dayKey));
+        const dayTxs = txs.filter(t => {
+          if (!t.date) return false;
+          if (t.date.startsWith(dayKey)) return true;
+          const tDate = new Date(t.date);
+          return tDate.toISOString().split('T')[0] === dayKey;
+        });
         const inc = dayTxs.filter(t => t.type === 'income').reduce((sum, t) => sum + t.amount, 0);
         const exp = dayTxs.filter(t => t.type === 'expense').reduce((sum, t) => sum + Math.abs(t.amount), 0);
 
