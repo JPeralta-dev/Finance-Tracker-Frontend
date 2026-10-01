@@ -50,7 +50,8 @@ export interface ChartFilter {
  */
 function deriveDateRangeFromPeriod(period: AnalyticsFilterState['period']): DateRange {
   const now = new Date();
-  const endUTC = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 23, 59, 59);
+  // Anchor to the user's local calendar day (e.g. Sept 30 in Colombia, not Oct 1 UTC)
+  const endUTC = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59, 999);
 
   let daysBack: number;
   switch (period) {
@@ -63,7 +64,6 @@ function deriveDateRangeFromPeriod(period: AnalyticsFilterState['period']): Date
   }
 
   const startMs = endUTC - (daysBack * 24 * 60 * 60 * 1000);
-  // Round start to UTC midnight
   const startDate = new Date(startMs);
   const startUTC = Date.UTC(startDate.getUTCFullYear(), startDate.getUTCMonth(), startDate.getUTCDate(), 0, 0, 0);
 

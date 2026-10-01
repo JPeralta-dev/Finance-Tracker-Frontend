@@ -333,14 +333,21 @@ export class AnalyticsPage implements OnInit {
       const dailyExpense: number[] = [];
 
       const cur = new Date(start);
-      cur.setUTCHours(0, 0, 0, 0);
+      // Anchor to noon UTC so toLocaleDateString stays on the correct day across UTC-5 and all timezones
+      cur.setUTCHours(12, 0, 0, 0);
       const endLimit = new Date(end);
+      endLimit.setUTCHours(23, 59, 59, 999);
 
       while (cur <= endLimit) {
         const dayKey = cur.toISOString().split('T')[0];
         dailyLabels.push(cur.toLocaleDateString('es-CO', { day: 'numeric', month: 'short' }));
 
-        const dayTxs = txs.filter(t => t.date && t.date.startsWith(dayKey));
+        const dayTxs = txs.filter(t => {
+          if (!t.date) return false;
+          if (t.date.startsWith(dayKey)) return true;
+          const tDate = new Date(t.date);
+          return tDate.toISOString().split('T')[0] === dayKey;
+        });
         const inc = dayTxs.filter(t => t.type === 'income').reduce((sum, t) => sum + t.amount, 0);
         const exp = dayTxs.filter(t => t.type === 'expense').reduce((sum, t) => sum + Math.abs(t.amount), 0);
 
@@ -386,10 +393,27 @@ export class AnalyticsPage implements OnInit {
     const breakdown = this.store.categoryBreakdown();
     if (!breakdown?.categories || breakdown.categories.length === 0) return undefined;
 
-    return this.themeMapper.buildDonutOption(
-      breakdown.categories.filter(c => c.category).map(c => this.i18n.translate(c.category)),
-      breakdown.categories.filter(c => c.category).map(c => c.amount),
-    );
+    const validCategories = breakdown.categories.filter(c => c.category && c.amount > 0);
+    if (validCategories.length === 0) return undefined;
+
+    // Group categories beyond top 5 into 'Otros' so donut chart isn't cramped
+    const topCount = 5;
+    const top = validCategories.slice(0, topCount);
+    const rest = validCategories.slice(topCount);
+    const defaultColors = this.themeMapper.categoryColors();
+
+    const labels: string[] = top.map(c => this.i18n.translate(c.category));
+    const data: number[] = top.map(c => c.amount);
+    const colors: string[] = top.map((c, i) => (c as any).color || defaultColors[i % defaultColors.length]);
+
+    if (rest.length > 0) {
+      const restTotal = rest.reduce((sum, c) => sum + c.amount, 0);
+      labels.push(this.i18n.translate('analytics.otherCategories') || 'Otros');
+      data.push(restTotal);
+      colors.push('#9CA3AF');
+    }
+
+    return this.themeMapper.buildDonutOption(labels, data, undefined, colors);
   });
 
   readonly dailyChartOptions = computed<EChartsOption | undefined>(() => {

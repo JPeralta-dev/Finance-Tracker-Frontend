@@ -67,27 +67,50 @@
         <div class="pocket-card">
           <div class="pocket-card__header">
             <div class="pocket-card__title-row">
-              <h3 class="pocket-card__name">{{ pocket.name }}</h3>
+              <div class="pocket-card__icon-badge">
+                <ft-icon name="wallet" [size]="18" />
+              </div>
+              <div class="pocket-card__titles">
+                <h3 class="pocket-card__name">{{ pocket.name }}</h3>
+                @if (getLinkedGoal(pocket); as goal) {
+                  <span class="pocket-card__goal-badge">
+                    <ft-icon name="target" [size]="12" />
+                    Meta: {{ goal.name }}
+                  </span>
+                }
+              </div>
               @if (pocket.isBotOriginated) {
                 <span class="pocket-card__badge">Bot</span>
               }
             </div>
-            <span class="pocket-card__percent" [class.pocket-card__percent--complete]="progress(pocket) >= 100">
-              {{ progress(pocket) }}%
-            </span>
-          </div>
-
-          <div class="pocket-card__amounts">
-            <span class="pocket-card__current">{{ formatCurrency(pocket.currentSpending) }}</span>
-            @if (pocket.monthlyLimit) {
-              <span class="pocket-card__separator">/</span>
-              <span class="pocket-card__target">{{ formatCurrency(pocket.monthlyLimit) }}</span>
-            } @else {
-              <span class="pocket-card__no-limit">Sin límite</span>
+            @if (pocket.targetAmount || getLinkedGoal(pocket) || pocket.monthlyLimit) {
+              <span class="pocket-card__percent" [class.pocket-card__percent--complete]="progress(pocket) >= 100">
+                {{ progress(pocket) }}%
+              </span>
             }
           </div>
 
-          @if (pocket.monthlyLimit) {
+          <div class="pocket-card__amounts">
+            <div class="amount-group">
+              <span class="amount-label">Saldo Ahorrado</span>
+              <span class="pocket-card__current">{{ formatCurrency(pocket.currentBalance || 0) }}</span>
+            </div>
+            @if (pocket.targetAmount || getLinkedGoal(pocket)?.targetAmount; as target) {
+              <span class="pocket-card__separator">/</span>
+              <div class="amount-group">
+                <span class="amount-label">Objetivo</span>
+                <span class="pocket-card__target">{{ formatCurrency(target) }}</span>
+              </div>
+            } @else if (pocket.monthlyLimit) {
+              <span class="pocket-card__separator">/</span>
+              <div class="amount-group">
+                <span class="amount-label">Límite mensual</span>
+                <span class="pocket-card__target">{{ formatCurrency(pocket.monthlyLimit) }}</span>
+              </div>
+            }
+          </div>
+
+          @if (pocket.targetAmount || getLinkedGoal(pocket) || pocket.monthlyLimit) {
             <div class="pocket-card__bar">
               <div
                 class="pocket-card__bar-fill"
@@ -100,10 +123,13 @@
 
           <div class="pocket-card__footer">
             <span class="pocket-card__allocation">
-              {{ pocket.percentage }}% del presupuesto
+              {{ pocket.percentage }}% de los ingresos
             </span>
 
             <div class="pocket-card__actions">
+              <button class="btn-icon btn-icon--primary" (click)="openAllocateModal(pocket)" title="Abonar al bolsillo">
+                <ft-icon name="plus" [size]="16" />
+              </button>
               <button class="btn-icon" (click)="openEditModal(pocket)" title="Editar">
                 <ft-icon name="pencil" [size]="16" />
               </button>
@@ -187,6 +213,55 @@
           <button type="submit" class="btn-primary">
             {{ modalMode() === 'create' ? 'Crear Pocket' : 'Guardar Cambios' }}
           </button>
+        </div>
+      </form>
+    </div>
+  </div>
+}
+
+<!-- Modal: Allocate (Abonar / Retirar) -->
+@if (modalMode() === 'allocate' && selectedPocket(); as pocket) {
+  <div class="modal-overlay" (click)="closeModal()">
+    <div class="modal modal--small" (click)="$event.stopPropagation()">
+      <div class="modal__header">
+        <h2 class="modal__title">Abonar a "{{ pocket.name }}"</h2>
+        <button class="modal__close" (click)="closeModal()"><ft-icon name="x" [size]="18" /></button>
+      </div>
+
+      <form class="modal__form" (ngSubmit)="onSubmitAllocate()">
+        <div class="form-group">
+          <label class="form-label" for="allocate-amount">Monto a abonar</label>
+          <input
+            id="allocate-amount"
+            class="form-input"
+            type="number"
+            [(ngModel)]="formAllocateAmount"
+            name="allocateAmount"
+            placeholder="50000"
+            min="1"
+            required
+            autofocus
+          />
+        </div>
+
+        <div class="add-amount__current">
+          Saldo actual: {{ formatCurrency(pocket.currentBalance || 0) }}
+          → Nuevo: {{ formatCurrency((pocket.currentBalance || 0) + (formAllocateAmount() || 0)) }}
+        </div>
+
+        @if (pocket.linkedGoalId) {
+          <div class="form-hint">
+            Este abono actualizará también el progreso de la meta vinculada.
+          </div>
+        }
+
+        @if (formError()) {
+          <div class="form-error">{{ formError() }}</div>
+        }
+
+        <div class="modal__actions">
+          <button type="button" class="btn-secondary" (click)="closeModal()">Cancelar</button>
+          <button type="submit" class="btn-primary">Abonar Saldo</button>
         </div>
       </form>
     </div>

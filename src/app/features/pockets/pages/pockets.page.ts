@@ -13,12 +13,14 @@ import { IconComponent } from '../../../shared/icons/icon.component';
 import { TranslatePipe } from '../../../core/pipes/translate.pipe';
 
 import { PocketsService } from '../../../core/services/pockets.service';
+import { GoalsService } from '../../../core/services/goals.service';
 import { CurrencyService } from '../../../core/services/currency.service';
 import { ToastService } from '../../../core/services/toast.service';
 import { PocketResponse, CreatePocketDto, UpdatePocketDto } from '../../../core/models/pocket.model';
+import { Goal } from '../../../core/models/goal.model';
 
 type PageState = 'loading' | 'ready' | 'empty' | 'error';
-type ModalMode = 'create' | 'edit' | null;
+type ModalMode = 'create' | 'edit' | 'allocate' | null;
 
 @Component({
   selector: 'ft-pockets-page',
@@ -29,10 +31,12 @@ type ModalMode = 'create' | 'edit' | null;
 })
 export class PocketsPage implements OnInit {
   private readonly pocketsService = inject(PocketsService);
+  private readonly goalsService = inject(GoalsService);
   private readonly currencyService = inject(CurrencyService);
   private readonly toast = inject(ToastService);
 
   readonly pockets = signal<PocketResponse[]>([]);
+  readonly goals = signal<Goal[]>([]);
   readonly state = signal<PageState>('loading');
 
   // Modal state
@@ -44,6 +48,10 @@ export class PocketsPage implements OnInit {
   readonly formPercentage = signal<number | null>(null);
   readonly formMonthlyLimit = signal<number | null>(null);
   readonly formError = signal('');
+
+  // Allocate form fields
+  readonly formAllocateAmount = signal<number | null>(null);
+  readonly formAllocateType = signal<'deposit' | 'withdraw'>('deposit');
 
   // Confirm delete
   readonly pocketToDelete = signal<PocketResponse | null>(null);
@@ -58,6 +66,20 @@ export class PocketsPage implements OnInit {
 
   ngOnInit(): void {
     this.loadPockets();
+    this.loadGoals();
+  }
+
+  loadGoals(): void {
+    this.goalsService.getGoals().pipe(
+      catchError(() => of([])),
+    ).subscribe((goals) => {
+      this.goals.set(goals || []);
+    });
+  }
+
+  getLinkedGoal(pocket: PocketResponse): Goal | undefined {
+    if (!pocket.linkedGoalId) return undefined;
+    return this.goals().find((g) => g.id === pocket.linkedGoalId);
   }
 
   // ─── Load pockets ────────────────────────────────────────────────
@@ -85,13 +107,28 @@ export class PocketsPage implements OnInit {
   // ─── Progress helpers ────────────────────────────────────────────
 
   progress(pocket: PocketResponse): number {
-    if (!pocket.monthlyLimit || pocket.monthlyLimit <= 0) return 0;
-    return Math.min(100, Math.round((pocket.currentSpending / pocket.monthlyLimit) * 100));
+    if (pocket.targetAmount && pocket.targetAmount > 0) {
+      return Math.min(100, Math.round(((pocket.currentBalance || 0) / pocket.targetAmount) * 100));
+    }
+    const linked = this.getLinkedGoal(pocket);
+    if (linked && linked.targetAmount > 0) {
+      return Math.min(100, Math.round(((pocket.currentBalance || 0) / linked.targetAmount) * 100));
+    }
+    if (pocket.monthlyLimit && pocket.monthlyLimit > 0) {
+      return Math.min(100, Math.round(((pocket.currentSpending || 0) / pocket.monthlyLimit) * 100));
+    }
+    return 0;
   }
 
   remaining(pocket: PocketResponse): number {
-    if (!pocket.monthlyLimit) return 0;
-    return Math.max(0, pocket.monthlyLimit - pocket.currentSpending);
+    const target = pocket.targetAmount || this.getLinkedGoal(pocket)?.targetAmount;
+    if (target && target > 0) {
+      return Math.max(0, target - (pocket.currentBalance || 0));
+    }
+    if (pocket.monthlyLimit) {
+      return Math.max(0, pocket.monthlyLimit - pocket.currentSpending);
+    }
+    return 0;
   }
 
   formatCurrency(value: number): string {
@@ -133,6 +170,49 @@ export class PocketsPage implements OnInit {
     this.formPercentage.set(pocket.percentage);
     this.formMonthlyLimit.set(pocket.monthlyLimit);
     this.formError.set('');
+  }
+
+  // ─── Modal: Allocate (Abonar / Retirar) ───────────────────────────
+
+  openAllocateModal(pocket: PocketResponse, type: 'deposit' | 'withdraw' = 'deposit'): void {
+    this.selectedPocket.set(pocket);
+    this.formAllocateType.set(type);
+    this.formAllocateAmount.set(null);
+    this.formError.set('');
+    this.modalMode.set('allocate');
+  }
+
+  onSubmitAllocate(): void {
+    const pocket = this.selectedPocket();
+    const amount = this.formAllocateAmount();
+    const type = this.formAllocateType();
+
+    if (!pocket) return;
+    if (!amount || amount <= 0) {
+      this.formError.set('Ingresá un monto válido mayor a 0');
+      return;
+    }
+    if (type === 'withdraw' && (pocket.currentBalance || 0) < amount) {
+      this.formError.set(`Saldo insuficiente. Saldo disponible: ${this.formatCurrency(pocket.currentBalance || 0)}`);
+      return;
+    }
+
+    this.pocketsService.allocate(pocket.id, { amount, type }).pipe(
+      catchError((err) => {
+        this.formError.set(err?.error?.message || 'Error al procesar el abono. Intentá de nuevo.');
+        return of(null);
+      }),
+    ).subscribe({
+      next: (res) => {
+        if (res) {
+          const actionText = type === 'deposit' ? 'Abono realizado' : 'Retiro realizado';
+          this.toast.success(actionText, `${actionText} exitosamente en "${pocket.name}"`);
+          this.closeModal();
+          this.loadPockets();
+          this.loadGoals();
+        }
+      },
+    });
   }
 
   closeModal(): void {
