@@ -636,7 +636,7 @@
   },
   "categories": {
     "title": "Categories",
-    "subtitle": "Spending breakdown by category",
+    "subtitle": "Breakdown and management of income and expense categories",
     "new": "New Category",
     "add": "Add",
     "edit": "Edit",
@@ -645,19 +645,42 @@
     "delete_message": "Transactions in this category will be moved to Other. This cannot be undone.",
     "default": "Default",
     "of_total": "of total",
+    "of_income_total": "of total income",
+    "of_expense_total": "of total expenses",
     "view_transactions": "View transactions",
     "edit_title": "Edit Category",
     "new_title": "New Category",
+    "tabs": {
+      "all": "All",
+      "expenses": "Expenses",
+      "income": "Income"
+    },
+    "sections": {
+      "expenses_title": "Expense Categories",
+      "expenses_subtitle": "Distribution relative to your total expenses",
+      "new_expense": "New Expense",
+      "income_title": "Income Categories",
+      "income_subtitle": "Distribution relative to your total income",
+      "new_income": "New Income",
+      "mixed_title": "Mixed Categories",
+      "mixed_subtitle": "Categories applicable to income and expenses"
+    },
     "stats": {
       "title": "Category summary",
       "total": "Total tracked",
       "highest": "Highest spend",
-      "total_expenses": "Total expenses"
+      "total_expenses": "Total expenses",
+      "total_income": "Total income",
+      "highest_income": "Highest income",
+      "expenses_count": "Expense categories",
+      "income_count": "Income categories"
     },
     "empty": {
       "title": "No categories yet",
-      "desc": "Create your first category to start organizing your spending.",
+      "desc": "Create your first category to start organizing your finances.",
       "action": "Create Category",
+      "empty_expenses": "No expense categories yet.",
+      "empty_income": "No income categories yet.",
       "search": "No categories match your search"
     },
     "error": {

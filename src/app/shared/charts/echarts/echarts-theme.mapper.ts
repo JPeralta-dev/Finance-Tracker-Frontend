@@ -773,6 +773,7 @@ export class EchartsThemeMapper {
     labels: string[],
     data: number[],
     title?: string,
+    customColors?: string[],
   ): EChartsOption {
     const css = this.cssVars();
     const colors = this.categoryColors();
@@ -799,20 +800,24 @@ export class EchartsThemeMapper {
         },
       },
       legend: {
+        type: 'scroll',
         orient: 'vertical',
-        right: 20,
-        top: 'center',
-        itemWidth: 12,
-        itemHeight: 12,
-        itemGap: 14,
-        textStyle: { color: css.textSecondary, fontFamily: "'Inter', sans-serif", fontSize: 12 },
+        right: 12,
+        top: 'middle',
+        bottom: 12,
+        itemWidth: 10,
+        itemHeight: 10,
+        itemGap: 10,
+        textStyle: { color: css.textSecondary, fontFamily: "'Inter', sans-serif", fontSize: 11 },
+        pageIconColor: css.textPrimary,
+        pageTextStyle: { color: css.textSecondary },
       },
       series: [
         {
           type: 'pie',
-          radius: ['50%', '70%'],
+          radius: ['45%', '70%'],
           center: ['35%', '50%'],
-          avoidLabelOverlap: false,
+          avoidLabelOverlap: true,
           itemStyle: {
             borderRadius: 6,
             borderColor: css.bgSecondary,
@@ -826,7 +831,9 @@ export class EchartsThemeMapper {
           data: labels.map((label, i) => ({
             name: label,
             value: data[i],
-            itemStyle: { color: colors[i % colors.length] + 'CC' },
+            itemStyle: {
+              color: (customColors && customColors[i]) ? customColors[i] + 'CC' : colors[i % colors.length] + 'CC',
+            },
           })),
         },
       ],

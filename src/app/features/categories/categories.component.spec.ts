@@ -66,7 +66,7 @@ describe('CategoriesComponent — Currency Integration', () => {
     const statValues = compiled.querySelectorAll('.stat-value');
     const totalExpensesEl = statValues[2];
     expect(totalExpensesEl.textContent).toContain('$');
-    expect(totalExpensesEl.textContent).toContain('6.5k');
+    expect(totalExpensesEl.textContent).toContain('1.5k');
   }));
 
   it('should use ftCurrency pipe for category totals', fakeAsync(() => {
@@ -79,6 +79,39 @@ describe('CategoriesComponent — Currency Integration', () => {
     expect(catTotals.length).toBe(2);
     expect(catTotals[0].textContent).toContain('$');
     expect(catTotals[1].textContent).toContain('$');
+  }));
+
+
+  it("should calculate percentages independently for income and expense categories", fakeAsync(() => {
+    fixture.detectChanges();
+    tick();
+    fixture.detectChanges();
+
+    // Food is 1500 expense out of 1500 total expenses = 100%
+    const foodCat = mockCategories[0];
+    expect(component.categoryPercentage(foodCat)).toBe(100);
+
+    // Salary is 5000 income out of 5000 total income = 100%
+    const salaryCat = mockCategories[1];
+    expect(component.categoryPercentage(salaryCat)).toBe(100);
+  }));
+
+  it("should filter categories when activeTab changes", fakeAsync(() => {
+    fixture.detectChanges();
+    tick();
+    fixture.detectChanges();
+
+    component.setActiveTab("expense");
+    fixture.detectChanges();
+    let compiled = fixture.nativeElement;
+    expect(compiled.querySelectorAll(".cat-card--expense").length).toBe(1);
+    expect(compiled.querySelectorAll(".cat-card--income").length).toBe(0);
+
+    component.setActiveTab("income");
+    fixture.detectChanges();
+    compiled = fixture.nativeElement;
+    expect(compiled.querySelectorAll(".cat-card--expense").length).toBe(0);
+    expect(compiled.querySelectorAll(".cat-card--income").length).toBe(1);
   }));
 
   it('should reflect EUR symbol after currency change', fakeAsync(() => {
