@@ -503,10 +503,12 @@ export class EchartsThemeMapper {
           let income = 0;
           let expenses = 0;
           for (const item of items) {
+            const rawVal = item.data;
+            const val = typeof rawVal === 'number' ? rawVal : (rawVal as any)?.value ?? 0;
             if (item.seriesName.toLowerCase().includes('income') || item.seriesName.toLowerCase().includes('ingreso')) {
-              income = item.data;
+              income = val;
             } else {
-              expenses = item.data;
+              expenses = val;
             }
           }
           const total = income + expenses;

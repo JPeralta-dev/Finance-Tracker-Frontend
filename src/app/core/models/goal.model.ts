@@ -19,6 +19,8 @@ export interface GoalPacing {
   projectedCompletionDate?: string;  // Para 'savings': fecha estimada calculada
   dailyAllowanceRemaining?: number;  // Para 'caps': presupuesto restante por día
   daysRemaining: number;             // Días restantes en el periodo o plazo
+  monthsRemaining?: number | null;   // Meses restantes al plazo
+  suggestedMonthlySavings?: number | null; // Cuota mensual de ahorro requerida
 }
 
 export interface Goal {
@@ -48,7 +50,7 @@ export interface CreateGoalDto {
   currentAmount?: number;
   deadline?: string;
   period?: 'monthly' | 'weekly';
-  pocketId?: string;
+  pocketId?: string | null;
   categoryId?: string;
   categoryIds?: string[];
   autoAllocatePercent?: number;
@@ -59,9 +61,9 @@ export interface UpdateGoalDto {
   type?: GoalType;
   targetAmount?: number;
   currentAmount?: number;
-  deadline?: string;
+  deadline?: string | null;
   period?: 'monthly' | 'weekly';
-  pocketId?: string;
+  pocketId?: string | null;
   categoryId?: string;
   categoryIds?: string[];
   autoAllocatePercent?: number;
@@ -69,9 +71,12 @@ export interface UpdateGoalDto {
 }
 
 export interface GoalProjection {
-  projectedBalance: number;
-  projectedSavings: number;
-  monthsUntilGoal: number | null;
-  confidence: 'low' | 'medium' | 'high';
+  projectedBalance?: number;
+  projectedSavings?: number;
+  monthsUntilGoal?: number | null;
+  monthsToGoal?: number | null;
+  insufficientSavings?: boolean;
+  alreadyCompleted?: boolean;
+  confidence?: 'low' | 'medium' | 'high';
 }
 

@@ -134,8 +134,8 @@ export function mapToCategoryAnalysis(
     .map((cat, i) => ({
       id: cat.categoryId,
       name: i18n.translate(cat.category),
-      icon: icons[cat.category.toLowerCase()] ?? 'other',
-      color: colors[i % colors.length],
+      icon: (cat as any).icon || icons[cat.category.toLowerCase()] || 'other',
+      color: (cat as any).color || colors[i % colors.length],
       total: cat.amount,
       percentage: cat.percentage,
       change: 0, // Would need historical data; placeholder for now
@@ -307,7 +307,7 @@ export class AnalyticsPage implements OnInit {
 
   readonly trendChartTitle = computed<string>(() => {
     return this.isSingleMonthRange()
-      ? (this.i18n.translate('analytics.dailySpending') || 'Tendencias Diarias')
+      ? (this.i18n.translate('analytics.monthTrend') || 'Evolución del Mes')
       : this.i18n.translate('analytics.monthlyTrends');
   });
 
@@ -322,26 +322,23 @@ export class AnalyticsPage implements OnInit {
     const range = this.store.apiParams().range;
     const isSingleMonth = this.isSingleMonthRange();
 
-    // If viewing a single month (or <= 31 days), show daily granularity (day 1 to today/end of month)
+    // If viewing a single month (or <= 32 days), show daily granularity across the actual date range
     if (isSingleMonth && range) {
       const start = new Date(range.startDate);
       const end = new Date(range.endDate);
-      const now = new Date();
-
-      const isCurrentMonth =
-        start.getUTCFullYear() === now.getUTCFullYear() &&
-        start.getUTCMonth() === now.getUTCMonth();
-      const lastDay = isCurrentMonth ? Math.min(now.getUTCDate(), end.getUTCDate()) : end.getUTCDate();
       const txs = this.store.transactions();
 
       const dailyLabels: string[] = [];
       const dailyIncome: number[] = [];
       const dailyExpense: number[] = [];
 
-      for (let day = 1; day <= lastDay; day++) {
-        const d = new Date(Date.UTC(start.getUTCFullYear(), start.getUTCMonth(), day, 12, 0, 0));
-        const dayKey = d.toISOString().split('T')[0];
-        dailyLabels.push(d.toLocaleDateString('es-CO', { day: 'numeric', month: 'short' }));
+      const cur = new Date(start);
+      cur.setUTCHours(0, 0, 0, 0);
+      const endLimit = new Date(end);
+
+      while (cur <= endLimit) {
+        const dayKey = cur.toISOString().split('T')[0];
+        dailyLabels.push(cur.toLocaleDateString('es-CO', { day: 'numeric', month: 'short' }));
 
         const dayTxs = txs.filter(t => t.date && t.date.startsWith(dayKey));
         const inc = dayTxs.filter(t => t.type === 'income').reduce((sum, t) => sum + t.amount, 0);
@@ -349,14 +346,16 @@ export class AnalyticsPage implements OnInit {
 
         dailyIncome.push(inc);
         dailyExpense.push(exp);
+
+        cur.setUTCDate(cur.getUTCDate() + 1);
       }
 
       if (dailyLabels.length > 0) {
         return this.themeMapper.buildAreaOption(
           dailyLabels,
           [
-            { label: this.i18n.translate('transactions.form.income'), data: dailyIncome, color: colors[7] },
-            { label: this.i18n.translate('transactions.form.expense'), data: dailyExpense, color: colors[4] },
+            { label: this.i18n.translate('transactions.form.income') || 'Ingresos', data: dailyIncome, color: colors[7] },
+            { label: this.i18n.translate('transactions.form.expense') || 'Gastos', data: dailyExpense, color: colors[4] },
           ],
         );
       }
@@ -462,7 +461,7 @@ export class AnalyticsPage implements OnInit {
       const dayData = dayOrder.map((_, dayIdx) => {
         const dayOfWeek = dayIdx === 6 ? 0 : dayIdx + 1;
         const pattern = data.patterns.find(p => p.dayOfWeek === dayOfWeek && p.category === cat);
-        return pattern?.average ?? 0;
+        return pattern?.total ?? 0;
       });
 
       datasets.push({
@@ -475,7 +474,7 @@ export class AnalyticsPage implements OnInit {
     const othersData = dayOrder.map((_, dayIdx) => {
       const dayOfWeek = dayIdx === 6 ? 0 : dayIdx + 1;
       const dayPatterns = data.patterns.filter(p => p.dayOfWeek === dayOfWeek && !topCategories.includes(p.category));
-      return dayPatterns.reduce((sum, p) => sum + p.average, 0);
+      return dayPatterns.reduce((sum, p) => sum + (p.total ?? 0), 0);
     });
 
     if (othersData.some(v => v > 0)) {
@@ -500,6 +499,9 @@ export class AnalyticsPage implements OnInit {
     const filters = this.store.filters();
     const period = filters.period;
     const thisWeek = this.i18n.translate('analytics.thisWeek');
+    if (this.isSingleMonthRange()) {
+      return this.i18n.translate('analytics.weekdayAverage') || 'Promedio por día de la semana';
+    }
     if (filters.dateRange) {
       const start = new Date(filters.dateRange.startDate);
       const end = new Date(filters.dateRange.endDate);
@@ -727,7 +729,7 @@ export class AnalyticsPage implements OnInit {
       insights: this.api.getInsights(range, bankId, type, category).pipe(
         catchError(() => of({ insights: [] })),
       ),
-      transactions: this.api.getRecentTransactions(range, bankId, type, category, 50).pipe(
+      transactions: this.api.getRecentTransactions(range, bankId, type, category, 200).pipe(
         catchError(() => of({ transactions: [] })),
       ),
     }).subscribe({

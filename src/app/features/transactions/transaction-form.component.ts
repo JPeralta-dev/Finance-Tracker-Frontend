@@ -189,12 +189,17 @@ export class TransactionFormComponent implements OnInit {
     this.errorMsg.set('');
 
     const raw = this.form.value;
+    const now = new Date();
+    const todayStr = now.toISOString().split('T')[0];
+    const isToday = raw.date === todayStr;
+    const dateToSubmit = isToday ? now.toISOString() : new Date(raw.date + 'T12:00:00Z').toISOString();
+
     const payload: any = {
       type: raw.type as 'income' | 'expense',
       amount: Number(raw.amount),
       description: raw.description!,
       category: raw.category!,
-      date: new Date(raw.date!).toISOString(),
+      date: dateToSubmit,
     };
     if (raw.bank) payload.bank = raw.bank;
 

@@ -93,13 +93,13 @@ export const routes: Routes = [
     path: 'goals',
     loadComponent: () =>
       import('./features/goals/pages/goals.page').then(m => m.GoalsPage),
-    canActivate: [authGuard, premiumGuard],
+    canActivate: [authGuard],
   },
   {
     path: 'ai-insights',
     loadComponent: () =>
       import('./features/ai-insights/pages/ai-insights.page').then(m => m.AiInsightsPage),
-    canActivate: [authGuard, premiumGuard],
+    canActivate: [authGuard],
   },
   {
     path: 'pockets',

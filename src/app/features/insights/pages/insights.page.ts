@@ -128,7 +128,9 @@ export class InsightsPage implements OnInit {
   handleActionClick(event: { action: InsightAction; insight: ActionableInsight }): void {
     const { action } = event;
 
-    switch (action.actionType) {
+    const actionType = action.actionType || (action as any).type;
+    switch (actionType) {
+      case 'review_category':
       case 'filter_transactions': {
         const queryParams: Record<string, string> = {};
         if (action.payload?.categoryId) {
@@ -151,7 +153,8 @@ export class InsightsPage implements OnInit {
         break;
       }
 
-      case 'adjust_goal_limit': {
+      case 'adjust_goal_limit':
+      case 'view_goal': {
         this.router.navigate(['/goals']);
         break;
       }
