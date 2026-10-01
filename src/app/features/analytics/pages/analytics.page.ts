@@ -393,10 +393,27 @@ export class AnalyticsPage implements OnInit {
     const breakdown = this.store.categoryBreakdown();
     if (!breakdown?.categories || breakdown.categories.length === 0) return undefined;
 
-    return this.themeMapper.buildDonutOption(
-      breakdown.categories.filter(c => c.category).map(c => this.i18n.translate(c.category)),
-      breakdown.categories.filter(c => c.category).map(c => c.amount),
-    );
+    const validCategories = breakdown.categories.filter(c => c.category && c.amount > 0);
+    if (validCategories.length === 0) return undefined;
+
+    // Group categories beyond top 5 into 'Otros' so donut chart isn't cramped
+    const topCount = 5;
+    const top = validCategories.slice(0, topCount);
+    const rest = validCategories.slice(topCount);
+    const defaultColors = this.themeMapper.categoryColors();
+
+    const labels: string[] = top.map(c => this.i18n.translate(c.category));
+    const data: number[] = top.map(c => c.amount);
+    const colors: string[] = top.map((c, i) => (c as any).color || defaultColors[i % defaultColors.length]);
+
+    if (rest.length > 0) {
+      const restTotal = rest.reduce((sum, c) => sum + c.amount, 0);
+      labels.push(this.i18n.translate('analytics.otherCategories') || 'Otros');
+      data.push(restTotal);
+      colors.push('#9CA3AF');
+    }
+
+    return this.themeMapper.buildDonutOption(labels, data, undefined, colors);
   });
 
   readonly dailyChartOptions = computed<EChartsOption | undefined>(() => {
