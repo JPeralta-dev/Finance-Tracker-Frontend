@@ -29,4 +29,8 @@ export class PocketsService {
   getSpending(pocketId: string): Observable<PocketSpending> {
     return this.http.get<PocketSpending>(`${this.base}/${pocketId}/spending`);
   }
+
+  allocate(pocketId: string, dto: { amount: number; type: 'deposit' | 'withdraw' }): Observable<PocketResponse> {
+    return this.http.post<PocketResponse>(`${this.base}/${pocketId}/allocate`, dto);
+  }
 }

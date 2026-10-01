@@ -3,7 +3,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { NgIcon } from '@ng-icons/core';
+import { NgIcon, provideIcons } from '@ng-icons/core';
 import { ICONS } from '../../shared/icons/icon-registry';
 import { FinanceService } from '../../core/services/finance.service';
 import { Category } from '../../core/models/category.model';
@@ -38,6 +38,7 @@ import { categoryMark } from '../../shared/utils/category-mark';
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [provideIcons(ICONS)],
 })
 export class CategoriesComponent implements OnInit {
   private financeService = inject(FinanceService);
@@ -49,21 +50,47 @@ export class CategoriesComponent implements OnInit {
   categories = signal<Category[]>([]);
   loading = signal(true);
   error = signal(false);
+  activeTab = signal<'all' | 'expense' | 'income'>('all');
   readonly skeletonArray = Array.from({ length: 6 }, (_, i) => i);
 
   // Confirm dialog state
   confirmVisible = signal(false);
   private pendingDeleteCategory: Category | null = null;
 
-  // Computed
-  topCategory = computed(() => {
-    const sorted = [...this.categories()].sort((a, b) => b.total - a.total);
+  // Computed collections separated by conceptual kind
+  expenseCategories = computed(() =>
+    this.categories().filter((c) => c.kind === 'expense')
+  );
+
+  incomeCategories = computed(() =>
+    this.categories().filter((c) => c.kind === 'income')
+  );
+
+  mixedCategories = computed(() =>
+    this.categories().filter((c) => c.kind === 'mixed')
+  );
+
+  // Totals calculated strictly per kind
+  totalExpenses = computed(() =>
+    this.expenseCategories().reduce((sum, c) => sum + (c.total || 0), 0)
+  );
+
+  totalIncome = computed(() =>
+    this.incomeCategories().reduce((sum, c) => sum + (c.total || 0), 0)
+  );
+
+  topExpenseCategory = computed(() => {
+    const sorted = [...this.expenseCategories()].sort((a, b) => (b.total || 0) - (a.total || 0));
     return sorted[0] ?? { name: '-' };
   });
 
-  totalExpenses = computed(() =>
-    this.categories().reduce((sum, c) => sum + c.total, 0)
-  );
+  topIncomeCategory = computed(() => {
+    const sorted = [...this.incomeCategories()].sort((a, b) => (b.total || 0) - (a.total || 0));
+    return sorted[0] ?? { name: '-' };
+  });
+
+  // Backward compatibility alias for topCategory
+  topCategory = computed(() => this.topExpenseCategory());
 
   ngOnInit(): void {
     this.loadCategories();
@@ -94,21 +121,31 @@ export class CategoriesComponent implements OnInit {
     this.loadCategories();
   }
 
-  percentage(total: number): number {
-    const max = this.totalExpenses();
-    if (!max) return 0;
-    return Math.min((total / max) * 100, 100);
+  setActiveTab(tab: 'all' | 'expense' | 'income'): void {
+    this.activeTab.set(tab);
+  }
+
+  categoryPercentage(cat: Category): number {
+    const base = cat.kind === 'income' ? this.totalIncome() : this.totalExpenses();
+    if (!base || base <= 0) return 0;
+    return Math.min(((cat.total || 0) / base) * 100, 100);
+  }
+
+  percentage(total: number, kind: 'expense' | 'income' | 'mixed' = 'expense'): number {
+    const base = kind === 'income' ? this.totalIncome() : this.totalExpenses();
+    if (!base || base <= 0) return 0;
+    return Math.min((total / base) * 100, 100);
   }
 
   categoryMark = categoryMark;
 
   // CRUD Actions
-  openCreateForm(): void {
+  openCreateForm(kind: 'expense' | 'income' = 'expense'): void {
     this.modalService.openCategoryModal({
       name: '',
       icon: '',
-      color: '#A855F7',
-      kind: 'expense',
+      color: kind === 'income' ? '#10B981' : '#A855F7',
+      kind: kind,
     });
   }
 

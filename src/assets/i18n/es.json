@@ -636,7 +636,7 @@
   },
   "categories": {
     "title": "Categorías",
-    "subtitle": "Desglose de gastos por categoría",
+    "subtitle": "Gestión y desglose de ingresos y gastos por categoría",
     "new": "Nueva Categoría",
     "add": "Agregar",
     "edit": "Editar",
@@ -645,19 +645,42 @@
     "delete_message": "Las transacciones de esta categoría se moverán a Otros. Esto no se puede deshacer.",
     "default": "Por defecto",
     "of_total": "del total",
+    "of_income_total": "del total de ingresos",
+    "of_expense_total": "del total de gastos",
     "view_transactions": "Ver transacciones",
     "edit_title": "Editar Categoría",
     "new_title": "Nueva Categoría",
+    "tabs": {
+      "all": "Todas",
+      "expenses": "Gastos",
+      "income": "Ingresos"
+    },
+    "sections": {
+      "expenses_title": "Categorías de Gastos",
+      "expenses_subtitle": "Distribución sobre tus gastos totales",
+      "new_expense": "Nuevo Gasto",
+      "income_title": "Categorías de Ingresos",
+      "income_subtitle": "Distribución sobre tus ingresos totales",
+      "new_income": "Nuevo Ingreso",
+      "mixed_title": "Categorías Mixtas",
+      "mixed_subtitle": "Categorías aplicables a ingresos y gastos"
+    },
     "stats": {
       "title": "Resumen de categorías",
       "total": "Total rastreadas",
       "highest": "Mayor gasto",
-      "total_expenses": "Gastos totales"
+      "total_expenses": "Gastos totales",
+      "total_income": "Ingresos totales",
+      "highest_income": "Mayor ingreso",
+      "expenses_count": "Categorías de gasto",
+      "income_count": "Categorías de ingreso"
     },
     "empty": {
       "title": "No hay categorías todavía",
-      "desc": "Creá tu primera categoría para empezar a organizar tus gastos.",
+      "desc": "Creá tu primera categoría para empezar a organizar tus finanzas.",
       "action": "Crear categoría",
+      "empty_expenses": "No tienes categorías de gastos aún.",
+      "empty_income": "No tienes categorías de ingresos aún.",
       "search": "No hay categorías que coincidan con tu búsqueda"
     },
     "error": {

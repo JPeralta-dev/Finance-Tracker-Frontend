@@ -389,26 +389,57 @@
   },
   "categories": {
     "title": "Catégories",
-    "subtitle": "Répartition des dépenses par catégorie",
+    "subtitle": "Ventilation et gestion des catégories de revenus et dépenses",
     "new": "Nouvelle Catégorie",
     "add": "Ajouter",
     "edit": "Modifier",
     "delete": "Supprimer",
+    "delete_title": "Supprimer la catégorie ?",
+    "delete_message": "Les transactions de cette catégorie seront déplacées vers Autre. Cette action est irréversible.",
     "default": "Par défaut",
     "of_total": "du total",
+    "of_income_total": "du total des revenus",
+    "of_expense_total": "du total des dépenses",
     "view_transactions": "Voir les transactions",
     "edit_title": "Modifier la Catégorie",
     "new_title": "Nouvelle Catégorie",
+    "tabs": {
+      "all": "Toutes",
+      "expenses": "Dépenses",
+      "income": "Revenus"
+    },
+    "sections": {
+      "expenses_title": "Catégories de Dépenses",
+      "expenses_subtitle": "Répartition par rapport au total de vos dépenses",
+      "new_expense": "Nouvelle Dépense",
+      "income_title": "Catégories de Revenus",
+      "income_subtitle": "Répartition par rapport au total de vos revenus",
+      "new_income": "Nouveau Revenu",
+      "mixed_title": "Catégories Mixtes",
+      "mixed_subtitle": "Catégories applicables aux revenus et dépenses"
+    },
     "stats": {
+      "title": "Résumé des catégories",
       "total": "Total suivies",
       "highest": "Plus grande dépense",
-      "total_expenses": "Dépenses totales"
+      "total_expenses": "Dépenses totales",
+      "total_income": "Revenus totaux",
+      "highest_income": "Plus fort revenu",
+      "expenses_count": "Catégories de dépenses",
+      "income_count": "Catégories de revenus"
     },
     "empty": {
       "title": "Pas encore de catégories",
-      "desc": "Ajoutez des transactions pour voir les catégories apparaître ici.",
-      "action": "+ Nouvelle Transaction",
+      "desc": "Créez votre première catégorie pour organiser vos finances.",
+      "action": "Créer une catégorie",
+      "empty_expenses": "Aucune catégorie de dépenses pour le moment.",
+      "empty_income": "Aucune catégorie de revenus pour le moment.",
       "search": "Aucune catégorie ne correspond à votre recherche"
+    },
+    "error": {
+      "title": "Impossible de charger les catégories",
+      "desc": "Une erreur est survenue lors de la récupération des catégories. Veuillez réessayer.",
+      "retry": "Réessayer"
     },
     "form": {
       "name": "Nom",

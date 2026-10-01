@@ -5,7 +5,7 @@ import { TranslationService } from '../services/translation.service';
 @Pipe({
   name: 'ftCurrency',
   standalone: true,
-  pure: true,
+  pure: false,
 })
 export class FtCurrencyPipe implements PipeTransform {
   private currencyService = inject(CurrencyService);
