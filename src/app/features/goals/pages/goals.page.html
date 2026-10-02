@@ -261,7 +261,7 @@
         @if (selectedGoal()) {
           <div class="add-amount__current">
             Actual: {{ formatCurrency(selectedGoal()!.currentAmount) }}
-            → Nuevo: {{ formatCurrency(selectedGoal()!.currentAmount + (formAddAmount() || 0)) }}
+            → Nuevo: {{ formatCurrency(selectedGoal()!.currentAmount + parseNumber(formAddAmount())) }}
           </div>
         }
 
