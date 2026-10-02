@@ -18,6 +18,7 @@ import { ToastService } from '../../../core/services/toast.service';
 import { Goal, CreateGoalDto, UpdateGoalDto } from '../../../core/models/goal.model';
 import { PocketResponse } from '../../../core/models/pocket.model';
 import { DatepickerComponent } from '../../../shared/ui/datepicker/datepicker.component';
+import { FtNumberFormatDirective } from '../../../shared/directives/ft-number-format.directive';
 
 type PageState = 'loading' | 'ready' | 'empty' | 'error';
 type ModalMode = 'create' | 'edit' | 'add-amount' | null;
@@ -36,7 +37,7 @@ export interface GoalWithTimeInfo extends Goal {
 @Component({
   selector: 'ft-goals-page',
   standalone: true,
-  imports: [CommonModule, FormsModule, NgIcon, DatepickerComponent],
+  imports: [CommonModule, FormsModule, NgIcon, DatepickerComponent, FtNumberFormatDirective],
   templateUrl: './goals.page.html',
   styleUrl: './goals.page.scss',
 })
