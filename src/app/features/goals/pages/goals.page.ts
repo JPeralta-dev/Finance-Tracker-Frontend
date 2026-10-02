@@ -233,15 +233,23 @@ export class GoalsPage implements OnInit {
 
   // ─── Form submission ───────────────────────────────────
 
+  parseNumber(val: unknown): number {
+    if (typeof val === 'number') return isNaN(val) ? 0 : val;
+    if (!val) return 0;
+    const cleaned = String(val).replace(/,/g, '').trim();
+    const parsed = parseFloat(cleaned);
+    return isNaN(parsed) ? 0 : parsed;
+  }
+
   validateForm(): boolean {
     const name = this.formName().trim();
-    const targetAmount = this.formTargetAmount();
+    const targetAmount = this.parseNumber(this.formTargetAmount());
 
     if (!name) {
       this.formError.set('El nombre es obligatorio');
       return false;
     }
-    if (!targetAmount || targetAmount <= 0) {
+    if (targetAmount <= 0) {
       this.formError.set('El monto objetivo debe ser mayor a 0');
       return false;
     }
@@ -251,17 +259,20 @@ export class GoalsPage implements OnInit {
   onSubmitCreate(): void {
     if (!this.validateForm()) return;
 
+    const pocketId = this.formPocketId();
     const dto: CreateGoalDto = {
       name: this.formName().trim(),
-      targetAmount: this.formTargetAmount()!,
+      targetAmount: this.parseNumber(this.formTargetAmount()),
       currentAmount: 0,
       deadline: this.formDeadline() || undefined,
-      pocketId: this.formPocketId() || undefined,
+      pocketId: (pocketId && pocketId !== 'null') ? pocketId : undefined,
     };
 
     this.goalsService.createGoal(dto).pipe(
-      catchError(() => {
-        this.formError.set('Error al crear la meta. Intentá de nuevo.');
+      catchError((err) => {
+        console.error('Error al crear la meta:', err);
+        const serverMsg = err?.error?.details?.[0]?.message || err?.error?.message;
+        this.formError.set(serverMsg || 'Error al crear la meta. Intentá de nuevo.');
         return of(null);
       }),
     ).subscribe({
@@ -280,10 +291,11 @@ export class GoalsPage implements OnInit {
     const goal = this.selectedGoal();
     if (!goal) return;
 
+    const pocketId = this.formPocketId();
     const dto: UpdateGoalDto = {
       name: this.formName().trim(),
-      targetAmount: this.formTargetAmount()!,
-      pocketId: this.formPocketId() || undefined,
+      targetAmount: this.parseNumber(this.formTargetAmount()),
+      pocketId: (pocketId && pocketId !== 'null') ? pocketId : undefined,
     };
     if (this.formDeadline()) {
       dto.deadline = this.formDeadline();
@@ -292,8 +304,10 @@ export class GoalsPage implements OnInit {
     }
 
     this.goalsService.updateGoal(goal.id, dto).pipe(
-      catchError(() => {
-        this.formError.set('Error al actualizar la meta. Intentá de nuevo.');
+      catchError((err) => {
+        console.error('Error al actualizar la meta:', err);
+        const serverMsg = err?.error?.details?.[0]?.message || err?.error?.message;
+        this.formError.set(serverMsg || 'Error al actualizar la meta. Intentá de nuevo.');
         return of(null);
       }),
     ).subscribe({
@@ -308,9 +322,9 @@ export class GoalsPage implements OnInit {
   }
 
   onSubmitAddAmount(): void {
-    const amount = this.formAddAmount();
+    const amount = this.parseNumber(this.formAddAmount());
     const goal = this.selectedGoal();
-    if (!amount || amount <= 0 || !goal) {
+    if (amount <= 0 || !goal) {
       this.formError.set('Ingresá un monto válido mayor a 0');
       return;
     }
@@ -320,8 +334,10 @@ export class GoalsPage implements OnInit {
     };
 
     this.goalsService.updateGoal(goal.id, dto).pipe(
-      catchError(() => {
-        this.formError.set('Error al actualizar el progreso. Intentá de nuevo.');
+      catchError((err) => {
+        console.error('Error al actualizar el progreso:', err);
+        const serverMsg = err?.error?.details?.[0]?.message || err?.error?.message;
+        this.formError.set(serverMsg || 'Error al actualizar el progreso. Intentá de nuevo.');
         return of(null);
       }),
     ).subscribe({
